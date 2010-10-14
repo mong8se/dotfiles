@@ -1,0 +1,6 @@
+[submodule "Resources/grml-etc-core"]
+	path = Resources/grml-etc-core
+	url = git://git.grml.org/grml-etc-core.git
+[submodule "Resources/ryanb"]
+	path = Resources/ryanb
+	url = http://github.com/ryanb/dotfiles.git

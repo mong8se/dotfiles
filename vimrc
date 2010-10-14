@@ -152,6 +152,11 @@ set cursorline " highlight current line
 set showmatch " show matching brackets
 set incsearch " show incremental search results
 
+" Use Ack instead of Grep when available
+if executable("ack")
+  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
+endif
+
 "------------------------------------------------------------
 " Source a local configuration file if available.
 "
