@@ -8,9 +8,11 @@ if [[ "$TERM" != emacs ]] ; then
     [[ "$terminfo[kcud1]" == $'\eO'* ]] && bindkey -M viins "${terminfo[kcud1]/O/[}" down-line-or-history
 fi
 
+setopt prompt_subst
+
 PS1="%(1j.[$fg[green]%j%{$reset_color%}].)%B[%b%(!.%{$fg[red]%}.%{$fg[blue]%})%m%{$reset_color%}%B]%b%# "
 DONTSETRPROMPT=1
-RPS1='${VCS_INFO_message_0_}%S %3~ %s'
+RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
 # Put the penultimate and current directory in the iterm tab:
 function settab { print -Pn "\e]1;%m:%2~\a%" }
