@@ -1,0 +1,19 @@
+set visualbell
+hi! Bell opacity: .5;
+
+hi! TabNumber background-color: white; padding: 0 .25em; -moz-border-radius: 4px; -moz-box-shadow: 1px 1px 2px black; border: 1px solid black
+hi! Hint -moz-border-radius: 4px; -moz-box-shadow: 1px 1px 2px black; background-color: red; color: white; padding: 1px 2px; opacity: .8;
+hi! -append HintElem background-color: orange;
+hi! -append StatusLine font-size: 9pt; font-weight: normal;
+hi! -append CmdLine font-size: 11pt;
+
+set editor='/usr/local/bin/mvim -f'
+set popups=tab,resized
+
+style! chrome://* .tabs-newtab-button {display: none;}
+
+set guioptions=rbn
+set showstatuslinks=2
+
+au LocationChange .* js modes.passAllKeys = /(www|mail)\.google\.com/.test(buffer.URL)
+au LocationChange .* js modes.passAllKeys = /google\.com\/reader/.test(buffer.URL) 

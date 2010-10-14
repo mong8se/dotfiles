@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+for dir in bundle/*
+do
+    cd $dir
+    git pull
+    cd ../..
+done

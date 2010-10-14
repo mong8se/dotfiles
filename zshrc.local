@@ -1,0 +1,55 @@
+bindkey -v
+if [[ "$TERM" != emacs ]] ; then
+    [[ -z "$terminfo[cuu1]"  ]] || bindkey -M viins "$terminfo[cuu1]"  up-line-or-history
+    [[ -z "$terminfo[kcuu1]" ]] || bindkey -M viins "$terminfo[kcuu1]" up-line-or-history
+    [[ -z "$terminfo[kcud1]" ]] || bindkey -M viins "$terminfo[kcud1]" down-line-or-history
+    # ncurses stuff:
+    [[ "$terminfo[kcuu1]" == $'\eO'* ]] && bindkey -M viins "${terminfo[kcuu1]/O/[}" up-line-or-history
+    [[ "$terminfo[kcud1]" == $'\eO'* ]] && bindkey -M viins "${terminfo[kcud1]/O/[}" down-line-or-history
+fi
+
+PS1="%(1j.[$fg[green]%j%{$reset_color%}].)%B[%b%(!.%{$fg[red]%}.%{$fg[blue]%})%m%{$reset_color%}%B]%b%# "
+DONTSETRPROMPT=1
+RPS1='${VCS_INFO_message_0_}%S %3~ %s'
+
+# Put the penultimate and current directory in the iterm tab:
+function settab { print -Pn "\e]1;%m:%2~\a%" }
+
+# Put the string "[zsh] hostname:/full/directory/path" in the title bar:
+function settitle { print -Pn "\e]2;%n@%m:%d [zsh]\a" }
+
+REPORTTIME=5
+TIMEFMT=$'\e]9;%J\007 \e[7m %J: %P %Mk \e[0m %U user / %S sys / %E total'
+
+NOPRECMD=1
+# This updates after each change of directory:
+function precmd {
+    vcs_info
+    settab
+    settitle
+}
+
+unsetopt AUTO_CD # cd if no matching command
+unsetopt beep
+
+alias cd..="cd .."
+
+### MAC SPECFIC
+# This sends growl a notification to iterm
+function growl {
+    if [[ $TERM_PROGRAM == iTerm.app && -z "$KONSOLE_DCOP_SESSION" ]];then
+        print -Pn $'\e]9;'${1}'\007'
+    else
+        /usr/local/bin/growlnotify Terminal -m "$PWD: $1"
+    fi
+}
+# man pages in os x
+function pman { man -t $@ | open -f -a /Applications/Preview.app }
+function bman { gunzip < `man -w $@` | groff -Thtml -man | bcat }
+# start/stop mysql
+function mysql_start { cd /opt/local ; sudo /opt/local/lib/mysql5/bin/mysqld_safe &! ; cd - }
+function mysql_stop { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
+
+alias flush_dns='/usr/bin/dscacheutil -flushcache'
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.

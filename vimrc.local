@@ -1,0 +1,27 @@
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{fugitive#statusline()}%=%-16(\ %l,%c-%v\ %)%P
+"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?Rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
+"set statusline+=%{Rvm#statusline()}
+
+"supertab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+
+"ruby
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+
+"improve autocomplete menu color
+highlight Pmenu ctermbg=238 gui=bold
+
+" delimitMate
+let delimitMate_expand_space = 1
+let delimitMate_expand_cr = 1
+
+" NERDTree
+let NERDTreeShowBookmarks = 1
+let NERDChristmasTree = 1
+let NERDTreeWinPos = "left"
+map <leader>n :NERDTreeToggle <cr>
+
