@@ -53,5 +53,3 @@ function mysql_start { cd /opt/local ; sudo /opt/local/lib/mysql5/bin/mysqld_saf
 function mysql_stop { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
 
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
