@@ -3,3 +3,5 @@ nbproject
 .DS_Store
 .rvmrc
 *.orig
+.project
+.idea
