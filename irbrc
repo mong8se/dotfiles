@@ -12,8 +12,15 @@ IRB.conf[:HISTORY_PATH] = File::expand_path("~/.irb.history")
 
 # Colorize results
 require 'wirble'
-Wirble.init
-Wirble.colorize
+wirble_opts = {
+    :colors => {
+      :object_class => :brown,
+      :symbol => :purple,
+      :symbol_prefix => :purple
+    },
+    :init_color => true,
+}
+Wirble.init(wirble_opts)
 
 require 'bond'
 Bond.start
@@ -32,18 +39,3 @@ else # MacRuby
     end
   end.new
 end
-
-# Textmate helper
-def mate *args
-  flattened_args = args.map {|arg| "\"#{arg.to_s}\""}.join ' '
-  `mate #{flattened_args}`
-  nil
-end
-
-# Vi helper
-def vi *args
-  flattened_args = args.map { |arg| "\"#{arg.to_s}\""}.join ' '
-  `vi #{flattened_args}`
-  nil
-end
-
