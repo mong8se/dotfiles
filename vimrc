@@ -42,6 +42,7 @@ set hidden
 
 " Better command-line completion
 set wildmenu
+set wildmode=list:longest
 
 " Show partial commands in the last line of the screen
 set showcmd
@@ -131,6 +132,11 @@ set expandtab
 "set shiftwidth=2
 "set tabstop=2
 
+" Set the teriminal title
+set title
+
+" Maintain more context around the cursor
+set scrolloff=3
 
 "------------------------------------------------------------
 " Mappings {{{1
