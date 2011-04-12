@@ -1,12 +1,3 @@
-"ruby
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-
-"improve autocomplete menu color
-highlight Pmenu ctermbg=238 gui=bold
-
 " delimitMate
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr = 1
@@ -21,49 +12,55 @@ map <leader>n :NERDTreeToggle <cr>
 set background=light
 colorscheme solarized
 
+" Snipmate for erb files
+autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
+ 
+" Turn off auto rails prompt
+let g:rails_statusline = 0
+
 " Prompts
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{fugitive#statusline()}%=%-16(\ %l,%c-%v\ %)%P
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?Rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
 "set statusline+=%{Rvm#statusline()}
 
 " Some Prompt thing from reddit
-"hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
-"hi Modified guibg=orange guifg=black ctermbg=lightred ctermfg=black
+hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
+hi Modified guibg=orange guifg=black ctermbg=lightred ctermfg=black
 
-"function! MyStatusLine(mode)
-    "let statusline=""
-    "if a:mode == 'Enter'
-        "let statusline.="%#StatColor#"
-    "endif
-    "let statusline.="\(%n\)\ %f\ "
-    "if a:mode == 'Enter'
-        "let statusline.="%*"
-    "endif
-    "let statusline.="%#Modified#%m"
-    "if a:mode == 'Leave'
-        "let statusline.="%*%r"
-    "elseif a:mode == 'Enter'
-        "let statusline.="%r%*"
-    "endif
-    "let statusline .= "\ (%l/%L,\ %c)\ %P%=%h%w\ %y\ [%{&encoding}:%{&fileformat}]\ \ "
-    "return statusline
-"endfunction
+function! MyStatusLine(mode)
+    let statusline=""
+    if a:mode == 'Enter'
+        let statusline.="%#StatColor#"
+    endif
+    let statusline.="\(%n\)\ %f\ "
+    if a:mode == 'Enter'
+        let statusline.="%*"
+    endif
+    let statusline.="%#Modified#%m"
+    if a:mode == 'Leave'
+        let statusline.="%*%r"
+    elseif a:mode == 'Enter'
+        let statusline.="%r%*"
+    endif
+    let statusline .= "\ (%l/%L,\ %c)\ %P%=%h%w\ %y\ %{fugitive#statusline()} [%{&encoding}:%{&fileformat}]\ \ "
+    return statusline
+endfunction
 
-"au WinEnter * setlocal statusline=%!MyStatusLine('Enter')
-"au WinLeave * setlocal statusline=%!MyStatusLine('Leave')
-"set statusline=%!MyStatusLine('Enter')
+au WinEnter * setlocal statusline=%!MyStatusLine('Enter')
+au WinLeave * setlocal statusline=%!MyStatusLine('Leave')
+set statusline=%!MyStatusLine('Enter')
 
-"function! InsertStatuslineColor(mode)
-    "if a:mode == 'i'
-        "hi StatColor guibg=orange ctermbg=lightred
-    "elseif a:mode == 'r'
-        "hi StatColor guibg=#e454ba ctermbg=magenta
-    "elseif a:mode == 'v'
-        "hi StatColor guibg=#e454ba ctermbg=magenta
-    "else
-        "hi StatColor guibg=red ctermbg=red
-    "endif
-"endfunction 
+function! InsertStatuslineColor(mode)
+    if a:mode == 'i'
+        hi StatColor guibg=orange ctermbg=lightred
+    elseif a:mode == 'r'
+        hi StatColor guibg=#e454ba ctermbg=magenta
+    elseif a:mode == 'v'
+        hi StatColor guibg=#e454ba ctermbg=magenta
+    else
+        hi StatColor guibg=red ctermbg=red
+    endif
+endfunction 
 
-"au InsertEnter * call InsertStatuslineColor(v:insertmode)
-"au InsertLeave * hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
