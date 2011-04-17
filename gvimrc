@@ -19,10 +19,21 @@ set guifont=Inconsolata:h14
 set transparency=8
 
 " Make command enter make a new line without splitting
-inoremap <D-CR> <ESC>o
+inoremap <D-CR> <ESC> o
 
 " Map Command T to CommandT plugin
 if has("gui_macvim")
   macmenu &File.New\ Tab key=<nop>
   map <D-t> :CommandT<CR>
 endif
+
+augroup automongoose
+" Save files automatically when focus is lost
+" Silent means don't bitch about unamed or readonline files
+" Those silently fail
+    autocmd BufLeave,FocusLost * silent! wall
+    autocmd BufLeave,FocusLost * stopinsert
+augroup END
+
+" Auto load files that have local changes
+set autoread

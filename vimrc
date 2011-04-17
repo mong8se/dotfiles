@@ -42,7 +42,8 @@ set hidden
 
 " Better command-line completion
 set wildmenu
-set wildmode=list:longest
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/* "
 
 " Show partial commands in the last line of the screen
 set showcmd
@@ -151,17 +152,22 @@ map Y y$
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+" Arrow keys move up and down visible lines, not physical lines
+nnoremap <Down> gj
+nnoremap <Up> gk
+
 "------------------------------------------------------------
 " smoazami
 "
 set cursorline " highlight current line
 set showmatch " show matching brackets
 set incsearch " show incremental search results
-
-" Use Ack instead of Grep when available
-if executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
-endif
+" Set leader key to comma
+let mapleader = ","
+" allow cursor to go where there is nothing
+set virtualedit=all
+" highlight trailing whitepsace with a ·
+set list listchars=tab:\ \ ,trail:·
 
 "------------------------------------------------------------
 " Source a local configuration file if available.

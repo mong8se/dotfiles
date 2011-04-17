@@ -6,11 +6,19 @@ let delimitMate_expand_cr = 1
 let NERDTreeShowBookmarks = 1
 let NERDChristmasTree = 1
 let NERDTreeWinPos = "left"
-map <leader>n :NERDTreeToggle <cr>
+map <leader>, :NERDTreeToggle <cr>
 
 " Solarized
 set background=light
 colorscheme solarized
+
+" Command T
+let g:CommandTMatchWindowAtTop=1
+let g:CommandTMaxHeight=10
+let g:CommandTAcceptSelectionMap='<C-CR>'
+let g:CommandTAcceptSelectionSplitMap='<C-s>'
+let g:CommandTAcceptSelectionVSplitMap='<C-v>'
+let g:CommandTAcceptSelectionTabMap='<CR>'
 
 " Snipmate for erb files
 autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
