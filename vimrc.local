@@ -2,6 +2,10 @@
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr = 1
 
+" Surround
+let g:surround_{char2nr('-')} = "<% \r -%>"
+let g:surround_{char2nr('=')} = "<%= \r %>"
+
 " NERDTree
 let NERDTreeShowBookmarks = 1
 let NERDChristmasTree = 1

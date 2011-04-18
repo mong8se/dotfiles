@@ -169,6 +169,9 @@ set virtualedit=all
 " highlight trailing whitepsace with a ·
 set list listchars=tab:•·,trail:·
 
+" 256 colors
+set t_Co=256
+
 "------------------------------------------------------------
 " Source a local configuration file if available.
 "
