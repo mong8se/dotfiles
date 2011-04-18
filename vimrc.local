@@ -24,9 +24,11 @@ let g:CommandTAcceptSelectionSplitMap='<C-s>'
 let g:CommandTAcceptSelectionVSplitMap='<C-v>'
 let g:CommandTAcceptSelectionTabMap='<CR>'
 
-" Snipmate for erb files
-autocmd BufNewFile,BufRead *.html.erb set filetype=html.eruby
- 
+" proper filetype for erb files
+autocmd BufNewFile,BufRead *.html.erb set filetype=eruby
+" xpt uses <Tab> as trigger key
+let g:xptemplate_key = '<Tab>'
+
 " Turn off auto rails prompt
 let g:rails_statusline = 0
 
