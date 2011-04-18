@@ -19,9 +19,6 @@
 [submodule "vim/bundle/rvm.vim"]
 	path = vim/bundle/rvm.vim
 	url = https://github.com/csexton/rvm.vim.git
-[submodule "vim/bundle/snipmate.vim"]
-	path = vim/bundle/snipmate.vim
-	url = https://github.com/MarcWeber/snipmate.vim.git
 [submodule "vim/bundle/vim-abolish"]
 	path = vim/bundle/vim-abolish
 	url = https://github.com/tpope/vim-abolish.git
