@@ -1,7 +1,6 @@
 " What a funny comment character
-" " .gvimrc
-" " v 0.1
-" " rev. 2009-03-18
+" .gvimrc
+" v 0.3
 
 " Turns on the tab bar always
 set showtabline=2
@@ -39,8 +38,8 @@ if has("gui_macvim")
 endif
 
 " Command-/ to toggle comments
-map <D-/> <plug>NERDCommenterToggle<CR> "
+map <D-/> <plug>NERDCommenterToggle<CR>
 
 " Command-][ to increase/decrease indentation
-vmap <D-]> >gv
-vmap <D-[> <gv]] "
+vnoremap <D-]> >>
+vnoremap <D-[> <<
