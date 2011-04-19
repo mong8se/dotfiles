@@ -1,7 +1,3 @@
-" delimitMate
-let delimitMate_expand_space = 1
-let delimitMate_expand_cr = 1
-
 " Surround
 let g:surround_{char2nr('-')} = "<% \r -%>"
 let g:surround_{char2nr('=')} = "<%= \r %>"
@@ -24,10 +20,10 @@ let g:CommandTAcceptSelectionSplitMap='<C-s>'
 let g:CommandTAcceptSelectionVSplitMap='<C-v>'
 let g:CommandTAcceptSelectionTabMap='<CR>'
 
-" proper filetype for erb files
-autocmd BufNewFile,BufRead *.html.erb set filetype=eruby
 " xpt uses <Tab> as trigger key
 let g:xptemplate_key = '<Tab>'
+" xpt completes braces for you
+let g:xptemplate_brace_complete = 1
 
 " Turn off auto rails prompt
 let g:rails_statusline = 0
