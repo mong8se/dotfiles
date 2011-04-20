@@ -5,6 +5,9 @@
 " Turns on the tab bar always
 set showtabline=2
 
+" solarized
+let g:solarized_termcolors=256
+
 " Number of horizontal lines on the screen
 set lines=60
 
