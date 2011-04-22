@@ -25,7 +25,7 @@ augroup automongoose
 " Silent means don't bitch about unamed or readonline files
 " Those silently fail
     autocmd BufLeave,FocusLost * silent! wall
-    autocmd BufLeave,FocusLost * stopinsert
+    autocmd BufLeave,FocusLost * if mode()[0] =~ 'i\|R' | call feedkeys("\<Esc>") | en
 augroup END
 
 " Auto load files that have local changes
