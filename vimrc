@@ -184,6 +184,12 @@ let g:surround_{char2nr('=')} = "<%= \r %>"
 let NERDTreeShowBookmarks = 1
 let NERDChristmasTree = 1
 let NERDTreeWinPos = "left"
+let NERDTreeChDirMode = 2
+let NERDTreeMouseMode = 2
+let NERDTreeQuitOnOpen = 0
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
 map <leader>, :NERDTreeToggle <cr>
 
 " Solarized
@@ -191,8 +197,8 @@ set background=light
 colorscheme solarized
 
 " Command T
-let g:CommandTMatchWindowAtTop=1
-let g:CommandTMaxHeight=10
+let g:CommandTMatchWindowReverse=1
+let g:CommandTMaxHeight=16
 let g:CommandTAcceptSelectionMap='<C-CR>'
 let g:CommandTAcceptSelectionSplitMap='<C-s>'
 let g:CommandTAcceptSelectionVSplitMap='<C-v>'
