@@ -168,6 +168,8 @@ let mapleader = ","
 set virtualedit=all
 " highlight trailing whitepsace with a ·
 set list listchars=tab:•·,trail:·
+" so complex operations dont display until finished
+set lazyredraw
 
 " 256 colors
 set t_Co=256
@@ -207,7 +209,16 @@ let g:CommandTAcceptSelectionTabMap='<CR>'
 " xpt uses <Tab> as trigger key
 let g:xptemplate_key = '<Tab>'
 " xpt completes braces for you
-let g:xptemplate_brace_complete = 1
+"let g:xptemplate_brace_complete = 1
+
+" delimitMate
+let delimitMate_expand_space = 1
+let delimitMate_expand_cr = 1
+
+" gitv
+"let g:Gitv_WrapLines = 1
+let g:Gitv_TruncateCommitSubjects = 1
+
 
 " Turn off auto rails prompt
 let g:rails_statusline = 0

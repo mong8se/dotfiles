@@ -30,7 +30,7 @@
 	url = https://github.com/tpope/vim-surround.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
-	url = git://git.wincent.com/command-t.git
+	url = https://github.com/pMongoose/Command-T.git
 [submodule "vim/bundle/vim-colors-solarized"]
 	path = vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
@@ -52,3 +52,9 @@
 [submodule "vim/bundle/xptemplate"]
 	path = vim/bundle/xptemplate
 	url = https://github.com/drmingdrmer/xptemplate-dist.git
+[submodule "vim/bundle/delimitMate"]
+	path = vim/bundle/delimitMate
+	url = https://github.com/Raimondi/delimitMate.git
+[submodule "vim/bundle/gitv"]
+	path = vim/bundle/gitv
+	url = https://github.com/gregsexton/gitv.git

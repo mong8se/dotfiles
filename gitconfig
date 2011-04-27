@@ -15,8 +15,6 @@
   changed = blue
   untracked = red
 [core]
-  editor = mvim -f
-  ;editor = mate -w
   excludesfile = /Users/smoazami/.gitignore
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [user]
