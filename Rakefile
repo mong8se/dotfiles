@@ -3,10 +3,13 @@ require 'erb'
 
 desc "install the dot files into user's home directory"
 task :install do
+  is_mac = RUBY_PLATFORM.downcase.include?("darwin")
   replace_all = false
+
   Dir['*'].each do |file|
     next if %w[Resources Rakefile README.rdoc LICENSE].include? file
-    
+    next if file.end_with?('.mac') and not is_mac
+
     if File.exist?(File.join(ENV['HOME'], ".#{file.sub('.erb', '')}"))
       if File.identical? file, File.join(ENV['HOME'], ".#{file.sub('.erb', '')}")
         puts "identical ~/.#{file.sub('.erb', '')}"
