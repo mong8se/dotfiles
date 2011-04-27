@@ -1,0 +1,20 @@
+### MAC SPECFIC
+# This sends growl a notification to iterm
+function growl {
+    if [[ $TERM_PROGRAM == iTerm.app && -z "$KONSOLE_DCOP_SESSION" ]];then
+        print -Pn $'\e]9;'${1}'\007'
+    else
+        /usr/local/bin/growlnotify Terminal -m "$PWD: $1"
+    fi
+}
+# man pages in os x
+function pman { man -t $@ | open -f -a /Applications/Preview.app }
+function bman { gunzip < `man -w $@` | groff -Thtml -man | bcat }
+# start/stop mysql
+function mysql_start { cd /opt/local ; sudo -b /opt/local/lib/mysql5/bin/mysqld_safe ; cd - }
+function mysql_stop { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
+
+alias flush_dns='/usr/bin/dscacheutil -flushcache'
+
+#export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
+export EDITOR='mvim -f'
