@@ -1,6 +1,9 @@
 " What a funny comment character
 " .gvimrc
-" v 0.3
+" v 0.4
+
+" Focus follows mouse
+set mousefocus
 
 " Turns on the tab bar always
 set showtabline=2

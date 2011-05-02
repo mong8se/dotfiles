@@ -167,7 +167,7 @@ let mapleader = ","
 " allow cursor to go where there is nothing
 set virtualedit=all
 " highlight trailing whitepsace with a ·
-set list listchars=tab:•·,trail:·
+set list listchars=tab:•·,trail:·,extends:›,precedes:‹
 " so complex operations dont display until finished
 set lazyredraw
 
