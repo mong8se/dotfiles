@@ -22,3 +22,9 @@
   email = smoazami@converseon.com
 [merge]
   tool = opendiff
+[push]
+  # default to tracking so git will only try to push the current branch
+  # otherwise git push will push all branches which can be problematic if you have
+  # changes in a branch that were not ready to be pushed (or if you use -f to force a push
+  # will overwrite remote branches when you only wanted to force-push the current branch)
+  default = tracking
