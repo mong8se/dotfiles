@@ -3,7 +3,7 @@
 " v 0.4
 
 " Focus follows mouse
-set mousefocus
+" set mousefocus
 
 " Turns on the tab bar always
 set showtabline=2
@@ -21,14 +21,14 @@ set guioptions-=T
 set guifont=Inconsolata:h14
 
 " Sets the percent transparency
-set transparency=8
+set transparency=5
 
 augroup automongoose
 " Save files automatically when focus is lost
 " Silent means don't bitch about unamed or readonline files
 " Those silently fail
-    autocmd BufLeave,FocusLost * silent! wall
     autocmd BufLeave,FocusLost * if mode()[0] =~ 'i\|R' | call feedkeys("\<Esc>") | en
+    autocmd BufLeave,FocusLost * silent! wall
 augroup END
 
 " Auto load files that have local changes

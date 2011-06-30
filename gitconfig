@@ -18,7 +18,7 @@
   excludesfile = /Users/smoazami/.gitignore
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [user]
-  name = Steven Moazami
+	name = Steven Moazami
   email = smoazami@converseon.com
 [merge]
   tool = opendiff

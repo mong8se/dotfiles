@@ -64,3 +64,6 @@
 [submodule "vim/bundle/vim-cucumber"]
 	path = vim/bundle/vim-cucumber
 	url = https://github.com/tpope/vim-cucumber.git
+[submodule "Resources/zsh-syntax-highlighting"]
+	path = Resources/zsh-syntax-highlighting
+	url = git://github.com/nicoulaj/zsh-syntax-highlighting.git

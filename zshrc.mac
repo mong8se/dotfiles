@@ -11,8 +11,8 @@ function growl {
 function pman { man -t $@ | open -f -a /Applications/Preview.app }
 function bman { gunzip < `man -w $@` | groff -Thtml -man | bcat }
 # start/stop mysql
-function mysql_start { cd /opt/local ; sudo -b /opt/local/lib/mysql5/bin/mysqld_safe ; cd - }
-function mysql_stop { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
+function start_mysql { cd /opt/local ; sudo -b /opt/local/lib/mysql5/bin/mysqld_safe ; cd - }
+function stop_mysql { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
 
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
 

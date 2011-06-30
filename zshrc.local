@@ -40,3 +40,5 @@ xsource "${HOME}/.zshrc.local.local"
 if [[ `uname` == Darwin ]] then
     xsource "${HOME}/.zshrc.mac"
 fi
+
+xsource "${HOME}/.dotfiles/Resources/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
