@@ -49,9 +49,6 @@
 [submodule "vim/bundle/vim-addon-mw-utils"]
 	path = vim/bundle/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "vim/bundle/xptemplate"]
-	path = vim/bundle/xptemplate
-	url = https://github.com/drmingdrmer/xptemplate-dist.git
 [submodule "vim/bundle/delimitMate"]
 	path = vim/bundle/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
@@ -66,4 +63,10 @@
 	url = https://github.com/tpope/vim-cucumber.git
 [submodule "Resources/zsh-syntax-highlighting"]
 	path = Resources/zsh-syntax-highlighting
-	url = git://github.com/nicoulaj/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim/bundle/vim-snipmate"]
+	path = vim/bundle/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule "vim/bundle/snipmate-snippets"]
+	path = vim/bundle/snipmate-snippets
+	url = https://github.com/scrooloose/snipmate-snippets.git

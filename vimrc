@@ -206,11 +206,6 @@ let g:CommandTAcceptSelectionSplitMap='<C-s>'
 let g:CommandTAcceptSelectionVSplitMap='<C-v>'
 let g:CommandTAcceptSelectionTabMap='<CR>'
 
-" xpt uses <Tab> as trigger key
-let g:xptemplate_key = '<Tab>'
-" xpt completes braces for you
-"let g:xptemplate_brace_complete = 1
-
 " delimitMate
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr = 1
