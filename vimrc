@@ -15,10 +15,12 @@
 " have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
 
-" For pathogen
+" Manage your 'runtimepath' with ease. In practical terms, pathogen.vim makes
+" it super easy to install plugins and runtime files in their own private
+" directories.
 filetype off
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
+source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents.  Use this to allow intelligent auto-indenting for each filetype,
