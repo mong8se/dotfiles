@@ -14,6 +14,8 @@ function bman { gunzip < `man -w $@` | groff -Thtml -man | bcat }
 function start_mysql { cd /opt/local ; sudo -b /opt/local/lib/mysql5/bin/mysqld_safe ; cd - }
 function stop_mysql { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
 
+function start_postgres { sudo -u postgres /opt/local/lib/postgresql83/bin/postgres -D /opt/local/var/db/postgresql83/defaultdb }
+
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
 
 #export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
