@@ -224,6 +224,11 @@ let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
+" pare down quickfixsigns
+"let g:quickfixsigns_classes = ['loc','vcsdiff']
+"let g:svndiff_autoupdate = 1 
+"let g:svndiff_one_sign_delete = 1 
+
 " Turn off auto rails prompt
 let g:rails_statusline = 0
 
