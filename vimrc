@@ -180,10 +180,6 @@ set t_Co=256
 " plugins
 "
 
-" Surround
-let g:surround_{char2nr('-')} = "<% \r -%>"
-let g:surround_{char2nr('=')} = "<%= \r %>"
-
 " NERDTree
 let NERDTreeShowBookmarks = 1
 let NERDChristmasTree = 1
