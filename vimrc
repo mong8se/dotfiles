@@ -167,7 +167,7 @@ set incsearch " show incremental search results
 " Set leader key to comma
 let mapleader = ","
 " allow cursor to go where there is nothing
-set virtualedit=all
+set virtualedit=block,insert
 " highlight trailing whitepsace with a ·
 set list listchars=tab:•·,trail:·,extends:›,precedes:‹
 " so complex operations dont display until finished
@@ -220,10 +220,15 @@ let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
-" pare down quickfixsigns
-"let g:quickfixsigns_classes = ['loc','vcsdiff']
-"let g:svndiff_autoupdate = 1 
-"let g:svndiff_one_sign_delete = 1 
+" SVN Diff
+let g:svndiff_autoupdate = 1
+let g:svndiff_one_sign_delete = 1
+noremap <F3> :call Svndiff("prev")<CR> 
+noremap <F4> :call Svndiff("next")<CR> 
+noremap <F5> :call Svndiff("clear")<CR> 
+hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green' 
+hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red' 
+hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow' 
 
 " Turn off auto rails prompt
 let g:rails_statusline = 0
