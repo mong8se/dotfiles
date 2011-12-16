@@ -16,6 +16,8 @@ function stop_mysql { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
 
 function start_postgres { sudo -u postgres /opt/local/lib/postgresql83/bin/postgres -D /opt/local/var/db/postgresql83/defaultdb }
 
+function start_mongodb { sudo /opt/local/bin/mongod -f /opt/local/etc/mongo/mongodb.conf }
+
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
 
 #export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
