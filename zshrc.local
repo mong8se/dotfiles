@@ -42,3 +42,4 @@ if [[ `uname` == Darwin ]] then
 fi
 
 xsource "${HOME}/.dotfiles/Resources/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+xsource "${HOME}/.dotfiles/Resources/f/f.sh"
