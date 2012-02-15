@@ -58,15 +58,6 @@
 [submodule "Resources/zsh-syntax-highlighting"]
 	path = Resources/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "vim/bundle/vim-snipmate"]
-	path = vim/bundle/vim-snipmate
-	url = https://github.com/garbas/vim-snipmate.git
-[submodule "vim/bundle/supertab"]
-	path = vim/bundle/supertab
-	url = https://github.com/ervandew/supertab.git
-[submodule "vim/bundle/snipmate-snippets"]
-	path = vim/bundle/snipmate-snippets
-	url = https://github.com/honza/snipmate-snippets.git
 [submodule "vim/bundle/vim-pathogen"]
 	path = vim/bundle/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
@@ -76,6 +67,9 @@
 [submodule "vim/bundle/vim-slim"]
 	path = vim/bundle/vim-slim
 	url = https://github.com/bbommarito/vim-slim.git
-[submodule "Resources/f"]
-	path = Resources/f
-	url = https://github.com/clvv/f.git
+[submodule "vim/bundle/neocomplcache"]
+	path = vim/bundle/neocomplcache
+	url = https://github.com/Shougo/neocomplcache.git
+[submodule "Resources/fasd"]
+	path = Resources/fasd
+	url = https://github.com/clvv/fasd.git

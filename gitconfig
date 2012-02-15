@@ -15,11 +15,11 @@
   changed = blue
   untracked = red
 [core]
-  excludesfile = /Users/smoazami/.gitignore
+	excludesfile = /Users/smoazami/.gitignore
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [user]
 	name = Steven Moazami
-  email = smoazami@converseon.com
+	email = smoazami@converseon.com
 [merge]
   tool = opendiff
 [push]
@@ -28,3 +28,9 @@
   # changes in a branch that were not ready to be pushed (or if you use -f to force a push
   # will overwrite remote branches when you only wanted to force-push the current branch)
   default = tracking
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

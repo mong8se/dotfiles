@@ -42,4 +42,7 @@ if [[ `uname` == Darwin ]] then
 fi
 
 xsource "${HOME}/.dotfiles/Resources/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-xsource "${HOME}/.dotfiles/Resources/f/f.sh"
+
+# fasd
+eval "$(fasd --init auto)"
+alias v='f -e vim' # quick opening files with vim
