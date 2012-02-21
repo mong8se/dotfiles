@@ -213,6 +213,17 @@ let delimitMate_expand_cr = 1
 "let g:Gitv_WrapLines = 1
 let g:Gitv_TruncateCommitSubjects = 1
 
+" relative line numbers
+function! g:ToggleNuMode() 
+if(&rnu == 1) 
+set nu 
+else 
+set rnu 
+endif 
+endfunc 
+
+nnoremap <leader>l :call g:ToggleNuMode()<cr>
+
 " SVN Diff
 let g:svndiff_autoupdate = 1
 let g:svndiff_one_sign_delete = 1
@@ -221,11 +232,10 @@ noremap <F4> :call Svndiff("next")<CR>
 noremap <F5> :call Svndiff("clear")<CR> 
 hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green' 
 hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red' 
-hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow' 
+hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
 
-" Turn off auto rails prompt
-let g:rails_statusline = 0
-
+" -----
+" neocomplcache vvv
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
@@ -260,21 +270,28 @@ inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-" inoremap <expr><CR> neocomplcache#smart_close_popup()."\<CR>"
+" inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y> neocomplcache#close_popup()
-inoremap <expr><C-e> neocomplcache#cancel_popup()
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " AutoComplPop like behavior.
 "let g:neocomplcache_enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -292,6 +309,12 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+" neocomplcache ^^^
+" -----
+
+" Turn off auto rails prompt
+let g:rails_statusline = 0
 
 " Prompts
 "set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{fugitive#statusline()}%=%-16(\ %l,%c-%v\ %)%P
