@@ -22,6 +22,7 @@
 	email = smoazami@converseon.com
 [merge]
   tool = opendiff
+	conflictstyle = diff3
 [push]
   # default to tracking so git will only try to push the current branch
   # otherwise git push will push all branches which can be problematic if you have
