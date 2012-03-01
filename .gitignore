@@ -1,3 +1,4 @@
 vimperator/info/default/history-*
 vim/.netrwhist
+vim/tmp/*
 *.local

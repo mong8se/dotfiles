@@ -232,6 +232,10 @@ colorscheme solarized
 
 " CtrlP
 let g:ctrlp_map = '<leader>t'
+map <leader>b :CtrlPBuffer<cr>
+let g:ctrlp_jump_to_buffer = 2
+let g:ctrlp_dotfiles = 0
+let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/ctrlp'
 let g:ctrlp_prompt_mappings = {
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     \ 'AcceptSelection("e")': ['<c-t>', '<MiddleMouse>'],
