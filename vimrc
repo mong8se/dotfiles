@@ -117,8 +117,14 @@ set number
 " set notimeout ttimeout ttimeoutlen=200
 set timeout timeoutlen=500
 
+" I can type :help on my own, thanks.
+noremap <F1> <Esc>
+
 " Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
+
+" Automatically leave paste mode when leaving insert mode
+au InsertLeave * set nopaste
 
 "------------------------------------------------------------
 " Indentation options {{{1
@@ -174,8 +180,35 @@ set list listchars=tab:•·,trail:·,extends:›,precedes:‹
 " so complex operations dont display until finished
 set lazyredraw
 
+" Use a .vim directory in the project root, .vim/tmp in your home dir, or
+" lastly current folder.
+set directory=./.vim,~/.vim/tmp,.,/tmp
+set backupdir=./.vim,~/.vim/tmp,.,/tmp
+
 " 256 colors
 set t_Co=256
+
+" Window movement
+function! WinMove(key) 
+  let t:curwin = winnr()
+  exec "wincmd ".a:key
+  if (t:curwin == winnr()) "we havent moved
+    if (match(a:key,'[jk]')) "were we going up/down
+      wincmd v
+    else 
+      wincmd s
+    endif
+    exec "wincmd ".a:key
+  endif
+endfunction
+
+map <leader>h              :call WinMove('h')<cr>
+map <leader>k              :call WinMove('k')<cr>
+map <leader>l              :call WinMove('l')<cr>
+map <leader>j              :call WinMove('j')<cr>
+
+map <leader>wc :wincmd q<cr>
+map <leader>wr <C-W>r
 
 "------------------------------------------------------------
 " plugins
@@ -197,13 +230,14 @@ map <leader>, :NERDTreeToggle <cr>
 set background=light
 colorscheme solarized
 
-" Command T
-let g:CommandTMatchWindowReverse=1
-let g:CommandTMaxHeight=16
-let g:CommandTAcceptSelectionMap='<C-CR>'
-let g:CommandTAcceptSelectionSplitMap='<C-s>'
-let g:CommandTAcceptSelectionVSplitMap='<C-v>'
-let g:CommandTAcceptSelectionTabMap='<CR>'
+" CtrlP
+let g:ctrlp_map = '<leader>t'
+let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ 'AcceptSelection("e")': ['<c-t>', '<MiddleMouse>'],
+    \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
+    \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
+    \ }
 
 " delimitMate
 let delimitMate_expand_space = 1
@@ -223,16 +257,6 @@ endif
 endfunc 
 
 nnoremap <leader>l :call g:ToggleNuMode()<cr>
-
-" SVN Diff
-let g:svndiff_autoupdate = 1
-let g:svndiff_one_sign_delete = 1
-noremap <F3> :call Svndiff("prev")<CR> 
-noremap <F4> :call Svndiff("next")<CR> 
-noremap <F5> :call Svndiff("clear")<CR> 
-hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green' 
-hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red' 
-hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
 
 " -----
 " neocomplcache vvv
