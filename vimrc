@@ -256,7 +256,7 @@ set rnu
 endif 
 endfunc 
 
-nnoremap <leader>l :call g:ToggleNuMode()<cr>
+nnoremap <leader>n :call g:ToggleNuMode()<cr>
 
 " -----
 " neocomplcache vvv
