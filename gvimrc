@@ -1,15 +1,12 @@
 " What a funny comment character
 " .gvimrc
-" v 0.4
+" v 0.5
 
 " Focus follows mouse
 " set mousefocus
 
 " Turns on the tab bar always
 set showtabline=2
-
-" solarized
-let g:solarized_termcolors=256
 
 " Number of horizontal lines on the screen
 set lines=60
@@ -37,15 +34,14 @@ set autoread
 " Make command enter make a new line without splitting
 inoremap <D-CR> <ESC>o
 
-" Map Command T to CommandT plugin
+" Map Command T to CtrlP in case of muscle memory
 if has("gui_macvim")
   macmenu &File.New\ Tab key=<nop>
-  map <D-t> :CommandT<CR>
+  map <D-t> :CtrlP<CR>
 endif
 
-" Command-/ to toggle comments
-map <D-/> <plug>NERDCommenterToggle<CR>
-
 " Command-][ to increase/decrease indentation
+nnoremap <D-]> >>
+nnoremap <D-[> <<
 vnoremap <D-]> >>
 vnoremap <D-[> <<

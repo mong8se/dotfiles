@@ -185,8 +185,8 @@ set lazyredraw
 set directory=./.vim,~/.vim/tmp,.,/tmp
 set backupdir=./.vim,~/.vim/tmp,.,/tmp
 
-" 256 colors
-set t_Co=256
+set foldlevelstart=99
+set foldmethod=syntax
 
 " Window movement
 function! WinMove(key) 
@@ -229,6 +229,17 @@ map <leader>, :NERDTreeToggle <cr>
 " Solarized
 set background=light
 colorscheme solarized
+set t_Co=16
+let g:solarized_termcolors=   16
+let g:solarized_termtrans =   0
+let g:solarized_degrade   =   0
+let g:solarized_bold      =   1
+let g:solarized_underline =   1
+let g:solarized_italic    =   1
+let g:solarized_contrast  =   "normal"
+let g:solarized_visibility=   "normal"
+let g:solarized_hitrail   =   0
+let g:solarized_menu      =   1
 
 " CtrlP
 let g:ctrlp_map = '<leader>t'
