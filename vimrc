@@ -1,74 +1,30 @@
-" UR: http://vim.wikia.com/wiki/Example_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
-
-"------------------------------------------------------------
-" Features {{{1
-"
-" These options and commands enable some very useful features in Vim, that
-" no user should have to live without.
-
-" Set 'nocompatible' to ward off unexpected things that your distro might
-" have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
 
-" Manage your 'runtimepath' with ease. In practical terms, pathogen.vim makes
-" it super easy to install plugins and runtime files in their own private
-" directories.
 filetype off
 source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-" Attempt to determine the type of a file based on its name and possibly its
-" contents.  Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
 filetype indent plugin on
 
-" Enable syntax highlighting
 syntax on
-
-
-"------------------------------------------------------------
-" Must have options {{{1
-"
-" These are highly recommended options.
-
-" One of the most important options to activate. Allows you to switch from an
-" unsaved buffer without saving it first. Also allows you to keep an undo
-" history for multiple files. Vim will complain if you try to quit without
-" saving, and swap files will keep you safe if your computer crashes.
 set hidden
 
-" Better command-line completion
 set wildmenu
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/* "
 
-" Show partial commands in the last line of the screen
 set showcmd
 
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
 set hlsearch
+set showmatch " show matching brackets
+set incsearch " show incremental search results
 
 " Modelines have historically been a source of security vulnerabilities.  As
 " such, it may be a good idea to disable them and use the securemodelines
 " script, <http://www.vim.org/scripts/script.php?script_id=1876>.
-" set nomodeline
+set nomodeline
 
 
-"------------------------------------------------------------
-" Usability options {{{1
-"
-" These are options that users frequently set in their .vimrc. Some of them
-" change Vim's behaviour in ways which deviate from the true Vi way, but
-" which are considered to add usability. Which, if any, of these options to
-" use is very much a personal preference, but they are harmless.
-
-" Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
 
@@ -113,8 +69,6 @@ set cmdheight=2
 " Display line numbers on the left
 set number
 
-" Quickly time out on keycodes, but never time out on mappings
-" set notimeout ttimeout ttimeoutlen=200
 set timeout timeoutlen=500
 
 " I can type :help on my own, thanks.
@@ -126,21 +80,11 @@ set pastetoggle=<F11>
 " Automatically leave paste mode when leaving insert mode
 au InsertLeave * set nopaste
 
-"------------------------------------------------------------
-" Indentation options {{{1
-"
-" Indentation settings according to personal preference.
-
 " Indentation settings for using 4 spaces instead of tabs.
 " Do not change 'tabstop' from its default value of 8 with this setup.
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
-"set shiftwidth=2
-"set tabstop=2
 
 " Set the teriminal title
 set title
@@ -165,29 +109,6 @@ nnoremap <C-L> :nohl<CR><C-L>
 nnoremap <Down> gj
 nnoremap <Up> gk
 
-"------------------------------------------------------------
-" smoazami
-"
-set cursorline " highlight current line
-set showmatch " show matching brackets
-set incsearch " show incremental search results
-" Set leader key to comma
-let mapleader = ","
-" allow cursor to go where there is nothing
-set virtualedit=block,insert
-" highlight trailing whitepsace with a ·
-set list listchars=tab:•·,trail:·,extends:›,precedes:‹
-" so complex operations dont display until finished
-set lazyredraw
-
-" Use a .vim directory in the project root, .vim/tmp in your home dir, or
-" lastly current folder.
-set directory=./.vim,~/.vim/tmp,.,/tmp
-set backupdir=./.vim,~/.vim/tmp,.,/tmp
-
-set foldlevelstart=99
-set foldmethod=syntax
-
 " Window movement
 function! WinMove(key) 
   let t:curwin = winnr()
@@ -209,6 +130,34 @@ map <leader>j              :call WinMove('j')<cr>
 
 map <leader>wc :wincmd q<cr>
 map <leader>wr <C-W>r
+
+" reselect the text that was just pasted so I can perform commands (like indentation) on it:
+nnoremap <leader>v V`]
+
+"------------------------------------------------------------
+" smoazami
+"
+set cursorline " highlight current line
+" Set leader key to comma
+let mapleader = ","
+" allow cursor to go where there is nothing
+set virtualedit=block,insert
+" highlight trailing whitepsace with a ·
+set list listchars=tab:•·,trail:·,extends:›,precedes:‹
+" so complex operations dont display until finished
+set lazyredraw
+set ttyfast
+
+" Use a .vim directory in the project root, .vim/tmp in your home dir, or
+" lastly current folder.
+set directory=./.vim,~/.vim/tmp,.,/tmp
+set backupdir=./.vim,~/.vim/tmp,.,/tmp
+set undodir=./.vim,~/.vim/tmp,.,/tmp
+
+set undofile
+
+set foldlevelstart=99
+set foldmethod=syntax
 
 "------------------------------------------------------------
 " plugins
