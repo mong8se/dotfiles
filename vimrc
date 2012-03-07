@@ -24,7 +24,6 @@ set incsearch " show incremental search results
 " script, <http://www.vim.org/scripts/script.php?script_id=1876>.
 set nomodeline
 
-
 set ignorecase
 set smartcase
 
@@ -213,11 +212,11 @@ let g:Gitv_TruncateCommitSubjects = 1
 
 " relative line numbers
 function! g:ToggleNuMode() 
-if(&rnu == 1) 
-set nu 
-else 
-set rnu 
-endif 
+    if(&rnu == 1) 
+        set nu 
+    else 
+        set rnu 
+    endif 
 endfunc 
 
 nnoremap <leader>n :call g:ToggleNuMode()<cr>
