@@ -1,12 +1,11 @@
 set nocompatible
 
 filetype off
-source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
-
+syntax on
 filetype indent plugin on
 
-syntax on
 set hidden
 
 set wildmenu
@@ -60,6 +59,7 @@ set visualbell
 
 " Enable use of the mouse for all modes
 " set mouse=a
+" set mousehide
 
 " Set the command window height to 2 lines, to avoid many cases of having to
 " "press <Enter> to continue"
@@ -96,6 +96,10 @@ set scrolloff=3
 "
 " Useful mappings
 
+" Set leader key
+map <Space> <Nop>
+let mapleader = "\<Space>"
+
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
 map Y y$
@@ -122,23 +126,32 @@ function! WinMove(key)
   endif
 endfunction
 
-map <leader>h              :call WinMove('h')<cr>
-map <leader>k              :call WinMove('k')<cr>
-map <leader>l              :call WinMove('l')<cr>
-map <leader>j              :call WinMove('j')<cr>
+map <leader>h :call WinMove('h')<cr>
+map <leader>k :call WinMove('k')<cr>
+map <leader>l :call WinMove('l')<cr>
+map <leader>j :call WinMove('j')<cr>
 
 map <leader>wc :wincmd q<cr>
 map <leader>wr <C-W>r
 
 " reselect the text that was just pasted so I can perform commands (like indentation) on it:
-nnoremap <leader>v V`]
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+" relative line numbers
+function! g:ToggleNuMode() 
+    if(&rnu == 1) 
+        set nu 
+    else 
+        set rnu 
+    endif 
+endfunc 
+
+nnoremap <leader>n :call g:ToggleNuMode()<cr>
 
 "------------------------------------------------------------
 " smoazami
 "
 set cursorline " highlight current line
-" Set leader key to comma
-let mapleader = ","
 " allow cursor to go where there is nothing
 set virtualedit=block,insert
 " highlight trailing whitepsace with a ·
@@ -149,9 +162,9 @@ set ttyfast
 
 " Use a .vim directory in the project root, .vim/tmp in your home dir, or
 " lastly current folder.
-set directory=./.vim,~/.vim/tmp,.,/tmp
-set backupdir=./.vim,~/.vim/tmp,.,/tmp
-set undodir=./.vim,~/.vim/tmp,.,/tmp
+set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
+set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
+set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
 
 set undofile
 
@@ -172,10 +185,10 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
-map <leader>, :NERDTreeToggle <cr>
+map <leader><Space> :NERDTreeToggle <cr>
 
 " Solarized
-set background=light
+set background=dark
 colorscheme solarized
 set t_Co=16
 let g:solarized_termcolors=   16
@@ -190,6 +203,7 @@ let g:solarized_hitrail   =   0
 let g:solarized_menu      =   1
 
 " CtrlP
+let g:ctrlp_extensions = ['tag']
 let g:ctrlp_map = '<leader>t'
 map <leader>b :CtrlPBuffer<cr>
 let g:ctrlp_jump_to_buffer = 2
@@ -210,16 +224,6 @@ let delimitMate_expand_cr = 1
 "let g:Gitv_WrapLines = 1
 let g:Gitv_TruncateCommitSubjects = 1
 
-" relative line numbers
-function! g:ToggleNuMode() 
-    if(&rnu == 1) 
-        set nu 
-    else 
-        set rnu 
-    endif 
-endfunc 
-
-nnoremap <leader>n :call g:ToggleNuMode()<cr>
 
 " -----
 " neocomplcache vvv
