@@ -73,3 +73,15 @@
 [submodule "vim/bundle/ctrlp"]
 	path = vim/bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule "Resources/oh-my-zsh"]
+	path = Resources/oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "vim/bundle/atea.vim"]
+	path = vim/bundle/atea.vim
+	url = https://github.com/pkamenarsky/atea.vim.git
+[submodule "vim/bundle/golden-ratio"]
+	path = vim/bundle/golden-ratio
+	url = https://github.com/roman/golden-ratio
+[submodule "Resources/git-flow-completion"]
+	path = Resources/git-flow-completion
+	url = https://github.com/bobthecow/git-flow-completion
