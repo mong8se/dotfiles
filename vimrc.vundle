@@ -1,0 +1,37 @@
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'mileszs/ack.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'scrooloose/nerdtree'
+Bundle 'vim-ruby/vim-ruby'
+
+Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-rake'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-cucumber'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-surround'
+
+Bundle 'csexton/rvm.vim'
+Bundle 'Raimondi/delimitMate'
+Bundle 'gregsexton/gitv'
+Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'Shougo/neocomplcache'
+Bundle 'roman/golden-ratio'
+Bundle 'nathanaelkane/vim-indent-guides'
+
+Bundle 'pkamenarsky/atea.vim'
+Bundle 'bbommarito/vim-slim'
+
+Bundle 'Lokaltog/vim-powerline'
+
+filetype plugin indent on     " required!

@@ -1,10 +1,6 @@
-set nocompatible
+source ~/.vimrc.vundle
 
-filetype off
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
 syntax on
-filetype indent plugin on
 
 set hidden
 
@@ -306,53 +302,6 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 " Turn off auto rails prompt
 let g:rails_statusline = 0
-
-" Prompts
-"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{fugitive#statusline()}%=%-16(\ %l,%c-%v\ %)%P
-"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?Rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
-"set statusline+=%{Rvm#statusline()}
-
-" Some Prompt thing from reddit
-hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
-hi Modified guibg=orange guifg=black ctermbg=lightred ctermfg=black
-
-function! MyStatusLine(mode)
-    let statusline=""
-    if a:mode == 'Enter'
-        let statusline.="%#StatColor#"
-    endif
-    let statusline.="\(%n\)\ %f\ "
-    if a:mode == 'Enter'
-        let statusline.="%*"
-    endif
-    let statusline.="%#Modified#%m"
-    if a:mode == 'Leave'
-        let statusline.="%*%r"
-    elseif a:mode == 'Enter'
-        let statusline.="%r%*"
-    endif
-    let statusline .= "\ (%l/%L,\ %c)\ %P%=%h%w\ %y\ %{fugitive#statusline()} [%{&encoding}:%{&fileformat}]\ \ "
-    return statusline
-endfunction
-
-au WinEnter * setlocal statusline=%!MyStatusLine('Enter')
-au WinLeave * setlocal statusline=%!MyStatusLine('Leave')
-set statusline=%!MyStatusLine('Enter')
-
-function! InsertStatuslineColor(mode)
-    if a:mode == 'i'
-        hi StatColor guibg=orange ctermbg=lightred
-    elseif a:mode == 'r'
-        hi StatColor guibg=#e454ba ctermbg=magenta
-    elseif a:mode == 'v'
-        hi StatColor guibg=#e454ba ctermbg=magenta
-    else
-        hi StatColor guibg=red ctermbg=red
-    endif
-endfunction 
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi StatColor guibg=#95e454 guifg=black ctermbg=lightgreen ctermfg=black
 
 "------------------------------------------------------------
 " Source a local configuration file if available.
