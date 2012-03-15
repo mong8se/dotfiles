@@ -3,6 +3,7 @@ source ~/.vimrc.vundle
 syntax on
 
 set hidden
+set encoding=utf-8
 
 set wildmenu
 set wildmode=list:longest,list:full
@@ -64,7 +65,7 @@ set cmdheight=2
 " Display line numbers on the left
 set number
 
-set timeout timeoutlen=500
+set timeoutlen=333
 
 " I can type :help on my own, thanks.
 noremap <F1> <Esc>
@@ -301,7 +302,10 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " -----
 
 " Turn off auto rails prompt
-let g:rails_statusline = 0
+" let g:rails_statusline = 0
+
+" Powerline
+let g:Powerline_symbols = 'unicode'
 
 "------------------------------------------------------------
 " Source a local configuration file if available.
