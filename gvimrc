@@ -15,7 +15,7 @@ set lines=60
 set guioptions-=T
 
 " Sets the font and size
-set guifont=Inconsolata:h14
+set guifont=Inconsolata-dz\ for\ Powerline:h12
 
 " Sets the percent transparency
 set transparency=5
@@ -24,7 +24,7 @@ augroup automongoose
 " Save files automatically when focus is lost
 " Silent means don't bitch about unamed or readonline files
 " Those silently fail
-    autocmd BufLeave,FocusLost * if mode()[0] =~ 'i\|R' | call feedkeys("\<Esc>") | en
+    autocmd BufLeave,FocusLost * if mode()[0] =~ 'i\|R' | call feedkeys("\<Esc>") | endif
     autocmd BufLeave,FocusLost * silent! wall
 augroup END
 
