@@ -161,9 +161,11 @@ set ttyfast
 " lastly current folder.
 set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
 set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
-set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
 
-set undofile
+if has('persistent_undo')
+    set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
+    set undofile
+endif
 
 set foldlevelstart=99
 set foldmethod=syntax
