@@ -1,6 +1,22 @@
 require 'rake'
 require 'erb'
 
+desc "init git subodules"
+task :init_submodules do
+    `git submodule update --init`
+    `cd Resources/fasd; sudo make install`
+end
+
+desc "update git submodules"
+task :update_submodules do
+    `git submodule foreach 'git checkout master && git pull'`
+end
+
+desc "install vim bundles"
+task :vundle do
+    `vim +BundleInstall +qall`
+end
+
 desc "install the dot files into user's home directory"
 task :install do
   is_mac = RUBY_PLATFORM.downcase.include?("darwin")
