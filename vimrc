@@ -65,7 +65,7 @@ set cmdheight=2
 " Display line numbers on the left
 set number
 
-set timeoutlen=333
+set timeoutlen=500
 
 " I can type :help on my own, thanks.
 noremap <F1> <Esc>
@@ -305,7 +305,7 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " let g:rails_statusline = 0
 
 " Powerline
-let g:Powerline_symbols = 'unicode'
+let g:Powerline_symbols = 'fancy'
 
 "------------------------------------------------------------
 " Source a local configuration file if available.
