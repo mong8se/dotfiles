@@ -49,15 +49,6 @@ set confirm
 " Use visual bell instead of beeping when doing something wrong
 set visualbell
 
-" And reset the terminal code for the visual bell.  If visualbell is set, and
-" this line is also included, vim will neither flash nor beep.  If visualbell
-" is unset, this does nothing.
-"set t_vb=
-
-" Enable use of the mouse for all modes
-" set mouse=a
-" set mousehide
-
 " Set the command window height to 2 lines, to avoid many cases of having to
 " "press <Enter> to continue"
 set cmdheight=2
@@ -66,9 +57,6 @@ set cmdheight=2
 set number
 
 set timeoutlen=500
-
-" I can type :help on my own, thanks.
-noremap <F1> <Esc>
 
 " Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
@@ -96,6 +84,9 @@ set scrolloff=3
 " Set leader key
 map <Space> <Nop>
 let mapleader = "\<Space>"
+
+" I can type :help on my own, thanks.
+noremap <F1> <Esc>
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
@@ -135,13 +126,13 @@ map <leader>wr <C-W>r
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " relative line numbers
-function! g:ToggleNuMode() 
-    if(&rnu == 1) 
-        set nu 
-    else 
-        set rnu 
-    endif 
-endfunc 
+function! g:ToggleNuMode()
+    if(&rnu == 1)
+        set nu
+    else
+        set rnu
+    endif
+endfunc
 
 nnoremap <leader>n :call g:ToggleNuMode()<cr>
 
@@ -223,7 +214,6 @@ let delimitMate_expand_cr = 1
 "let g:Gitv_WrapLines = 1
 let g:Gitv_TruncateCommitSubjects = 1
 
-
 " -----
 " neocomplcache vvv
 " Disable AutoComplPop.
@@ -268,8 +258,8 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
@@ -306,7 +296,7 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " let g:rails_statusline = 0
 
 " Powerline
-let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'unicode'
 
 "------------------------------------------------------------
 " Source a local configuration file if available.
