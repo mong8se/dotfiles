@@ -20,5 +20,9 @@ function start_mongodb { sudo /opt/local/bin/mongod -f /opt/local/etc/mongo/mong
 
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
 
-#export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
-export EDITOR='mvim -f'
+if [[ $TERM_PROGRAM == iTerm.app ]];then
+    export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+else
+    export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
+fi
+
