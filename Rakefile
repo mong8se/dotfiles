@@ -14,7 +14,8 @@ end
 
 desc "install vim bundles"
 task :vundle do
-    `vim +BundleInstall +qall`
+    puts "Run this command:"
+    puts "vim -u ~/.vimrc.vundle +BundleInstall +q"
 end
 
 desc "install the dot files into user's home directory"
