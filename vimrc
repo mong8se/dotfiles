@@ -278,7 +278,10 @@ let g:Powerline_symbols = 'unicode'
 
 "------------------------------------------------------------
 " Source a local configuration file if available.
-"
-if filereadable(expand("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
+" For loops only work in 7.x
+for rc_extension in ["local", "mac"]
+    let rc_file = "~/.vimrc." . rc_extension
+    if filereadable(expand(rc_file))
+        execute 'source' rc_file
+    endif
+endfor

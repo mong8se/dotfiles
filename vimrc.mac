@@ -1,0 +1,2 @@
+" Use OSX Clipboard
+set clipboard=unnamed
