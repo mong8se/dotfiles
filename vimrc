@@ -177,7 +177,8 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
-map <leader><Space> :NERDTreeToggle <cr>
+map <silent> <leader><Space> :NERDTreeToggle <cr>
+map <silent> <leader>f :NERDTreeFind <cr>
 
 " Solarized
 set background=dark
