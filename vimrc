@@ -59,6 +59,8 @@ set list listchars=tab:•·,trail:·,extends:›,precedes:‹
 set lazyredraw
 set ttyfast
 
+set splitright " new vertical splits are to the right
+
 " Use a .vim directory in the project root, .vim/tmp in your home dir, or
 " lastly current folder.
 set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
