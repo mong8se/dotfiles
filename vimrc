@@ -189,7 +189,7 @@ let g:solarized_menu      =   1
 " CtrlP
 let g:ctrlp_extensions = ['tag']
 let g:ctrlp_map = '<leader>t'
-map <leader>b :CtrlPBuffer<cr>
+map <silent> <leader>b :CtrlPBuffer<cr>
 let g:ctrlp_jump_to_buffer = 2
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/ctrlp'
