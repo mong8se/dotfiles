@@ -149,6 +149,10 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+" add blank line without entering insert mode
+nnoremap <silent> <CR> :put=''<CR>
+nnoremap <silent> <S-CR> :.-1put=''<CR>
+
 "------------------------------------------------------------
 " PLUGINS
 
