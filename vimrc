@@ -16,9 +16,7 @@ set hlsearch
 set showmatch " show matching brackets
 set incsearch " show incremental search results
 
-" Modelines have historically been a source of security vulnerabilities.  As
-" such, it may be a good idea to disable them and use the securemodelines
-" script, <http://www.vim.org/scripts/script.php?script_id=1876>.
+" Modelines have historically been a source of security vulnerabilities.
 set nomodeline
 
 set ignorecase
@@ -27,61 +25,36 @@ set smartcase
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
 
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
-set autoindent
-
 " Stop certain movements from always going to the first character of a line.
 " While this behaviour deviates from that of Vi, it does what most users
 " coming from other editors would expect.
 set nostartofline
 
-" Display the cursor position on the last line of the screen or in the status
-" line of a window
 set ruler
-
-" Always display the status line, even if only one window is displayed
 set laststatus=2
-
-" Instead of failing a command because of unsaved changes, instead raise a
-" dialogue asking if you wish to save changed files.
-set confirm
-
-" Use visual bell instead of beeping when doing something wrong
-set visualbell
-
-" Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
 set cmdheight=2
-
-" Display line numbers on the left
+set confirm
+set visualbell
 set number
-
 set timeoutlen=500
 
-" Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
-
-" Automatically leave paste mode when leaving insert mode
-au InsertLeave * set nopaste
+au InsertLeave * set nopaste " Automatically leave paste mode when leaving insert mode
 
 " Indentation settings for using 4 spaces instead of tabs.
 " Do not change 'tabstop' from its default value of 8 with this setup.
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set autoindent
 
-" Set the teriminal title
 set title
-
-" Maintain more context around the cursor
 set scrolloff=3
-
 set cursorline " highlight current line
-" allow cursor to go where there is nothing
-set virtualedit=block,insert
+set virtualedit=block,insert " allow cursor to go where there is nothing
 " highlight trailing whitepsace with a ·
 set list listchars=tab:•·,trail:·,extends:›,precedes:‹
+
 " so complex operations dont display until finished
 set lazyredraw
 set ttyfast
@@ -167,6 +140,14 @@ function! g:ToggleNuMode()
 endfunc
 
 nnoremap <silent> <leader>n :call g:ToggleNuMode()<cr>
+
+" Always keep current search result centered
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 "------------------------------------------------------------
 " PLUGINS
