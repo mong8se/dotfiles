@@ -11,6 +11,8 @@ set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/* "
 
 set showcmd
+set cmdheight=2
+set laststatus=2
 
 set hlsearch
 set showmatch " show matching brackets
@@ -31,8 +33,6 @@ set backspace=indent,eol,start
 set nostartofline
 
 set ruler
-set laststatus=2
-set cmdheight=2
 set confirm
 set visualbell
 set number
