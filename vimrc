@@ -1,3 +1,4 @@
+" Start with base setup with vundle
 source ~/.vimrc.vundle
 
 syntax on
@@ -76,13 +77,44 @@ set title
 " Maintain more context around the cursor
 set scrolloff=3
 
+set cursorline " highlight current line
+" allow cursor to go where there is nothing
+set virtualedit=block,insert
+" highlight trailing whitepsace with a ·
+set list listchars=tab:•·,trail:·,extends:›,precedes:‹
+" so complex operations dont display until finished
+set lazyredraw
+set ttyfast
+
+" Use a .vim directory in the project root, .vim/tmp in your home dir, or
+" lastly current folder.
+set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
+set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
+
+if has('persistent_undo')
+    set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
+    set undofile
+endif
+
+set foldlevelstart=99
+set foldmethod=syntax
+
+runtime macros/matchit.vim
+
+if version >= 703 && has('clipboard')
+    if has('x11')
+        " Default yank and paste go to system clipboard
+        set clipboard=unnamedplus
+    else
+        set clipboard=unnamed
+    endif
+endif
+
 "------------------------------------------------------------
-" Mappings {{{1
-"
-" Useful mappings
+" MAPPINGS
 
 " Set leader key
-map <Space> <Nop>
+noremap <Space> <Nop>
 let mapleader = "\<Space>"
 
 " I can type :help on my own, thanks.
@@ -94,7 +126,7 @@ map Y y$
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
-nnoremap <C-L> :nohl<CR><C-L>
+nnoremap <silent> <C-L> :nohl<CR><C-L>
 
 " Arrow keys move up and down visible lines, not physical lines
 nnoremap <Down> gj
@@ -134,38 +166,10 @@ function! g:ToggleNuMode()
     endif
 endfunc
 
-nnoremap <leader>n :call g:ToggleNuMode()<cr>
+nnoremap <silent> <leader>n :call g:ToggleNuMode()<cr>
 
 "------------------------------------------------------------
-" smoazami
-"
-set cursorline " highlight current line
-" allow cursor to go where there is nothing
-set virtualedit=block,insert
-" highlight trailing whitepsace with a ·
-set list listchars=tab:•·,trail:·,extends:›,precedes:‹
-" so complex operations dont display until finished
-set lazyredraw
-set ttyfast
-
-" Use a .vim directory in the project root, .vim/tmp in your home dir, or
-" lastly current folder.
-set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
-set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
-
-if has('persistent_undo')
-    set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
-    set undofile
-endif
-
-set foldlevelstart=99
-set foldmethod=syntax
-
-runtime macros/matchit.vim
-
-"------------------------------------------------------------
-" plugins
-"
+" PLUGINS
 
 " NERDTree
 let NERDTreeShowBookmarks = 1
@@ -278,6 +282,8 @@ let g:rubycomplete_rails = 1
 let g:Powerline_symbols = 'unicode'
 
 "------------------------------------------------------------
+" LOCALS
+
 " Source a local configuration file if available.
 " For loops only work in 7.x
 for rc_extension in ["local", "mac"]
