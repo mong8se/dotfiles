@@ -76,8 +76,8 @@ set foldmethod=syntax
 
 runtime macros/matchit.vim
 
-if version >= 703 && has('clipboard')
-    if has('x11')
+if has('clipboard')
+    if has('x11') && version >= 703
         " Default yank and paste go to system clipboard
         set clipboard=unnamedplus
     else
