@@ -131,6 +131,9 @@ map <leader>wr <C-W>r
 
 " reselect the text that was just pasted so I can perform commands (like indentation) on it:
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
 
 " relative line numbers
 function! g:ToggleNuMode()
