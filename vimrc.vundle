@@ -30,6 +30,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Shougo/neocomplcache'
 
 Bundle 'scrooloose/syntastic'
+Bundle 'chrisbra/changesPlugin'
 
 Bundle 'pkamenarsky/atea.vim'
 Bundle 'bbommarito/vim-slim'

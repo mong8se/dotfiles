@@ -158,6 +158,8 @@ nnoremap g# g#zz
 nnoremap <silent> <CR> :put _<CR>
 nnoremap <silent> <S-CR> :-1put _<CR>
 
+nnoremap <silent> <leader>sb :set scrollbind!<CR>
+
 "------------------------------------------------------------
 " PLUGINS
 
@@ -203,6 +205,12 @@ let delimitMate_expand_cr = 1
 
 " gitv
 let g:Gitv_WrapLines = 1
+
+" changesPlugin
+let g:changes_vcs_check=1
+let g:changes_verbose=0
+" let g:changes_autocmd=1
+nnoremap <silent> <leader>c :ToggleChangeView<CR>
 
 " -----
 " neocomplcache vvv
