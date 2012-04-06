@@ -29,6 +29,8 @@ Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Shougo/neocomplcache'
 
+Bundle 'scrooloose/syntastic'
+
 Bundle 'pkamenarsky/atea.vim'
 Bundle 'bbommarito/vim-slim'
 
