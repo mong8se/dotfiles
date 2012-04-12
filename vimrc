@@ -93,7 +93,8 @@ noremap <Space> <Nop>
 let mapleader = "\<Space>"
 
 " I can type :help on my own, thanks.
-noremap <F1> <Esc>
+noremap <F1> <Nop>
+noremap! <F1> <Esc>
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
@@ -210,6 +211,7 @@ let g:Gitv_WrapLines = 1
 let g:changes_vcs_check=1
 let g:changes_verbose=0
 " let g:changes_autocmd=1
+
 nnoremap <silent> <leader>c :ToggleChangeView<CR>
 
 " -----
