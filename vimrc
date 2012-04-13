@@ -158,6 +158,7 @@ nnoremap g# g#zz
 " add blank line without entering insert mode
 nnoremap <silent> <CR> :put _<CR>
 nnoremap <silent> <S-CR> :-1put _<CR>
+au FileType qf nnoremap <buffer> <CR> <CR>
 
 nnoremap <silent> <leader>sb :set scrollbind!<CR>
 
