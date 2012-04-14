@@ -144,7 +144,6 @@ function! g:ToggleNuMode()
         set rnu
     endif
 endfunc
-
 nnoremap <silent> <leader>n :call g:ToggleNuMode()<cr>
 
 " Always keep current search result centered
@@ -156,9 +155,15 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 
 " add blank line without entering insert mode
-nnoremap <silent> <CR> :put _<CR>
-nnoremap <silent> <S-CR> :-1put _<CR>
-au FileType qf nnoremap <buffer> <CR> <CR>
+function! g:ActivateCR(range)
+    if empty(&buftype)
+        execute a:range . "put _"
+    else
+        execute "normal! \<CR>"
+    end
+endfunction
+nnoremap <silent> <CR> :call g:ActivateCR('.')<CR>
+nnoremap <silent> <S-CR> :call g:ActivateCR('-1')<CR>
 
 nnoremap <silent> <leader>sb :set scrollbind!<CR>
 
