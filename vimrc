@@ -132,9 +132,14 @@ map <leader>wr <C-W>r
 
 " reselect the text that was just pasted so I can perform commands (like indentation) on it:
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " relative line numbers
 function! g:ToggleNuMode()
@@ -166,6 +171,12 @@ nnoremap <silent> <CR> :call g:ActivateCR('.')<CR>
 nnoremap <silent> <S-CR> :call g:ActivateCR('-1')<CR>
 
 nnoremap <silent> <leader>sb :set scrollbind!<CR>
+
+" always search with magic mode
+nnoremap / /\v
+
+" Original mapping
+nnoremap Q gq
 
 "------------------------------------------------------------
 " PLUGINS
