@@ -1,3 +1,6 @@
+set nocompatible "needed when we bootstrap with this file:
+" vim -u ~/.vimrc.vundle +BundleInstall +q
+
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
