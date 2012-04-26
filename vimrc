@@ -1,4 +1,4 @@
-" Start with base setup with vundle
+" Base config with vundle
 source ~/.vimrc.vundle
 
 syntax on
@@ -88,7 +88,7 @@ endif
 "------------------------------------------------------------
 " MAPPINGS
 
-" Set leader key
+" Set <Leader> key
 noremap <Space> <Nop>
 let mapleader = "\<Space>"
 
@@ -98,7 +98,7 @@ noremap! <F1> <Esc>
 
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
-map Y y$
+nnoremap Y y$
 
 " Map U to redo
 nnoremap U <C-r>
@@ -110,6 +110,12 @@ nnoremap <silent> <C-L> :nohl<CR><C-L>
 " Arrow keys move up and down visible lines, not physical lines
 nnoremap <Down> gj
 nnoremap <Up> gk
+
+" always search with magic mode
+nnoremap / /\v
+
+" Original mapping
+nnoremap Q gq
 
 " Window movement
 function! WinMove(key) 
@@ -125,13 +131,13 @@ function! WinMove(key)
   endif
 endfunction
 
-map <leader>h :call WinMove('h')<cr>
-map <leader>k :call WinMove('k')<cr>
-map <leader>l :call WinMove('l')<cr>
-map <leader>j :call WinMove('j')<cr>
+nnoremap <silent> <Leader>h :call WinMove('h')<cr>
+nnoremap <silent> <Leader>k :call WinMove('k')<cr>
+nnoremap <silent> <Leader>l :call WinMove('l')<cr>
+nnoremap <silent> <Leader>j :call WinMove('j')<cr>
 
-map <leader>wc :wincmd q<cr>
-map <leader>wr <C-W>r
+nnoremap <silent> <Leader>wc :wincmd q<cr>
+nnoremap <silent> <Leader>wr <C-W>r
 
 " reselect the text that was just pasted so I can perform commands (like indentation) on it:
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -152,7 +158,7 @@ function! g:ToggleRelativeNumber()
     setlocal relativenumber
   endif
 endfunction
-nnoremap <silent> <leader>n :call g:ToggleRelativeNumber()<CR>
+nnoremap <silent> <Leader>n :call g:ToggleRelativeNumber()<CR>
 
 " Always keep current search result centered
 nnoremap n nzz
@@ -185,14 +191,12 @@ function! g:ScrollBindAllWindows()
   exec l:starting_window . 'wincmd w'
   exec l:starting_line
 endfunction
+nnoremap <silent> <Leader>sb :call g:ScrollBindAllWindows()<CR>
 
-nnoremap <silent> <leader>sb :call g:ScrollBindAllWindows()<CR>
-
-" always search with magic mode
-nnoremap / /\v
-
-" Original mapping
-nnoremap Q gq
+if has('spell')
+  set spelllang=en_us
+  nnoremap <silent> <Leader>sc :setlocal spell!<CR>
+endif
 
 "------------------------------------------------------------
 " PLUGINS
@@ -207,8 +211,8 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
-map <silent> <leader><Space> :NERDTreeToggle <cr>
-map <silent> <leader>f :NERDTreeFind <cr>
+nnoremap <silent> <Leader><Space> :NERDTreeToggle <cr>
+nnoremap <silent> <Leader>f :NERDTreeFind <cr>
 
 " Solarized
 set background=dark
@@ -227,8 +231,8 @@ let g:solarized_menu      =   1
 
 " CtrlP
 let g:ctrlp_extensions = ['tag']
-let g:ctrlp_map = '<leader>t'
-map <silent> <leader>b :CtrlPBuffer<cr>
+let g:ctrlp_map = '<Leader>t'
+nnoremap <silent> <Leader>b :CtrlPBuffer<cr>
 let g:ctrlp_jump_to_buffer = 2
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/ctrlp'
@@ -245,7 +249,7 @@ let g:changes_vcs_check=1
 let g:changes_verbose=0
 " let g:changes_autocmd=1
 
-nnoremap <silent> <leader>c :ToggleChangeView<CR>
+nnoremap <silent> <Leader>c :ToggleChangeView<CR>
 
 " -----
 " neocomplcache vvv
