@@ -100,6 +100,9 @@ noremap! <F1> <Esc>
 " which is the default
 map Y y$
 
+" Map U to redo
+nnoremap U <C-r>
+
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <silent> <C-L> :nohl<CR><C-L>
