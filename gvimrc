@@ -15,7 +15,7 @@ set lines=60
 set guioptions-=T
 
 " Sets the font and size
-set guifont=Inconsolata-dz\ for\ Powerline:h12
+set guifont=Menlo:h12
 
 " Sets the percent transparency
 set transparency=5
