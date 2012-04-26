@@ -145,14 +145,14 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " relative line numbers
-function! g:ToggleNuMode()
-    if(&rnu == 1)
-        set nu
-    else
-        set rnu
-    endif
-endfunc
-nnoremap <silent> <leader>n :call g:ToggleNuMode()<cr>
+function! g:ToggleRelativeNumber()
+  if &relativenumber
+    setlocal number
+  else
+    setlocal relativenumber
+  endif
+endfunction
+nnoremap <silent> <leader>n :call g:ToggleRelativeNumber()<CR>
 
 " Always keep current search result centered
 nnoremap n nzz
