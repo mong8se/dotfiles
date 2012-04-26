@@ -170,7 +170,20 @@ endfunction
 nnoremap <silent> <CR> :call g:ActivateCR('.')<CR>
 nnoremap <silent> <S-CR> :call g:ActivateCR('-1')<CR>
 
-nnoremap <silent> <leader>sb :set scrollbind!<CR>
+function! g:ScrollBindAllWindows()
+  let l:starting_window = winnr()
+  let l:starting_line = line('.')
+  if &scrollbind
+    windo setlocal noscrollbind
+  else
+    windo normal gg
+    windo setlocal scrollbind
+  endif
+  exec l:starting_window . 'wincmd w'
+  exec l:starting_line
+endfunction
+
+nnoremap <silent> <leader>sb :call g:ScrollBindAllWindows()<CR>
 
 " always search with magic mode
 nnoremap / /\v
