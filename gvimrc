@@ -14,11 +14,13 @@ set lines=60
 " GUI Option to remove the Toolbar (T)
 set guioptions-=T
 
-" Sets the font and size
-set guifont=Menlo:h12
+if has('macunix')
+  " Sets the font and size
+  set guifont=Menlo:h12
 
-" Sets the percent transparency
-set transparency=5
+  " Sets the percent transparency
+  set transparency=5
+endif
 
 augroup automongoose
 " Save files automatically when focus is lost
