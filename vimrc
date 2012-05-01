@@ -1,5 +1,5 @@
 " Base config with vundle
-source ~/.vimrc.vundle
+source $MYVIMRC.vundle
 
 syntax on
 
