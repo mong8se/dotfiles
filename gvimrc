@@ -20,6 +20,8 @@ if has('macunix')
 
   " Sets the percent transparency
   set transparency=5
+elseif has('unix')
+  set guifont=Inconsolata\ Medium\ 12
 elseif has('win32')
   set guifont=Consolas:h10:cANSI
 endif
