@@ -1,24 +1,41 @@
 (blink-cursor-mode t)
 (show-paren-mode t)
 (column-number-mode t)
+
+;; let sane usage of copy/paste/undo, etc
 (cua-mode t)
+
+;; no tool bar
 (tool-bar-mode -1)
+
+;; word wrap for text files
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
+;; ido mode everywhere, fuzzy matching
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; set font
 (set-frame-font "Courier New-20")
+
+;; Add macports executables to path
 (add-to-list 'exec-path "/opt/local/bin")
 
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs.d/autosaves/" t)
+
+;; add a bunch of package sources
 (require 'package)
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
 (custom-set-variables
+ ;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
+ '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+ '(backup-directory-alist '((".*" . "~/.emacs.d/backups/")))
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
