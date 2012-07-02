@@ -16,8 +16,14 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
-;; set font
-(set-frame-font "Courier New-20")
+(cond
+  ((eq system-type 'darwin)
+    ;; set font
+    (set-frame-font "Courier New-20"))
+  ((eq system-type 'gnu/linux)
+    ;; set font
+    (set-frame-font "Nimbus Mono L-20"))
+)
 
 ;; Add macports executables to path
 (add-to-list 'exec-path "/opt/local/bin")
