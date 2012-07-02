@@ -23,6 +23,9 @@
   ((eq system-type 'gnu/linux)
     ;; set font
     (set-frame-font "Nimbus Mono L-20"))
+  ((eq system-type 'windows-nt)
+    ;; set font
+    (set-frame-font "Courier New-20"))
 )
 
 ;; Add macports executables to path
