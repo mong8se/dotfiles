@@ -27,7 +27,7 @@
     (set-frame-font "Nimbus Mono L-20"))
   ((eq system-type 'windows-nt)
     ;; set font
-    (set-frame-font "Courier New-20"))
+    (set-frame-font "Courier New-14"))
 )
 
 ;; create the autosave dir if necessary, since emacs won't.
