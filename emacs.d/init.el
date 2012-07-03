@@ -19,7 +19,9 @@
 (cond
   ((eq system-type 'darwin)
     ;; set font
-    (set-frame-font "Courier New-20"))
+    (set-frame-font "Courier New-20")
+    ;; Add macports executables to path
+    (add-to-list 'exec-path "/opt/local/bin"))
   ((eq system-type 'gnu/linux)
     ;; set font
     (set-frame-font "Nimbus Mono L-20"))
@@ -27,9 +29,6 @@
     ;; set font
     (set-frame-font "Courier New-20"))
 )
-
-;; Add macports executables to path
-(add-to-list 'exec-path "/opt/local/bin")
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
