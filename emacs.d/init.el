@@ -21,7 +21,8 @@
     ;; set font
     (set-frame-font "Courier New-20")
     ;; Add macports executables to path
-    (add-to-list 'exec-path "/opt/local/bin"))
+    (add-to-list 'exec-path "/opt/local/bin")
+    (setq mac-command-modifier 'ctrl))
   ((eq system-type 'gnu/linux)
     ;; set font
     (set-frame-font "Nimbus Mono L-20"))
