@@ -34,8 +34,7 @@ Bundle 'Shougo/neocomplcache'
 Bundle 'scrooloose/syntastic'
 Bundle 'chrisbra/changesPlugin'
 
-Bundle 'pkamenarsky/atea.vim'
-Bundle 'bbommarito/vim-slim'
+Bundle 'slim-template/vim-slim'
 
 Bundle 'Lokaltog/vim-powerline'
 
