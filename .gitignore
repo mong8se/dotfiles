@@ -3,3 +3,4 @@ vim/bundle/*
 vim/.netrwhist
 vim/tmp/*
 *.local
+emacs.d/autosaves/*
