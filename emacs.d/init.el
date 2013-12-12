@@ -21,13 +21,14 @@
     ;; set font
     (set-frame-font "Courier New-20")
     ;; Add macports executables to path
-    (add-to-list 'exec-path "/opt/local/bin"))
+    (add-to-list 'exec-path "/opt/local/bin")
+    (setq mac-command-modifier 'ctrl))
   ((eq system-type 'gnu/linux)
     ;; set font
     (set-frame-font "Nimbus Mono L-20"))
   ((eq system-type 'windows-nt)
     ;; set font
-    (set-frame-font "Courier New-20"))
+    (set-frame-font "Courier New-14"))
 )
 
 ;; create the autosave dir if necessary, since emacs won't.

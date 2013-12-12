@@ -29,13 +29,13 @@ Bundle 'tpope/vim-surround'
 Bundle 'Raimondi/delimitMate'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'Shougo/neocomplcache'
+
+Bundle 'Valloric/YouCompleteMe'
 
 Bundle 'scrooloose/syntastic'
-Bundle 'chrisbra/changesPlugin'
+Bundle 'airblade/vim-gitgutter'
 
-Bundle 'pkamenarsky/atea.vim'
-Bundle 'bbommarito/vim-slim'
+Bundle 'slim-template/vim-slim'
 
 Bundle 'Lokaltog/vim-powerline'
 

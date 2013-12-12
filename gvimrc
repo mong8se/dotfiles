@@ -16,7 +16,7 @@ set guioptions-=T
 
 if has('macunix')
   " Sets the font and size
-  set guifont=Menlo:h12
+  set guifont=Source\ Code\ Pro:h13
 
   " Sets the percent transparency
   set transparency=5
