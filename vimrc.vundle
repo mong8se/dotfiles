@@ -29,10 +29,11 @@ Bundle 'tpope/vim-surround'
 Bundle 'Raimondi/delimitMate'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'Shougo/neocomplcache'
+
+Bundle 'Valloric/YouCompleteMe'
 
 Bundle 'scrooloose/syntastic'
-Bundle 'chrisbra/changesPlugin'
+Bundle 'airblade/vim-gitgutter'
 
 Bundle 'slim-template/vim-slim'
 
