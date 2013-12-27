@@ -56,7 +56,7 @@ alias cd..="cd .."
 if [[ `uname` == Darwin ]] then
     xsource "${HOME}/.zshrc.mac"
 fi
-xsource "${HOME}/.zshrc.`hostname`"
+xsource "${HOME}/.zshrc.`hostname -s`"
 
 xsource "${HOME}/.dotfiles/Resources/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "${HOME}/.dotfiles/Resources/git-flow-completion/git-flow-completion.zsh"
 
