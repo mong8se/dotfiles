@@ -63,3 +63,6 @@ xsource "${HOME}/.dotfiles/Resources/zsh-syntax-highlighting/zsh-syntax-highligh
 # fasd
 eval "$(fasd --init auto)"
 alias v='f -e vim' # quick opening files with vim
+
+# pass password store
+export PASSWORD_STORE_DIR=~/Dropbox/.password-store
