@@ -1,42 +1,43 @@
 set nocompatible "needed when we bootstrap with this file:
-" vim -u ~/.vimrc.vundle +BundleInstall +q
+" vim -u ~/.vimrc.vundle +PluginInstall +q
 
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
-Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
+Plugin 'tpope/vim-fugitive'
+Plugin 'gregsexton/gitv'
 
-Bundle 'mileszs/ack.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'scrooloose/nerdtree'
-Bundle 'roman/golden-ratio'
+Plugin 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'roman/golden-ratio'
 
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-rake'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-rake'
 
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
 
-Bundle 'Raimondi/delimitMate'
-Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'nathanaelkane/vim-indent-guides'
+Plugin 'Raimondi/delimitMate'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'nathanaelkane/vim-indent-guides'
 
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 
-Bundle 'scrooloose/syntastic'
-Bundle 'airblade/vim-gitgutter'
+Plugin 'scrooloose/syntastic'
+Plugin 'airblade/vim-gitgutter'
 
-Bundle 'slim-template/vim-slim'
+Plugin 'slim-template/vim-slim'
 
-Bundle 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 
-filetype plugin indent on     " required!
+call vundle#end()            " required
+filetype plugin indent on    " required
