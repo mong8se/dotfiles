@@ -66,6 +66,3 @@ alias v='f -e vim' # quick opening files with vim
 
 # pass password store
 export PASSWORD_STORE_DIR=~/Dropbox/.password-store
-
-# rvm
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
