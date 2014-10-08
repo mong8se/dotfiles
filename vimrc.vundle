@@ -37,6 +37,6 @@ Bundle 'airblade/vim-gitgutter'
 
 Bundle 'slim-template/vim-slim'
 
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'bling/vim-airline'
 
 filetype plugin indent on     " required!

@@ -214,6 +214,8 @@ let NERDTreeDirArrows = 1
 nnoremap <silent> <Leader><Space> :NERDTreeToggle <cr>
 nnoremap <silent> <Leader>f :NERDTreeFind <cr>
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 " Solarized
 set background=dark
 colorscheme solarized
@@ -265,8 +267,9 @@ let g:rubycomplete_rails = 1
 " Turn off auto rails prompt
 " let g:rails_statusline = 0
 
-" Powerline
-let g:Powerline_symbols = 'unicode'
+" Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 "------------------------------------------------------------
 " LOCALS
