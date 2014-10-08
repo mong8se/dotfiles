@@ -15,7 +15,7 @@
   changed = blue
   untracked = red
 [core]
-	excludesfile = /Users/smoazami/.gitignore
+  excludesfile = ~/.gitignore_global
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [user]
 	name = Steven Moazami
@@ -40,3 +40,5 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[include]
+	path = ~/.gitconfig.local
