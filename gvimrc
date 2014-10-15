@@ -43,7 +43,7 @@ inoremap <D-CR> <ESC>o
 " Map Command T to CtrlP in case of muscle memory
 if has("gui_macvim")
   macmenu &File.New\ Tab key=<nop>
-  map <D-t> :CtrlP<CR>
+  map <D-t> :CommandT<CR>
 endif
 
 " Command-][ to increase/decrease indentation
