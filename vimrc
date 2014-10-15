@@ -219,7 +219,7 @@ colorscheme base16-bespin
 set t_Co=16
 
 " Command T
-let g:CommandTMaxHeight = 10
+let g:CommandTMaxHeight = 15
 let g:CommandTFileScanner = 'git'
 let g:CommandTTraverseSCM = 'dir'
 let g:CommandTMatchWindowReverse = 1
@@ -237,27 +237,15 @@ let g:Gitv_WrapLines = 1
 " vim-gitgutter
 nnoremap <silent> <Leader>c :GitGutterToggle<CR>
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
-" neocomplcache ^^^
-" -----
-
-" Turn off auto rails prompt
-" let g:rails_statusline = 0
-
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 "------------------------------------------------------------
 " LOCALS
