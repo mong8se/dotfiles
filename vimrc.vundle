@@ -12,8 +12,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'gregsexton/gitv'
 
 Plugin 'mileszs/ack.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'wincent/command-t'
+
+Plugin 'chriskempson/base16-vim'
+
 Plugin 'scrooloose/nerdtree'
 Plugin 'roman/golden-ratio'
 

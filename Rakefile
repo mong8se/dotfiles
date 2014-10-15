@@ -1,5 +1,6 @@
 require 'rake'
 require 'erb'
+require 'socket'
 
 desc "init git subodules"
 task :init_submodules do
@@ -18,14 +19,18 @@ task :vundle do
     puts "vim -u ~/.vimrc.vundle +PluginInstall! +q"
 end
 
+SKIP_FILES = %w[Resources Rakefile]
+HOST = Socket.gethostname.gsub(/\..+$/, '')
+VALID_EXTENSIONS = ['erb', 'd', 'local', HOST, RUBY_PLATFORM.downcase.include?('darwin') ? 'mac' : nil ].compact
+VALID = %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
+
 desc "install the dot files into user's home directory"
 task :install do
-  is_mac = RUBY_PLATFORM.downcase.include?("darwin")
   replace_all = false
 
   Dir['*'].each do |file|
-    next if %w[Resources Rakefile README.rdoc LICENSE].include? file
-    next if file.end_with?('.mac') and not is_mac
+    next if SKIP_FILES.include? file
+    next unless file.match VALID
 
     if File.exist?(File.join(ENV['HOME'], ".#{file.sub('.erb', '')}"))
       if File.identical? file, File.join(ENV['HOME'], ".#{file.sub('.erb', '')}")

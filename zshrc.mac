@@ -6,19 +6,15 @@ function growl {
 # man pages in os x
 function pman { man -t $@ | open -f -a /Applications/Preview.app }
 function bman { gunzip < `man -w $@` | groff -Thtml -man | bcat }
-# start/stop mysql
-function start_mysql { cd /opt/local ; sudo -b /opt/local/lib/mysql5/bin/mysqld_safe ; cd - }
-function stop_mysql { sudo /opt/local/bin/mysqladmin5 -u root shutdown }
-
-function start_postgres { sudo -u postgres /opt/local/lib/postgresql83/bin/postgres -D /opt/local/var/db/postgresql83/defaultdb }
-
-function start_mongodb { sudo /opt/local/bin/mongod -f /opt/local/etc/mongo/mongodb.conf }
 
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
 
 if [[ $TERM_PROGRAM == iTerm.app ]];then
-    export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+  # Turn off xon/xoff so that ctrl-s is passed through
+  stty -ixon
+
+  export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
 else
-    export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
+  export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
 fi
 

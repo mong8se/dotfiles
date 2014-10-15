@@ -53,7 +53,7 @@ set scrolloff=3
 set cursorline " highlight current line
 set virtualedit=block,insert " allow cursor to go where there is nothing
 " highlight trailing whitepsace with a ·
-set list listchars=tab:•·,trail:·,extends:›,precedes:‹
+set list listchars=tab:•·,trail:…,extends:›,precedes:‹
 
 " so complex operations dont display until finished
 set lazyredraw
@@ -118,7 +118,7 @@ nnoremap / /\v
 nnoremap Q gq
 
 " Window movement
-function! WinMove(key) 
+function! WinMove(key)
   let t:curwin = winnr()
   exec "wincmd ".a:key
   if (t:curwin == winnr()) "we havent moved
@@ -152,11 +152,8 @@ vnoremap <S-Tab> <gv
 
 " relative line numbers
 function! g:ToggleRelativeNumber()
-  if &relativenumber
-    setlocal number
-  else
-    setlocal relativenumber
-  endif
+  set number
+  set relativenumber!
 endfunction
 nnoremap <silent> <Leader>n :call g:ToggleRelativeNumber()<CR>
 
@@ -218,26 +215,17 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Solarized
 set background=dark
-colorscheme solarized
+colorscheme base16-bespin
 set t_Co=16
-let g:solarized_termcolors=   16
-let g:solarized_termtrans =   0
-let g:solarized_degrade   =   0
-let g:solarized_bold      =   1
-let g:solarized_underline =   1
-let g:solarized_italic    =   1
-let g:solarized_contrast  =   "normal"
-let g:solarized_visibility=   "normal"
-let g:solarized_hitrail   =   0
-let g:solarized_menu      =   1
 
-" CtrlP
-let g:ctrlp_extensions = ['tag']
-let g:ctrlp_map = '<Leader>t'
-nnoremap <silent> <Leader>b :CtrlPBuffer<cr>
-let g:ctrlp_jump_to_buffer = 2
-let g:ctrlp_dotfiles = 0
-let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/ctrlp'
+" Command T
+let g:CommandTMaxHeight = 10
+let g:CommandTFileScanner = 'git'
+let g:CommandTTraverseSCM = 'dir'
+let g:CommandTMatchWindowReverse = 1
+" if &term =~ "xterm" || &term =~ "screen" || &term =~ "tmux"
+"   let g:CommandTCancelMap = ['<ESC>', '<C-c>']
+" endif
 
 " delimitMate
 let delimitMate_expand_space = 1
