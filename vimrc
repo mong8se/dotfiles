@@ -1,3 +1,19 @@
+" Source a local configuration file if available.
+" Takes arguments and constructs filename for example:
+" g:LoadRcFiles('first', 'second', third') would load:
+" ~/.first.second.third.local
+" ~/.first.second.third.mac
+" ~/.first.second.third.hostname
+"
+function! g:LoadRCFiles(...)
+  for l:rc_extension in ['local', 'mac', substitute(hostname(), '\..*', '', '')]
+  let l:rc_file = join(['~/'] + a:000 + [l:rc_extension], '.')
+   if filereadable(expand(l:rc_file))
+     execute 'source' l:rc_file
+   endif
+  endfor
+endfunction
+
 " Base config with vundle
 source $MYVIMRC.vundle
 
@@ -118,7 +134,7 @@ nnoremap / /\v
 nnoremap Q gq
 
 " Window movement
-function! WinMove(key)
+function! g:WinMove(key)
   let t:curwin = winnr()
   exec "wincmd ".a:key
   if (t:curwin == winnr()) "we havent moved
@@ -131,10 +147,10 @@ function! WinMove(key)
   endif
 endfunction
 
-nnoremap <silent> <Leader>h :call WinMove('h')<cr>
-nnoremap <silent> <Leader>k :call WinMove('k')<cr>
-nnoremap <silent> <Leader>l :call WinMove('l')<cr>
-nnoremap <silent> <Leader>j :call WinMove('j')<cr>
+nnoremap <silent> <Leader>h :call g:WinMove('h')<cr>
+nnoremap <silent> <Leader>k :call g:WinMove('k')<cr>
+nnoremap <silent> <Leader>l :call g:WinMove('l')<cr>
+nnoremap <silent> <Leader>j :call g:WinMove('j')<cr>
 
 nnoremap <silent> <Leader>wc :wincmd q<cr>
 nnoremap <silent> <Leader>wr <C-W>r
@@ -215,7 +231,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Solarized
 set background=dark
-colorscheme base16-bespin
+colorscheme base16-eighties
 set t_Co=16
 
 " Command T
@@ -250,11 +266,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "------------------------------------------------------------
 " LOCALS
 
-" Source a local configuration file if available.
-" For loops only work in 7.x
-for rc_extension in ['local', 'mac', substitute(hostname(), '\..*', '', '')]
-    let rc_file = '~/.vimrc.' . rc_extension
-    if filereadable(expand(rc_file))
-        execute 'source' rc_file
-    endif
-endfor
+call g:LoadRCFiles('vimrc')

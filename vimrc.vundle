@@ -41,10 +41,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
-let rc_file = '~/.vimrc.vundle.local'
-if filereadable(expand(rc_file))
-  execute 'source' rc_file
-endif
+call g:LoadRCFiles('vimrc', 'vundle')
 
 call vundle#end()            " required
 filetype plugin indent on    " required
