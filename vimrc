@@ -1,13 +1,13 @@
 " Source a local configuration file if available.
 " Takes arguments and constructs filename for example:
 " g:LoadRcFiles('first', 'second', third') would load:
-" ~/.first.second.third.local
-" ~/.first.second.third.mac
-" ~/.first.second.third.hostname
+" ~/.vimrc.first.second.third.local
+" ~/.vimrc.first.second.third.mac
+" ~/.vimrc.first.second.third.hostname
 "
 function! g:LoadRCFiles(...)
   for l:rc_extension in ['local', 'mac', substitute(hostname(), '\..*', '', '')]
-  let l:rc_file = join(['~/'] + a:000 + [l:rc_extension], '.')
+  let l:rc_file = join([$MYVIMRC] + a:000 + [l:rc_extension], '.')
    if filereadable(expand(l:rc_file))
      execute 'source' l:rc_file
    endif
@@ -15,7 +15,7 @@ function! g:LoadRCFiles(...)
 endfunction
 
 " Base config with vundle
-source $MYVIMRC.vundle
+source $MYVIMRC.vundle.conf
 
 syntax on
 
@@ -266,4 +266,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "------------------------------------------------------------
 " LOCALS
 
-call g:LoadRCFiles('vimrc')
+call g:LoadRCFiles()

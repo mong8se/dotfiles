@@ -21,7 +21,7 @@ end
 
 SKIP_FILES = %w[Resources Rakefile]
 HOST = Socket.gethostname.gsub(/\..+$/, '')
-VALID_EXTENSIONS = ['erb', 'd', 'local', HOST, RUBY_PLATFORM.downcase.include?('darwin') ? 'mac' : nil ].compact
+VALID_EXTENSIONS = ['erb', 'conf', 'd', 'local', HOST, RUBY_PLATFORM.downcase.include?('darwin') ? 'mac' : nil ].compact
 VALID = %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
 
 desc "install the dot files into user's home directory"
@@ -30,15 +30,18 @@ task :install do
 
   Dir['*'].each do |file|
     next if SKIP_FILES.include? file
-    next unless file.match VALID
+    unless file.match VALID
+      puts "ignoring ~/.#{name(file)}"
+      next
+    end
 
-    if File.exist?(File.join(ENV['HOME'], ".#{file.sub('.erb', '')}"))
-      if File.identical? file, File.join(ENV['HOME'], ".#{file.sub('.erb', '')}")
-        puts "identical ~/.#{file.sub('.erb', '')}"
+    if File.exist?(File.join(ENV['HOME'], ".#{name(file)}"))
+      if File.identical? file, File.join(ENV['HOME'], ".#{name(file)}")
+        puts "identical ~/.#{name(file)}"
       elsif replace_all
         replace_file(file)
       else
-        print "overwrite ~/.#{file.sub('.erb', '')}? [ynaq] "
+        print "overwrite ~/.#{name(file)}? [ynaq] "
         case $stdin.gets.chomp
         when 'a'
           replace_all = true
@@ -48,7 +51,7 @@ task :install do
         when 'q'
           exit
         else
-          puts "skipping ~/.#{file.sub('.erb', '')}"
+          puts "skipping ~/.#{name(file)}"
         end
       end
     else
@@ -58,18 +61,22 @@ task :install do
 end
 
 def replace_file(file)
-  system %Q{rm -rf "$HOME/.#{file.sub('.erb', '')}"}
+  system %Q{rm -rf "$HOME/.#{name(file)}"}
   link_file(file)
 end
 
 def link_file(file)
   if file =~ /.erb$/
-    puts "generating ~/.#{file.sub('.erb', '')}"
-    File.open(File.join(ENV['HOME'], ".#{file.sub('.erb', '')}"), 'w') do |new_file|
+    puts "generating ~/.#{name(file)}"
+    File.open(File.join(ENV['HOME'], ".#{name(file)}"), 'w') do |new_file|
       new_file.write ERB.new(File.read(file)).result(binding)
     end
   else
     puts "linking ~/.#{file}"
     system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
   end
+end
+
+def name(file)
+    file.sub('.erb', '')
 end
