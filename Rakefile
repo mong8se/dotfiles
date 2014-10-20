@@ -27,7 +27,7 @@ VALID = %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION  = ENV['HOME']
 
-desc "install the dot files into user's home directory"
+desc "install .dotfiles into home directory"
 task :install do
   replace_all = false
 
@@ -63,7 +63,7 @@ task :install do
   end
 end
 
-desc 'clean up .dotfiles that are no longer present'
+desc 'clean up .dotfile symlinks that are no longer present'
 task :cleanup do
   delete_files
 end
