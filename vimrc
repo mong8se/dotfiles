@@ -247,6 +247,13 @@ let g:CommandTMatchWindowReverse = 1
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr = 1
 
+" Fugitive
+nmap <leader>gs :Gstatus<cr>
+nmap <leader>gc :Gcommit<cr>
+nmap <leader>gl :Glog<cr>
+nmap <leader>gd :Gdiff<cr>
+nmap <leader>gb :Gbrowse<cr>
+
 " gitv
 let g:Gitv_WrapLines = 1
 
