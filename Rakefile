@@ -63,7 +63,7 @@ task :install do
   end
 end
 
-desc 'clean up .dotfile symlinks that are no longer present'
+desc 'clean up .dotfile symlinks that are no longer there'
 task :cleanup do
   delete_files
 end
