@@ -2,21 +2,27 @@ require 'rake'
 require 'erb'
 require 'socket'
 
-desc "init git subodules"
-task :init_submodules do
-    `git submodule update --init`
-    `cd Resources/fasd; sudo make install`
-end
+namespace :submodules do
+  desc "init git subodules"
+  task :init do
+    system 'git submodule update --init'
+    Rake::Task[:update_submodules].invoke
+  end
 
-desc "update git submodules"
-task :update_submodules do
-    `git submodule foreach 'git checkout master && git pull'`
+  desc "update git submodules to their latest tag"
+  task :update do
+    system <<-'UPDATE'
+      git submodule foreach 'git fetch && git checkout `git describe --abbrev=0 --tags`';
+      cd Resources/fasd;
+      echo 'Need sudo to install fasd...';
+      sudo make install;
+    UPDATE
+  end
 end
 
 desc "install vim bundles"
 task :vundle do
-    puts "Run this command:"
-    puts "vim -u ~/.vimrc.vundle +PluginInstall! +q"
+  exec "vim +PluginInstall! +qall"
 end
 
 SKIP_FILES = %w[Resources Rakefile]
