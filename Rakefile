@@ -2,11 +2,11 @@ require 'rake'
 require 'erb'
 require 'socket'
 
-namespace :submodules do
-  desc "init git subodules"
+namespace :submodule do
+  desc "init git submodules"
   task :init do
     system 'git submodule update --init'
-    Rake::Task[:update_submodules].invoke
+    Rake::Task['submodule:update'].invoke
   end
 
   desc "update git submodules to their latest tag"
