@@ -19,7 +19,7 @@ if has('macunix')
   set guifont=Source\ Code\ Pro\ For\ Powerline:h13
 
   " Sets the percent transparency
-  set transparency=5
+  set transparency=7
 elseif has('unix')
   set guifont=Inconsolata\ Medium\ 12
 elseif has('win32')

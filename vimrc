@@ -274,7 +274,7 @@ call unite#filters#sorter_default#use(['sorter_selecta'])
 nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
 nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 nnoremap <leader>/ :<C-u>Unite -no-split -buffer-name=search  grep:.<cr>
 
 " Custom mappings for the unite buffer
