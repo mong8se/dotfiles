@@ -249,6 +249,7 @@ let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Vimfiler
+let g:vimfiler_as_default_explorer = 1
 set fillchars=vert:│,fold:─
 let g:vimfiler_tree_leaf_icon = "░"
 let g:vimfiler_tree_opened_icon = "▼"
