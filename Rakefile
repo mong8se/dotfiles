@@ -22,7 +22,7 @@ end
 
 desc "install vim bundles"
 task :vundle do
-  exec "vim +PluginInstall! +qall"
+  exec "vim -u vimrc.vundle.conf +PluginInstall! +qall"
 end
 
 SKIP_FILES = %w[Resources Rakefile]

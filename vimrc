@@ -1,19 +1,3 @@
-" Source a local configuration file if available.
-" Takes arguments and constructs filename for example:
-" g:LoadRcFiles('first', 'second', third') would load:
-" ~/.vimrc.first.second.third.local
-" ~/.vimrc.first.second.third.mac
-" ~/.vimrc.first.second.third.hostname
-"
-function! g:LoadRCFiles(...)
-  for l:rc_extension in ['local', 'mac', substitute(hostname(), '\..*', '', '')]
-  let l:rc_file = join([$MYVIMRC] + a:000 + [l:rc_extension], '.')
-   if filereadable(expand(l:rc_file))
-     execute 'source' l:rc_file
-   endif
-  endfor
-endfunction
-
 " Base config with vundle
 source $MYVIMRC.vundle.conf
 
