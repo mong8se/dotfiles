@@ -52,14 +52,15 @@ set title
 set scrolloff=3
 set cursorline " highlight current line
 set virtualedit=block,insert " allow cursor to go where there is nothing
-" highlight trailing whitepsace with a ·
-set list listchars=tab:•·,trail:…,extends:›,precedes:‹
+
+set list listchars=tab:•·,trail:…,extends:⇥,precedes:⇤
 
 " so complex operations dont display until finished
 set lazyredraw
 set ttyfast
 
 set splitright " new vertical splits are to the right
+set splitbelow " new horizontal splits are below
 
 " Use a .vim directory in the project root, .vim/tmp in your home dir, or
 " lastly current folder.
@@ -96,8 +97,8 @@ let mapleader = "\<Space>"
 noremap <F1> <Nop>
 noremap! <F1> <Esc>
 
-" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
-" which is the default
+" Map Y to act like D and C, i.e. to yank until EOL,
+" rather than act as yy, which is the default
 nnoremap Y y$
 
 " Map U to redo
@@ -116,28 +117,6 @@ nnoremap / /\v
 
 " Original mapping
 nnoremap Q gq
-
-" Window movement
-function! g:WinMove(key)
-  let t:curwin = winnr()
-  exec "wincmd ".a:key
-  if (t:curwin == winnr()) "we havent moved
-    if (match(a:key,'[jk]')) "were we going up/down
-      wincmd v
-    else 
-      wincmd s
-    endif
-    exec "wincmd ".a:key
-  endif
-endfunction
-
-nnoremap <silent> <Leader>h :call g:WinMove('h')<cr>
-nnoremap <silent> <Leader>k :call g:WinMove('k')<cr>
-nnoremap <silent> <Leader>l :call g:WinMove('l')<cr>
-nnoremap <silent> <Leader>j :call g:WinMove('j')<cr>
-
-nnoremap <silent> <Leader>wc :wincmd q<cr>
-nnoremap <silent> <Leader>wr <C-W>r
 
 " reselect the text that was just pasted so I can perform commands (like indentation) on it:
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -241,6 +220,7 @@ let g:vimfiler_tree_closed_icon = "▷"
 let g:vimfiler_file_icon = '-'
 let g:vimfiler_readonly_file_icon = '✗'
 let g:vimfiler_marked_file_icon = '✓'
+
 nnoremap <silent> <Leader><Space> :VimFiler -project -toggle<cr>
 nnoremap <silent> <Leader>o :VimFiler -project -find<cr>
 
@@ -260,6 +240,7 @@ nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file
 nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 nnoremap <leader>/ :<C-u>Unite -no-split -buffer-name=search  grep:.<cr>
+nnoremap <leader>r :<C-u>UniteResume<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()

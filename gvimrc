@@ -20,6 +20,8 @@ if has('macunix')
 
   " Sets the percent transparency
   set transparency=7
+
+  let g:vimfiler_quick_look_command = 'qlmanage -p'
 elseif has('unix')
   set guifont=Inconsolata\ Medium\ 12
 elseif has('win32')
