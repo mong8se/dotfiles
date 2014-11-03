@@ -1,5 +1,5 @@
 " Base config with vundle
-source $MYVIMRC.vundle.conf
+source $MYVIMRC.plug.conf
 
 syntax on
 
