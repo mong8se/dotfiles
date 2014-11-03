@@ -42,12 +42,6 @@ set autoread
 " Make command enter make a new line without splitting
 inoremap <D-CR> <ESC>o
 
-" Map Command T to CtrlP in case of muscle memory
-if has("gui_macvim")
-  macmenu &File.New\ Tab key=<nop>
-  map <D-t> :CommandT<CR>
-endif
-
 " Command-][ to increase/decrease indentation
 nnoremap <D-]> >>
 nnoremap <D-[> <<

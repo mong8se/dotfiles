@@ -1,9 +1,9 @@
 " Source a local configuration file if available.
 " Takes arguments and constructs filename for example:
 " g:LoadRcFiles('first', 'second', third') would load:
-" ~/.vimrc.first.second.third.mac
-" ~/.vimrc.first.second.third.local
-" ~/.vimrc.first.second.third.hostname
+" ~/.vim/vimrc.first.second.third.mac
+" ~/.vim/vimrc.first.second.third.local
+" ~/.vim/vimrc.first.second.third.hostname
 
 function! g:LoadRCFiles(...)
   for l:rc_extension in ['mac', 'local', substitute(hostname(), '\..*', '', '')]
@@ -55,6 +55,8 @@ Plug 'scrooloose/syntastic'
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+call g:LoadRCFiles('plug')
 
 call plug#end()
 
