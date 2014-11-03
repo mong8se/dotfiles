@@ -1,5 +1,5 @@
 " Base config with vundle
-source $MYVIMRC.vundle.conf
+source $MYVIMRC.plug
 
 syntax on
 
@@ -7,16 +7,21 @@ set hidden
 set encoding=utf-8
 
 set wildmenu
-set wildmode=list:longest,list:full
+" set wildmode=list:longest,list:full
+" set wildmode=longest,list:longest
+set wildmode=longest:full,full
+
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/* "
 
 set showcmd
-set cmdheight=2
+set cmdheight =2
 set laststatus=2
 
-set hlsearch
 set showmatch " show matching brackets
+
+set hlsearch
 set incsearch " show incremental search results
+let g:oblique#very_magic=1
 
 " Modelines have historically been a source of security vulnerabilities.
 set nomodeline
@@ -75,7 +80,7 @@ endif
 set foldlevelstart=99
 set foldmethod=syntax
 
-runtime macros/matchit.vim
+runtime! macros/matchit.vim
 
 if has('clipboard')
     if has('x11') && version >= 703
@@ -111,9 +116,6 @@ nnoremap <silent> <C-L> :nohl<CR><C-L>
 " Arrow keys move up and down visible lines, not physical lines
 nnoremap <Down> gj
 nnoremap <Up> gk
-
-" always search with magic mode
-nnoremap / /\v
 
 " Original mapping
 nnoremap Q gq
@@ -152,7 +154,7 @@ function! g:ActivateCR(range)
         execute "normal! \<CR>"
     end
 endfunction
-nnoremap <silent> <CR> :call g:ActivateCR('.')<CR>
+nnoremap <silent> <CR>   :call g:ActivateCR('.')<CR>
 nnoremap <silent> <S-CR> :call g:ActivateCR('-1')<CR>
 
 function! g:ScrollBindAllWindows()
@@ -192,34 +194,33 @@ nmap <leader>gc :Gcommit<cr>
 nmap <leader>gl :Glog<cr>
 nmap <leader>gd :Gdiff<cr>
 nmap <leader>gb :Gbrowse<cr>
+" vim-gitgutter
+nmap <Leader>gt :GitGutterToggle<CR>
 
 " gitv
 let g:Gitv_WrapLines = 1
-
-" vim-gitgutter
-nnoremap <silent> <Leader>c :GitGutterToggle<CR>
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 " supertab youcompleteme and ultisnips
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>']
+let g:SuperTabDefaultCompletionType    = '<C-n>'
+let g:UltiSnipsExpandTrigger           = '<tab>'
+let g:UltiSnipsJumpForwardTrigger      = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Vimfiler
 let g:vimfiler_as_default_explorer = 1
-set fillchars=vert:│,fold:─
-let g:vimfiler_tree_leaf_icon = "░"
-let g:vimfiler_tree_opened_icon = "▼"
-let g:vimfiler_tree_closed_icon = "▷"
-let g:vimfiler_file_icon = '-'
-let g:vimfiler_readonly_file_icon = '✗'
-let g:vimfiler_marked_file_icon = '✓'
+set fillchars                      =vert:│,fold:─
+let g:vimfiler_tree_leaf_icon      = "░"
+let g:vimfiler_tree_opened_icon    = "▼"
+let g:vimfiler_tree_closed_icon    = "▷"
+let g:vimfiler_file_icon           = '-'
+let g:vimfiler_readonly_file_icon  = '✗'
+let g:vimfiler_marked_file_icon    = '✓'
 
 nnoremap <silent> <Leader><Space> :VimFiler -project -toggle<cr>
 nnoremap <silent> <Leader>o :VimFiler -project -find<cr>
@@ -235,11 +236,14 @@ endfunction
 let g:unite_source_history_yank_enable = 1
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_selecta'])
+
 nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
 nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>y :<C-u>Unite           -buffer-name=yank    history/yank<cr>
 nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 nnoremap <leader>/ :<C-u>Unite -no-split -buffer-name=search  grep:.<cr>
+nnoremap <leader>l :<C-u>Unite -no-split -buffer-name=lines   -start-insert line<cr>
+nnoremap <leader>c :<C-u>Unite           -buffer-name=commands -start-insert command<CR>
 nnoremap <leader>r :<C-u>UniteResume<cr>
 
 " Custom mappings for the unite buffer
@@ -248,27 +252,27 @@ function! s:unite_settings()
   " Play nice with supertab
   let b:SuperTabDisabled=1
   " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <buffer> <C-j> <Plug>(unite_select_next_line)
+  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
 endfunction
 
 if executable('ag')
   " Use ag in unite grep source.
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
+  let g:unite_source_grep_command       = 'ag'
+  let g:unite_source_grep_default_opts  =
         \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
         \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
   let g:unite_source_grep_recursive_opt = ''
 elseif executable('pt')
   " Use pt in unite grep source.
   " https://github.com/monochromegane/the_platinum_searcher
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+  let g:unite_source_grep_command       = 'pt'
+  let g:unite_source_grep_default_opts  = '--nogroup --nocolor'
   let g:unite_source_grep_recursive_opt = ''
 elseif executable('ack-grep')
   " Use ack in unite grep source.
-  let g:unite_source_grep_command = 'ack-grep'
-  let g:unite_source_grep_default_opts =
+  let g:unite_source_grep_command       = 'ack-grep'
+  let g:unite_source_grep_default_opts  =
         \ '-i --no-heading --no-color -k -H'
   let g:unite_source_grep_recursive_opt = ''
 endif

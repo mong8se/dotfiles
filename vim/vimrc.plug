@@ -1,0 +1,63 @@
+" Source a local configuration file if available.
+" Takes arguments and constructs filename for example:
+" g:LoadRcFiles('first', 'second', third') would load:
+" ~/.vim/vimrc.first.second.third.mac
+" ~/.vim/vimrc.first.second.third.local
+" ~/.vim/vimrc.first.second.third.hostname
+
+function! g:LoadRCFiles(...)
+  for l:rc_extension in ['mac', 'local', substitute(hostname(), '\..*', '', '')]
+  let l:rc_file = join([$MYVIMRC] + a:000 + [l:rc_extension], '.')
+   if filereadable(expand(l:rc_file))
+     execute 'source' l:rc_file
+   endif
+  endfor
+endfunction
+
+set nocompatible
+filetype off
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'chriskempson/base16-vim'
+Plug 'bling/vim-airline'
+
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'vim-ruby/vim-ruby',      { 'for': 'ruby' }
+Plug 'tpope/vim-rails',        { 'for': 'ruby' }
+Plug 'tpope/vim-endwise',      { 'for': 'ruby' }
+Plug 'tpope/vim-rake',         { 'for': 'ruby' }
+Plug 'slim-template/vim-slim', { 'for': 'ruby' }
+
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+
+Plug 'Raimondi/delimitMate'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'tommcdo/vim-lion'
+Plug 'AndrewRadev/splitjoin.vim'
+
+Plug 'junegunn/vim-pseudocl'
+Plug 'junegunn/vim-oblique'
+
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'scrooloose/syntastic'
+
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+call g:LoadRCFiles('plug')
+
+call plug#end()
+
+filetype plugin indent on    " required

@@ -1,5 +1,5 @@
 vimperator/info/default/history-*
-vim/bundle/*
+vim/plugged/*
 vim/.netrwhist
 vim/tmp/*
 *.local

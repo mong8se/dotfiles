@@ -20,9 +20,15 @@ namespace :submodule do
   end
 end
 
-desc "install vim bundles"
-task :vundle do
-  exec "vim -u vimrc.vundle.conf +PluginInstall! +qall"
+namespace :vim do
+  desc "install vim plugins"
+  task :install do
+    exec "vim -u vim/vimrc.plug +PlugInstall! +qall"
+  end
+  desc "update vim plugins"
+  task :update do
+    exec "vim -u vim/vimrc.plug +PlugUpdate! +qall"
+  end
 end
 
 SKIP_FILES = %w[Resources Rakefile]
