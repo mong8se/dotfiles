@@ -21,7 +21,19 @@ set showmatch " show matching brackets
 
 set hlsearch
 set incsearch " show incremental search results
-let g:oblique#very_magic=1
+
+" haya14busa/incsearch.vim
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+let g:incsearch#magic = '\v'
 
 " Modelines have historically been a source of security vulnerabilities.
 set nomodeline
