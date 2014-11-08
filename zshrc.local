@@ -1,3 +1,4 @@
+prompt off
 bindkey -v
 if [[ "$TERM" != emacs ]] ; then
     [[ -z "$terminfo[cuu1]"  ]] || bindkey -M viins "$terminfo[cuu1]"  up-line-or-history
@@ -37,6 +38,8 @@ function settitle { print -Pn "\e]2;%n@%m:%d\a" }
 
 REPORTTIME=5
 TIMEFMT=$'\e]9;%J\007 \e[7m %J: %P %Mk \e[0m %U user / %S sys / %E total'
+
+BATTERY=1
 
 # This updates after each change of directory:
 function precmd {
