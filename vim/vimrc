@@ -101,7 +101,7 @@ if has('persistent_undo')
 endif
 
 set foldlevelstart=99
-set foldmethod=syntax
+set foldmethod=indent
 
 runtime! macros/matchit.vim
 
