@@ -46,6 +46,7 @@ Plug 'haya14busa/incsearch.vim'
 
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimfiler.vim'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
