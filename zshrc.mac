@@ -18,3 +18,8 @@ else
   export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
 fi
 
+function rvim {
+  local file
+   file=$(fzf --query="$1" --select-1 --exit-0)
+   [ -n "$file" ] && mvim --servername RVIM --remote-silent "$file"
+}
