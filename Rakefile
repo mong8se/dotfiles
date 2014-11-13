@@ -23,11 +23,11 @@ end
 namespace :vim do
   desc "install vim plugins"
   task :install do
-    exec "vim -u vim/vimrc.plug +PlugInstall +qall"
+    exec "MYVIMRC=vim/vimrc vim -u vim/vimrc.plug +PlugInstall +qall"
   end
   desc "update vim plugins"
   task :update do
-    exec "vim -u vim/vimrc.plug +PlugUpdate +qall"
+    exec "MYVIMRC=vim/vimrc vim -u vim/vimrc.plug +PlugUpdate +qall"
   end
 end
 
