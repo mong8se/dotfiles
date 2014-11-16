@@ -23,7 +23,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
 
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'airblade/vim-gitgutter'
 
 Plug 'vim-ruby/vim-ruby',      { 'for': 'ruby' }
