@@ -44,12 +44,12 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'haya14busa/incsearch.vim'
 
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/vimproc.vim', { 'do': 'PATH=/opt/local/bin:$PATH make' }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimfiler.vim'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'PATH=/opt/local/bin:$PATH ./install.sh' }
 Plug 'scrooloose/syntastic'
 
 Plug 'ervandew/supertab'
