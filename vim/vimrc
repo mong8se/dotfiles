@@ -199,6 +199,12 @@ if has('spell')
   nnoremap <silent> <Leader>sc :setlocal spell!<CR>
 endif
 
+if has("user_commands")
+    command! -bang Q q<bang>
+    command! -bang QA qa<bang>
+    command! -bang Qa qa<bang>
+endif
+
 "------------------------------------------------------------
 " PLUGINS
 
@@ -238,10 +244,10 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 " Vimfiler
 let g:vimfiler_as_default_explorer = 1
 set fillchars                      =vert:│,fold:─
-let g:vimfiler_tree_leaf_icon      = "┖"
-let g:vimfiler_tree_opened_icon    = "▼"
-let g:vimfiler_tree_closed_icon    = "▷"
-let g:vimfiler_file_icon           = '-'
+let g:vimfiler_tree_leaf_icon      = "┝"
+let g:vimfiler_tree_opened_icon    = "┑"
+let g:vimfiler_tree_closed_icon    = "┅"
+let g:vimfiler_file_icon           = '━'
 let g:vimfiler_readonly_file_icon  = '✗'
 let g:vimfiler_marked_file_icon    = '✓'
 
