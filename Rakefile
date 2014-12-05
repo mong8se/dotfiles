@@ -5,7 +5,7 @@ require 'socket'
 namespace :submodule do
   desc "init git submodules"
   task :init do
-    system 'git submodule update --init'
+    system 'git submodule update --init --recursive'
     Rake::Task['submodule:update'].invoke
   end
 
