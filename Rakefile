@@ -2,6 +2,23 @@ require 'rake'
 require 'erb'
 require 'socket'
 
+IS_MAC = RUBY_PLATFORM.downcase.include?('darwin') ? 'mac' : nil
+
+if IS_MAC && File.exist?('/etc/zshenv')
+ puts(<<-'WARNING')
+ WARNING: Detected /etc/zshenv on OS X
+
+ Vim subshell paths will be messed up unless you do:
+
+ sudo mv /etc/zshenv /etc/zprofile
+
+ Be sure to merge them if zprofile exits!
+
+ See: https://github.com/b4winckler/macvim/wiki/Troubleshooting#rename-the-etczshenv-file-to-etczprofile
+
+ WARNING
+end
+
 namespace :submodule do
   desc "init git submodules"
   task :init do
@@ -33,7 +50,7 @@ end
 
 SKIP_FILES = %w[Resources Rakefile]
 HOST = Socket.gethostname.gsub(/\..+$/, '')
-VALID_EXTENSIONS = ['erb', 'conf', 'd', 'local', HOST, RUBY_PLATFORM.downcase.include?('darwin') ? 'mac' : nil ].compact
+VALID_EXTENSIONS = ['erb', 'conf', 'd', 'local', HOST, IS_MAC].compact
 VALID = %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
 
 REPO_LOCATION = File.dirname(__FILE__)
