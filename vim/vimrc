@@ -209,7 +209,7 @@ endif
 " PLUGINS
 
 " Solarized
-set background=dark
+set background=light
 colorscheme base16-eighties
 set t_Co=16
 
