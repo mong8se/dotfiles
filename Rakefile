@@ -48,7 +48,7 @@ namespace :vim do
   end
 end
 
-SKIP_FILES = %w[Resources Rakefile]
+SKIP_FILES = %w[Resources Rakefile Readme.md]
 HOST = Socket.gethostname.gsub(/\..+$/, '')
 VALID_EXTENSIONS = ['erb', 'conf', 'd', 'local', HOST, IS_MAC].compact
 VALID = %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
