@@ -49,12 +49,12 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimfiler.vim'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'
 
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'ervandew/supertab'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 call g:LoadRCFiles('plug')
 
