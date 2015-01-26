@@ -208,9 +208,9 @@ endif
 "------------------------------------------------------------
 " PLUGINS
 
-" Solarized
-set background=light
-colorscheme base16-eighties
+" use iterm profile name to determine light or dark
+" set background=$ITERM_PROFILE
+colorscheme base16-bespin
 set t_Co=16
 
 " delimitMate
@@ -263,18 +263,22 @@ endfunction
 
 " Unite
 let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#matcher_default#use(['matcher_glob'])
 call unite#filters#sorter_default#use(['sorter_selecta'])
 
-nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files    -start-insert -short-source-names file_rec/async:!<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files    -start-insert file<cr>
-nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=files    -start-insert file_mru<cr>
-nnoremap <leader>y :<C-u>Unite           -buffer-name=yank     history/yank<cr>
-nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer   buffer<cr>
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files    -prompt-direction=below -start-insert -short-source-names file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files    -prompt-direction=below -start-insert file<cr>
+nnoremap <leader>m :<C-u>Unite -no-split -buffer-name=files    -prompt-direction=below -start-insert file_mru<cr>
+nnoremap <leader>y :<C-u>Unite           -buffer-name=yank      history/yank<cr>
+nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    buffer<cr>
 nnoremap <leader>/ :<C-u>Unite -no-split -buffer-name=search   -auto-preview grep:.<cr>
-nnoremap <leader>l :<C-u>Unite -no-split -buffer-name=lines    -start-insert line<cr>
-nnoremap <leader>c :<C-u>Unite           -buffer-name=commands -start-insert command<CR>
+nnoremap <leader>l :<C-u>Unite -no-split -buffer-name=lines    -prompt-direction=below -start-insert line<cr>
+nnoremap <leader>c :<C-u>Unite           -buffer-name=commands -prompt-direction=below -start-insert command<CR>
 nnoremap <leader>r :<C-u>UniteResume<cr>
+
+  call unite#custom#source(
+        \ 'neomru/file', 'matchers',
+        \ ['matcher_project_files', 'matcher_fuzzy'])
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
