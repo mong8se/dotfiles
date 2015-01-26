@@ -18,4 +18,4 @@
 	url = https://github.com/junegunn/fzf.git
 [submodule "emacs.d"]
 	path = emacs.d
-	url = http://github.com/syl20bnr/spacemacs
+	url = https://github.com/syl20bnr/spacemacs
