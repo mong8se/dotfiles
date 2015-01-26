@@ -26,7 +26,8 @@ function vim_mode_prompt {
 
 setopt prompt_subst
 autoload -U colors && colors
-PS1='%(1j.[$fg[green]%j%{$reset_color%}].)%B[%b%(!.%{$fg[red]%}.%{$fg[blue]%})%m%{$reset_color%}%B]%b$(vim_mode_prompt) '
+PS1='%(1j.[$fg[green]%j%{$reset_color%}].)%(!.%{$fg[red]%}.%{$fg[blue]%})%m%{$reset_color%}%B|%b$(vim_mode_prompt) '
+
 DONTSETRPROMPT=1
 RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
