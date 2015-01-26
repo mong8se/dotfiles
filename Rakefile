@@ -31,8 +31,8 @@ namespace :submodule do
     system <<-'UPDATE'
       git submodule foreach 'git fetch && git fetch --tags && git checkout $(git describe --tags $(git rev-list --tags --max-count=1))';
       cd Resources/fasd;
-      echo 'Need sudo to install fasd...';
-      sudo make install;
+      echo 'Install fasd...';
+      make install;
     UPDATE
   end
 end
