@@ -32,6 +32,10 @@ PS1='%(1j.[$fg[green]%j%{$reset_color%}].)%S%(!.%{$fg[red]%}.%{$fg[blue]%}) %m %
 DONTSETRPROMPT=1
 RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
+# customize vcs info on prompt
+zstyle ':vcs_info:*' formats       "|%F{blue}%s%F{reset_color}|%r|%F{green}%b%F{reset_color}| " 'zsh: %r'
+zstyle ':vcs_info:*' actionformats "|%F{blue}%s%F{reset_color}|%r|%F{green}%b%F{reset_color}|%F{red}%a%F{reset_color}| " 'zsh: %r'
+
 # Put the penultimate and current directory in the iterm tab:
 function settab { print -Pn "\e]1;%m:%2~\a%" }
 
