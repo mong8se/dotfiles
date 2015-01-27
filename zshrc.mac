@@ -25,3 +25,5 @@ function rv {
 }
 
 export HOMEBREW_GITHUB_API_TOKEN=***REMOVED***
+
+fpath=(/usr/local/share/zsh-completions $fpath)

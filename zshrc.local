@@ -17,16 +17,17 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 function vim_mode_prompt {
+    local VIM_SIGIL='%B|%b%# '
     if [[ "$VIM_MODE_PROMPT" == 'C' ]]
-    then echo '%S%#%s'
-    else echo '%#'
+    then echo "%S${VIM_SIGIL}%s"
+    else echo $VIM_SIGIL
     fi
     VIM_MODE_PROMPT='I'
 }
 
 setopt prompt_subst
 autoload -U colors && colors
-PS1='%(1j.[$fg[green]%j%{$reset_color%}].)%(!.%{$fg[red]%}.%{$fg[blue]%})%m%{$reset_color%}%B|%b$(vim_mode_prompt) '
+PS1='%(1j.[$fg[green]%j%{$reset_color%}].)%S%(!.%{$fg[red]%}.%{$fg[blue]%}) %m %{$reset_color%}%s$(vim_mode_prompt)'
 
 DONTSETRPROMPT=1
 RPS1='${vcs_info_msg_0_}%S %3~ %s'

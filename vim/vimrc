@@ -210,7 +210,7 @@ endif
 
 " use iterm profile name to determine light or dark
 " set background=$ITERM_PROFILE
-colorscheme base16-bespin
+colorscheme base16-eighties
 set t_Co=16
 
 " delimitMate
