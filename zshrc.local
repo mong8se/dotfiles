@@ -33,6 +33,7 @@ DONTSETRPROMPT=1
 RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
 # customize vcs info on prompt
+# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
 zstyle ':vcs_info:*' formats       "|%F{blue}%s%F{reset_color}|%r|%F{green}%b%F{reset_color}| " 'zsh: %r'
 zstyle ':vcs_info:*' actionformats "|%F{blue}%s%F{reset_color}|%r|%F{green}%b%F{reset_color}|%F{red}%a%F{reset_color}| " 'zsh: %r'
 
