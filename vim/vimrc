@@ -208,8 +208,10 @@ endif
 "------------------------------------------------------------
 " PLUGINS
 
-" use iterm profile name to determine light or dark
-" set background=$ITERM_PROFILE
+" If we're not in iterm, specifically request dark profile
+if $TERM_PROGRAM !~ "iTerm"
+  set background=dark
+endif
 colorscheme base16-eighties
 set t_Co=16
 
