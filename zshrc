@@ -53,7 +53,6 @@ BATTERY=1
 
 # This updates after each change of directory:
 function precmd {
-    vcs_info
     settab
     settitle
 }
