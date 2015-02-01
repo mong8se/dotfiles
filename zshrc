@@ -37,8 +37,8 @@ RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
 # customize vcs info on prompt
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
-zstyle ':vcs_info:*' formats       "%F{blue}%s%f%B|%%b%r %K{green} %b %k " 'zsh: %r'
-zstyle ':vcs_info:*' actionformats "%K{red} %a %k %F{blue}%s%f%B|%%b%r %K{green} %b %k " 'zsh: %r'
+zstyle ':vcs_info:*' formats       "%F{blue}%s%f %K{green} %b %k " 'zsh: %r'
+zstyle ':vcs_info:*' actionformats "%K{red} %a %k %F{blue}%s%f %K{green} %b %k " 'zsh: %r'
 
 # Put the penultimate and current directory in the iterm tab:
 function settab { print -Pn "\e]1;%m:%2~\a%" }
@@ -77,6 +77,7 @@ xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 eval "$(fasd --init auto)"
 alias v='f -e vim' # quick opening files with vim
 
+#fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # pass password store
