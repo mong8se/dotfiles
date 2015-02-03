@@ -46,6 +46,10 @@ namespace :vim do
   task :update do
     exec "MYVIMRC=vim/vimrc vim -u vim/vimrc.plug +PlugUpdate +qall"
   end
+  desc "clean vim plugins"
+  task :cleanup do
+    exec "MYVIMRC=vim/vimrc vim -u vim/vimrc.plug +PlugClean +qall"
+  end
 end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md]
