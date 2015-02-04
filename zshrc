@@ -89,7 +89,12 @@ function precmd {
     settitle
 }
 
+# enable lazy mode
 alias cd..="cd .."
+alias cd...="cd ../.."
+alias cd....="cd ../../.."
+
+# color ls
 alias ls="ls -G "
 
 if [[ `uname` == Darwin ]] then
