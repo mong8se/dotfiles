@@ -25,6 +25,7 @@ set incsearch " show incremental search results
 " haya14busa/incsearch.vim
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
+
 map g/ <Plug>(incsearch-stay)
 let g:incsearch#auto_nohlsearch = 1
 map n  <Plug>(incsearch-nohl-n)
@@ -177,8 +178,8 @@ function! g:ActivateCR(range)
         execute "normal! \<CR>"
     end
 endfunction
-nnoremap <silent> <CR>   :call g:ActivateCR('.')<CR>
-nnoremap <silent> <S-CR> :call g:ActivateCR('-1')<CR>
+nnoremap <silent> <Leader><CR>   :call g:ActivateCR('.')<CR>
+nnoremap <silent> <Leader><S-CR> :call g:ActivateCR('-1')<CR>
 
 function! g:ScrollBindAllWindows()
   let l:starting_window = winnr()
