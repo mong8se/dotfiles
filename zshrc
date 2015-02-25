@@ -23,6 +23,10 @@ setopt pushd_ignore_dups
 setopt noglobdots
 setopt noshwordsplit
 
+# Completions
+autoload -Uz compinit
+compinit
+
 # Source script if it is readable. Stolen from grml
 xsource() {
     if (( ${#argv} < 1 )) ; then
