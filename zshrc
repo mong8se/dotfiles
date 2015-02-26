@@ -22,10 +22,19 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt noglobdots
 setopt noshwordsplit
+setopt extended_glob
+setopt correct
 
 # Completions
 autoload -Uz compinit
 compinit
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle -e ':completion:*:approximate:*' \
+  max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
 
 # Source script if it is readable. Stolen from grml
 xsource() {
@@ -96,6 +105,7 @@ function precmd {
 alias cd..="cd .."
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
+alias h="history -1000"
 
 # color ls
 alias ls="ls -G "
