@@ -61,21 +61,21 @@ zle -N zle-keymap-select
 function vim_mode_prompt {
     if [[ "$VIM_MODE_PROMPT" == 'C' ]]
     then echo '⌨ '
-    else echo '⟩ '
+    else echo '  '
     fi
     VIM_MODE_PROMPT='I'
 }
 
 autoload -U colors && colors
-PS1='%(1j.[%F{green}%j%f].)%S%(!.%F{red}.%F{blue}) %m %s┃%f$(vim_mode_prompt)'
+PS1='%(1j.[%F{green}%j%f].)%S%(!.%F{red}.%F{blue})│%m│%s%f$(vim_mode_prompt)'
 
 autoload -Uz vcs_info
 RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
 # customize vcs info on prompt
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
-zstyle ':vcs_info:*' formats       "%F{blue}%s%f %K{green} %b %k%%S┃%%s" 'zsh: %r'
-zstyle ':vcs_info:*' actionformats "%F{blue}%s%f %K{red} %a %K{green}%F{red}┃%f %b %k%%S┃%%s" 'zsh: %r'
+zstyle ':vcs_info:*' formats       "%F{blue}%s%f %K{green} %b┃%k" 'zsh: %r'
+zstyle ':vcs_info:*' actionformats "%F{blue}%s%f %K{red} %a┃%K{green} %b┃%k" 'zsh: %r'
 
 # Put the penultimate and current directory in the iterm tab:
 function settab { print -Pn "\e]1;%m:%2~\a%" }
