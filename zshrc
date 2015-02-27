@@ -51,6 +51,7 @@ xsource() {
 }
 
 bindkey -v
+export KEYTIMEOUT=1 # may cause issues with other commands, but reduces delay when hitting esc
 if [[ "$TERM" != emacs ]] ; then
     [[ -z "$terminfo[cuu1]"  ]] || bindkey -M viins "$terminfo[cuu1]"  up-line-or-history
     [[ -z "$terminfo[kcuu1]" ]] || bindkey -M viins "$terminfo[kcuu1]" up-line-or-history
