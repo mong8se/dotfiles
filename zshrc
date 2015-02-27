@@ -92,6 +92,9 @@ function settab { print -Pn "\e]1;%2~\a" }
 # Put the string "hostname:/full/directory/path" in the title bar:
 function settitle { print -Pn "\e]2;%n@%m:%d\a" }
 
+function make_light { print -n "\e]50;SetProfile=light\a" }
+function make_dark  { print -n "\e]50;SetProfile=dark\a" }
+
 REPORTTIME=5
 TIMEFMT=$'\e]9;%J\007 \e[7m %J: %P %Mk \e[0m %U user / %S sys / %E total'
 
