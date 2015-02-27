@@ -1,5 +1,5 @@
 " Base config with vundle
-source $MYVIMRC.plug
+execute 'source' join([$HOME, '.vim', 'vimrc.plug'], '/')
 
 syntax on
 

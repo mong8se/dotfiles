@@ -7,7 +7,7 @@
 
 function! g:LoadRCFiles(...)
   for l:rc_extension in ['mac', 'local', substitute(hostname(), '\..*', '', '')]
-  let l:rc_file = join([$MYVIMRC] + a:000 + [l:rc_extension], '.')
+  let l:rc_file = join([$HOME . '/.vim/vimrc'] + a:000 + [l:rc_extension], '.')
    if filereadable(expand(l:rc_file))
      execute 'source' l:rc_file
    endif
