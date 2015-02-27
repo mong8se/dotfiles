@@ -49,8 +49,17 @@ xsource() {
     return 0
 }
 
-bindkey -v
+function set_iterm_profile { print -n "\e]50;SetProfile=$1\a" }
+function make_light { set_iterm_profile 'light' }
+zle -N make_light
+function make_dark  { set_iterm_profile 'dark'  }
+zle -N make_dark
+
 export KEYTIMEOUT=1 # may cause issues with other commands, but reduces delay when hitting esc
+bindkey -v
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+bindkey '^w' backward-kill-word
 if [[ "$TERM" != emacs ]] ; then
     [[ -z "$terminfo[cuu1]"  ]] || bindkey -M viins "$terminfo[cuu1]"  up-line-or-history
     [[ -z "$terminfo[kcuu1]" ]] || bindkey -M viins "$terminfo[kcuu1]" up-line-or-history
@@ -58,6 +67,11 @@ if [[ "$TERM" != emacs ]] ; then
     # ncurses stuff:
     [[ "$terminfo[kcuu1]" == $'\eO'* ]] && bindkey -M viins "${terminfo[kcuu1]/O/[}" up-line-or-history
     [[ "$terminfo[kcud1]" == $'\eO'* ]] && bindkey -M viins "${terminfo[kcud1]/O/[}" down-line-or-history
+
+    bindkey -M vicmd u undo
+    bindkey -M vicmd U redo
+    bindkey -M vicmd gl make_light
+    bindkey -M vicmd gd make_dark
 fi
 
 function zle-line-init zle-keymap-select {
@@ -93,10 +107,6 @@ function settab     { print -Pn "\e]1;%2~\a" }
 
 # Put the string "hostname:/full/directory/path" in the title bar:
 function settitle   { print -Pn "\e]2;%n@%m:%d\a" }
-
-function set_iterm_profile { print -n "\e]50;SetProfile=$1\a" }
-function make_light { set_iterm_profile 'light' }
-function make_dark  { set_iterm_profile 'dark'  }
 
 REPORTTIME=5
 TIMEFMT=$'\e]9;%J\007 \e[7m %J: %P %Mk \e[0m %U user / %S sys / %E total'
