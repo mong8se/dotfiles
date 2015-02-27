@@ -69,8 +69,8 @@ zle -N zle-keymap-select
 
 function vim_mode_prompt {
     if [[ "$VIM_MODE_PROMPT" == 'C' ]]
-    then echo '⌨ '
-    else echo '  '
+    then print -Pn "⌨ \e]50;CursorShape=0\a"
+    else print -Pn "  \e]50;CursorShape=1\a"
     fi
     VIM_MODE_PROMPT='I'
 }
