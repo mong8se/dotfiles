@@ -105,7 +105,7 @@ function precmd {
 alias cd..="cd .."
 alias cd...="cd ../.."
 alias cd....="cd ../../.."
-alias h="history -1000"
+alias hag="history -1000 | ag "
 
 # color ls
 alias ls="ls -G "
