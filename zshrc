@@ -87,7 +87,7 @@ zstyle ':vcs_info:*' formats       "%F{blue}%s%f %K{green} %b┃%k" 'zsh: %r'
 zstyle ':vcs_info:*' actionformats "%F{blue}%s%f %K{red} %a┃%K{green} %b┃%k" 'zsh: %r'
 
 # Put the penultimate and current directory in the iterm tab:
-function settab { print -Pn "\e]1;%m:%2~\a%" }
+function settab { print -Pn "\e]1;%2~\a" }
 
 # Put the string "hostname:/full/directory/path" in the title bar:
 function settitle { print -Pn "\e]2;%n@%m:%d\a" }
