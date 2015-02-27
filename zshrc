@@ -62,22 +62,24 @@ if [[ "$TERM" != emacs ]] ; then
 fi
 
 function zle-line-init zle-keymap-select {
-    VIM_MODE_PROMPT="${${KEYMAP/vicmd/C}/(main|viins)/I}"
+  case $KEYMAP in
+    vicmd)
+      print -n "\e]50;CursorShape=0\a"
+      VIM_PS1="⌨ "
+      ;;
+    viins|main)
+      print -n "\e]50;CursorShape=1\a"
+      VIM_PS1="  "
+      ;;
+  esac
     zle reset-prompt
 }
+
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-function vim_mode_prompt {
-    if [[ "$VIM_MODE_PROMPT" == 'C' ]]
-    then print -Pn "⌨ \e]50;CursorShape=0\a"
-    else print -Pn "  \e]50;CursorShape=1\a"
-    fi
-    VIM_MODE_PROMPT='I'
-}
-
 autoload -U colors && colors
-PS1='%(1j.[%F{green}%j%f].)%S%(!.%F{red}.%F{blue})│%m│%s%f$(vim_mode_prompt)'
+PS1='%(1j.[%F{green}%j%f].)%S%(!.%F{red}.%F{blue})│%m│%s%f$VIM_PS1'
 
 autoload -Uz vcs_info
 RPS1='${vcs_info_msg_0_}%S %3~ %s'
