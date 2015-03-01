@@ -22,4 +22,6 @@ function __vcs_root_named_directory ()
 
 zstyle ':vcs_info:*:__vcs_root:*' formats '%R' '%S'
 zstyle ':vcs_info:*:__vcs_root:*' actionformats '%R' '%S'
-zsh_directory_name_functions+=(__vcs_root_named_directory)
+
+autoload -Uz add-zsh-hook
+add-zsh-hook -Uz zsh_directory_name __vcs_root_named_directory

@@ -1,20 +1,18 @@
 " Source a local configuration file if available.
 " Takes arguments and constructs filename for example:
 " g:LoadRcFiles('first', 'second', third') would load:
-" ~/.vim/vimrc.first.second.third.mac
-" ~/.vim/vimrc.first.second.third.local
-" ~/.vim/vimrc.first.second.third.hostname
+" mac.first.second.third.vim
+" local.first.second.third.vim
+" hostname.first.second.third.vim
 
 function! g:LoadRCFiles(...)
-  for l:rc_extension in ['mac', 'local', substitute(hostname(), '\..*', '', '')]
-  let l:rc_file = join([$HOME . '/.vim/vimrc'] + a:000 + [l:rc_extension], '.')
-   if filereadable(expand(l:rc_file))
-     execute 'source' l:rc_file
-   endif
+  for l:rc_type in ['mac', 'local', substitute(hostname(), '\..*', '', '')]
+    let l:rc_file = join([l:rc_type] + a:000 + ['vim'], '.')
+    execute 'runtime' l:rc_file
   endfor
 endfunction
 
-set nocompatible
+set nocompatible " in case we bypassed vimrc
 filetype off
 
 call plug#begin('~/.vim/plugged')
@@ -62,7 +60,7 @@ Plug 'scrooloose/syntastic'
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
 
-call g:LoadRCFiles('plug')
+call g:LoadRCFiles('plugs')
 
 call plug#end()
 
