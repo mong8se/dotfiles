@@ -1,0 +1,1 @@
+Plug 'sjl/vitality.vim'

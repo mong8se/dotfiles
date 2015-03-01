@@ -20,10 +20,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
 
-if $TERM_PROGRAM =~ "iTerm"
-  Plug 'sjl/vitality.vim'
-endif
-
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'airblade/vim-gitgutter'

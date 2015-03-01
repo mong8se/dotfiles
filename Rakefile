@@ -40,15 +40,15 @@ end
 namespace :vim do
   desc "install vim plugins"
   task :install do
-    exec "vim -u vim/vimrc.plug +PlugInstall +qall"
+    exec "vim -u vim/plugs.vim +PlugInstall +qall"
   end
   desc "update vim plugins"
   task :update do
-    exec "vim -u vim/vimrc.plug +PlugUpdate +qall"
+    exec "vim -u vim/plugs.vim +PlugUpdate +qall"
   end
   desc "clean vim plugins"
   task :cleanup do
-    exec "vim -u vim/vimrc.plug +PlugClean +qall"
+    exec "vim -u vim/plugs.vim +PlugClean +qall"
   end
 end
 
