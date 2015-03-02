@@ -4,5 +4,5 @@ vim/.netrwhist
 vim/tmp/*
 zsh/logs/*
 zsh/cache/*
-*.local
+**/local.*
 emacs.d/autosaves/*

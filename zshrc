@@ -1,4 +1,5 @@
 DOTFILE_RESOURCES=$HOME/.dotfiles/Resources
+ZSH_HOME=$HOME/.zsh
 HISTSIZE=5000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
@@ -127,10 +128,10 @@ alias hag="history -1000 | ag "
 alias ls="ls -G "
 
 if [[ `uname` == Darwin ]] then
-    xsource "${HOME}/.zsh/mac.zsh"
+    xsource $ZSH_HOME/mac.zsh
 fi
-xsource "${HOME}/.zsh/${HOST%%.*}.zsh"
-xsource $HOME/.zsh/*.plugin.zsh
+xsource "$ZSH_HOME/${HOST%%.*}.zsh"
+xsource $ZSH_HOME/*.plugin.zsh
 
 xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILE_RESOURCES/git-flow-completion/git-flow-completion.zsh"
 
@@ -143,3 +144,5 @@ alias v='f -e vim' # quick opening files with vim
 
 # pass password store
 export PASSWORD_STORE_DIR=~/Dropbox/.password-store
+
+xsource $ZSH_HOME/local.zsh
