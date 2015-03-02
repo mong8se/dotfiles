@@ -71,7 +71,7 @@ set scrolloff=3
 set cursorline " highlight current line
 set virtualedit=block,insert " allow cursor to go where there is nothing
 
-set list listchars=tab:┠╌,trail:▁,extends:▶,precedes:◀
+set list listchars=tab:┠╌,trail:⎵,extends:▶,precedes:◀
 
 " so complex operations dont display until finished
 set lazyredraw
