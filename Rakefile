@@ -1,8 +1,7 @@
 require 'rake'
-require 'erb'
 require 'socket'
 
-IS_MAC = RUBY_PLATFORM.downcase.include?('darwin') ? 'mac' : nil
+IS_MAC = RUBY_PLATFORM.downcase.include?('darwin') && 'mac'
 
 if IS_MAC && File.exist?('/etc/zshenv')
  puts(<<-'WARNING')
@@ -23,11 +22,10 @@ namespace :submodule do
   desc "init git submodules"
   task :init do
     system 'git submodule update --init --recursive'
-    Rake::Task['submodule:update'].invoke
   end
 
   desc "update git submodules to their latest tag"
-  task :update do
+  task :update => 'submodule:init' do
     system <<-'UPDATE'
       git submodule foreach 'git fetch && git fetch --tags && git checkout $(git describe --tags $(git rev-list --tags --max-count=1))';
       cd Resources/fasd;
@@ -54,7 +52,7 @@ end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md]
 HOST = Socket.gethostname.gsub(/\..+$/, '')
-VALID_EXTENSIONS = ['erb', 'conf', 'd', 'local', HOST, IS_MAC].compact
+VALID_EXTENSIONS = ['conf', 'd', 'local', HOST, IS_MAC].compact
 VALID = %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
 
 REPO_LOCATION = File.dirname(__FILE__)
@@ -106,29 +104,23 @@ task :implode do
   delete_files(true)
 end
 
+desc 'install new and remove old symlinks'
+task :update => :install do
+  delete_files(false, true)
+end
+
 def replace_file(file)
   FileUtils.remove_entry_secure dot_file(file), true
   link_file(file)
 end
 
 def link_file(file)
-  if file =~ /.erb$/
-    puts_message 'generating', file
-    File.open(dot_file(file), 'w') do |new_file|
-      new_file.write ERB.new(File.read(file)).result(binding)
-    end
-  else
-    puts_message 'linking', file
-    File.symlink repo_file(file), dot_file(file)
-  end
-end
-
-def name(file)
-    file.sub('.erb', '')
+  puts_message 'linking', file
+  File.symlink repo_file(file), dot_file(file)
 end
 
 def dot_file(file)
-  File.join DOT_LOCATION, ".#{name(file)}"
+  File.join DOT_LOCATION, ".#{file}"
 end
 
 def repo_file(file)
@@ -136,7 +128,7 @@ def repo_file(file)
 end
 
 def format_message(verb, file)
-  "#{verb} ~/.#{name(file)}"
+  "#{verb} ~/.#{file}"
 end
 
 def puts_message(verb, file)
@@ -147,9 +139,7 @@ def print_prompt(verb, file)
   print format_message(verb, file), '? [ynaq] '
 end
 
-def delete_files(implode=false)
-  delete_all = false
-
+def delete_files(implode=false, delete_all=false)
   Dir["#{ENV['HOME']}/.[^.]*"].each do |file_name|
     next unless File.symlink?(file_name) && File.dirname(__FILE__) == File.dirname(File.readlink(file_name))
     next unless implode || !File.exist?(repo_file(file_name))
@@ -175,3 +165,5 @@ def delete_files(implode=false)
     end
   end
 end
+
+task :default => 'update'
