@@ -6,7 +6,7 @@
 " hostname.first.second.third.vim
 
 function! g:LoadRCFiles(...)
-  for l:rc_type in ['mac', 'local', substitute(hostname(), '\..*', '', '')]
+  for l:rc_type in ['mac', substitute(hostname(), '\..*', '', ''), 'local']
     let l:rc_file = join([l:rc_type] + a:000 + ['vim'], '.')
     execute 'runtime' l:rc_file
   endfor
