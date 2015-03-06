@@ -60,8 +60,11 @@ DOT_LOCATION  = ENV['HOME']
 desc "install .dotfiles into home directory"
 task :install do
   install_files
-  Dir['config/*/*'].each do |dir|
-    install_files dir
+  Dir['config/*'].each do |dir|
+    unless File.exist?(dot_file(dir))
+      Dir.mkdir(dot_file(dir))
+    end
+    install_files File.join(dir, '*')
   end
 end
 
