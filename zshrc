@@ -29,6 +29,9 @@ setopt correct
 # Completions
 autoload -Uz compinit
 compinit
+setopt menu_complete
+
+zstyle ':completion:*' menu select
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle ':completion:*' completer _complete _match _approximate
