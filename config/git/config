@@ -5,11 +5,15 @@
   local   = blue
   remote  = green
 [color "status"]
+  header    = normal
   added     = green reverse
   changed   = blue
   untracked = red
+  nobranch  = red ul
+[column]
+  ui = auto
 [core]
-  excludesfile = ~/.gitignore_global
+  excludesfile = ~/.config/git/ignore
   whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   autocrlf     = input
 [user]
@@ -21,11 +25,14 @@
   prompt = true
 [difftool]
   prompt = true
+[alias]
+  sdo ="!sh -c 'git status --porcelain | awk $1==\"'"
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
   default = simple
 [include]
-  path = ~/.gitconfig.local
+  path = ~/.config/git/config.mac
+  path = ~/.config/git/config.local
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
