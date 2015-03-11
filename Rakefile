@@ -31,6 +31,9 @@ namespace :submodule do
       cd Resources/fasd;
       echo 'Install fasd...';
       make install;
+      cd ../fzf;
+      echo 'Install fzf...';
+      yes | ./install
     UPDATE
   end
 end
