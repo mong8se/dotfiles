@@ -111,8 +111,8 @@ RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
 # customize vcs info on prompt
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
-zstyle ':vcs_info:*' formats       "%F{blue}%s%f %K{green} %b┃%k" 'zsh: %r'
-zstyle ':vcs_info:*' actionformats "%F{blue}%s%f %K{red} %a┃%K{green} %b┃%k" 'zsh: %r'
+zstyle ':vcs_info:*' formats       "%F{blue}%s %%S %b┃%%s%f" 'zsh: %r'
+zstyle ':vcs_info:*' actionformats "%F{blue}%s %%S%F{red} %a┃%F{blue} %b┃%f%%s" 'zsh: %r'
 
 # Put the penultimate and current directory in the iterm tab:
 function settab     { print -Pn "\e]1;%2~\a" }
