@@ -203,7 +203,6 @@ if $TERM_PROGRAM !~ "iTerm"
   set background=dark
 endif
 colorscheme base16-eighties
-set t_Co=16
 
 " delimitMate
 let delimitMate_expand_space = 1
@@ -224,10 +223,6 @@ let g:Gitv_WrapLines = 1
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
-" supertab youcompleteme and ultisnips
-let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 " Unite
 let g:unite_source_history_yank_enable = 1
