@@ -81,11 +81,19 @@ fi
 function zle-line-init zle-keymap-select {
   case $KEYMAP in
     vicmd)
+      if [ $TMUX ]; then
+        print -n "\e[1 q"
+      else
       print -n "\e]50;CursorShape=0\a"
+      fi
       VIM_PS1="⌨ "
       ;;
     viins|main)
+      if [ $TMUX ]; then
+        print -n "\e[5 q"
+      else
       print -n "\e]50;CursorShape=1\a"
+      fi
       VIM_PS1="  "
       ;;
   esac
