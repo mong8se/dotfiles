@@ -84,7 +84,7 @@ function zle-line-init zle-keymap-select {
       if [ $TMUX ]; then
         print -n "\e[1 q"
       else
-      print -n "\e]50;CursorShape=0\a"
+        print -n "\e]50;CursorShape=0\a"
       fi
       VIM_PS1="⌨ "
       ;;
@@ -92,7 +92,7 @@ function zle-line-init zle-keymap-select {
       if [ $TMUX ]; then
         print -n "\e[5 q"
       else
-      print -n "\e]50;CursorShape=1\a"
+        print -n "\e]50;CursorShape=1\a"
       fi
       VIM_PS1="  "
       ;;
