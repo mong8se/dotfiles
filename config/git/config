@@ -13,7 +13,6 @@
 [column]
   ui = auto
 [core]
-  excludesfile = ~/.config/git/ignore
   whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   autocrlf     = input
 [user]
@@ -26,13 +25,10 @@
 [difftool]
   prompt = true
 [alias]
-  sdo ="!sh -c 'git status --porcelain | awk $1==\"'"
+  sdo = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
   default = simple
-[include]
-  path = ~/.config/git/config.mac
-  path = ~/.config/git/config.local
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -41,3 +37,6 @@
 	trustExitCode = true
 [help]
 	autocorrect = 15
+[include]
+  path = config.mac
+  path = config.local
