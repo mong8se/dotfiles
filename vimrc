@@ -206,7 +206,7 @@ colorscheme base16-eighties
 
 " delimitMate
 let delimitMate_expand_space = 1
-let delimitMate_expand_cr = 1
+let delimitMate_expand_cr    = 2
 
 " Fugitive
 nmap <leader>gs :Gstatus<cr>
