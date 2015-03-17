@@ -59,7 +59,7 @@ zle -N make_light
 function make_dark  { set_iterm_profile 'dark'  }
 zle -N make_dark
 
-export KEYTIMEOUT=1 # may cause issues with other commands, but reduces delay when hitting esc
+set -sg escape-time 0 # may cause issues with other commands, but reduces delay when hitting esc
 bindkey -v
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
@@ -79,24 +79,24 @@ if [[ "$TERM" != emacs ]] ; then
 fi
 
 function zle-line-init zle-keymap-select {
+  if [ $TMUX ]; then
+    print -n "\ePtmux;\e"
+  fi
+  print -n "\e]50;CursorShape="
   case $KEYMAP in
     vicmd)
-      if [ $TMUX ]; then
-        print -n "\e[1 q"
-      else
-        print -n "\e]50;CursorShape=0\a"
-      fi
+      print -n "0"
       VIM_PS1="⌨ "
       ;;
     viins|main)
-      if [ $TMUX ]; then
-        print -n "\e[5 q"
-      else
-        print -n "\e]50;CursorShape=1\a"
-      fi
+      print -n "1"
       VIM_PS1="  "
       ;;
   esac
+  print -n "\a"
+  if [ $TMUX ]; then
+    print -n "\e\\"
+  fi
   zle reset-prompt
 }
 
@@ -148,10 +148,26 @@ xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # fasd
 eval "$(fasd --init auto)"
-alias v='f -e vim' # quick opening files with vim
+alias v="f -e ${EDITOR:-vim}" # quick opening files with vim
 
 #fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fe() {
+  local file
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}
+
+# Equivalent to above, but opens it with `open` command
+fo() {
+  local file
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && open "$file"
+}
 
 # pass password store
 export PASSWORD_STORE_DIR=~/Dropbox/.password-store
