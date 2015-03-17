@@ -4,11 +4,13 @@
   current = blue reverse
   local   = blue
   remote  = green
+  upstream = green ul
 [color "status"]
   header    = normal
   added     = green reverse
   changed   = blue
-  untracked = red
+  untracked = black
+  branch    = blue reverse
   nobranch  = red ul
 [column]
   ui = auto
@@ -25,7 +27,7 @@
 [difftool]
   prompt = true
 [alias]
-  sdo = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
+  fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
   default = simple
