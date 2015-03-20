@@ -30,6 +30,8 @@ Plug 'tpope/vim-endwise',      { 'for': 'ruby' }
 Plug 'tpope/vim-rake',         { 'for': 'ruby' }
 Plug 'slim-template/vim-slim', { 'for': 'ruby' }
 
+Plug 'othree/html5.vim'
+
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -46,8 +48,9 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/unite.vim'
 " Plug 'Shougo/neomru.vim'
 " Plug 'Shougo/vimfiler.vim'
-"
-Plug 'jeetsukumaran/vim-filebeagle'
+
+Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-dirvish'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'
