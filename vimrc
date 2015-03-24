@@ -219,6 +219,7 @@ nmap <Leader>gt :GitGutterToggle<CR>
 
 " gitv
 let g:Gitv_WrapLines = 1
+let g:Gitv_OpenHorizontal = 'auto'
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -271,6 +272,10 @@ elseif executable('ack-grep')
         \ '-i --no-heading --no-color -k -H'
   let g:unite_source_grep_recursive_opt = ''
 endif
+
+"Dirvish
+nnoremap <leader>f :Dirvish<cr>
+nnoremap <leader>o :Dirvish %<cr>
 
 "------------------------------------------------------------
 " LOCALS
