@@ -30,6 +30,8 @@ Plug 'tpope/vim-endwise',      { 'for': 'ruby' }
 Plug 'tpope/vim-rake',         { 'for': 'ruby' }
 Plug 'slim-template/vim-slim', { 'for': 'ruby' }
 
+Plug 'dag/vim-fish', { 'for': 'fish' }
+
 Plug 'othree/html5.vim'
 
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
