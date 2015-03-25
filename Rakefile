@@ -55,7 +55,7 @@ end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md config]
 HOST = Socket.gethostname.gsub(/\..+$/, '')
-VALID_EXTENSIONS = ['conf', 'd', 'local', HOST, IS_MAC].compact
+VALID_EXTENSIONS = ['vim', 'zsh', 'fish', 'bash', 'conf', 'd', 'local', HOST, IS_MAC].compact
 
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION  = ENV['HOME']
@@ -64,10 +64,7 @@ desc "install .dotfiles into home directory"
 task :install do
   install_files
   Dir['config/*'].each do |dir|
-    unless File.exist?(dot_file(dir))
-      Dir.mkdir(dot_file(dir))
-    end
-    install_files File.join(dir, '*')
+    install_directory(dir)
   end
 end
 
@@ -84,6 +81,13 @@ end
 desc 'install new and remove old symlinks'
 task :update => :install do
   delete_files(false, true)
+end
+
+def install_directory(dir)
+  unless File.exist?(dot_file(dir))
+    Dir.mkdir(dot_file(dir))
+  end
+  install_files File.join(dir, '*'), true
 end
 
 def replace_file(file)
@@ -120,7 +124,7 @@ def print_prompt(verb, file)
   print format_message(verb, file), '? [ynaq] '
 end
 
-def install_files(dir='*')
+def install_files(dir='*', recurse=false)
   replace_all = false
 
   Dir[dir].each do |file|
@@ -131,7 +135,9 @@ def install_files(dir='*')
       next
     end
 
-    if File.exist?(dot_file(file))
+    if recurse && File.directory?(file)
+      install_directory(file)
+    elsif File.exist?(dot_file(file))
       if File.identical? file, dot_file(file)
         puts_message 'identical', file
       elsif replace_all
@@ -158,7 +164,7 @@ end
 
 def delete_files(implode=false, delete_all=false)
     delete_corrrect_files("#{ENV['HOME']}/.[^.]*", implode, delete_all)
-    delete_corrrect_files("#{ENV['HOME']}/.config/*/*", implode, delete_all)
+    delete_corrrect_files("#{ENV['HOME']}/.config/**/*", implode, delete_all)
 end
 
 def delete_corrrect_files(files, implode, delete_all)
