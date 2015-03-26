@@ -113,7 +113,7 @@ def repo_file(file)
 end
 
 def format_message(verb, file)
-  "#{verb} ~/.#{file}"
+  "#{verb} #{file.start_with?('/') ? '' : '~/.' }#{file}"
 end
 
 def puts_message(verb, file)
@@ -163,20 +163,36 @@ def install_files(dir='*', recurse=false)
 end
 
 def delete_files(implode=false, delete_all=false)
-    delete_corrrect_files("#{ENV['HOME']}/.[^.]*", implode, delete_all)
-    delete_corrrect_files("#{ENV['HOME']}/.config/**/*", implode, delete_all)
+    delete_all = delete_correct_files("#{ENV['HOME']}/.[^.]*", implode, delete_all)
+    delete_correct_files("#{ENV['HOME']}/.config/**/*", implode, delete_all)
 end
 
-def delete_corrrect_files(files, implode, delete_all)
+def delete_correct_files(files, implode, delete_all)
   Dir[files].each do |file_name|
     next unless File.symlink?(file_name)
     target = File.readlink(file_name)
     next unless File.dirname(target).start_with?(File.dirname(__FILE__))
     next unless implode || !File.exist?(target)
 
+    delete_me, delete_all = delete_prompt(file_name, delete_all)
+
+    if delete_me || delete_all
+      File.delete(file_name)
+      dir_name = File.dirname(file_name)
+      if Dir.entries(dir_name).length == 2
+        delete_me_dir, delete_all_dir = delete_prompt(dir_name, delete_all, 'remov%s empty directory')
+        Dir.rmdir(dir_name) if delete_me_dir || delete_all_dir
+      end
+    end
+  end
+
+  return delete_all
+end
+
+def delete_prompt(file_name, delete_all, prompt='delet%s')
     delete_me = false
     unless delete_all
-      print_prompt 'delete', file_name
+      print_prompt prompt % 'e', file_name
       case $stdin.gets.chomp
       when 'y'
         delete_me = true
@@ -188,12 +204,12 @@ def delete_corrrect_files(files, implode, delete_all)
     end
 
     if delete_me || delete_all
-      File.delete(file_name)
-      puts "deleting #{file_name}"
+      puts_message prompt % 'ing', file_name
     else
       puts_message 'skipping', file_name
     end
-  end
+
+    return delete_me, delete_all
 end
 
 task :default => 'update'
