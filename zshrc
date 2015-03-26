@@ -1,8 +1,8 @@
 DOTFILE_RESOURCES=$HOME/.dotfiles/Resources
-ZSH_HOME=$HOME/.zsh
+ZDOTDIR=$HOME/.config/zsh
 HISTSIZE=5000
 SAVEHIST=10000
-HISTFILE=~/.zsh_history
+HISTFILE=$ZDOTDIR/history
 unsetopt auto_cd
 unsetopt beep
 unsetopt clobber
@@ -139,10 +139,10 @@ alias hag="history -1000 | ag "
 alias ls="ls -G "
 
 if [[ `uname` == Darwin ]] then
-    xsource $ZSH_HOME/mac.zsh
+    xsource $ZDOTDIR/mac.zsh
 fi
-xsource "$ZSH_HOME/${HOST%%.*}.zsh"
-xsource $ZSH_HOME/*.plugin.zsh
+xsource "$ZDOTDIR/${HOST%%.*}.zsh"
+xsource $ZDOTDIR/*.plugin.zsh
 
 xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILE_RESOURCES/git-flow-completion/git-flow-completion.zsh"
 
@@ -172,4 +172,4 @@ fo() {
 # pass password store
 export PASSWORD_STORE_DIR=~/Dropbox/.password-store
 
-xsource $ZSH_HOME/local.zsh
+xsource $ZDOTDIR/local.zsh
