@@ -199,7 +199,7 @@ endif
 " PLUGINS
 
 " If we're not in iterm, specifically request dark profile
-if $TERM_PROGRAM !~ "iTerm"
+if has('nvim') || $TERM_PROGRAM !~ "iTerm"
   set background=dark
 endif
 colorscheme base16-eighties
