@@ -276,8 +276,11 @@ vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <leader>r :CtrlSFOpen<CR>
 
 " Dirvish
-nnoremap <leader>f :Dirvish<cr>
-nnoremap <leader>o :Dirvish %<cr>
+nnoremap <silent> <leader>f :Dirvish<cr>
+nnoremap <silent> <leader>o :Dirvish %<cr>
+
+" CtrlSpace
+nnoremap <silent> <leader><Space> :CtrlSpace<cr>
 
 "------------------------------------------------------------
 " LOCALS
