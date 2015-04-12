@@ -7,8 +7,11 @@
 
 function! g:LoadRCFiles(...)
   for l:rc_type in ['mac', substitute(hostname(), '\..*', '', ''), 'local']
+    if l:rc_type == 'mac' && !has('macunix')
+      continue
+    endif
     let l:rc_file = join([l:rc_type] + a:000 + ['vim'], '.')
-    runtime l:rc_file
+    execute 'runtime' l:rc_file
   endfor
 endfunction
 
