@@ -8,12 +8,14 @@
 function! g:LoadRCFiles(...)
   for l:rc_type in ['mac', substitute(hostname(), '\..*', '', ''), 'local']
     let l:rc_file = join([l:rc_type] + a:000 + ['vim'], '.')
-    execute 'runtime' l:rc_file
+    runtime l:rc_file
   endfor
 endfunction
 
 set nocompatible " in case we bypassed vimrc
 filetype off
+
+set rtp+=~/.dotfiles/Resources/fzf
 
 call plug#begin('~/.vim/plugged')
 
@@ -45,21 +47,14 @@ Plug 'tommcdo/vim-lion'
 Plug 'AndrewRadev/splitjoin.vim'
 
 Plug 'haya14busa/incsearch.vim'
-
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/unite.vim'
-" Plug 'Shougo/neomru.vim'
-" Plug 'Shougo/vimfiler.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'szw/vim-ctrlspace'
 
 Plug 'justinmk/vim-sneak'
 Plug 'justinmk/vim-dirvish'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'
-
-" Plug 'ervandew/supertab'
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
 
 call g:LoadRCFiles('plugs')
 

@@ -225,55 +225,57 @@ let g:Gitv_OpenHorizontal = 'auto'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-" Unite
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-if has('ruby')
-  call unite#filters#sorter_default#use(['sorter_selecta'])
-else
-  call unite#filters#sorter_default#use(['sorter_rank'])
-endif
-
-nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files    -prompt-direction=below -start-insert -short-source-names file_rec/async:!<cr>
-nnoremap <leader>y :<C-u>Unite           -buffer-name=yank      history/yank<cr>
-nnoremap <leader>b :<C-u>Unite -no-split -buffer-name=buffer    buffer<cr>
-nnoremap <leader>/ :<C-u>Unite -no-split -buffer-name=search   -auto-preview grep:.<cr>
-nnoremap <leader>l :<C-u>Unite -no-split -buffer-name=lines    -prompt-direction=below -start-insert line<cr>
-nnoremap <leader>c :<C-u>Unite           -buffer-name=commands -prompt-direction=below -start-insert command<CR>
-nnoremap <leader>r :<C-u>UniteResume<cr>
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j> <Plug>(unite_select_next_line)
-  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+" fzf
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
 endfunction
 
-if executable('ag')
-  " Use ag in unite grep source.
-  let g:unite_source_grep_command       = 'ag'
-  let g:unite_source_grep_default_opts  =
-        \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-  " Use pt in unite grep source.
-  " https://github.com/monochromegane/the_platinum_searcher
-  let g:unite_source_grep_command       = 'pt'
-  let g:unite_source_grep_default_opts  = '--nogroup --nocolor'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-  " Use ack in unite grep source.
-  let g:unite_source_grep_command       = 'ack-grep'
-  let g:unite_source_grep_default_opts  =
-        \ '-i --no-heading --no-color -k -H'
-  let g:unite_source_grep_recursive_opt = ''
-endif
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
 
-"Dirvish
+nnoremap <silent> <Leader>b :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
+
+nnoremap <leader>t :FZF<CR>
+
+function! s:line_handler(l)
+  let keys = split(a:l, ':\t')
+  exec 'buf ' . keys[0]
+  exec keys[1]
+  normal! ^zz
+endfunction
+
+function! s:buffer_lines()
+  let res = []
+  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
+  endfor
+  return res
+endfunction
+
+command! FZFLines call fzf#run({
+\   'source':  <sid>buffer_lines(),
+\   'sink':    function('<sid>line_handler'),
+\   'options': '--extended --nth=3..',
+\   'down':    '60%'
+\})
+
+nnoremap <leader>l :FZFLines<CR>
+
+" CtrlSF
+nmap     <leader>/ <Plug>CtrlSFPrompt
+vmap     <leader>/ <Plug>CtrlSFVwordExec
+nnoremap <leader>r :CtrlSFOpen<CR>
+
+" Dirvish
 nnoremap <leader>f :Dirvish<cr>
 nnoremap <leader>o :Dirvish %<cr>
 
