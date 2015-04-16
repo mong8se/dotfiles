@@ -27,7 +27,7 @@ Plug 'bling/vim-airline'
 
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify' " ]c [c
 
 Plug 'vim-ruby/vim-ruby',      { 'for': 'ruby' }
 Plug 'tpope/vim-rails',        { 'for': 'ruby' }

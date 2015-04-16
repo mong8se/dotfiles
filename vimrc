@@ -214,12 +214,14 @@ nmap <leader>gc :Gcommit<cr>
 nmap <leader>gl :Glog<cr>
 nmap <leader>gd :Gdiff<cr>
 nmap <leader>gb :Gbrowse<cr>
-" vim-gitgutter
-nmap <Leader>gt :GitGutterToggle<CR>
 
 " gitv
 let g:Gitv_WrapLines = 1
 let g:Gitv_OpenHorizontal = 'auto'
+
+" vim-signify
+let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
+nmap <Leader>gt :SignifyToggle<CR>
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
