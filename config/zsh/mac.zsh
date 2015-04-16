@@ -9,15 +9,6 @@ function bman { gunzip < `man -w $@` | groff -Thtml -man | bcat }
 
 alias flush_dns='/usr/bin/dscacheutil -flushcache'
 
-if [[ $TERM_PROGRAM == iTerm.app ]];then
-  # Turn off xon/xoff so that ctrl-s is passed through
-  stty -ixon
-
-  export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
-else
-  export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a Terminal"'
-fi
-
 function rv {
   local file
    file=$(fzf --query="$1" --select-1 --exit-0)
