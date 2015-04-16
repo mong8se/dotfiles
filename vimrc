@@ -222,6 +222,7 @@ let g:Gitv_OpenHorizontal = 'auto'
 " vim-signify
 let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
 nmap <Leader>gt :SignifyToggle<CR>
+nmap <leader>gh :SignifyToggleHighlight<CR>
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
