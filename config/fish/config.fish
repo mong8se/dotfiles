@@ -7,6 +7,14 @@ function z
   cd (fasd -d -e 'printf %s' "$argv")
 end
 
+function fe
+  set tmp $TMPDIR/fzf.result
+  fzf --query="$argv[1]" --select-1 --exit-0 > $tmp
+  if [ (cat $tmp | wc -l) -gt 0 ]
+    nvim (cat $tmp)
+  end
+end
+
 function xsource -d "Source list of files if they exist."
   set -l fish_home ~/.config/fish
   for file in $argv
