@@ -39,4 +39,4 @@ if test `uname`="Darwin"
   xsource mac.fish
 end
 
-xsource local.fish
+xsource (hostname -s).fish local.fish

@@ -13,6 +13,11 @@ Config Order
     1. mac.vim
     1. hostname.vim
     1. local.vim
+* fish
+    1. config.fish
+    1. mac.fish
+    1. hostname.fish
+    1. local.fish
 * zsh
     1. zshrc
     1. mac.zsh
