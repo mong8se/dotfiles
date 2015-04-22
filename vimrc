@@ -212,11 +212,11 @@ let delimitMate_expand_space = 1
 let delimitMate_expand_cr    = 2
 
 " Fugitive
-nmap <leader>gs :Gstatus<cr>
-nmap <leader>gc :Gcommit<cr>
-nmap <leader>gl :Glog<cr>
-nmap <leader>gd :Gdiff<cr>
-nmap <leader>gb :Gbrowse<cr>
+nmap <silent> <leader>gs :Gstatus<cr>
+nmap <silent> <leader>gc :Gcommit<cr>
+nmap <silent> <leader>gl :Glog<cr>
+nmap <silent> <leader>gd :Gdiff<cr>
+nmap <silent> <leader>gb :Gbrowse<cr>
 
 " gitv
 let g:Gitv_WrapLines = 1
@@ -224,62 +224,20 @@ let g:Gitv_OpenHorizontal = 'auto'
 
 " vim-signify
 let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
-nmap <Leader>gt :SignifyToggle<CR>
-nmap <leader>gh :SignifyToggleHighlight<CR>
+nmap <silent> <Leader>gt :SignifyToggle<CR>
+nmap <silent> <leader>gh :SignifyToggleHighlight<CR>
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 " fzf
-function! s:buflist()
-  redir => ls
-  silent ls
-  redir END
-  return split(ls, '\n')
-endfunction
-
-function! s:bufopen(e)
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
-
-nnoremap <silent> <Leader>b :call fzf#run({
-\   'source':  reverse(<sid>buflist()),
-\   'sink':    function('<sid>bufopen'),
-\   'options': '+m',
-\   'down':    len(<sid>buflist()) + 2
-\ })<CR>
-
-nnoremap <leader>t :FZF<CR>
-
-function! s:line_handler(l)
-  let keys = split(a:l, ':\t')
-  exec 'buf ' . keys[0]
-  exec keys[1]
-  normal! ^zz
-endfunction
-
-function! s:buffer_lines()
-  let res = []
-  for b in filter(range(1, bufnr('$')), 'buflisted(v:val)')
-    call extend(res, map(getbufline(b,0,"$"), 'b . ":\t" . (v:key + 1) . ":\t" . v:val '))
-  endfor
-  return res
-endfunction
-
-command! FZFLines call fzf#run({
-\   'source':  <sid>buffer_lines(),
-\   'sink':    function('<sid>line_handler'),
-\   'options': '--extended --nth=3..',
-\   'down':    '60%'
-\})
-
-nnoremap <leader>l :FZFLines<CR>
+nnoremap <silent> <leader>t :FZF<CR>
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
 vmap     <leader>/ <Plug>CtrlSFVwordExec
-nnoremap <leader>r :CtrlSFOpen<CR>
+nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 
 " Dirvish
 nnoremap <silent> <leader>f :Dirvish<cr>
@@ -287,6 +245,12 @@ nnoremap <silent> <leader>o :Dirvish %<cr>
 
 " CtrlSpace
 nnoremap <silent> <leader><Space> :CtrlSpace<cr>
+" nnoremap <silent> <leader>t :CtrlSpace O<cr>
+let g:ctrlspace_save_workspace_on_exit = 1
+let g:ctrlspace_save_workspace_on_switch = 1
+let g:ctrlspace_load_last_workspace_on_start = 1
+let g:ctrlspace_cache_dir = "~/.vim"
+" let g:ctrlspace_use_mouse_and_arrows_in_term = 1
 
 "------------------------------------------------------------
 " LOCALS
