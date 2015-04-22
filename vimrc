@@ -223,7 +223,7 @@ let g:Gitv_WrapLines = 1
 let g:Gitv_OpenHorizontal = 'auto'
 
 " vim-signify
-let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
+let g:signify_vcs_list = [ 'git', 'svn', 'hg' ]
 nmap <silent> <Leader>gt :SignifyToggle<CR>
 nmap <silent> <leader>gh :SignifyToggleHighlight<CR>
 
