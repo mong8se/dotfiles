@@ -1,7 +1,7 @@
 #!/bin/env fish
 
 function fish_greeting
-  if test -x (which figlet)
+  if type -P (which figlet) > /dev/null; and test -x (which figlet)
     set_color red
     hostname -s | figlet -cf thin
     set_color normal
