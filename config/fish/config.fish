@@ -1,4 +1,15 @@
 #!/bin/env fish
+
+function fish_greeting
+  if test -x (which figlet)
+    set_color red
+    hostname -s | figlet -cf thin
+    set_color normal
+  end
+end
+
+set -Ux EDITOR nvim
+
 function -e fish_preexec _run_fasd
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
 end
