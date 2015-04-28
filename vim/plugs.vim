@@ -24,6 +24,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
+" Plug 'zhaocai/GoldenView.Vim'
+Plug 'roman/golden-ratio'
 
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
@@ -50,12 +52,12 @@ Plug 'tommcdo/vim-lion'                " gl
 Plug 'AndrewRadev/splitjoin.vim'       " gJ
 Plug 'tommcdo/vim-exchange'            " cx
 
-Plug 'haya14busa/incsearch.vim'
-Plug 'dyng/ctrlsf.vim'
-Plug 'szw/vim-ctrlspace'
+Plug 'haya14busa/incsearch.vim'        " /
+Plug 'dyng/ctrlsf.vim'                 " leader /
+Plug 'szw/vim-ctrlspace'               " leader leader
 
-Plug 'justinmk/vim-sneak'
-Plug 'justinmk/vim-dirvish'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'jeetsukumaran/vim-filebeagle'    " leader f
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'

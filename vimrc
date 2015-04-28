@@ -31,12 +31,12 @@ map ?  <Plug>(incsearch-backward)
 
 map g/ <Plug>(incsearch-stay)
 let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+map n  <Plug>(incsearch-nohl-n)zz
+map N  <Plug>(incsearch-nohl-N)zz
+map *  <Plug>(incsearch-nohl-*)zz
+map #  <Plug>(incsearch-nohl-#)zz
+map g* <Plug>(incsearch-nohl-g*)zz
+map g# <Plug>(incsearch-nohl-g#)zz
 let g:incsearch#magic = '\v'
 
 " Modelines have historically been a source of security vulnerabilities.
@@ -154,14 +154,6 @@ function! g:ToggleRelativeNumber()
 endfunction
 nnoremap <silent> <Leader>n :call g:ToggleRelativeNumber()<CR>
 
-" Always keep current search result centered
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
-
 " add blank line without entering insert mode
 function! g:ActivateCR(range)
     if empty(&buftype)
@@ -239,18 +231,22 @@ nmap     <leader>/ <Plug>CtrlSFPrompt
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 
-" Dirvish
-nnoremap <silent> <leader>f :Dirvish<cr>
-nnoremap <silent> <leader>o :Dirvish %<cr>
-
 " CtrlSpace
 nnoremap <silent> <leader><Space> :CtrlSpace<cr>
 " nnoremap <silent> <leader>t :CtrlSpace O<cr>
-let g:ctrlspace_save_workspace_on_exit = 1
-let g:ctrlspace_save_workspace_on_switch = 1
+let g:ctrlspace_save_workspace_on_exit       = 1
+let g:ctrlsspace_save_workspace_on_switch    = 1
 let g:ctrlspace_load_last_workspace_on_start = 1
-let g:ctrlspace_cache_dir = "~/.vim"
-" let g:ctrlspace_use_mouse_and_arrows_in_term = 1
+let g:ctrlspace_cache_dir                    = "~/.vim"
+
+" Golden Ratio
+nmap <leader>gr <Plug>(golden_ratio_toggle)
+
+" easy motion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase  = 1 " Turn on case insensitive feature
+nmap s <Plug>(easymotion-s2)
+nmap <leader>s <Plug>(easymotion-sn)
 
 "------------------------------------------------------------
 " LOCALS
