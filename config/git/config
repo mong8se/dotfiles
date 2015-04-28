@@ -10,7 +10,7 @@
   added     = green reverse
   changed   = blue
   untracked = black
-  branch    = blue reverse
+  branch    = blue ul
   nobranch  = red ul
 [column]
   ui = auto
