@@ -71,7 +71,6 @@ set autoindent
 
 set title
 set scrolloff=3
-set cursorline " highlight current line
 set virtualedit=block,insert " allow cursor to go where there is nothing
 
 set list listchars=tab:┠╌,trail:⎵,extends:▶,precedes:◀
@@ -106,6 +105,13 @@ if has('clipboard')
         set clipboard=unnamed
     endif
 endif
+
+" cursorline only for active window
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
 
 "------------------------------------------------------------
 " MAPPINGS
@@ -240,7 +246,7 @@ let g:ctrlspace_load_last_workspace_on_start = 1
 let g:ctrlspace_cache_dir                    = "~/.vim"
 
 " Golden Ratio
-nmap <leader>gr <Plug>(golden_ratio_toggle)
+nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
 
 " easy motion
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
