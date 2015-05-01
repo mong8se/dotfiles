@@ -3,7 +3,7 @@
 function fish_greeting
   if type -P (which figlet) > /dev/null; and test -x (which figlet)
     set_color red
-    hostname -s | figlet -cf thin
+    hostname -s | figlet -c -w $COLUMNS -f thin
     set_color normal
   end
 end
