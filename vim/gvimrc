@@ -22,10 +22,17 @@ if has('macunix')
   set transparency=7
 
   let g:vimfiler_quick_look_command = 'qlmanage -p'
+
+  let g:fzf_launcher = "osascript ~/.vim/macvim_fzf.scpt %s \"\$PWD\""
+
 elseif has('unix')
+
   set guifont=Inconsolata\ Medium\ 12
+
 elseif has('win32')
+
   set guifont=Consolas:h10:cANSI
+
 endif
 
 augroup automongoose
