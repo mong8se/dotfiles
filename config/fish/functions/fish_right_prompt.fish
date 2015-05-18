@@ -10,6 +10,10 @@ function fish_right_prompt --description 'Write out the prompt'
     set -g __fish_prompt_hostname (hostname|cut -d . -f 1)
   end
 
+  if not set -q __fish_color_host
+    set -g __fish_color_host (set_color $fish_color_host)
+  end
+
   if not set -q -g __fish_classic_git_functions_defined
     set -g __fish_classic_git_functions_defined
 
@@ -36,6 +40,6 @@ function fish_right_prompt --description 'Write out the prompt'
   end
 
   echo -n -s "$__fish_prompt_normal" (__fish_git_prompt)
-  echo -n -s -e " \e[7m$__fish_prompt_host $__fish_prompt_hostname $__fish_prompt_normal\e[7m "
+  echo -n -s -e " \e[7m$__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal\e[7m "
   echo -n -s (prompt_pwd) " $__fish_prompt_normal"
 end
