@@ -18,7 +18,9 @@ set cmdheight =2
 set laststatus=2
 
 set mouse=a        " mouse for all
-set ttymouse=sgr   " mouse works past 223 columns
+if ! has('nvim')
+  set ttymouse=sgr   " mouse works past 223 columns
+end
 
 set showmatch " show matching brackets
 
