@@ -58,6 +58,7 @@ Plug 'szw/vim-ctrlspace'               " leader leader
 
 Plug 'Lokaltog/vim-easymotion'
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
+Plug 'EinfachToll/DidYouMean'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'
