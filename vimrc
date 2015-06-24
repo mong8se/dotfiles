@@ -75,7 +75,7 @@ set title
 set scrolloff=3
 set virtualedit=block,insert " allow cursor to go where there is nothing
 
-set list listchars=tab:┠╌,trail:⎵,extends:▶,precedes:◀
+set list listchars=tab:╾╌,trail:⎵,extends:▶,precedes:◀
 
 " so complex operations dont display until finished
 set lazyredraw
@@ -121,6 +121,9 @@ augroup END
 " Set <Leader> key
 noremap <Space> <Nop>
 let mapleader = "\<Space>"
+
+" Can hit enter to open command, then enter to execute
+nnoremap <CR> :
 
 " I can type :help on my own, thanks.
 noremap <F1> <Nop>
@@ -226,6 +229,8 @@ let g:Gitv_OpenHorizontal = 'auto'
 let g:signify_vcs_list = [ 'git', 'svn', 'hg' ]
 nmap <silent> <Leader>gt :SignifyToggle<CR>
 nmap <silent> <leader>gh :SignifyToggleHighlight<CR>
+nmap <silent> <leader>gf :SignifyFold<CR>
+nmap <silent> <leader>gr :SignifyRefresh<CR>
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
