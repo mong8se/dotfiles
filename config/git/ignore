@@ -7,3 +7,4 @@ nbproject
 .project
 .idea
 .vim_tmp
+.tern-config
