@@ -1,5 +1,7 @@
 #!/bin/env fish
 
+fish_vi_mode
+
 function fish_greeting
   if type -P (which figlet) > /dev/null; and test -x (which figlet)
     set_color red
