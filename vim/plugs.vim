@@ -56,7 +56,7 @@ Plug 'haya14busa/incsearch.vim'        " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'szw/vim-ctrlspace'               " leader leader
 
-Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'         " s
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
 Plug 'EinfachToll/DidYouMean'
 

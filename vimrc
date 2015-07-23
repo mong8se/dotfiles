@@ -125,6 +125,14 @@ let mapleader = "\<Space>"
 " Can hit enter to open command, then enter to execute
 nnoremap <CR> :
 
+" Move lines
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <ESC>:m .+1<CR>==gi
+inoremap <C-k> <ESC>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
 " I can type :help on my own, thanks.
 noremap <F1> <Nop>
 noremap! <F1> <Esc>
@@ -136,6 +144,9 @@ nnoremap Y y$
 " Map U to redo
 nnoremap U <C-r>
 
+" Instead of look up in man, let's split, opposite of J for join
+nnoremap K i<CR><Esc>
+
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <silent> <C-L> :nohl<CR><C-L>
@@ -143,6 +154,20 @@ nnoremap <silent> <C-L> :nohl<CR><C-L>
 " Arrow keys move up and down visible lines, not physical lines
 nnoremap <Down> gj
 nnoremap <Up> gk
+
+" Make shift + arrow work more like other editors, selecting text
+nmap <S-Up>    v<Up>
+nmap <S-Down>  v<Down>
+nmap <S-Left>  v<Left>
+nmap <S-Right> v<Right>
+vmap <S-Up>    <Up>
+vmap <S-Down>  <Down>
+vmap <S-Left>  <Left>
+vmap <S-Right> <Right>
+imap <S-Up>    <Esc>v<Up>
+imap <S-Down>  <Esc>v<Down>
+imap <S-Left>  <Esc>v<Left>
+imap <S-Right> <Esc>v<Right>
 
 " Original mapping
 nnoremap Q gq
@@ -243,12 +268,13 @@ nnoremap <silent> <leader>t :FZF<CR>
 nmap     <leader>/ <Plug>CtrlSFPrompt
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
+let g:ctrlsf_regex_pattern = 1 " search with regex by default
 
 " CtrlSpace
 nnoremap <silent> <leader><Space> :CtrlSpace<cr>
 " nnoremap <silent> <leader>t :CtrlSpace O<cr>
 let g:ctrlspace_save_workspace_on_exit       = 1
-let g:ctrlsspace_save_workspace_on_switch    = 1
+let g:ctrlspace_save_workspace_on_switch     = 1
 let g:ctrlspace_load_last_workspace_on_start = 1
 let g:ctrlspace_cache_dir                    = "~/.vim"
 
