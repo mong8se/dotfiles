@@ -8,3 +8,4 @@ nbproject
 .idea
 .vim_tmp
 .tern-config
+.watchmanconfig

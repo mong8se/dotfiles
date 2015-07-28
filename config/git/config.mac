@@ -1,2 +1,4 @@
+[merge]
+  tool = opendiff
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
