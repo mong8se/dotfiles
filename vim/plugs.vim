@@ -40,13 +40,14 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'othree/html5.vim'
 
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
-Plug 'tpope/vim-commentary' " gc
+Plug 'tomtom/tcomment_vim' "gc
 Plug 'tpope/vim-surround'   " cs ds ys
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vim-easy-align' "v enter
 
 Plug 'Raimondi/delimitMate'
 Plug 'michaeljsmith/vim-indent-object' " ai
 Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
-Plug 'tommcdo/vim-lion'                " gl
 Plug 'AndrewRadev/splitjoin.vim'       " gJ
 Plug 'tommcdo/vim-exchange'            " cx
 

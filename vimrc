@@ -75,7 +75,7 @@ set title
 set scrolloff=3
 set virtualedit=block,insert " allow cursor to go where there is nothing
 
-set list listchars=tab:╾╌,trail:⎵,extends:▶,precedes:◀
+set list listchars=tab:╾╌,trail:⎵,extends:…,precedes:…
 
 " so complex operations dont display until finished
 set lazyredraw
@@ -176,10 +176,11 @@ nnoremap Q gq
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " visual shifting (does not exit Visual mode)
+"
 vnoremap < <gv
 vnoremap > >gv
-nnoremap <Tab> >>
-nnoremap <S-Tab> <<
+" nnoremap <Tab> >>
+" nnoremap <S-Tab> <<
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 
@@ -282,6 +283,13 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:EasyMotion_smartcase  = 1 " Turn on case insensitive feature
 nmap s <Plug>(easymotion-s2)
 nmap <leader>s <Plug>(easymotion-sn)
+
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap gl <Plug>(EasyAlign)
+
 
 "------------------------------------------------------------
 " LOCALS
