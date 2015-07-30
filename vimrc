@@ -6,6 +6,9 @@ syntax on
 set hidden
 set encoding=utf-8
 
+set timeoutlen=1200 " A little bit more time for macros
+set ttimeoutlen=33  " Make Esc work faster
+
 set wildmenu
 " set wildmode=list:longest,list:full
 " set wildmode=longest,list:longest
@@ -179,10 +182,6 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 "
 vnoremap < <gv
 vnoremap > >gv
-" nnoremap <Tab> >>
-" nnoremap <S-Tab> <<
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
 
 " relative line numbers
 function! g:ToggleRelativeNumber()
@@ -263,7 +262,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 " fzf
-nnoremap <silent> <leader>t :FZF<CR>
+nnoremap <silent> <Leader>t :FZF<CR>
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
@@ -271,13 +270,12 @@ vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
 
-" CtrlSpace
-nnoremap <silent> <leader><Space> :CtrlSpace<cr>
-" nnoremap <silent> <leader>t :CtrlSpace O<cr>
-let g:ctrlspace_save_workspace_on_exit       = 1
-let g:ctrlspace_save_workspace_on_switch     = 1
-let g:ctrlspace_load_last_workspace_on_start = 1
-let g:ctrlspace_cache_dir                    = "~/.vim"
+" buffers
+nmap <silent> ]b :bn<CR>
+nmap <silent> [b :bp<CR>
+nmap <silent> <leader><Space> :BuffergatorToggle<CR>
+let g:buffergator_sort_regime = "mru"
+let g:buffergator_viewport_split_policy = "B"
 
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
@@ -289,7 +287,7 @@ nmap s <Plug>(easymotion-s2)
 nmap <leader>s <Plug>(easymotion-sn)
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+vmap <Tab> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap gl <Plug>(EasyAlign)

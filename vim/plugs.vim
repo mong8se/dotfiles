@@ -55,9 +55,9 @@ Plug 'tommcdo/vim-exchange'            " cx
 
 Plug 'haya14busa/incsearch.vim'        " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
-Plug 'szw/vim-ctrlspace'               " leader leader
 
 Plug 'Lokaltog/vim-easymotion'         " s
+Plug 'jeetsukumaran/vim-buffergator'   " leader b
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
 Plug 'EinfachToll/DidYouMean'
 
