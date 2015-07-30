@@ -262,18 +262,22 @@ nmap <silent> <leader>gr :SignifyRefresh<CR>
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
+" fzf
+nnoremap <silent> <leader>t :FZF<CR>
+
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
 
-" Command-T
-nnoremap <silent> <leader><Space> :CommandTMRU<CR>
-nnoremap <silent> <leader>t :CommandT<CR>
-let g:CommandTMatchWindowReverse = 1
-let g:CommandTFileScanner = "git"
-let g:CommandTMaxHeight = 25
+" CtrlSpace
+nnoremap <silent> <leader><Space> :CtrlSpace<cr>
+" nnoremap <silent> <leader>t :CtrlSpace O<cr>
+let g:ctrlspace_save_workspace_on_exit       = 1
+let g:ctrlspace_save_workspace_on_switch     = 1
+let g:ctrlspace_load_last_workspace_on_start = 1
+let g:ctrlspace_cache_dir                    = "~/.vim"
 
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)

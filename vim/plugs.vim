@@ -18,6 +18,8 @@ endfunction
 set nocompatible " in case we bypassed vimrc
 filetype off
 
+set rtp+=~/.dotfiles/Resources/fzf
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
@@ -53,7 +55,7 @@ Plug 'tommcdo/vim-exchange'            " cx
 
 Plug 'haya14busa/incsearch.vim'        " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
-Plug 'wincent/command-t', { 'do': 'cd ruby/command-t;ruby extconf.rb;make' }
+Plug 'szw/vim-ctrlspace'               " leader leader
 
 Plug 'Lokaltog/vim-easymotion'         " s
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
