@@ -271,6 +271,7 @@ nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
 
 " buffers
+let g:buffergator_suppress_keymaps = 1
 nmap <silent> ]b :bn<CR>
 nmap <silent> [b :bp<CR>
 nmap <silent> <leader><Space> :BuffergatorToggle<CR>
