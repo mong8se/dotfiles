@@ -292,6 +292,16 @@ vmap <Tab> <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap gl <Plug>(EasyAlign)
 
+" syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
+nmap <silent> ]e :lnext<CR>
+nmap <silent> [e :lprevious<CR>
+let g:syntastic_javascript_checkers = ["jshint", "eslint"]
 
 "------------------------------------------------------------
 " LOCALS
