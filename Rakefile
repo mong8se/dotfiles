@@ -101,7 +101,14 @@ def link_file(file)
 end
 
 def valid_file?(file)
-  return File.basename(file).match %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
+  name = File.basename(file)
+  unless name.match %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
+      return false
+  end
+  if name.match %r(^_(?!#{HOST}))
+    return false
+  end
+  return true
 end
 
 def dot_file(file)

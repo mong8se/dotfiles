@@ -141,7 +141,7 @@ alias ls="ls -G "
 if [[ `uname` == Darwin ]] then
     xsource $ZDOTDIR/mac.zsh
 fi
-xsource "$ZDOTDIR/${HOST%%.*}.zsh"
+xsource "$ZDOTDIR/_${HOST%%.*}.zsh"
 xsource $ZDOTDIR/*.plugin.zsh
 
 xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILE_RESOURCES/git-flow-completion/git-flow-completion.zsh"

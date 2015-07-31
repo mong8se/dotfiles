@@ -41,4 +41,4 @@ if test `uname`="Darwin"
   xsource mac.fish
 end
 
-xsource (hostname -s).fish local.fish
+xsource _(hostname -s).fish local.fish
