@@ -26,6 +26,11 @@ Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
 " Plug 'zhaocai/GoldenView.Vim'
 Plug 'roman/golden-ratio'
+Plug 'unblevable/quick-scope'
+
+Plug 'jeetsukumaran/vim-buffergator'   " leader b
+Plug 'jeetsukumaran/vim-filebeagle'    " leader f
+Plug 'EinfachToll/DidYouMean'
 
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
@@ -44,22 +49,19 @@ Plug 'othree/html5.vim'
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
 Plug 'tomtom/tcomment_vim' "gc
 Plug 'tpope/vim-surround'   " cs ds ys
-Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'junegunn/vim-easy-align' "v enter
+Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
+Plug 'junegunn/vim-easy-align' "v tab
+Plug 'tommcdo/vim-exchange'            " cx
 
 Plug 'Raimondi/delimitMate'
 Plug 'michaeljsmith/vim-indent-object' " ai
 Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
-Plug 'AndrewRadev/splitjoin.vim'       " gJ
-Plug 'tommcdo/vim-exchange'            " cx
+Plug 'wellle/targets.vim'
 
 Plug 'haya14busa/incsearch.vim'        " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
 
 Plug 'Lokaltog/vim-easymotion'         " s
-Plug 'jeetsukumaran/vim-buffergator'   " leader b
-Plug 'jeetsukumaran/vim-filebeagle'    " leader f
-Plug 'EinfachToll/DidYouMean'
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'
