@@ -66,6 +66,8 @@ Plug 'Lokaltog/vim-easymotion'         " s
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/syntastic'
 
+Plug 'ryanoasis/vim-devicons'
+
 call g:LoadRCFiles('plugs')
 
 call plug#end()
