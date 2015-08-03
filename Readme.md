@@ -3,25 +3,26 @@ What? More Dotfiles?!
 
 Config Order
 ------------
+_Note:_ "hostname" below is the actual hostname of the machine.
 
 * vim
     1. plugs.vim
     1. mac.plugs.vim
-    1. hostname.plugs.vim
+    1. _hostname.plugs.vim
     1. local.plugs.vim
     1. vimrc
     1. mac.vim
-    1. hostname.vim
+    1. _hostname.vim
     1. local.vim
 * fish
     1. config.fish
     1. mac.fish
-    1. hostname.fish
+    1. _hostname.fish
     1. local.fish
 * zsh
     1. zshrc
     1. mac.zsh
-    1. hostname.zsh
+    1. _hostname.zsh
     1. local.zsh
 
 Rake tasks
