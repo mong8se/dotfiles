@@ -245,6 +245,7 @@ nmap <silent> <leader>gc :Gcommit<cr>
 nmap <silent> <leader>gl :Glog<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gb :Gbrowse<cr>
+autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " gitv
 let g:Gitv_WrapLines = 1
