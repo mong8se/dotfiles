@@ -2,7 +2,7 @@ vimperator/info/default/history-*
 vim/plugged/*
 vim/.netrwhist
 vim/tmp/*
+vim/spell/*
 zsh/logs/*
 zsh/cache/*
-**/local.*
 emacs.d/autosaves/*
