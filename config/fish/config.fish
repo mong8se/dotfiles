@@ -41,4 +41,7 @@ if test `uname`="Darwin"
   xsource mac.fish
 end
 
+# Base16 Shell
+eval sh $HOME/.dotfiles/Resources/base16-shell/base16-bespin.dark.sh
+
 xsource _(hostname -s).fish local.fish

@@ -146,6 +146,10 @@ xsource $ZDOTDIR/*.plugin.zsh
 
 xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILE_RESOURCES/git-flow-completion/git-flow-completion.zsh"
 
+# Base16 Shell
+BASE16_SHELL="$HOME/.dotfiles/Resources/base16-shell/base16-bespin.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
 # fasd
 eval "$(fasd --init auto)"
 alias v="f -e ${EDITOR:-vim}" # quick opening files with vim

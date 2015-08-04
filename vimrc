@@ -3,6 +3,8 @@ runtime plugs.vim
 
 syntax on
 
+set shell=/bin/zsh
+
 set hidden
 set encoding=utf-8
 
@@ -233,7 +235,8 @@ endif
 if has('nvim') || $TERM_PROGRAM !~ "iTerm"
   set background=dark
 endif
-colorscheme base16-eighties
+let base16colorspace=256
+colorscheme base16-bespin
 
 " delimitMate
 let delimitMate_expand_space = 1
