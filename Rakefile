@@ -24,10 +24,10 @@ namespace :submodule do
     system 'git submodule update --init --recursive'
   end
 
-  desc "update git submodules to their latest tag"
+  desc "update git submodules to their latest master"
   task :update => 'submodule:init' do
     system <<-'UPDATE'
-      git submodule foreach 'git fetch && git fetch --tags && git checkout $(git describe --tags $(git rev-list --tags --max-count=1))';
+      git submodule foreach 'git checkout master && git pull origin master';
       cd Resources/fasd;
       echo 'Install fasd...';
       make install;
