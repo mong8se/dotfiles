@@ -17,7 +17,18 @@ function -e fish_preexec _run_fasd
 end
 
 function z
-  cd (fasd -d -e 'printf %s' "$argv")
+  set -l result
+
+  if count $argv > /dev/null
+    set result (fasd -d -e 'printf %s' "$argv")
+  else
+    set tmp $TMPDIR/fzf.result
+    fasd -Rdl | fzf --no-sort +m > $tmp
+    if [ (cat $tmp | wc -l) -gt 0 ]
+      set result (cat $tmp)
+   end
+  end
+  cd $result
 end
 
 function fe
