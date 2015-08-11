@@ -21,11 +21,7 @@ function z
 end
 
 function fe
-  set tmp $TMPDIR/fzf.result
-  fzf --query="$argv[1]" --select-1 --exit-0 > $tmp
-  if [ (cat $tmp | wc -l) -gt 0 ]
-    nvim (cat $tmp)
-  end
+  fzf --query="$argv[1]" --select-1 --exit-0 | xargs -o nvim
 end
 
 function xsource -d "Source list of files if they exist."

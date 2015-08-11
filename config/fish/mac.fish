@@ -19,11 +19,7 @@ function pman -d "Open man page in Preview"
 end
 
 function rv
-  set tmp $TMPDIR/fzf.result
-  fzf --query="$argv[1]" --select-1 --exit-0 > $tmp
-  if [ (cat $tmp | wc -l) -gt 0 ]
-    mvim --servername (basename $PWD) --remote-silent (cat $tmp)
-  end
+  fzf --query="$argv[1]" --select-1 --exit-0 | xargs -o mvim --servername (basename $PWD) --remote-silent
 end
 
 set -Ux HOMEBREW_GITHUB_API_TOKEN ***REMOVED***
