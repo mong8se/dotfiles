@@ -3,7 +3,7 @@
 " g:LoadRcFiles('first', 'second', third') would load:
 " mac.first.second.third.vim
 " local.first.second.third.vim
-" hostname.first.second.third.vim
+" _hostname.first.second.third.vim
 
 function! g:LoadRCFiles(...)
   for l:rc_type in ['mac', '_' . substitute(hostname(), '\..*', '', ''), 'local']
@@ -26,7 +26,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
 " Plug 'zhaocai/GoldenView.Vim'
 Plug 'roman/golden-ratio'
-Plug 'unblevable/quick-scope'
+Plug 'unblevable/quick-scope' " f F t T
 
 Plug 'jeetsukumaran/vim-buffergator'   " leader b
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f

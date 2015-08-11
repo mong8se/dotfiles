@@ -19,7 +19,7 @@ set wildmode=longest:full,full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/* "
 
 set showcmd
-set cmdheight =2
+set cmdheight=2
 set laststatus=2
 
 set mouse=a        " mouse for all
@@ -299,14 +299,38 @@ nmap gl <Plug>(EasyAlign)
 
 " syntastic
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_auto_loc_list            = 0
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+let g:syntastic_error_symbol             = "✗"
+let g:syntastic_warning_symbol           = "⚠"
 nmap <silent> ]e :lnext<CR>
 nmap <silent> [e :lprevious<CR>
-let g:syntastic_javascript_checkers = ["jshint", "eslint"]
+" let g:syntastic_javascript_checkers = ["jshint", "eslint"]
+
+" Only show quick-scope highlights after f/F/t/T is pressed
+function! Quick_scope_selective(movement)
+    let needs_disabling = 0
+    if !g:qs_enable
+        QuickScopeToggle
+        redraw
+        let needs_disabling = 1
+    endif
+
+    let letter = nr2char(getchar())
+
+    if needs_disabling
+        QuickScopeToggle
+    endif
+
+    return a:movement . letter
+endfunction
+
+let g:qs_enable = 0
+
+for i in  [ 'f', 'F', 't', 'T' ]
+    execute 'noremap <expr> <silent>' . i . " Quick_scope_selective('". i . "')"
+endfor
 
 "------------------------------------------------------------
 " LOCALS
