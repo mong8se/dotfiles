@@ -30,6 +30,10 @@
   fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
   icd = "difftool -t icdiff -y"
   cln = "!find . -name *.orig -print -delete"
+  co  = "!git branch | cut -c 3- | fzf +m | xargs git checkout"
+  cor = "!git branch -r | cut -c 3- | fzf +m | xargs git checkout"
+  vi  = "!git ls-files | fzf | xargs -o nvim"
+  af  = "!git ls-files -m | fzf -m | xargs git add"
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
   default = simple
