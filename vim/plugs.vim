@@ -24,12 +24,11 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
-" Plug 'zhaocai/GoldenView.Vim'
 Plug 'roman/golden-ratio'
 Plug 'unblevable/quick-scope' " f F t T
 
-Plug 'jeetsukumaran/vim-buffergator'   " leader b
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
+Plug 'szw/vim-ctrlspace'               " leader leader
 Plug 'EinfachToll/DidYouMean'
 
 Plug 'tpope/vim-fugitive'
