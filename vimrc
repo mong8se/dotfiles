@@ -238,6 +238,10 @@ endif
 let base16colorspace=256
 colorscheme base16-bespin
 
+let g:startify_custom_header =
+      \ map(split(system('hostname -s | figlet -c -w $COLUMNS -f thin'), '\n'), '"   ". v:val') + ['','']
+let g:startify_list_order = [['// here'], 'dir', ['// anywhere'], 'files', ['// bookmarks'], 'bookmarks', ['// sessions'], 'sessions']
+
 " delimitMate
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr    = 2
