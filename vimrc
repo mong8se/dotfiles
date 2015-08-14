@@ -46,9 +46,6 @@ map g* <Plug>(incsearch-nohl-g*)zz
 map g# <Plug>(incsearch-nohl-g#)zz
 let g:incsearch#magic = '\v'
 
-" Modelines have historically been a source of security vulnerabilities.
-set nomodeline
-
 set ignorecase
 set smartcase
 

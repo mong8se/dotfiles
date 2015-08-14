@@ -25,6 +25,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'
+Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
 
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
