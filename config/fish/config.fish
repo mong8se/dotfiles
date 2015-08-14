@@ -31,8 +31,8 @@ function z
   cd $result
 end
 
-function fe
-  fzf --query="$argv[1]" --select-1 --exit-0 | xargs -o nvim
+function fv
+  fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o nvim
 end
 
 function xsource -d "Source list of files if they exist."
