@@ -28,8 +28,8 @@ Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
 
+Plug 'jeetsukumaran/vim-buffergator'   " leader b
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
-Plug 'szw/vim-ctrlspace'               " leader leader
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 

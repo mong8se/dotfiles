@@ -269,23 +269,19 @@ let g:airline_powerline_fonts = 1
 " fzf
 nnoremap <silent> <Leader>t :FZF<CR>
 
-" CtrlSpace
-nnoremap <silent> <leader><Space> :CtrlSpace<cr>
-" nnoremap <silent> <leader>t :CtrlSpace O<cr>
-nmap <silent> ]b :bn<CR>
-nmap <silent> [b :bp<CR>
-let g:CtrlSpaceCacheDir = "~/.vim"
-let g:CtrlSpaceFileEngine = "file_engine_darwin_amd64"
-let g:CtrlSpaceSearchTiming = 300
-if executable("ag")
-  let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
-endif
-
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
+
+" buffers
+let g:buffergator_suppress_keymaps = 1
+nmap <silent> ]b :bn<CR>
+nmap <silent> [b :bp<CR>
+nmap <silent> <leader><Space> :BuffergatorOpen<CR>
+let g:buffergator_sort_regime = "mru"
+let g:buffergator_viewport_split_policy = "N"
 
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
