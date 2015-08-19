@@ -86,7 +86,7 @@ set ttyfast
 set splitright " new vertical splits are to the right
 set splitbelow " new horizontal splits are below
 
-" Use a .vim directory in the project root, .vim/tmp in your home dir, or
+" Use a .vim_tmp directory in the project root, .vim/tmp in your home dir, or
 " lastly current folder.
 set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
 set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
@@ -95,6 +95,9 @@ if has('persistent_undo')
     set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
     set undofile
 endif
+
+" put viminfo in .vim/tmp
+set viminfo='100,n$HOME/.vim/tmp/viminfo
 
 set foldlevelstart=99
 set foldmethod=manual
