@@ -64,7 +64,7 @@ Plug 'dyng/ctrlsf.vim'                 " leader /
 
 Plug 'Lokaltog/vim-easymotion'         " s
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'scrooloose/syntastic'
 
 Plug 'ryanoasis/vim-devicons'
