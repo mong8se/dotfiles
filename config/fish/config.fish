@@ -52,3 +52,5 @@ end
 eval sh $HOME/.dotfiles/Resources/base16-shell/base16-bespin.dark.sh
 
 xsource _(hostname -s).fish local.fish
+
+set -Ux PASSWORD_STORE_DIR ~/Dropbox/.password-store
