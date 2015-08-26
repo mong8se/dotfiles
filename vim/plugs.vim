@@ -59,7 +59,7 @@ Plug 'michaeljsmith/vim-indent-object' " ai
 Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
 Plug 'wellle/targets.vim'
 
-Plug 'haya14busa/incsearch.vim'        " /
+Plug 'wincent/loupe'                   " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
 
 Plug 'Lokaltog/vim-easymotion'         " s
