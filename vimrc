@@ -209,9 +209,12 @@ if has('spell')
 endif
 
 if has("user_commands")
-    command! -bang Q q<bang>
-    command! -bang QA qa<bang>
-    command! -bang Qa qa<bang>
+  command! -bang Q q<bang>
+  command! -bang QA qa<bang>
+  command! -bang Qa qa<bang>
+
+  " Force saving files that require root permission
+  command! Sudow w !sudo tee > /dev/null %
 endif
 
 "------------------------------------------------------------
