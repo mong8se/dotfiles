@@ -12,8 +12,6 @@ set timeoutlen=1200 " A little bit more time for macros
 set ttimeoutlen=33  " Make Esc work faster
 
 set wildmenu
-" set wildmode=list:longest,list:full
-" set wildmode=longest,list:longest
 set wildmode=longest:full,full
 
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/* "
@@ -299,7 +297,6 @@ let g:syntastic_error_symbol             = "✗"
 let g:syntastic_warning_symbol           = "⚠"
 nmap <silent> ]e :lnext<CR>
 nmap <silent> [e :lprevious<CR>
-" let g:syntastic_javascript_checkers = ["jshint", "eslint"]
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 function! Quick_scope_selective(movement)
