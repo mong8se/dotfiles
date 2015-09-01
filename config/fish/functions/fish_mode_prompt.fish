@@ -4,19 +4,19 @@ function fish_mode_prompt --description "Displays the current mode"
   if set -q __fish_vi_mode
     switch $fish_bind_mode
       case default
-        set_color --bold --background red white
-        echo ' v '
+        set_color  --background red white
+        echo ' n '
       case insert
-        set_color --bold --background green white
+        set_color  --background green white
         echo ' i '
       case replace-one
-        set_color --bold --background green white
+        set_color  --background green white
         echo ' r '
       case visual
-        set_color --bold --background magenta white
+        set_color  --background magenta white
         echo ' v '
     end
     set_color normal
-    # echo -n ''
+    # echo -n '' 
   end
 end
