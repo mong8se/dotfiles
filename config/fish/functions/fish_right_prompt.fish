@@ -2,6 +2,14 @@ function fish_right_prompt --description 'Write out the prompt'
 
   set -l last_status $status
 
+  if not set -q __fish_git_prompt_color_branch
+    set -g __fish_git_prompt_color_branch --background green white
+  end
+
+  if not set -q __fish_git_prompt_color_merging
+    set -g __fish_git_prompt_color_merging --background red white
+  end
+
   if not set -q __fish_prompt_normal
     set -g __fish_prompt_normal (set_color normal)
   end
@@ -39,7 +47,7 @@ function fish_right_prompt --description 'Write out the prompt'
     end
   end
 
-  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt)
-  echo -n -s -e " \e[7m$__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal\e[7m "
+  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt " %s ")
+  echo -n -s -e "\e[7m$__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal\e[7m "
   echo -n -s (prompt_pwd) " $__fish_prompt_normal"
 end

@@ -21,5 +21,5 @@ function fish_prompt --description 'Write out the prompt'
     end
   end
 
-  echo -n -s -e "$__fish_prompt_color" '|' "$__fish_prompt_normal"
+  echo -n -s -e "$__fish_prompt_color" '│' "$__fish_prompt_normal"
 end
