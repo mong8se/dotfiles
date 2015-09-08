@@ -104,6 +104,13 @@ augroup CursorLine
   au WinLeave * setlocal nocursorline
 augroup END
 
+augroup FocusIssues
+    " Leave insert or replace mode on focus lost
+    autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | call feedkeys("\<C-\>\<C-n>") | endif
+    " Automatically try to save current buffer if focus lost
+    autocmd BufLeave,FocusLost * silent! w
+augroup END
+
 "------------------------------------------------------------
 " MAPPINGS
 
