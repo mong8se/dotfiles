@@ -1,1 +1,1 @@
-Plug 'sjl/vitality.vim'
+Plug 'wincent/terminus'

@@ -11,6 +11,7 @@ function fish_greeting
 end
 
 set -Ux EDITOR nvim
+set -Ux NVIM_TUI_ENABLE_CURSOR_SHAPE 1
 
 function -e fish_preexec _run_fasd
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
