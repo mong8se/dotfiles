@@ -3,11 +3,11 @@ function fish_right_prompt --description 'Write out the prompt'
   set -l last_status $status
 
   if not set -q __fish_git_prompt_color_branch
-    set -g __fish_git_prompt_color_branch --background green white
+    set -g __fish_git_prompt_color_branch --underline blue
   end
 
   if not set -q __fish_git_prompt_color_merging
-    set -g __fish_git_prompt_color_merging --background red white
+    set -g __fish_git_prompt_color_merging red
   end
 
   if not set -q __fish_prompt_normal
