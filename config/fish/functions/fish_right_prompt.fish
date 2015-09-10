@@ -2,6 +2,10 @@ function fish_right_prompt --description 'Write out the prompt'
 
   set -l last_status $status
 
+  if not set -q __fish_git_prompt_show_informative_status
+    set -g __fish_git_prompt_show_informative_status 1
+  end
+
   if not set -q __fish_git_prompt_color_branch
     set -g __fish_git_prompt_color_branch --underline blue
   end
