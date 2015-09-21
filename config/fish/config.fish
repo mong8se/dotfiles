@@ -12,7 +12,7 @@ end
 
 set -Ux EDITOR nvim
 set -Ux NVIM_TUI_ENABLE_CURSOR_SHAPE 1
-set -Ux NVIM_TUI_ENABLE_TRUE_COLOR 1
+# set -Ux NVIM_TUI_ENABLE_TRUE_COLOR 0
 
 function -e fish_preexec _run_fasd
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
@@ -51,6 +51,7 @@ if test `uname`="Darwin"
 end
 
 abbr -a gls git ls-files
+abbr -a vi nvim
 
 # Base16 Shell
 eval sh $HOME/.dotfiles/Resources/base16-shell/base16-bespin.dark.sh
