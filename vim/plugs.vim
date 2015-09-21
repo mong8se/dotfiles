@@ -63,7 +63,7 @@ Plug 'wellle/targets.vim'
 Plug 'wincent/loupe'                   " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
 
-Plug 'Lokaltog/vim-easymotion'         " s
+Plug 'justinmk/vim-sneak'         " s
 
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'scrooloose/syntastic'

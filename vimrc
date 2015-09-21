@@ -284,11 +284,8 @@ let g:buffergator_viewport_split_policy = "N"
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
 
-" easy motion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-let g:EasyMotion_smartcase  = 1 " Turn on case insensitive feature
-nmap s <Plug>(easymotion-s2)
-nmap <leader>s <Plug>(easymotion-sn)
+" vim sneak
+let g:sneak#streak = 1
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Tab> <Plug>(EasyAlign)
