@@ -22,4 +22,4 @@ function rv
   fzf --query="$argv[1]" --select-1 --exit-0 | xargs -o mvim --servername (basename $PWD) --remote-silent
 end
 
-set -Ux HOMEBREW_GITHUB_API_TOKEN ***REMOVED***
+set -x HOMEBREW_GITHUB_API_TOKEN ***REMOVED***

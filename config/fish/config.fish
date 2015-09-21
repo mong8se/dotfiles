@@ -10,9 +10,9 @@ function fish_greeting
   end
 end
 
-set -Ux EDITOR nvim
-set -Ux NVIM_TUI_ENABLE_CURSOR_SHAPE 1
-# set -Ux NVIM_TUI_ENABLE_TRUE_COLOR 0
+set -x EDITOR nvim
+set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
+# set -x NVIM_TUI_ENABLE_TRUE_COLOR 0
 
 function -e fish_preexec _run_fasd
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
@@ -58,4 +58,4 @@ eval sh $HOME/.dotfiles/Resources/base16-shell/base16-bespin.dark.sh
 
 xsource _(hostname -s).fish local.fish
 
-set -Ux PASSWORD_STORE_DIR ~/Dropbox/.password-store
+set -x PASSWORD_STORE_DIR ~/Dropbox/.password-store
