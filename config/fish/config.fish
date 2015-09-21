@@ -12,6 +12,7 @@ end
 
 set -Ux EDITOR nvim
 set -Ux NVIM_TUI_ENABLE_CURSOR_SHAPE 1
+set -Ux NVIM_TUI_ENABLE_TRUE_COLOR 1
 
 function -e fish_preexec _run_fasd
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
