@@ -23,6 +23,8 @@ set rtp+=~/.dotfiles/Resources/fzf
 call plug#begin('~/.vim/plugged')
 
 Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+
 Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
