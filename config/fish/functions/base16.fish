@@ -1,19 +1,36 @@
-function base16 -d "activate base16 color scheme"
+if not set -q __base16_path
+  set -g __base16_path $HOME/.dotfiles/Resources/base16-shell
+end
+
+function __base16_schemes
+  ls $__base16_path/*.dark.sh | cut -d . -f 2 | cut -d - -f 3
+end
+
+function __base16_has_command
+  set -l cmd (commandline -opc)
+  if [ (count $cmd) -gt 1 ]
+    return 0
+  end
+  return 1
+end
+
+complete -c base16 -n "not __base16_has_command" -a "(__base16_schemes)" -d "Color scheme name"
+complete -c base16 -n "__base16_has_command"     -a "light dark"         -d "Color scheme version"
+
+function base16 -d "Activate base16 terminal color scheme"
   set -l light_or_dark "dark"
-  set -l base16 $HOME/.dotfiles/Resources/base16-shell
 
   switch (count $argv)
   case 0
-    ls $base16/*.dark.sh | cut -d . -f 2 | cut -d - -f 3
-    exit
+    echo (__base16_schemes)
+    return
   case 1
   case 2
     set light_or_dark $argv[2]
-    echo $light_or_dark
   case '*'
     echo "base16 scheme [light_or_dark]"
-    exit
+    return
   end
 
-  eval sh {$base16}/base16-{$argv[1]}.{$light_or_dark}.sh
+  eval sh {$__base16_path}/base16-{$argv[1]}.{$light_or_dark}.sh
 end
