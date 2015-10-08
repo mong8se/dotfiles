@@ -46,15 +46,17 @@ function xsource -d "Source list of files if they exist."
   end
 end
 
+if status --is-interactive
+  abbr -a gls git ls-files
+  abbr -a vi nvim
+
+  # Set Base16 Shell Colors
+  base16 bespin
+end
+
 if test `uname`="Darwin"
   xsource mac.fish
 end
-
-abbr -a gls git ls-files
-abbr -a vi nvim
-
-# Base16 Shell
-base16 bespin
 
 xsource _(hostname -s).fish local.fish
 

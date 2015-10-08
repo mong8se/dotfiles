@@ -32,5 +32,9 @@ function base16 -d "Activate base16 terminal color scheme"
     return
   end
 
-  eval sh {$__base16_path}/base16-{$argv[1]}.{$light_or_dark}.sh
+  if status --is-interactive
+    eval sh {$__base16_path}/base16-{$argv[1]}.{$light_or_dark}.sh
+  else
+    echo "base16 doing nothing: Non interactive shell"
+  end
 end
