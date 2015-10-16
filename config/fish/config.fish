@@ -10,9 +10,13 @@ function fish_greeting
   end
 end
 
-set -x EDITOR nvim
-set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
-# set -x NVIM_TUI_ENABLE_TRUE_COLOR 0
+if test (which nvim)
+  set -x EDITOR nvim
+  set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
+  set -x NVIM_TUI_ENABLE_TRUE_COLOR 1
+else
+  set -x EDITOR vi
+end
 
 function -e fish_preexec _run_fasd
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
