@@ -29,7 +29,6 @@ Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
-Plug 't9md/vim-choosewin' " leader w
 
 Plug 'jeetsukumaran/vim-buffergator'   " leader b
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
