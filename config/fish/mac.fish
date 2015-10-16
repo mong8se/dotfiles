@@ -23,3 +23,5 @@ function rv
 end
 
 set -gx HOMEBREW_GITHUB_API_TOKEN ***REMOVED***
+
+xsource iterm2_shell_integration.fish
