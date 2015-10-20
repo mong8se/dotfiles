@@ -1,7 +1,7 @@
 ### MAC SPECFIC
 # This sends growl a notification to iterm
 function growl {
-  terminal-notifier -message "$1"
+  echo -e "\e]9;$@\007"
 }
 # man pages in os x
 function pman { man -t $@ | open -f -a /Applications/Preview.app }
