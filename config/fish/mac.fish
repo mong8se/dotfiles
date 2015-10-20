@@ -6,10 +6,6 @@ function make_dark -d "Switch iTerm profile to 'dark'"
   set_iterm_profile 'dark'
 end
 
-function growl -d "Notify"
-  terminal-notifier -message "$argv[1]"
-end
-
 function flush_dns -d "Flush DNS Cache"
   /usr/bin/dscacheutil -flushcache
 end
@@ -23,5 +19,10 @@ function rv
 end
 
 set -gx HOMEBREW_GITHUB_API_TOKEN ***REMOVED***
+
+# items below require beta iterm2
+function growl -d "Notify"
+  echo -e "\e]9;$argv\007"
+end
 
 xsource iterm2_shell_integration.fish
