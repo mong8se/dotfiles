@@ -26,6 +26,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 
 Plug 'bling/vim-airline'
+" Plug 'itchyny/lightline.vim'
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
