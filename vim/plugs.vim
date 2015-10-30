@@ -70,8 +70,6 @@ Plug 'justinmk/vim-sneak'         " s
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'scrooloose/syntastic'
 
-Plug 'ryanoasis/vim-devicons'
-
 call g:LoadRCFiles('plugs')
 
 call plug#end()
