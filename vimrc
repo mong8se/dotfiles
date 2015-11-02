@@ -80,8 +80,10 @@ if has('persistent_undo')
     set undofile
 endif
 
-" put viminfo in .vim/tmp
-set viminfo='100,n$HOME/.vim/tmp/viminfo
+if ! has('nvim')
+  " put viminfo in .vim/tmp
+  set viminfo='100,n$HOME/.vim/tmp/viminfo
+end
 
 set foldlevelstart=99
 set foldmethod=manual
