@@ -68,6 +68,35 @@ task :install do
   end
 end
 
+desc "make dot file symlinks"
+task :make_links do
+  replace_all = false
+  {
+   'vim' => 'config/nvim'
+  }.each_pair do |raw_target, raw_link|
+    target = dot_file(raw_target)
+    link = dot_file(raw_link)
+
+    if File.exist?(link) || File.symlink?(link)
+      if File.identical? target, link
+        puts_message 'identical', link
+        next
+      else
+        replace_me, replace_all = delete_prompt(link, replace_all, prompt='replac%s')
+
+        if replace_me || replace_all
+          FileUtils.remove_entry_secure link, true
+        else
+          next
+        end
+      end
+    else
+      puts_message 'linking', link
+    end
+    File.symlink target, link
+  end
+end
+
 desc 'clean up .dotfile symlinks that are no longer there'
 task :cleanup do
   delete_files
@@ -79,7 +108,7 @@ task :implode do
 end
 
 desc 'install new and remove old symlinks'
-task :update => :install do
+task :update => [:install, :make_links] do
   delete_files(false, true)
 end
 
