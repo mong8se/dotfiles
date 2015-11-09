@@ -3,8 +3,6 @@ runtime plugs.vim
 
 syntax on
 
-set shell=/bin/zsh
-
 set hidden
 set encoding=utf-8
 
