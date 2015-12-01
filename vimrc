@@ -309,8 +309,6 @@ nmap <silent> [e :lprevious<CR>
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-" choose win
-nmap w <Plug>(choosewin)
 
 "------------------------------------------------------------
 " LOCALS
