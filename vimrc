@@ -273,6 +273,7 @@ nmap     <leader>/ <Plug>CtrlSFPrompt
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
+let g:ctrlsf_default_root = 'project' " search relative to project root
 
 " buffers
 let g:buffergator_suppress_keymaps = 1
