@@ -281,6 +281,7 @@ nmap <silent> [b :bp<CR>
 nmap <silent> <leader><Space> :BuffergatorOpen<CR>
 let g:buffergator_sort_regime = "mru"
 let g:buffergator_viewport_split_policy = "N"
+let g:buffergator_show_full_directory_path = 0
 
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
