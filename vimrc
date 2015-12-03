@@ -119,9 +119,6 @@ augroup END
 noremap <Space> <Nop>
 let mapleader = "\<Space>"
 
-" Can hit enter to open command, then enter to execute
-nnoremap <CR> :
-
 " Move lines
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
@@ -269,7 +266,7 @@ let g:airline_right_sep='│'
 nnoremap <silent> <Leader>t :FZF<CR>
 
 " CtrlSF
-nmap     <leader>/ <Plug>CtrlSFPrompt
+nmap     <leader>/ <Plug>CtrlSFCwordPath
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
@@ -308,7 +305,6 @@ nmap <silent> [e :lprevious<CR>
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
 
 "------------------------------------------------------------
 " LOCALS
