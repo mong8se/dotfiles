@@ -81,12 +81,13 @@ endif
 if ! has('nvim')
   " put viminfo in .vim/tmp
   set viminfo='100,n$HOME/.vim/tmp/viminfo
+
+  " Add matching plugin to super power %
+  runtime! macros/matchit.vim
 end
 
 set foldlevelstart=99
 set foldmethod=manual
-
-runtime! macros/matchit.vim
 
 if has('clipboard')
     if has('x11') && version >= 703
