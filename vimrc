@@ -267,7 +267,8 @@ let g:airline_right_sep='│'
 nnoremap <silent> <Leader>t :FZF<CR>
 
 " CtrlSF
-nmap     <leader>/ <Plug>CtrlSFCwordPath
+nmap     <leader>/ <Plug>CtrlSFPrompt
+nmap     <leader>* <Plug>CtrlSFCwordExec
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1 " search with regex by default
