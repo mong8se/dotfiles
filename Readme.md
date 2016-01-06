@@ -3,7 +3,7 @@ What? More Dotfiles?!
 
 Config Order
 ------------
-_Note:_ `hostname` below is the actual hostname of the machine.
+_Note:_ `hostname` below is the actual hostname of the machine. `mac` files are only loaded if on a mac.
 
 * vim
     1. plugs.vim
