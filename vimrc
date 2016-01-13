@@ -56,10 +56,11 @@ set expandtab
 set autoindent
 
 set title
-set scrolloff=3
+set scrolloff=5
 set virtualedit=block,insert " allow cursor to go where there is nothing
 
 set list listchars=tab:╾╌,trail:⎵,extends:…,precedes:…
+set list fillchars=vert:│,fold:╍
 
 " so complex operations dont display until finished
 set lazyredraw
@@ -74,8 +75,8 @@ set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
 set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
 
 if has('persistent_undo')
-    set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
-    set undofile
+  set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
+  set undofile
 endif
 
 if ! has('nvim')
@@ -84,18 +85,20 @@ if ! has('nvim')
 
   " Add matching plugin to super power %
   runtime! macros/matchit.vim
+else
+  set shada=!,'100,<50,s10,h,n$HOME/.vim/tmp/main.shada
 end
 
 set foldlevelstart=99
 set foldmethod=manual
 
 if has('clipboard')
-    if has('x11') && version >= 703
-        " Default yank and paste go to system clipboard
-        set clipboard=unnamedplus
-    else
-        set clipboard=unnamed
-    endif
+  if has('x11') && version >= 703
+    " Default yank and paste go to system clipboard
+    set clipboard=unnamedplus
+  else
+    set clipboard=unnamed
+  endif
 endif
 
 " cursorline only for active window
@@ -106,11 +109,11 @@ augroup CursorLine
 augroup END
 
 augroup FocusIssues
-    " Leave insert or replace mode on focus lost
-    autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | call feedkeys("\<C-\>\<C-n>") | endif
+  " Leave insert or replace mode on focus lost
+  autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | call feedkeys("\<C-\>\<C-n>") | endif
 
-    " Automatically try to save current buffer if focus lost
-    autocmd BufLeave,FocusLost * if &modifiable | silent! w | endif
+  " Automatically try to save current buffer if focus lost
+  autocmd BufLeave,FocusLost * if &modifiable | silent! w | endif
 augroup END
 
 "------------------------------------------------------------
@@ -184,11 +187,11 @@ nnoremap <silent> <Leader>n :call g:ToggleRelativeNumber()<CR>
 
 " add blank line without entering insert mode
 function! g:ActivateCR(range)
-    if empty(&buftype)
-        execute a:range . "put _"
-    else
-        execute "normal! \<CR>"
-    end
+  if empty(&buftype)
+    execute a:range . "put _"
+  else
+    execute "normal! \<CR>"
+  end
 endfunction
 nnoremap <silent> <Leader><CR>   :call g:ActivateCR('.')<CR>
 nnoremap <silent> <Leader><S-CR> :call g:ActivateCR('-1')<CR>
