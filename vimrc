@@ -289,8 +289,24 @@ let g:buffergator_show_full_directory_path = 0
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
 
-" vim sneak
-let g:sneak#streak = 1
+" EasyMotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Incsearch
+let g:incsearch#auto_nohlsearch = 1
+let g:incsearch#magic = '\v' " very magic
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Tab> <Plug>(EasyAlign)

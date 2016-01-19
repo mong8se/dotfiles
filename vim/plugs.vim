@@ -15,7 +15,8 @@ function! g:LoadRCFiles(...)
   endfor
 endfunction
 
-set nocompatible " in case we bypassed vimrc
+" in case we bypassed vimrc and loaded this file directly
+set nocompatible
 filetype off
 
 set rtp+=~/.dotfiles/Resources/fzf
@@ -26,7 +27,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 
 Plug 'bling/vim-airline'
-" Plug 'itchyny/lightline.vim'
+
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
@@ -35,6 +36,7 @@ Plug 'jeetsukumaran/vim-buffergator'   " leader b
 Plug 'jeetsukumaran/vim-filebeagle'    " leader f
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
+Plug 'airblade/vim-rooter'
 
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
@@ -62,10 +64,9 @@ Plug 'michaeljsmith/vim-indent-object' " ai
 Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
 Plug 'wellle/targets.vim'
 
-Plug 'wincent/loupe'                   " /
 Plug 'dyng/ctrlsf.vim'                 " leader /
-
-Plug 'justinmk/vim-sneak'         " s
+Plug 'haya14busa/incsearch.vim'
+Plug 'easymotion/vim-easymotion'
 
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'scrooloose/syntastic'
