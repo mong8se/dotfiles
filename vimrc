@@ -18,7 +18,7 @@ set showcmd
 set cmdheight=2
 set laststatus=2
 
-set mouse=a        " mouse for all
+set mouse=nvi        " mouse for all
 if ! has('nvim')
   set ttymouse=sgr   " mouse works past 223 columns
 end
@@ -42,7 +42,7 @@ set nostartofline
 set ruler
 set confirm
 set visualbell
-set number
+" set number
 set timeoutlen=500
 
 set pastetoggle=<F11>
@@ -57,9 +57,12 @@ set autoindent
 
 set title
 set scrolloff=5
+set nowrap
+set sidescroll=1
+set sidescrolloff=5
 set virtualedit=block,insert " allow cursor to go where there is nothing
 
-set list listchars=tab:╾╌,trail:⎵,extends:…,precedes:…
+set list listchars=tab:╾╌,trail:⎵,precedes:⊲,extends:⊳
 set list fillchars=vert:│,fold:╍
 
 " so complex operations dont display until finished
