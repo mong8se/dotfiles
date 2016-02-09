@@ -270,7 +270,9 @@ let g:airline_left_sep='│'
 let g:airline_right_sep='│'
 
 " fzf
-nnoremap <silent> <Leader>t :FZF<CR>
+nnoremap <silent> <Leader>t :Files<CR>
+nnoremap <silent> <Leader>g :GitFiles<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt

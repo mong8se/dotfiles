@@ -19,9 +19,10 @@ endfunction
 set nocompatible
 filetype off
 
-set rtp+=~/.dotfiles/Resources/fzf
-
 call plug#begin('~/.vim/plugged')
+
+set rtp+=~/.dotfiles/Resources/fzf
+Plug 'junegunn/fzf.vim'
 
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
