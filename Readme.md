@@ -29,8 +29,8 @@ Rake tasks
 ----------
 
 ```
+rake update            # install new and remove old symlinks *default*
 rake install           # install .dotfiles into home directory
-rake update            # install new and remove old symlinks
 rake cleanup           # clean up .dotfile symlinks that are no longer there
 rake implode           # remove all .dotfile symlinks
 
