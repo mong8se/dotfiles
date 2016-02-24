@@ -18,8 +18,6 @@ function rv
   fzf --query="$argv[1]" --select-1 --exit-0 | xargs -o mvim --servername (basename $PWD) --remote-silent
 end
 
-set -gx HOMEBREW_GITHUB_API_TOKEN ***REMOVED***
-
 # items below require beta iterm2
 function growl -d "Notify"
   echo -e "\e]9;$argv\007"

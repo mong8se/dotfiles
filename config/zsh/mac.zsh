@@ -15,8 +15,6 @@ function rv {
    [ -n "$file" ] && mvim --servername ${PWD##*/} --remote-silent "$file"
 }
 
-export HOMEBREW_GITHUB_API_TOKEN=***REMOVED***
-
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 xsource $ZDOTDIR/iterm2_shell_integration.zsh
