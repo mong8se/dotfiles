@@ -3,7 +3,7 @@ What? More Dotfiles?!
 
 Config Order
 ------------
-_Note:_ `hostname` below is the actual hostname of the machine. `mac` files are only loaded if on a mac.
+_Note:_ `hostname` below is the output of the "rake hostname" task. `mac` files are only loaded if on a mac.
 
 * vim
     1. plugs.vim
@@ -29,6 +29,8 @@ Rake tasks
 ----------
 
 ```
+rake hostname          # first 12 characters of a sha2 digest of the non-fully-qualified hostname
+
 rake update            # install new and remove old symlinks *default*
 rake install           # install .dotfiles into home directory
 rake cleanup           # clean up .dotfile symlinks that are no longer there

@@ -6,7 +6,7 @@
 " _hostname.first.second.third.vim
 
 function! g:LoadRCFiles(...)
-  for l:rc_type in ['mac', '_' . substitute(hostname(), '\..*', '', ''), 'local']
+  for l:rc_type in ['mac', '_' . sha256( substitute(hostname(), '\..*', '', '') )[0:11], 'local']
     if l:rc_type == 'mac' && !has('macunix')
       continue
     endif

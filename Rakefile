@@ -1,5 +1,6 @@
 require 'rake'
 require 'socket'
+require 'digest/sha2'
 
 IS_MAC = RUBY_PLATFORM.downcase.include?('darwin') && 'mac'
 
@@ -54,7 +55,7 @@ namespace :vim do
 end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md config]
-HOST = Socket.gethostname.gsub(/\..+$/, '')
+HOST = Digest::SHA2.hexdigest( Socket.gethostname.gsub(/\..+$/, '') ).slice(0,12)
 VALID_EXTENSIONS = ['vim', 'zsh', 'fish', 'bash', 'conf', 'd', 'local', HOST, IS_MAC].compact
 
 REPO_LOCATION = File.dirname(__FILE__)
@@ -110,6 +111,11 @@ end
 desc 'install new and remove old symlinks'
 task :update => [:install, :make_links] do
   delete_files(false, true)
+end
+
+desc 'first 12 characters of a sha2 digest of the non-fully-qualified hostname'
+task :hostname do
+  puts HOST
 end
 
 def install_directory(dir)

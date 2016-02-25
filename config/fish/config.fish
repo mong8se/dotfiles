@@ -63,6 +63,6 @@ if test `uname`="Darwin"
   xsource mac.fish
 end
 
-xsource _(hostname -s).fish local.fish
+xsource _(hostname -s | tr -d '\n' | shasum -p -a 256 | cut -c1-12).fish local.fish
 
 set -x PASSWORD_STORE_DIR ~/Dropbox/.password-store
