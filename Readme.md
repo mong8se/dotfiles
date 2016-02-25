@@ -43,3 +43,5 @@ rake vim:install       # install vim plugins
 rake vim:update        # update vim plugins
 rake vim:cleanup       # clean vim plugins
 ```
+
+Thanks to [ryanb](https://github.com/ryanb/dotfiles) for the starting point.
