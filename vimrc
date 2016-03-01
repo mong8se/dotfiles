@@ -181,37 +181,13 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 vnoremap < <gv
 vnoremap > >gv
 
-" relative line numbers
-function! g:ToggleRelativeNumber()
-  set number
-  set relativenumber!
-endfunction
-nnoremap <silent> <Leader>n :call g:ToggleRelativeNumber()<CR>
+" custom functions
+nnoremap <silent> <Leader>n :call custom#ToggleRelativeNumber()<CR>
 
-" add blank line without entering insert mode
-function! g:ActivateCR(range)
-  if empty(&buftype)
-    execute a:range . "put _"
-  else
-    execute "normal! \<CR>"
-  end
-endfunction
-nnoremap <silent> <Leader><CR>   :call g:ActivateCR('.')<CR>
-nnoremap <silent> <Leader><S-CR> :call g:ActivateCR('-1')<CR>
+nnoremap <silent> <Leader><CR>   :call custom#ActivateCR('.')<CR>
+nnoremap <silent> <Leader><S-CR> :call custom#ActivateCR('-1')<CR>
 
-function! g:ScrollBindAllWindows()
-  let l:starting_window = winnr()
-  let l:starting_line = line('.')
-  if &scrollbind
-    windo setlocal noscrollbind
-  else
-    windo normal gg
-    windo setlocal scrollbind
-  endif
-  exec l:starting_window . 'wincmd w'
-  exec l:starting_line
-endfunction
-nnoremap <silent> <Leader>sb :call g:ScrollBindAllWindows()<CR>
+nnoremap <silent> <Leader>sb :call custom#ScrollBindAllWindows()<CR>
 
 if has('spell')
   set spelllang=en_us
