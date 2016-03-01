@@ -16,12 +16,10 @@ set guioptions-=T
 
 if has('macunix')
   " Sets the font and size
-  set guifont=Sauce\ Code\ Powerline\ Plus\ Nerd\ File\ Types\ Plus\ Pomicons:h13
+  set guifont=Source\ Code\ Pro\ Light:h13
 
   " Sets the percent transparency
   set transparency=7
-
-  let g:vimfiler_quick_look_command = 'qlmanage -p'
 
   let g:fzf_launcher = "osascript ~/.vim/macvim_fzf.scpt %s \"\$PWD\""
 
