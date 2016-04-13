@@ -54,6 +54,7 @@ if status --is-interactive
   abbr -a gls git ls-files
   abbr -a vi nvim
   abbr -a em emacsclient
+  abbr -a cd.. cd ..
 
   # Set Base16 Shell Colors
   base16 bespin
