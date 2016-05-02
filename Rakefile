@@ -254,4 +254,10 @@ def delete_prompt(file_name, delete_all, prompt='delet%s')
     return delete_me, delete_all
 end
 
+# https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
+desc 'Install profile for iterm2 italics support'
+task "xterm-italic" do
+    system 'tic Resources/xterm-italic/xterm-256color-italic.terminfo'
+end
+
 task :default => 'update'

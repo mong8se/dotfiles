@@ -210,9 +210,11 @@ endif
 if has('nvim') || $TERM_PROGRAM !~ "iTerm"
   set background=dark
 endif
-let base16colorspace=256
+" let base16colorspace=256
 " colorscheme base16-default
 colorscheme gruvbox
+" need to install with `rake xterm-italic`
+highlight Comment cterm=italic
 
 let g:startify_custom_header =
       \ map(split(system('hostname -s | figlet -c -w $COLUMNS -f thin'), '\n'), '"   ". v:val') + ['','']
