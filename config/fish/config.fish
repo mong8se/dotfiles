@@ -1,6 +1,6 @@
 #!/bin/env fish
 
-fish_vi_mode
+fish_vi_key_bindings
 
 function fish_greeting
   if type -P (which figlet) > /dev/null; and test -x (which figlet)
