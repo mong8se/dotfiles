@@ -18,9 +18,10 @@
 [core]
   whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   autocrlf     = input
+  excludesfile = ~/.config/git/ignore
 [user]
   name  = Steven Moazami
-  email = steven@mostlyheroes.com
+  email = mong8se@users.noreply.github.com
 [mergetool]
   prompt = true
   keepBackup = false
