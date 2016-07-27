@@ -147,7 +147,7 @@ xsource $ZDOTDIR/*.plugin.zsh
 xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILE_RESOURCES/git-flow-completion/git-flow-completion.zsh"
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.dotfiles/Resources/base16-shell/base16-bespin.dark.sh"
+BASE16_SHELL="$HOME/.dotfiles/Resources/base16-shell/scripts/base16-bespin.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # fasd
