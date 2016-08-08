@@ -57,7 +57,12 @@ if status --is-interactive
   abbr -a cd.. cd ..
 
   # Set Base16 Shell Colors
-  base16 bespin
+  switch $ITERM_PROFILE
+  case light
+    base16 solarized-light
+  case dark
+    base16 bespin
+  end
 end
 
 if test `uname`="Darwin"
