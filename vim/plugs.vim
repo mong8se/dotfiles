@@ -70,7 +70,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
-Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 
 call g:LoadRCFiles('plugs')
 
