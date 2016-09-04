@@ -56,7 +56,7 @@ end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md config]
 HOST = Digest::SHA2.hexdigest( Socket.gethostname.gsub(/\..+$/, '') ).slice(0,12)
-VALID_EXTENSIONS = ['vim', 'zsh', 'fish', 'bash', 'conf', 'd', 'local', HOST, IS_MAC].compact
+VALID_EXTENSIONS = ['el', 'vim', 'zsh', 'fish', 'bash', 'conf', 'd', 'local', HOST, IS_MAC].compact
 
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION  = ENV['HOME']
