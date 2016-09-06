@@ -247,11 +247,6 @@ nmap <silent> <leader>gr :SignifyRefresh<CR>
 let g:airline_left_sep='│'
 let g:airline_right_sep='│'
 
-" fzf
-nnoremap <silent> <Leader>t :Files<CR>
-nnoremap <silent> <Leader>g :GitFiles<CR>
-nnoremap <silent> <Leader>b :Buffers<CR>
-
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
 nmap     <leader>* <Plug>CtrlSFCwordExec
@@ -260,8 +255,23 @@ nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1        " search with regex by default
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
+" fzf
+function! ActivateFZF()
+  if exists('b:git_dir')
+    GitFiles
+  else
+    Files
+  endif
+endfunction
+
+nnoremap <silent> <Leader>p :call ActivateFZF()<CR>
+nnoremap <silent> <Leader>g :GitFiles<CR>
+nnoremap <silent> <Leader>f :Files<CR>
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>c :Commands<CR>
+
 " Dirvish
-nmap <silent> <leader>f :Dirvish<CR>
+nmap <silent> \ :Dirvish<CR>
 nmap <silent> - <Plug>(dirvish_up)
 autocmd FileType dirvish call fugitive#detect(@%)               " enable git functions in dirvish view
 autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
