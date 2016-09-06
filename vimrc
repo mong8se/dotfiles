@@ -257,8 +257,15 @@ nmap     <leader>/ <Plug>CtrlSFPrompt
 nmap     <leader>* <Plug>CtrlSFCwordExec
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
-let g:ctrlsf_regex_pattern = 1 " search with regex by default
+let g:ctrlsf_regex_pattern = 1        " search with regex by default
 let g:ctrlsf_default_root = 'project' " search relative to project root
+
+" Dirvish
+nmap <silent> <leader>f :Dirvish<CR>
+nmap <silent> - <Plug>(dirvish_up)
+autocmd FileType dirvish call fugitive#detect(@%)               " enable git functions in dirvish view
+autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
+autocmd FileType dirvish :sort r /[^\/]$/                       " sort directories to top
 
 " buffers
 let g:buffergator_suppress_keymaps = 1
@@ -272,12 +279,8 @@ let g:buffergator_show_full_directory_path = 0
 " Golden Ratio
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
 
-" EasyMotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-let g:EasyMotion_smartcase = 1
-" s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
-vmap s <Plug>(easymotion-bd-f2)
+" vim-sneak
+let g:sneak#streak = 1
 
 " Incsearch
 let g:incsearch#auto_nohlsearch = 1

@@ -32,9 +32,10 @@ Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
+Plug 'justinmk/vim-sneak' " s
 
 Plug 'jeetsukumaran/vim-buffergator'   " leader b
-Plug 'jeetsukumaran/vim-filebeagle'    " leader f
+Plug 'justinmk/vim-dirvish'
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
@@ -67,7 +68,6 @@ Plug 'wellle/targets.vim'
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'haya14busa/incsearch.vim'
-Plug 'easymotion/vim-easymotion'
 
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'neomake/neomake'
