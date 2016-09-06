@@ -32,10 +32,11 @@ Plug 'bling/vim-airline'
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
-Plug 'justinmk/vim-sneak' " s
+Plug 'justinmk/vim-sneak'     " s or z with an operator
 
-Plug 'jeetsukumaran/vim-buffergator'   " leader b
-Plug 'justinmk/vim-dirvish'
+Plug 'jeetsukumaran/vim-buffergator' " leader b
+Plug 'justinmk/vim-dirvish'          " leader f
+
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
@@ -55,11 +56,11 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'othree/html5.vim'
 
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
-Plug 'tomtom/tcomment_vim' "gc
-Plug 'tpope/vim-surround'   " cs ds ys
+Plug 'tomtom/tcomment_vim'     " gc
+Plug 'tpope/vim-surround'      " cs ds ys
 Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
-Plug 'junegunn/vim-easy-align' "v tab
-Plug 'tommcdo/vim-exchange'            " cx
+Plug 'junegunn/vim-easy-align' " v tab
+Plug 'tommcdo/vim-exchange'    " cx
 
 Plug 'Raimondi/delimitMate'
 Plug 'michaeljsmith/vim-indent-object' " ai
