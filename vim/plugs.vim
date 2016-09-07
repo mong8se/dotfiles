@@ -27,6 +27,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 
+Plug 'tpope/vim-rsi'
+
 Plug 'bling/vim-airline'
 
 Plug 'roman/golden-ratio'
