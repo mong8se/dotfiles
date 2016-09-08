@@ -60,7 +60,6 @@ Plug 'othree/html5.vim'
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
 Plug 'tomtom/tcomment_vim'     " gc
 Plug 'tpope/vim-surround'      " cs ds ys
-Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
 Plug 'junegunn/vim-easy-align' " v tab
 Plug 'tommcdo/vim-exchange'    " cx
 
@@ -74,6 +73,9 @@ Plug 'haya14busa/incsearch.vim'
 
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'neomake/neomake'
+
+Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
+Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
 
 call g:LoadRCFiles('plugs')
 

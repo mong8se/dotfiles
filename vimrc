@@ -269,6 +269,7 @@ nnoremap <silent> <Leader>g :GitFiles<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>c :Commands<CR>
+nnoremap <Leader>a :Ag 
 
 " Dirvish
 nmap <silent> \ :Dirvish<CR>
@@ -287,6 +288,7 @@ let g:buffergator_viewport_split_policy = "N"
 let g:buffergator_show_full_directory_path = 0
 
 " Golden Ratio
+let g:golden_ratio_autocommand = 0
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
 
 " vim-sneak
