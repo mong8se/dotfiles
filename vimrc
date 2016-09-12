@@ -314,8 +314,8 @@ vmap <Tab> <Plug>(EasyAlign)
 nmap gl <Plug>(EasyAlign)
 
 " Neomake
-autocmd! BufWritePost * Neomake
-autocmd! BufReadPost * Neomake
+autocmd! BufWritePost * silent! Neomake
+autocmd! BufReadPost * silent! Neomake
 nmap <silent> ]e :lnext<CR>
 nmap <silent> [e :lprevious<CR>
 
