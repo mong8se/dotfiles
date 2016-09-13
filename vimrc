@@ -182,12 +182,12 @@ vnoremap < <gv
 vnoremap > >gv
 
 " custom functions
-nnoremap <silent> <Leader>n :call custom#ToggleRelativeNumber()<CR>
+nnoremap <silent> <Leader>n :call mong8se#ToggleRelativeNumber()<CR>
 
-nnoremap <silent> <Leader><CR>   :call custom#ActivateCR('.')<CR>
-nnoremap <silent> <Leader><S-CR> :call custom#ActivateCR('-1')<CR>
+nnoremap <silent> <Leader><CR>   :call mong8se#ActivateCR('.')<CR>
+nnoremap <silent> <Leader><S-CR> :call mong8se#ActivateCR('-1')<CR>
 
-nnoremap <silent> <Leader>sb :call custom#ScrollBindAllWindows()<CR>
+nnoremap <silent> <Leader>sb :call mong8se#ScrollBindAllWindows()<CR>
 
 if has('spell')
   set spelllang=en_us
@@ -255,16 +255,7 @@ nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1        " search with regex by default
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
-" fzf
-function! ActivateFZF()
-  if exists('b:git_dir')
-    GitFiles
-  else
-    Files
-  endif
-endfunction
-
-nnoremap <silent> <Leader>p :call ActivateFZF()<CR>
+nnoremap <silent> \ :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>g :GitFiles<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
@@ -272,7 +263,7 @@ nnoremap <silent> <Leader>c :Commands<CR>
 nnoremap <Leader>a :Ag 
 
 " Dirvish
-nmap <silent> \ :Dirvish<CR>
+nmap <silent> <Tab> :Dirvish<CR>
 nmap <silent> - <Plug>(dirvish_up)
 autocmd FileType dirvish call fugitive#detect(@%)               " enable git functions in dirvish view
 autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
@@ -325,4 +316,5 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 "------------------------------------------------------------
 " LOCALS
 
-call g:LoadRCFiles()
+call mong8se#LoadRCFiles()
+

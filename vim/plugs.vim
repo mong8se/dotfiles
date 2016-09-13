@@ -1,20 +1,3 @@
-" Source a local configuration file if available.
-" Takes arguments and constructs filename for example:
-" g:LoadRcFiles('first', 'second', third') would load:
-" mac.first.second.third.vim
-" local.first.second.third.vim
-" _hostname.first.second.third.vim
-
-function! g:LoadRCFiles(...)
-  for l:rc_type in ['mac', '_' . sha256( substitute(hostname(), '\..*', '', '') )[0:11], 'local']
-    if l:rc_type == 'mac' && !has('macunix')
-      continue
-    endif
-    let l:rc_file = join([l:rc_type] + a:000 + ['vim'], '.')
-    execute 'runtime' l:rc_file
-  endfor
-endfunction
-
 " in case we bypassed vimrc and loaded this file directly
 set nocompatible
 filetype off
@@ -77,7 +60,7 @@ Plug 'neomake/neomake'
 Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
 
-call g:LoadRCFiles('plugs')
+call mong8se#LoadRCFiles('plugs')
 
 call plug#end()
 
