@@ -41,7 +41,7 @@ Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'othree/html5.vim'
 
 Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
-Plug 'tomtom/tcomment_vim'     " gc
+Plug 'tpope/vim-commentary'     " gc
 Plug 'tpope/vim-surround'      " cs ds ys
 Plug 'junegunn/vim-easy-align' " v tab
 Plug 'tommcdo/vim-exchange'    " cx
