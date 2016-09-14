@@ -232,10 +232,6 @@ nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gb :Gbrowse<cr>
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
-" gitv
-let g:Gitv_WrapLines = 1
-let g:Gitv_OpenHorizontal = 'auto'
-
 " vim-signify
 let g:signify_vcs_list = [ 'git', 'svn', 'hg' ]
 nmap <silent> <Leader>gt :SignifyToggle<CR>
