@@ -106,12 +106,15 @@ endif
 
 " cursorline only for active window
 augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
+  autocmd!
+
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
 augroup END
 
 augroup FocusIssues
+  autocmd!
+
   " Leave insert or replace mode on focus lost
   autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | call feedkeys("\<C-\>\<C-n>") | endif
 
@@ -209,7 +212,9 @@ endif
 " If we're not in iterm, specifically request dark profile
 if has('nvim') || $TERM_PROGRAM !~ "iTerm"
   set background=dark
+  set termguicolors
 endif
+
 " let base16colorspace=256
 " colorscheme base16-default
 colorscheme gruvbox
