@@ -257,7 +257,6 @@ let g:ctrlsf_regex_pattern = 1        " search with regex by default
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
 nnoremap <silent> <Tab> :call mong8se#ActivateFZF()<CR>
-nnoremap <silent> <Leader>g :GitFiles<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>c :Commands<CR>
