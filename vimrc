@@ -255,7 +255,7 @@ nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_regex_pattern = 1        " search with regex by default
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
-nnoremap <silent> \ :call mong8se#ActivateFZF()<CR>
+nnoremap <silent> <Tab> :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>g :GitFiles<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
@@ -263,7 +263,7 @@ nnoremap <silent> <Leader>c :Commands<CR>
 nnoremap <Leader>a :Ag 
 
 " Dirvish
-nmap <silent> <Tab> :Dirvish<CR>
+nmap <silent> \ :Dirvish<CR>
 nmap <silent> - <Plug>(dirvish_up)
 autocmd FileType dirvish call fugitive#detect(@%)               " enable git functions in dirvish view
 autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
@@ -317,4 +317,3 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " LOCALS
 
 call mong8se#LoadRCFiles()
-
