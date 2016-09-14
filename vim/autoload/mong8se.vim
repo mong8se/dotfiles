@@ -14,10 +14,13 @@ function! mong8se#LoadRCFiles(...)
   endfor
 endfunction
 
-" relative line numbers
-function! mong8se#ToggleRelativeNumber()
-  set number
-  set relativenumber!
+" toggle line numbers
+function! mong8se#ToggleNumberMode()
+  if &number
+    set relativenumber!
+  else
+    set number
+  end
 endfunction
 
 " add blank line without entering insert mode

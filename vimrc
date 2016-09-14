@@ -185,7 +185,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " custom functions
-nnoremap <silent> <Leader>n :call mong8se#ToggleRelativeNumber()<CR>
+nnoremap <silent> <Leader>n :call mong8se#ToggleNumberMode()<CR>
 
 nnoremap <silent> <Leader><CR>   :call mong8se#ActivateCR('.')<CR>
 nnoremap <silent> <Leader><S-CR> :call mong8se#ActivateCR('-1')<CR>
