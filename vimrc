@@ -143,7 +143,7 @@ noremap! <F1> <Esc>
 
 " q in normal mode in a help file closes the help
 " similar to what happens in dirvish or fugitive
-autocmd FileType help nmap <buffer> q :bd<CR>
+autocmd FileType help nmap <silent> <buffer> q :helpclose<CR>
 
 " Map Y to act like D and C, i.e. to yank until EOL,
 " rather than act as yy, which is the default
