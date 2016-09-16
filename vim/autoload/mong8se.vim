@@ -16,8 +16,11 @@ endfunction
 
 " toggle line numbers
 function! mong8se#ToggleNumberMode()
-  if &number
-    set relativenumber!
+  if &relativenumber
+    set nonumber
+    set norelativenumber
+  elseif &number
+    set relativenumber
   else
     set number
   end
