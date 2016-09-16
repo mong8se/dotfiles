@@ -118,8 +118,8 @@ augroup FocusIssues
   " Leave insert or replace mode on focus lost
   autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | call feedkeys("\<C-\>\<C-n>") | endif
 
-  " Automatically try to save current buffer if focus lost
-  autocmd BufLeave,FocusLost * if &modifiable | silent! w | endif
+  " When focus is lost, save the buffer if it is modified and has a filename
+  autocmd BufLeave,FocusLost * if @% != '' && &modified | write | endif
 augroup END
 
 "------------------------------------------------------------
