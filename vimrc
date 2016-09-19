@@ -259,11 +259,13 @@ vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
-nnoremap <silent> <Tab> :call mong8se#ActivateFZF()<CR>
+" FZF
+nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>c :Commands<CR>
 nnoremap <Leader>a :Ag 
+autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
 
 " Dirvish
 nmap <silent> \ :Dirvish<CR>
