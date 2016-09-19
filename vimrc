@@ -226,7 +226,7 @@ colorscheme gruvbox
 highlight Comment cterm=italic
 
 let g:startify_custom_header =
-      \ map(split(system('hostname -s | figlet -c -w $COLUMNS -f thin'), '\n'), '"   ". v:val') + ['','']
+      \ map(split(system('figlet -c -w $COLUMNS -f stampatello //'.mong8se#shortHostname()), '\n'), '"   ". v:val') + ['','']
 let g:startify_list_order = [['// here'], 'dir', ['// anywhere'], 'files', ['// bookmarks'], 'bookmarks', ['// sessions'], 'sessions']
 
 " delimitMate

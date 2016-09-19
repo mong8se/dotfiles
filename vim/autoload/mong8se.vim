@@ -1,3 +1,8 @@
+" first part of hostname
+function! mong8se#shortHostname()
+  return substitute(hostname(), '\..*', '', '')
+endfunction
+
 " Source a local configuration file if available.
 " Takes arguments and constructs filename for example:
 " g:LoadRcFiles('first', 'second', third') would load:
@@ -5,7 +10,7 @@
 " local.first.second.third.vim
 " _hostname.first.second.third.vim
 function! mong8se#LoadRCFiles(...)
-  for l:rc_type in ['mac', '_' . sha256( substitute(hostname(), '\..*', '', '') )[0:11], 'local']
+  for l:rc_type in ['mac', '_' . sha256( mong8se#shortHostname() )[0:11], 'local']
     if l:rc_type == 'mac' && !has('macunix')
       continue
     endif
