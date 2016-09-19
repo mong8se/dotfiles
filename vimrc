@@ -251,6 +251,7 @@ nmap <silent> <leader>gr :SignifyRefresh<CR>
 " Airline
 let g:airline_left_sep='│'
 let g:airline_right_sep='│'
+let g:airline_inactive_collapse=0
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
