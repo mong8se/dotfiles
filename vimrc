@@ -211,19 +211,30 @@ if has("user_commands")
 endif
 
 "------------------------------------------------------------
-" PLUGINS
+" COLOR SCHEME
 
-" If we're not in iterm, specifically request dark profile
-if has('nvim') || $TERM_PROGRAM !~ "iTerm"
-  set background=dark
+if has('nvim')
   set termguicolors
 endif
 
-" let base16colorspace=256
-" colorscheme base16-default
-colorscheme gruvbox
+if $BASE16 != ""
+  let base16colorspace=256
+  colorscheme $BASE16
+else
+  if $TERM_PROGRAM == "iTerm" && $ITERM_PROFILE == "light"
+    set background=light
+  else
+    set background=dark
+  endif
+
+  colorscheme gruvbox
+endif
+
 " need to install with `rake xterm-italic`
 highlight Comment cterm=italic
+
+"------------------------------------------------------------
+" PLUGINS
 
 let g:startify_custom_header =
       \ map(split(system('figlet -c -w $COLUMNS -f stampatello //'.mong8se#shortHostname()), '\n'), '"   ". v:val') + ['','']

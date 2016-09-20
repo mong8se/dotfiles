@@ -62,6 +62,9 @@ if status --is-interactive
   case dark
     base16 bespin
   end
+
+  # Remove the environment variable as it's the default, not user set
+  set -e BASE16
 end
 
 if test `uname`="Darwin"
