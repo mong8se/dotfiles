@@ -19,6 +19,8 @@ if IS_MAC && File.exist?('/etc/zshenv')
  WARNING
 end
 
+VI_BIN = `which nvim || which vim || which vi`.chomp
+
 namespace :submodule do
   desc "init git submodules"
   task :init do
@@ -42,15 +44,15 @@ end
 namespace :vim do
   desc "install vim plugins"
   task :install do
-    exec "vim -u vim/plugs.vim +PlugInstall +qall"
+    exec "#{VI_BIN} -u vim/plugs.vim +PlugInstall +qall"
   end
   desc "update vim plugins"
   task :update do
-    exec "vim -u vim/plugs.vim +PlugUpdate +qall"
+    exec "#{VI_BIN} -u vim/plugs.vim +PlugUpdate +qall"
   end
   desc "clean vim plugins"
   task :cleanup do
-    exec "vim -u vim/plugs.vim +PlugClean +qall"
+    exec "#{VI_BIN} -u vim/plugs.vim +PlugClean +qall"
   end
 end
 
