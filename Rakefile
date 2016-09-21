@@ -44,15 +44,15 @@ end
 namespace :vim do
   desc "install vim plugins"
   task :install do
-    exec "#{VI_BIN} -u vim/plugs.vim +PlugInstall +qall"
+    exec "#{VI_BIN} -u config/nvim/plugs.vim +PlugInstall +qall"
   end
   desc "update vim plugins"
   task :update do
-    exec "#{VI_BIN} -u vim/plugs.vim +PlugUpdate +qall"
+    exec "#{VI_BIN} -u config/nvim/plugs.vim +PlugUpdate +qall"
   end
   desc "clean vim plugins"
   task :cleanup do
-    exec "#{VI_BIN} -u vim/plugs.vim +PlugClean +qall"
+    exec "#{VI_BIN} -u config/nvim/plugs.vim +PlugClean +qall"
   end
 end
 
@@ -75,7 +75,8 @@ desc "make dot file symlinks"
 task :make_links do
   replace_all = false
   {
-   'vim' => 'config/nvim'
+   'config/nvim' => 'vim',
+   'config/nvim/init.vim' => 'vimrc'
   }.each_pair do |raw_target, raw_link|
     target = dot_file(raw_target)
     link = dot_file(raw_link)

@@ -72,24 +72,24 @@ set ttyfast
 set splitright " new vertical splits are to the right
 set splitbelow " new horizontal splits are below
 
-" Use a .vim_tmp directory in the project root, .vim/tmp in your home dir, or
+" Use a .vim_tmp directory in the project root, .config/nvim/tmp in your home dir, or
 " lastly current folder.
-set directory=./.vim_tmp,~/.vim/tmp,.,/tmp
-set backupdir=./.vim_tmp,~/.vim/tmp,.,/tmp
+set directory=./.vim_tmp,~/.config/nvim/tmp,.,/tmp
+set backupdir=./.vim_tmp,~/.config/nvim/tmp,.,/tmp
 
 if has('persistent_undo')
-  set undodir=./.vim_tmp,~/.vim/tmp,.,/tmp
+  set undodir=./.vim_tmp,~/.config/nvim/tmp,.,/tmp
   set undofile
 endif
 
 if ! has('nvim')
-  " put viminfo in .vim/tmp
-  set viminfo='100,n$HOME/.vim/tmp/viminfo
+  " put viminfo in .config/nvim/tmp
+  set viminfo='100,n$HOME/.config/nvim/tmp/viminfo
 
   " Add matching plugin to super power %
   runtime! macros/matchit.vim
 else
-  set shada=!,'100,<50,s10,h,n$HOME/.vim/tmp/main.shada
+  set shada=!,'100,<50,s10,h,n$HOME/.config/nvim/tmp/main.shada
 end
 
 set foldlevelstart=99
@@ -228,6 +228,7 @@ else
   endif
 
   colorscheme gruvbox
+  let g:gruvbox_italic=1
 endif
 
 " need to install with `rake xterm-italic`

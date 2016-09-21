@@ -2,7 +2,7 @@
 set nocompatible
 filetype off
 
-call plug#begin('~/.vim/plugged')
+call plug#begin("~/.config/nvim/plugged")
 
 set rtp+=~/.dotfiles/Resources/fzf
 Plug 'junegunn/fzf.vim'
