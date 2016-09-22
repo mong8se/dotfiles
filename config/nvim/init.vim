@@ -308,13 +308,13 @@ let g:incsearch#auto_nohlsearch = 1
 let g:incsearch#magic = '\v' " very magic
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+map g/ <Plug>(incsearch-stay)zz
+map n  <Plug>(incsearch-nohl-n)zz
+map N  <Plug>(incsearch-nohl-N)zz
+map *  <Plug>(incsearch-nohl-*)zz
+map #  <Plug>(incsearch-nohl-#)zz
+map g* <Plug>(incsearch-nohl-g*)zz
+map g# <Plug>(incsearch-nohl-g#)zz
 
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Tab> <Plug>(EasyAlign)
