@@ -60,6 +60,7 @@ Plug 'neomake/neomake'
 
 Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
+Plug 'mtth/scratch.vim', { 'on': 'Scratch' } " gs
 
 call mong8se#LoadRCFiles('plugs')
 
