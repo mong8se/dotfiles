@@ -22,12 +22,12 @@ endfunction
 " toggle line numbers
 function! mong8se#ToggleNumberMode()
   if &relativenumber
-    set nonumber
-    set norelativenumber
+    windo set nonumber
+    windo set norelativenumber
   elseif &number
-    set relativenumber
+    windo set relativenumber
   else
-    set number
+    windo set number
   end
 endfunction
 
