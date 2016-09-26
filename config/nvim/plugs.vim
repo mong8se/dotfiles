@@ -11,6 +11,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
 
 Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-repeat'
 
 Plug 'bling/vim-airline'
 
