@@ -6,8 +6,10 @@ syntax on
 set hidden
 set encoding=utf-8
 
-set timeoutlen=1200 " A little bit more time for macros
-set ttimeoutlen=33  " Make Esc work faster
+set timeout           " for mappings
+set timeoutlen=1000   " default value
+set ttimeout          " for key codes
+set ttimeoutlen=10    " unnoticeable small value
 
 set wildmenu
 set wildmode=longest:full,full
@@ -42,8 +44,6 @@ set nostartofline
 set ruler
 set confirm
 set visualbell
-" set number
-set timeoutlen=500
 
 set pastetoggle=<F11>
 au InsertLeave * set nopaste " Automatically leave paste mode when leaving insert mode
