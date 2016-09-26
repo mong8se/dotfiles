@@ -31,15 +31,6 @@ function! mong8se#ToggleNumberMode()
   end
 endfunction
 
-" add blank line without entering insert mode
-function! mong8se#ActivateCR(range)
-  if empty(&buftype)
-    execute a:range . "put _"
-  else
-    execute "normal! \<CR>"
-  end
-endfunction
-
 " scroll bind all windows, works best with vertical splits
 function! mong8se#ScrollBindAllWindows()
   if &scrollbind

@@ -157,7 +157,7 @@ nnoremap K i<CR><Esc>
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
-nnoremap <silent> <C-L> :nohl<CR><C-L>
+nnoremap <silent> <C-L> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
 " Arrow keys move up and down visible lines, not physical lines
 nnoremap <Down> gj
@@ -191,10 +191,10 @@ vnoremap > >gv
 " custom functions
 nnoremap <silent> <Leader>n :call mong8se#ToggleNumberMode()<CR>
 
-nnoremap <silent> <Leader><CR>   :call mong8se#ActivateCR('.')<CR>
-nnoremap <silent> <Leader><S-CR> :call mong8se#ActivateCR('-1')<CR>
-
 nnoremap <silent> <Leader>sb :call mong8se#ScrollBindAllWindows()<CR>
+
+nnoremap [<cr>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<cr>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 if has('spell')
   set spelllang=en_us
@@ -333,6 +333,11 @@ nmap <silent> [e :lprevious<CR>
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" pretend these plugins are already loaded, so they don't load
+let loaded_2html_plugin = 1
+let loaded_matchparen   = 1
+let loaded_netrw        = 1
 
 "------------------------------------------------------------
 " LOCALS
