@@ -227,8 +227,11 @@ else
     set background=dark
   endif
 
-  colorscheme gruvbox
   let g:gruvbox_italic=1
+  let g:gruvbox_contrast_dark="soft"
+  let g:gruvbox_contrast_light="hard"
+  let g:gruvbox_invert_selection=0
+  colorscheme gruvbox
 endif
 
 " need to install with `rake xterm-italic`
