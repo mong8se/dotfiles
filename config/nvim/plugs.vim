@@ -14,6 +14,7 @@ Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 
 Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
 
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
