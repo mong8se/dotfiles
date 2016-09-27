@@ -56,11 +56,13 @@ if status --is-interactive
   abbr -a cd.. cd ..
 
   # Set Base16 Shell Colors
-  switch $ITERM_PROFILE
+  switch "$ITERM_PROFILE"
   case light
     base16 solarized-light
   case dark
     base16 bespin
+  case '*'
+    base16 eighties
   end
 
   # Remove the environment variable as it's the default, not user set
