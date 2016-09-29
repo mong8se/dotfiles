@@ -304,6 +304,7 @@ let g:buffergator_show_full_directory_path = 0
 " Golden Ratio
 let g:golden_ratio_autocommand = 0
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
+nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)   " compare to <C-W>=
 
 " vim-sneak
 let g:sneak#streak = 1
