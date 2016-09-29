@@ -28,8 +28,7 @@ Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
 
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim', { 'on': 'GV' }
+Plug 'tpope/vim-fugitive' | Plug 'junegunn/gv.vim', { 'on': 'GV' }
 
 Plug 'mhinz/vim-signify' " ]c [c
 
