@@ -277,6 +277,9 @@ vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
+" Grepper
+let g:grepper = { 'highlight': 1 }
+
 " FZF
 nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>f :Files<CR>
@@ -304,7 +307,8 @@ let g:buffergator_show_full_directory_path = 0
 " Golden Ratio
 let g:golden_ratio_autocommand = 0
 nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
-nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)   " compare to <C-W>=
+" compare to <C-W>=
+nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)
 
 " vim-sneak
 let g:sneak#streak = 1
