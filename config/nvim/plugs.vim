@@ -54,7 +54,6 @@ Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
 Plug 'wellle/targets.vim'
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
-Plug 'mhinz/vim-grepper'
 Plug 'haya14busa/incsearch.vim'
 
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }

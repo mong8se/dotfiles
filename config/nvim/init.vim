@@ -277,9 +277,6 @@ vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 
-" Grepper
-let g:grepper = { 'highlight': 1 }
-
 " FZF
 nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>f :Files<CR>
