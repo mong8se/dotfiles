@@ -243,6 +243,7 @@ highlight Comment cterm=italic
 let g:startify_custom_header =
       \ map(split(system('figlet -c -w $COLUMNS -f stampatello //'.mong8se#shortHostname()), '\n'), '"   ". v:val') + ['','']
 let g:startify_list_order = [['// here'], 'dir', ['// anywhere'], 'files', ['// bookmarks'], 'bookmarks', ['// sessions'], 'sessions']
+let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 
 " delimitMate
 let delimitMate_expand_space = 1
