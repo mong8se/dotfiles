@@ -130,8 +130,6 @@ noremap <Space> <Nop>
 let mapleader = "\<Space>"
 
 " Move lines
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
 inoremap <C-j> <ESC>:m .+1<CR>==gi
 inoremap <C-k> <ESC>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
@@ -162,6 +160,10 @@ nnoremap <silent> <C-L> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>
 " Arrow keys move up and down visible lines, not physical lines
 nnoremap <Down> gj
 nnoremap <Up> gk
+
+" scroll up and down without moving cursor line
+nnoremap <C-k> <C-e>gj
+nnoremap <C-j> <C-y>gk
 
 " Make shift + arrow work more like other editors, selecting text
 nmap <S-Up>    v<Up>
