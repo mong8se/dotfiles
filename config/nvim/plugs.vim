@@ -9,6 +9,8 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
+Plug 'alessandroyorba/despacio'
+Plug 'AlessandroYorba/Alduin'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
