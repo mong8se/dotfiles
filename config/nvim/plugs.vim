@@ -53,7 +53,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
 Plug 'neomake/neomake'
 
-Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' } " gs
 
