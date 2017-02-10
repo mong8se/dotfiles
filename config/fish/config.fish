@@ -1,6 +1,6 @@
 #!/bin/env fish
 
-fish_vi_key_bindings
+fish_hybrid_key_bindings
 
 function fish_greeting
   if type -P (which figlet) > /dev/null; and test -x (which figlet)
@@ -17,7 +17,7 @@ else
   set -x EDITOR vi
 end
 
-function -e fish_preexec _run_fasd
+function _run_fasd -e fish_preexec
   fasd --proc (fasd --sanitize "$argv") > "/dev/null" 2>&1
 end
 
