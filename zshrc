@@ -176,4 +176,7 @@ fo() {
 # pass password store
 export PASSWORD_STORE_DIR=~/Dropbox/.password-store
 
+# FZF defaults
+export FZF_DEFAULT_OPTS='--height 40% --reverse'
+
 xsource $ZDOTDIR/local.zsh

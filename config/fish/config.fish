@@ -76,3 +76,4 @@ end
 xsource _(hostname -s | tr -d '\n' | shasum -p -a 256 | cut -c1-12).fish local.fish
 
 set -x PASSWORD_STORE_DIR ~/Dropbox/.password-store
+set -x FZF_DEFAULT_OPTS '--height 40% --reverse'
