@@ -5,3 +5,5 @@ let g:startify_bookmarks = [
 
 "jsx everywhere
 let g:jsx_ext_required = 0
+
+let g:ctrlsf_ackprg = "rg"
