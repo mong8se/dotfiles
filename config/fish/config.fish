@@ -58,9 +58,9 @@ if status --is-interactive
   # Set Base16 Shell Colors
   switch "$ITERM_PROFILE"
   case light
-    base16 solarized-light
+    base16 gruvbox-light-soft
   case dark
-    base16 bespin
+    base16 gruvbox-dark-soft
   case '*'
     base16 eighties
   end
