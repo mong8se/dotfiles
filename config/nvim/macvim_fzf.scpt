@@ -3,8 +3,11 @@ on run argv
         set old_frontmost to item 1 of (get name of processes whose frontmost is true)
     end tell
     tell application "iTerm2"
-        set myterm to (create window with default profile command "bash")
-        tell current session of first window
+        set myterm to (create window with default profile)
+        tell myterm
+          select
+        end
+        tell current session of myterm
             write text "cd " & quoted form of (item 2 of argv)
             write text (item 1 of argv) & " && exit"
         end tell
