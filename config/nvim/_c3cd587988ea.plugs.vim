@@ -5,5 +5,5 @@ Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 'niftylettuce/vim-jinja'
 
-Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
