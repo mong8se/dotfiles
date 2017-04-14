@@ -1,7 +1,4 @@
 function fish_right_prompt --description 'Write out the prompt'
-
-  set -l last_status $status
-
   if not set -q __fish_git_prompt_show_informative_status
     set -g __fish_git_prompt_show_informative_status 1
   end
@@ -19,7 +16,7 @@ function fish_right_prompt --description 'Write out the prompt'
   end
 
   if not set -q __fish_prompt_hostname
-    set -g __fish_prompt_hostname (hostname|cut -d . -f 1)
+    set -g __fish_prompt_hostname (hostname|cut -d . -f 1|tr '[:lower:]' '[:upper:]')
   end
 
   if not set -q __fish_color_host
@@ -51,7 +48,7 @@ function fish_right_prompt --description 'Write out the prompt'
     end
   end
 
-  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt " %s ")
-  echo -n -s -e "\e[7m$__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal\e[7m "
+  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt " %s")
+  echo -n -s -e "\e[7m$__fish_color_host▌$__fish_prompt_hostname▐$__fish_prompt_normal\e[7m "
   echo -n -s (prompt_pwd) " $__fish_prompt_normal"
 end
