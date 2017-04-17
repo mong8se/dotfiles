@@ -53,6 +53,6 @@ function fish_right_prompt --description 'Write out the prompt'
   end
 
   echo -n -s "$__fish_prompt_normal" (__fish_git_prompt "%s")
-  echo -n -s "$__fish_color_host▌$__fish_prompt_hostname▐$__fish_prompt_normal"
+  echo -n -s " $__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal "
   echo -n -s "$__fish_prompt_reverse " (prompt_pwd) " $__fish_prompt_normal"
 end

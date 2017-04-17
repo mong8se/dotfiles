@@ -7,7 +7,7 @@ function fish_prompt --description 'Write out the prompt'
       echo -n '🐙 '
     end
   else
-    echo -n '☠️  '
+    echo -n '☠️ '
   end
 
   if not set -q __fish_prompt_normal
