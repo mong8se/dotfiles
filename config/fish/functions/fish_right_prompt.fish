@@ -11,6 +11,10 @@ function fish_right_prompt --description 'Write out the prompt'
     set -g __fish_git_prompt_color_merging red
   end
 
+  if not set -q __fish_prompt_reverse
+    set -g __fish_prompt_reverse (set_color --reverse)
+  end
+
   if not set -q __fish_prompt_normal
     set -g __fish_prompt_normal (set_color normal)
   end
@@ -20,7 +24,7 @@ function fish_right_prompt --description 'Write out the prompt'
   end
 
   if not set -q __fish_color_host
-    set -g __fish_color_host (set_color $fish_color_host)
+    set -g __fish_color_host (set_color -r $fish_color_host)
   end
 
   if not set -q -g __fish_classic_git_functions_defined
@@ -48,7 +52,7 @@ function fish_right_prompt --description 'Write out the prompt'
     end
   end
 
-  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt " %s")
-  echo -n -s -e "\e[7m$__fish_color_host▌$__fish_prompt_hostname▐$__fish_prompt_normal\e[7m "
-  echo -n -s (prompt_pwd) " $__fish_prompt_normal"
+  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt "%s")
+  echo -n -s "$__fish_color_host▌$__fish_prompt_hostname▐$__fish_prompt_normal"
+  echo -n -s "$__fish_prompt_reverse " (prompt_pwd) " $__fish_prompt_normal"
 end
