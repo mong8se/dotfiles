@@ -17,7 +17,7 @@ function fish_mode_prompt --description "Displays the current vi mode"
         changeCursor 1
       case replace-one
         echo '🔨 '
-        changeCursor 0
+        changeCursor 2
       case visual
         echo '🕯️ '
         changeCursor 0
