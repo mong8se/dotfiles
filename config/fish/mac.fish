@@ -20,7 +20,7 @@ end
 
 # items below require beta iterm2
 function growl -d "Notify"
-  echo -e "\e]9;$argv\007"
+  echo -e "\e]9;$argv\a"
 end
 
 xsource iterm2_shell_integration.fish
