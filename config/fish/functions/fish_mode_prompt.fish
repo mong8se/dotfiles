@@ -1,7 +1,7 @@
 function fish_mode_prompt --description "Displays the current vi mode"
   function changeCursor
     if set -q ITERM_PROFILE
-        echo -e '\e]1337;CursorShape='$argv[1]'\a'
+        echo -ne '\e]1337;CursorShape='$argv[1]'\a'
     end
   end
 
@@ -10,16 +10,16 @@ function fish_mode_prompt --description "Displays the current vi mode"
   if test $__fish_active_key_bindings = "fish_vi_key_bindings" -o $__fish_active_key_bindings = "fish_hybrid_key_bindings"
     switch $fish_bind_mode
       case default
-        echo '📣 '
+        echo -n '📣 '
         changeCursor 0
       case insert
-        echo '🖋️ '
+        echo -n '🖋️ '
         changeCursor 1
       case replace-one
-        echo '🔨 '
+        echo -n '🔨 '
         changeCursor 2
       case visual
-        echo '🕯️ '
+        echo -n '🕯️ '
         changeCursor 0
     end
   end
