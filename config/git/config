@@ -10,7 +10,7 @@
   header    = normal
   added     = green reverse
   changed   = blue
-  untracked = black
+  untracked = white dim
   branch    = blue ul
   nobranch  = red ul
 [column]

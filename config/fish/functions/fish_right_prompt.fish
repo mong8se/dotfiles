@@ -27,6 +27,10 @@ function fish_right_prompt --description 'Write out the prompt'
     set -g __fish_color_host (set_color -r $fish_color_host)
   end
 
+  if not set -q __fish_color_package_json
+    set -g __fish_color_package_json (set_color --reverse yellow -b black)
+  end
+
   if not set -q -g __fish_classic_git_functions_defined
     set -g __fish_classic_git_functions_defined
 
@@ -52,7 +56,14 @@ function fish_right_prompt --description 'Write out the prompt'
     end
   end
 
+  if test -e package.json
+    echo -n -s "$__fish_color_package_json"
+    cat package.json | jq '" " + .name + "|" + .version + " "' -r
+    echo -n -s "$__fish_prompt_normal" " "
+  end
+
   echo -n -s "$__fish_prompt_normal" (__fish_git_prompt "%s")
-  echo -n -s " $__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal "
+  echo -n " "
+  # echo -n -s " $__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal "
   echo -n -s "$__fish_prompt_reverse " (prompt_pwd) " $__fish_prompt_normal"
 end
