@@ -261,6 +261,7 @@ end
 desc 'Install profile for iterm2 italics support'
 task "xterm-italic" do
     system 'tic Resources/xterm-italic/xterm-256color-italic.terminfo'
+    puts "Set your term to 'xterm-256color-italic'"
 end
 
 task :default => 'update'
