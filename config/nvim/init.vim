@@ -279,6 +279,7 @@ nmap     <leader>* <Plug>CtrlSFCwordExec
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
+let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
 " FZF
 nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
@@ -303,6 +304,10 @@ nmap <silent> <leader><Space> :BuffergatorOpen<CR>
 let g:buffergator_sort_regime = "mru"
 let g:buffergator_viewport_split_policy = "N"
 let g:buffergator_show_full_directory_path = 0
+
+" tabs
+nmap <silent> ]t :tabnext<CR>
+nmap <silent> [t :tabprevious<CR>
 
 " Golden Ratio
 let g:golden_ratio_autocommand = 0

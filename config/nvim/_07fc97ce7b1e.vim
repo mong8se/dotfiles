@@ -4,3 +4,4 @@ let g:startify_bookmarks = [
                     \ ]
 
 let g:ctrlsf_ackprg = "rg"
+let g:jsx_ext_required = 0
