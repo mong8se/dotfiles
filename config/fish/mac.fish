@@ -23,4 +23,4 @@ function growl -d "Notify"
   echo -e "\e]9;$argv\a"
 end
 
-xsource iterm2_shell_integration.fish
+test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish ; or echo "iTerm2 shell extensions not installed."
