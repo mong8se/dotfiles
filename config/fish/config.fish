@@ -23,7 +23,7 @@ end
 
 function z
   if count $argv > /dev/null
-    cd (fasd -dl "$argv")
+    cd (fasd -dl1 "$argv")
   else
     cd (fasd -dlR | fzy)
   end
