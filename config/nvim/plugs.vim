@@ -50,8 +50,14 @@ Plug 'wellle/targets.vim'
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'haya14busa/incsearch.vim'
 
-Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
-Plug 'neomake/neomake'
+" Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
+" Plug 'neomake/neomake'
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' } " gs

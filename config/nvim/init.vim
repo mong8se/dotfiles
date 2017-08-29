@@ -338,10 +338,15 @@ vmap <Tab> <Plug>(EasyAlign)
 nmap gl <Plug>(EasyAlign)
 
 " Neomake
-autocmd! BufWritePost * silent! Neomake
-autocmd! BufReadPost * silent! Neomake
-nmap <silent> ]e :lnext<CR>
-nmap <silent> [e :lprevious<CR>
+" autocmd! BufWritePost * silent! Neomake
+" autocmd! BufReadPost * silent! Neomake
+" nmap <silent> ]e :lnext<CR>
+" nmap <silent> [e :lprevious<CR>
+nmap <silent> ]e <Plug>(ale_next)
+nmap <silent> [e <Plug>(ale_previous)
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_javascript_prettier_options = '--tab-width 4'
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
