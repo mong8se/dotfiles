@@ -62,7 +62,7 @@ if status --is-interactive
   set -e BASE16
 end
 
-if test `uname`="Darwin"
+if test (uname) = "Darwin"
   set -x IS_MAC 0
   xsource mac.fish
 end
