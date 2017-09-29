@@ -2,7 +2,7 @@ require 'rake'
 require 'socket'
 require 'digest/sha2'
 
-IS_MAC = RUBY_PLATFORM.downcase.include?('darwin') && 'mac'
+IS_MAC = RUBY_PLATFORM.downcase.include?('darwin')
 
 if IS_MAC && File.exist?('/etc/zshenv')
  puts(<<-'WARNING')
@@ -58,7 +58,6 @@ end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md config]
 HOST = Digest::SHA2.hexdigest( Socket.gethostname.gsub(/\..+$/, '') ).slice(0,12)
-VALID_EXTENSIONS = ['el', 'vim', 'zsh', 'fish', 'bash', 'conf', 'd', 'local', HOST, IS_MAC].compact
 
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION  = ENV['HOME']
@@ -138,15 +137,9 @@ def link_file(file)
   File.symlink repo_file(file), dot_file(file)
 end
 
-def valid_file?(file)
-  name = File.basename(file)
-  unless name.match %r(^[^\.]+([\w_.-]*\.(#{VALID_EXTENSIONS.join('|')}))?$)
-      return false
-  end
-  if name.match %r(^_(?!#{HOST}))
-    return false
-  end
-  return true
+def invalid_file?(file)
+  file_name = File.basename(file)
+  return ( !IS_MAC && file_name.match(/^mac\.|\.mac$/ )) || file_name.match(/^_(?!#{HOST})/)
 end
 
 def dot_file(file)
@@ -175,7 +168,7 @@ def install_files(dir='*', recurse=false)
   Dir[dir].each do |file|
     next if SKIP_FILES.include? file
 
-    unless valid_file?(file)
+    if invalid_file?(file)
       puts_message 'ignoring', file
       next
     end
