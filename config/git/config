@@ -32,10 +32,10 @@
 [alias]
   fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
   icd = "difftool -t icdiff -y"
-  co  = "!git branch --all | cut -c 3- | fzy | xargs git checkout"
-  vi  = "!git ls-files $1 | fzy | xargs -o \"$EDITOR\""
-  af  = "!git ls-files -m | fzy | xargs git add"
-  fzf = "!git ls-files | fzy | xargs git $1"
+  co  = "!git branch --all | cut -c 3- | fzf | xargs git checkout"
+  vi  = "!git ls-files $1 | fzf | xargs -o \"$EDITOR\""
+  af  = "!git ls-files -m | fzf | xargs git add"
+  fzf = "!git ls-files | fzf | xargs git $1"
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
   default = simple

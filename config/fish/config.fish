@@ -25,7 +25,7 @@ function z
   if count $argv > /dev/null
     cd (fasd -dl1 "$argv")
   else
-    cd (fasd -dlR | fzy)
+    cd (fasd -dlR | fzf)
   end
 end
 
