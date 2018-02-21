@@ -8,26 +8,26 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     if not set -q __fish_root_sigil
-      if test $IS_MAC
+      if set -q HAS_UTF
         set -g __fish_root_sigil '🦄 '
       else
-        set -g __fish_root_sigil 'u'
+        set -g __fish_root_sigil '>'
       end
     end
 
     if not set -q __fish_normal_sigil
-      if test $IS_MAC
+      if set -q HAS_UTF
         set -g __fish_normal_sigil '🐙 '
       else
-        set -g __fish_normal_sigil 'o'
+        set -g __fish_normal_sigil '|'
       end
     end
 
     if not set -q __fish_error_sigil
-      if test $IS_MAC
+      if set -q HAS_UTF
         set -g __fish_error_sigil '☠️ '
       else
-        set -g __fish_error_sigil 's'
+        set -g __fish_error_sigil 'X'
       end
     end
 

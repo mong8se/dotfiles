@@ -286,8 +286,14 @@ nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>f :Files<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>c :Commands<CR>
-nnoremap <Leader>a :Ag 
 autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+nnoremap <Leader>a :Rg 
 
 " Dirvish
 nmap <silent> \ :Dirvish<CR>

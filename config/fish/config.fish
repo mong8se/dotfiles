@@ -48,6 +48,13 @@ if status --is-interactive
   abbr -a em emacsclient
   abbr -a cd.. cd ..
 
+  # Feature Switches
+  if set -q ITERM_PROFILE
+    set -x HAS_UTF 0
+  else if test (echo $TERM | rev | cut -c 1-5) = "yttik"
+    set -e HAS_UTF
+  end
+
   # Set Base16 Shell Colors
   switch "$ITERM_PROFILE"
   case light
