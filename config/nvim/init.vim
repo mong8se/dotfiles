@@ -260,7 +260,8 @@ nmap <silent> <leader>gb :Gbrowse<cr>
 autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " vim-signify
-let g:signify_vcs_list = [ 'git', 'svn', 'hg' ]
+let g:signify_vcs_list = [ 'git' ]
+let g:signify_realtime = 1
 nmap <silent> <Leader>gt :SignifyToggle<CR>
 nmap <silent> <leader>gh :SignifyToggleHighlight<CR>
 nmap <silent> <leader>gf :SignifyFold<CR>
