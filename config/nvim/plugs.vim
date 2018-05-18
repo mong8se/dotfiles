@@ -14,6 +14,7 @@ Plug 'AlessandroYorba/Alduin'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-apathy'
 
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
@@ -30,9 +31,12 @@ Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
 
-Plug 'tpope/vim-fugitive' | Plug 'junegunn/gv.vim', { 'on': 'GV' }
-
-Plug 'mhinz/vim-signify' " ]c [c
+Plug 'tpope/vim-fugitive'
+" Plug 'sodapopcan/vim-twiggy'
+Plug 'jreybert/vimagit'
+Plug 'airblade/vim-gitgutter'
+" Plug 'junegunn/gv.vim', { 'on': 'GV' }
+" Plug 'mhinz/vim-signify' " ]c [c
 
 Plug 'sheerun/vim-polyglot'
 
@@ -50,13 +54,16 @@ Plug 'wellle/targets.vim'
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'haya14busa/incsearch.vim'
 
-" Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py' }
-" Plug 'neomake/neomake'
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'neomake/neomake'
+Plug 'yami-beta/asyncomplete-omni.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'prabirshrestha/asyncomplete-flow.vim'
+
 Plug 'w0rp/ale'
 
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
