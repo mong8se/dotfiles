@@ -95,7 +95,7 @@ end
 set foldlevelstart=99
 set foldmethod=manual
 
-if has('clipboard')
+if has('clipboard') && !exists("g:gui_oni")
   if has('x11') && version >= 703
     " Default yank and paste go to system clipboard
     set clipboard=unnamedplus
