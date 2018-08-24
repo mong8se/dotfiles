@@ -53,6 +53,7 @@ Plug 'wellle/targets.vim'
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'haya14busa/incsearch.vim'
+Plug 'RRethy/vim-illuminate'
 
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'

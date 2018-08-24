@@ -3,5 +3,4 @@ let g:startify_bookmarks = [
                     \ '~/Projects'
                     \ ]
 
-let g:ctrlsf_ackprg = "rg"
 let g:jsx_ext_required = 0
