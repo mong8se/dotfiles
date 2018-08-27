@@ -357,7 +357,6 @@ let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['css'] = ['prettier']
 let g:ale_fixers['json'] = ['prettier']
-let g:ale_javascript_prettier_options = '--tab-width 4'
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
