@@ -49,20 +49,25 @@ if status --is-interactive
   abbr -a cd.. cd ..
 
   # Feature Switches
-  if set -q ITERM_PROFILE
-    set -x HAS_UTF 0
-  else if test (echo $TERM | rev | cut -c 1-5) = "yttik"
+  # if set -q ITERM_PROFILE
+    # set -x HAS_UTF 0
+    # set -x fish_emoji_width 2
+  # else if set -q KITTY_WINDOW_ID
     set -e HAS_UTF
-  end
+  # end
 
   # Set Base16 Shell Colors
-  switch "$ITERM_PROFILE"
-  case light
-    base16 gruvbox-light-soft
-  case dark
+  if set -q ITERM_PROFILE
+    switch "$ITERM_PROFILE"
+    case light
+      base16 gruvbox-light-soft
+    case dark
+      base16 gruvbox-dark-soft
+    case '*'
+      base16 eighties
+    end
+  else
     base16 gruvbox-dark-soft
-  case '*'
-    base16 eighties
   end
 
   # Remove the environment variable as it's the default, not user set
