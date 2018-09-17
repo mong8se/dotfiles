@@ -9,18 +9,18 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'chriskempson/base16-vim'
 Plug 'morhetz/gruvbox'
-Plug 'alessandroyorba/despacio'
-Plug 'AlessandroYorba/Alduin'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-apathy'
 
 Plug 'bling/vim-airline'
-Plug 'bling/vim-bufferline'
+" Plug 'bling/vim-bufferline'
+Plug 'ap/vim-buftabline'
 
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
+
 Plug 'unblevable/quick-scope' " f F t T
 Plug 'justinmk/vim-sneak'     " s or z with an operator
 
@@ -33,14 +33,14 @@ Plug 'airblade/vim-rooter'
 
 Plug 'tpope/vim-fugitive'
 " Plug 'sodapopcan/vim-twiggy'
-Plug 'jreybert/vimagit'
-Plug 'airblade/vim-gitgutter'
+" Plug 'jreybert/vimagit'
+" Plug 'airblade/vim-gitgutter'
 " Plug 'junegunn/gv.vim', { 'on': 'GV' }
-" Plug 'mhinz/vim-signify' " ]c [c
+Plug 'mhinz/vim-signify' " ]c [c
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'tpope/vim-abolish', { 'on': 'Subvert' }
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'     " gc
 Plug 'tpope/vim-surround'      " cs ds ys
 Plug 'junegunn/vim-easy-align' " v tab

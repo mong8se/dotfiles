@@ -273,7 +273,8 @@ let g:airline_left_sep='│'
 let g:airline_right_sep='│'
 let g:airline_inactive_collapse=0
 let g:airline#extensions#bufferline#enabled = 1
-let g:bufferline_echo = 0
+let g:bufferline_echo = 1
+let g:airline#extensions#bufferline#overwrite_variables = 1
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
@@ -353,6 +354,7 @@ nmap gl <Plug>(EasyAlign)
 " nmap <silent> [e :lprevious<CR>
 nmap <silent> ]e <Plug>(ale_next)
 nmap <silent> [e <Plug>(ale_previous)
+nnoremap <silent> <Leader>ga :ALEFix<cr>
 let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['css'] = ['prettier']
