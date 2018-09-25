@@ -22,12 +22,20 @@ function fish_mode_prompt --description "Displays the current vi mode"
     end
   end
 
-  if not set -q __fish_prompt_reverse
-    set -g __fish_prompt_reverse (set_color --reverse)
+  if not set -q __fish_mode_prompt_insert
+    set -g __fish_mode_prompt_insert (set_color --reverse)
   end
 
-  if not set -q HAS_UTF
-    echo -en $__fish_prompt_reverse
+  if not set -q __fish_mode_prompt_normal
+    set -g __fish_mode_prompt_normal (set_color blue --reverse)
+  end
+
+  if not set -q __fish_mode_prompt_visual
+    set -g __fish_mode_prompt_visual (set_color red --reverse)
+  end
+
+  if not set -q __fish_mode_prompt_change
+    set -g __fish_mode_prompt_change (set_color magenta --reverse)
   end
 
 # The fish_mode_prompt function is prepended to the prompt
@@ -36,30 +44,30 @@ if test $__fish_active_key_bindings = "fish_vi_key_bindings" -o $__fish_active_k
   switch $fish_bind_mode
     case default
       if set -q HAS_UTF
-        echo -n '📣 '
+        echo -n '📣'
       else
-        echo -n ' N '
+        echo -en "$__fish_mode_prompt_normal N "
       end
       changeCursor "block"
     case insert
       if set -q HAS_UTF
-        echo -n '🖋️ '
+        echo -n '🖋️'
       else
-        echo -n ' I '
+        echo -en "$__fish_mode_prompt_insert I "
       end
       changeCursor "bar"
     case replace-one
       if set -q HAS_UTF
-        echo -n '🔨 '
+        echo -n '🔨'
       else
-        echo -n ' C '
+        echo -en "$__fish_mode_prompt_change C "
       end
       changeCursor "underscore"
     case visual
       if set -q HAS_UTF
-        echo -n '🕯️ '
+        echo -n '🕯️'
       else
-        echo -n ' V '
+        echo -en "$__fish_mode_prompt_visual V "
       end
       changeCursor "block"
     end

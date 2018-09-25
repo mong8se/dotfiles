@@ -79,6 +79,9 @@ if test (uname) = "Darwin"
   xsource mac.fish
 end
 
+set -x fish_color_error brred --italics
+set -x fish_color_autosuggestion brblack --italics
+
 xsource _(hostname -s | tr -d '\n' | /usr/bin/shasum -p -a 256 | cut -c1-12).fish local.fish
 
 set -x PASSWORD_STORE_DIR ~/Dropbox/.password-store

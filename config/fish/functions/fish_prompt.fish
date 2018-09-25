@@ -4,12 +4,14 @@ function fish_prompt --description 'Write out the prompt'
     echo -n -s $__fish_error_sigil
   else
     if not set -q __fish_prompt_normal
-      set -g __fish_prompt_normal (set_color normal)
+      set -g __fish_prompt_normal (set_color $fish_color_normal)
     end
+
+    echo -n -s -e $__fish_prompt_normal
 
     if not set -q __fish_root_sigil
       if set -q HAS_UTF
-        set -g __fish_root_sigil '🦄 '
+        set -g __fish_root_sigil '🦄'
       else
         set -g __fish_root_sigil '>'
       end
@@ -17,7 +19,7 @@ function fish_prompt --description 'Write out the prompt'
 
     if not set -q __fish_normal_sigil
       if set -q HAS_UTF
-        set -g __fish_normal_sigil '🐙 '
+        set -g __fish_normal_sigil '🐙'
       else
         set -g __fish_normal_sigil '|'
       end
@@ -25,11 +27,15 @@ function fish_prompt --description 'Write out the prompt'
 
     if not set -q __fish_error_sigil
       if set -q HAS_UTF
-        set -g __fish_error_sigil '☠️ '
+        set -g __fish_error_sigil '☠️'
       else
         set -g __fish_error_sigil 'X'
       end
     end
+
+    # if not set -q HAS_UTF
+    #   echo -n -s -e " $__fish_prompt_normal"
+    # end
 
     switch $USER
     case root
@@ -39,5 +45,6 @@ function fish_prompt --description 'Write out the prompt'
     end
   end
 
-  echo -n -s -e " $__fish_prompt_normal"
+    # if set -q HAS_UTF
+    # end
 end
