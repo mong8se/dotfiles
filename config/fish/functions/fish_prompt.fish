@@ -1,7 +1,7 @@
 function fish_prompt --description 'Write out the prompt'
 
   if test $status -gt 0
-    echo -n -s $__fish_error_sigil
+    echo -n -s -e $__fish_error_sigil $__fish_prompt_normal
   else
     if not set -q __fish_prompt_normal
       set -g __fish_prompt_normal (set_color $fish_color_normal)
