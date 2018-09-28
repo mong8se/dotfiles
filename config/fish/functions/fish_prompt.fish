@@ -4,6 +4,14 @@ function fish_prompt --description 'Write out the prompt'
       set -g __fish_prompt_error (set_color normal $fish_color_error)
     end
 
+    if not set -q __fish_error_sigil
+      if set -q HAS_UTF
+        set -g __fish_error_sigil '☠️'
+      else
+        set -g __fish_error_sigil '*'
+      end
+    end
+
     echo -nse $__fish_prompt_error $__fish_error_sigil
   else
     if not set -q __fish_prompt_normal
@@ -25,14 +33,6 @@ function fish_prompt --description 'Write out the prompt'
         set -g __fish_normal_sigil '🐙'
       else
         set -g __fish_normal_sigil '|'
-      end
-    end
-
-    if not set -q __fish_error_sigil
-      if set -q HAS_UTF
-        set -g __fish_error_sigil '☠️'
-      else
-        set -g __fish_error_sigil '*'
       end
     end
 

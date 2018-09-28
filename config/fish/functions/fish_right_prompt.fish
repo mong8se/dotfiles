@@ -1,6 +1,6 @@
 function fish_right_prompt --description 'Write out the prompt'
   if not set -q __fish_git_prompt_show_informative_status
-    set -g __fish_git_prompt_show_informative_status 1
+    set -g __fish_git_prompt_show_informative_status 0
   end
 
   if not set -q __fish_git_prompt_color_branch
