@@ -116,7 +116,7 @@ augroup FocusIssues
   autocmd!
 
   " Leave insert or replace mode on focus lost
-  autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | call feedkeys("\<C-\>\<C-n>") | endif
+  autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | stopinsert | endif
 
   " When focus is lost, save the buffer if it is modified and has a filename
   autocmd BufLeave,FocusLost * if @% != '' && &modified | write | endif
@@ -258,7 +258,7 @@ nmap <silent> <leader>gc :Gcommit<cr>
 nmap <silent> <leader>gl :Glog<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gb :Gbrowse<cr>
-autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd FileType gitcommit setlocal spell textwidth=72
 
 " vim-signify
 let g:signify_vcs_list = [ 'git' ]
