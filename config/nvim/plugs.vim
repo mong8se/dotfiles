@@ -24,7 +24,6 @@ Plug 'ciaranm/securemodelines'
 Plug 'unblevable/quick-scope' " f F t T
 Plug 'justinmk/vim-sneak'     " s or z with an operator
 
-Plug 'jeetsukumaran/vim-buffergator' " leader b
 Plug 'justinmk/vim-dirvish'          " leader f
 
 Plug 'EinfachToll/DidYouMean'
@@ -41,9 +40,8 @@ Plug 'mhinz/vim-signify' " ]c [c
 Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary'     " gc
+Plug 'tomtom/tcomment_vim' "gc
 Plug 'tpope/vim-surround'      " cs ds ys
-Plug 'junegunn/vim-easy-align' " v tab
 Plug 'tommcdo/vim-exchange'    " cx
 
 Plug 'Raimondi/delimitMate'

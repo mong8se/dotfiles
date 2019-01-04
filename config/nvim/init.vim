@@ -287,7 +287,6 @@ let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 " FZF
 nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
 nnoremap <silent> <Leader>f :Files<CR>
-nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>c :Commands<CR>
 autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
 command! -bang -nargs=* Rg
@@ -306,14 +305,9 @@ autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d " remove dot fil
 autocmd FileType dirvish :sort r /[^\/]$/                       " sort directories to top
 
 " buffers
-let g:buffergator_suppress_keymaps = 1
 nmap <silent> ]b :bn<CR>
 nmap <silent> [b :bp<CR>
-nmap <silent> <leader><Space> :BuffergatorOpen<CR>
-let g:buffergator_sort_regime = "mru"
-let g:buffergator_viewport_split_policy = "N"
-let g:buffergator_show_full_directory_path = 0
-let g:buffergator_display_regime = "parentdir"
+nnoremap <silent> <Leader><Space> :Buffers<CR>
 
 " tabs
 nmap <silent> ]t :tabnext<CR>
@@ -340,12 +334,6 @@ map *  <Plug>(incsearch-nohl-*)zz
 map #  <Plug>(incsearch-nohl-#)zz
 map g* <Plug>(incsearch-nohl-g*)zz
 map g# <Plug>(incsearch-nohl-g#)zz
-
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Tab> <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap gl <Plug>(EasyAlign)
 
 " Neomake
 " autocmd! BufWritePost * silent! Neomake
