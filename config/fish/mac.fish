@@ -20,7 +20,7 @@ end
 
 # items below require beta iterm2
 function growl -d "Notify"
-  echo -e "\e]9;$argv\a"
+  printf "\e]9;%s\a" "$argv"
 end
 
 if set -q ITERM_PROFILE

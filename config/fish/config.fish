@@ -2,10 +2,14 @@
 
 fish_hybrid_key_bindings
 
+if not set -q hostname
+  set -g hostname (hostname -s)
+end
+
 function fish_greeting
   if type -P (which figlet) > /dev/null; and test -x (which figlet)
     set_color red
-    hostname -s | figlet -c -w $COLUMNS -f thin
+    figlet -c -w $COLUMNS -f thin $hostname
     set_color normal
   end
 end
@@ -30,7 +34,7 @@ function z
 end
 
 function fv
-  fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o nvim
+  fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o $EDITOR
 end
 
 function xsource -d "Source list of files if they exist."
@@ -44,7 +48,9 @@ end
 
 if status --is-interactive
   abbr -a gls git ls-files
-  abbr -a vi nvim
+  if [ "$EDITOR" = "nvim" ]
+    abbr -a vi nvim
+  end
   abbr -a em emacsclient
   abbr -a cd.. cd ..
 
@@ -82,9 +88,7 @@ end
 set -x fish_color_error brred --italics
 set -x fish_color_autosuggestion brblack --italics
 
-xsource _(hostname -s | tr -d '\n' | /usr/bin/shasum -p -a 256 | cut -c1-12).fish local.fish
-
-set -x PASSWORD_STORE_DIR ~/Dropbox/.password-store
+xsource _(printf "$hostname" | /usr/bin/shasum -p -a 256 | cut -c1-12).fish local.fish
 
 # Base16 Gruvbox dark, soft
 # Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)

@@ -3,21 +3,21 @@ function fish_mode_prompt --description "Displays the current vi mode"
     switch $argv[1]
       case "block"
         if set -q ITERM_PROFILE
-          echo -ne '\e]1337;CursorShape=0\a'
+          printf '\e]1337;CursorShape=0\a'
         else
-          echo -ne '\e[1 q\a'
+          printf '\e[1 q\a'
         end
       case "bar"
         if set -q ITERM_PROFILE
-          echo -ne '\e]1337;CursorShape=1\a'
+          printf '\e]1337;CursorShape=1\a'
         else
-          echo -ne '\e[5 q\a'
+          printf '\e[5 q\a'
         end
       case "underscore"
         if set -q ITERM_PROFILE
-          echo -ne '\e]1337;CursorShape=2\a'
+          printf '\e]1337;CursorShape=2\a'
         else
-          echo -ne '\e[3 q\a'
+          printf '\e[3 q\a'
         end
     end
   end
@@ -44,30 +44,30 @@ if test $__fish_active_key_bindings = "fish_vi_key_bindings" -o $__fish_active_k
   switch $fish_bind_mode
     case default
       if set -q HAS_UTF
-        echo -n '📣'
+        printf '📣'
       else
-        echo -en "$__fish_mode_prompt_normal N "
+        printf "$__fish_mode_prompt_normal N "
       end
       changeCursor "block"
     case insert
       if set -q HAS_UTF
-        echo -n '🖋️'
+        printf '🖋️'
       else
-        echo -en "$__fish_mode_prompt_insert I "
+        printf "$__fish_mode_prompt_insert I "
       end
       changeCursor "bar"
     case replace-one
       if set -q HAS_UTF
-        echo -n '🔨'
+        printf '🔨'
       else
-        echo -en "$__fish_mode_prompt_change C "
+        printf "$__fish_mode_prompt_change C "
       end
       changeCursor "underscore"
     case visual
       if set -q HAS_UTF
-        echo -n '🕯️'
+        printf '🕯️'
       else
-        echo -en "$__fish_mode_prompt_visual V "
+        printf "$__fish_mode_prompt_visual V "
       end
       changeCursor "block"
     end

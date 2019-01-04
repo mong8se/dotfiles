@@ -57,13 +57,10 @@ function fish_right_prompt --description 'Write out the prompt'
   end
 
   if test -e package.json
-    echo -n -s "$__fish_color_package_json"
-    cat package.json | jq '" " + .name + "|" + .version + " "' -r
-    echo -n -s "$__fish_prompt_normal" " "
+    printf "%s %s|%s %s" "$__fish_color_package_json" (cat package.json | jq '.name, .version' -r) "$__fish_prompt_normal"
   end
 
-  echo -n -s "$__fish_prompt_normal" (__fish_git_prompt "%s")
-  echo -n " "
-  # echo -n -s " $__fish_color_host $__fish_prompt_hostname $__fish_prompt_normal "
-  echo -n -s "$__fish_prompt_reverse " (prompt_pwd) " $__fish_prompt_normal"
+  printf " %s%s" "$__fish_prompt_normal" (__fish_git_prompt "%s")
+  # printf " %s%s%s" "$__fish_color_host" "$__fish_prompt_hostname" "$__fish_prompt_normal"
+  printf " %s %s %s" "$__fish_prompt_reverse" (prompt_pwd) "$__fish_prompt_normal"
 end

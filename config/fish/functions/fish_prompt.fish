@@ -12,13 +12,13 @@ function fish_prompt --description 'Write out the prompt'
       end
     end
 
-    echo -nse $__fish_prompt_error $__fish_error_sigil
+    printf "%s%s" $__fish_prompt_error $__fish_error_sigil
   else
     if not set -q __fish_prompt_normal
       set -g __fish_prompt_normal (set_color $fish_color_normal)
     end
 
-    echo -ne $__fish_prompt_normal
+    printf $__fish_prompt_normal
 
     if not set -q __fish_root_sigil
       if set -q HAS_UTF
@@ -38,11 +38,11 @@ function fish_prompt --description 'Write out the prompt'
 
     switch $USER
     case root
-      echo -n -s $__fish_root_sigil
+      printf $__fish_root_sigil
     case '*'
-      echo -n -s $__fish_normal_sigil
+      printf $__fish_normal_sigil
     end
   end
 
-  echo -nse $__fish_prompt_normal " "
+  printf "%s "  "$__fish_prompt_normal"
 end
