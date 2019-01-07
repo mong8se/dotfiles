@@ -186,7 +186,6 @@ nnoremap Q gq
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " visual shifting (does not exit Visual mode)
-"
 vnoremap < <gv
 vnoremap > >gv
 
