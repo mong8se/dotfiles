@@ -300,8 +300,8 @@ nnoremap <Leader>a :Rg
 nmap <silent> \ :Dirvish<CR>
 nmap <silent> - <Plug>(dirvish_up)
 autocmd FileType dirvish call fugitive#detect(@%)               " enable git functions in dirvish view
-autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
-autocmd FileType dirvish :sort r /[^\/]$/                       " sort directories to top
+" autocmd FileType dirvish nnoremap gh <silent> :keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
+autocmd FileType dirvish :sort ,^.*[\/],
 
 " buffers
 nmap <silent> ]b :bn<CR>
