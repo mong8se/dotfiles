@@ -113,10 +113,11 @@ augroup CursorLine
 augroup END
 
 augroup FocusIssues
+  " Remove ALL autocommands for the current group.
   autocmd!
 
   " Leave insert or replace mode on focus lost
-  autocmd BufLeave,FocusLost * if v:insertmode =~ '[ir]' | stopinsert | endif
+  autocmd BufLeave,FocusLost * if mode() =~ '[iR]' | stopinsert | endif
 
   " When focus is lost, save the buffer if it is modified and has a filename
   autocmd BufLeave,FocusLost * if @% != '' && &modified | write | endif
@@ -346,6 +347,11 @@ let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['css'] = ['prettier']
 let g:ale_fixers['json'] = ['prettier']
+
+autocmd FileType javascript setlocal formatprg=prettier\ --parser=flow\ --stdin\ --stdin-filepath=%
+autocmd FileType css setlocal formatprg=prettier\ --parser=css\ --stdin\ --stdin-filepath=%
+autocmd FileType json setlocal formatprg=prettier\ --parser=json-stringify\ --stdin\ --stdin-filepath=%
+autocmd FileType yaml setlocal formatprg=prettier\ --parser=yaml\ --stdin\ --stdin-filepath=%
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']

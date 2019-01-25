@@ -14,9 +14,10 @@ Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-apathy'
 
-Plug 'bling/vim-airline'
-" Plug 'bling/vim-bufferline'
-Plug 'ap/vim-buftabline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'bling/vim-bufferline'
+" Plug 'ap/vim-buftabline'
 
 Plug 'roman/golden-ratio'
 Plug 'ciaranm/securemodelines'
@@ -31,13 +32,14 @@ Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
 
 Plug 'tpope/vim-fugitive'
+" Plug 'lambdalisue/gina.vim'
 " Plug 'sodapopcan/vim-twiggy'
 " Plug 'jreybert/vimagit'
 " Plug 'airblade/vim-gitgutter'
 " Plug 'junegunn/gv.vim', { 'on': 'GV' }
 Plug 'mhinz/vim-signify' " ]c [c
 
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' "gc
