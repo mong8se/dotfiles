@@ -275,6 +275,7 @@ let g:airline_inactive_collapse=0
 let g:airline#extensions#bufferline#enabled = 1
 let g:bufferline_echo = 1
 let g:airline#extensions#bufferline#overwrite_variables = 1
+let g:airline#extensions#ale#enabled = 1
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
@@ -348,7 +349,16 @@ let g:ale_fixers['javascript'] = ['prettier']
 let g:ale_fixers['css'] = ['prettier']
 let g:ale_fixers['json'] = ['prettier']
 
-autocmd FileType javascript setlocal formatprg=prettier\ --parser=flow\ --stdin\ --stdin-filepath=%
+let g:asyncomplete_remove_duplicates = 1
+let g:asyncomplete_smart_completion = 1
+let g:asyncomplete_auto_popup = 1
+
+
+" autocmd BufEnter  *  call ncm2#enable_for_buffer()
+
+" set completeopt=noinsert,menuone,noselect
+
+autocmd FileType javascript setlocal formatprg=prettier\ --parser=babylon\ --stdin\ --stdin-filepath=%
 autocmd FileType css setlocal formatprg=prettier\ --parser=css\ --stdin\ --stdin-filepath=%
 autocmd FileType json setlocal formatprg=prettier\ --parser=json-stringify\ --stdin\ --stdin-filepath=%
 autocmd FileType yaml setlocal formatprg=prettier\ --parser=yaml\ --stdin\ --stdin-filepath=%
@@ -360,54 +370,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 let loaded_2html_plugin = 1
 let loaded_matchparen   = 1
 let loaded_netrw        = 1
-
-" asynccomplete
-if executable('flow-language-server')
-" au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#flow#get_source_options({
-"     \ 'name': 'flow',
-"     \ 'whitelist': ['javascript'],
-"     \ 'completor': function('asyncomplete#sources#flow#completor'),
-"     \ 'config': {
-"     \    " Resolves 'flow' in the closest node_modules/.bin directory (in case
-"     \    " flow is installed via 'npm install flow-bin' locally). Falls back to
-"     \    " 'flowbin_path' (see below) if can't find it.
-"     \    'prefer_local': 1,
-"     \    " Path to 'flow' executable.
-"     \    'flowbin_path': expand('~/bin/flow'),
-"     \    " Displays additional typeinfo exposed by flow, if any is provided. 
-"     \    " Defaults to 0.
-"     \    'show_typeinfo': 1
-"     \  },
-"     \ }))
-
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'flow-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'flow-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
-        \ 'whitelist': ['javascript'],
-        \ })
-endif
-
-call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-\ 'name': 'omni',
-\ 'whitelist': ['*'],
-\ 'blacklist': ['c', 'cpp', 'html'],
-\ 'completor': function('asyncomplete#sources#omni#completor')
-\  }))
-
-call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    \ 'name': 'buffer',
-    \ 'whitelist': ['*'],
-    \ 'blacklist': ['go'],
-    \ 'completor': function('asyncomplete#sources#buffer#completor'),
-    \ }))
-
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-    \ 'name': 'file',
-    \ 'whitelist': ['*'],
-    \ 'priority': 10,
-    \ 'completor': function('asyncomplete#sources#file#completor')
-    \ }))
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
