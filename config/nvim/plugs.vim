@@ -39,7 +39,7 @@ Plug 'tpope/vim-fugitive'
 " Plug 'junegunn/gv.vim', { 'on': 'GV' }
 Plug 'mhinz/vim-signify' " ]c [c
 
-"Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' "gc
