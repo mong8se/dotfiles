@@ -298,6 +298,9 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 nnoremap <Leader>a :Rg 
 
+" Ripgrep
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+
 " Dirvish
 nmap <silent> \ :Dirvish<CR>
 nmap <silent> - <Plug>(dirvish_up)
