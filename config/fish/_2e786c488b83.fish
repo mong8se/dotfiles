@@ -11,4 +11,4 @@ set -gx TTC_REPOS {$HOME}/Projects
 set -gx TTC_WEATHER "Ann Arbor, MI"
 set -gx TTC_CELSIUS 0
 
-set -g fish_user_paths $fish_user_paths "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+set -g fish_user_paths "/usr/local/opt/node@10/bin" $fish_user_paths "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
