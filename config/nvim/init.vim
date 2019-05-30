@@ -268,14 +268,24 @@ nmap <silent> <leader>gh :SignifyToggleHighlight<CR>
 nmap <silent> <leader>gf :SignifyFold<CR>
 nmap <silent> <leader>gr :SignifyRefresh<CR>
 
-" Airline
-let g:airline_left_sep='│'
-let g:airline_right_sep='│'
-let g:airline_inactive_collapse=0
-let g:airline#extensions#bufferline#enabled = 1
-let g:bufferline_echo = 1
-let g:airline#extensions#bufferline#overwrite_variables = 1
-let g:airline#extensions#ale#enabled = 1
+" Crystalline
+function! StatusLine(current, width)
+  return (a:current ? crystalline#mode() . '%#Crystalline#' : '%#CrystallineInactive#')
+        \ . ' %f%h%w%m%r '
+        \ . (a:current ? '%#CrystallineFill# %{fugitive#head()} ' : '')
+        \ . '%=' . (a:current ? '%#Crystalline# %{&paste?"PASTE ":""}%{&spell?"SPELL ":""}' . crystalline#mode_color() : '')
+        \ . (a:width > 80 ? ' %{&ft}[%{&enc}][%{&ffs}] %l/%L %c%V %P ' : ' ')
+endfunction
+
+function! TabLine()
+  let l:vimlabel = has("nvim") ?  " NVIM " : " VIM "
+  return crystalline#bufferline(2, len(l:vimlabel), 1) . '%=%#CrystallineTab# ' . l:vimlabel
+endfunction
+
+let g:crystalline_statusline_fn = 'StatusLine'
+let g:crystalline_tabline_fn = 'TabLine'
+let g:crystalline_theme = 'onedark'
+set showtabline=2
 
 " CtrlSF
 nmap     <leader>/ <Plug>CtrlSFPrompt
