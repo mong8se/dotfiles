@@ -24,10 +24,13 @@ function! mong8se#ToggleNumberMode()
   if &relativenumber
     windo set nonumber
     windo set norelativenumber
+    windo set colorcolumn=0
   elseif &number
     windo set relativenumber
+    windo set colorcolumn=80
   else
     windo set number
+    windo set colorcolumn=80
   end
 endfunction
 
