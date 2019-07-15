@@ -56,9 +56,15 @@ if status --is-interactive
     abbr -a gls git ls-files
     if [ "$EDITOR" = "nvim" ]
         abbr -a vi nvim
+        if test (which abduco)
+          abbr -a av abduco -A nvim nvim
+        end
     end
     abbr -a em emacsclient
     abbr -a cd.. cd ..
+    if set -q KITTY_WINDOW_ID
+      abbr -a icat kitty +kitten icat
+    end
 
     # Feature Switches
     # if set -q ITERM_PROFILE
