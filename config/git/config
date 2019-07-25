@@ -31,7 +31,6 @@
   difftool = true
 [alias]
   fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
-  icd = "difftool -t icdiff -y"
   co  = "!git branch -a --color=always | rg -v '/HEAD\\s' | sort | fzf --ansi --multi --tac --preview-window right:70% --preview 'git log --oneline --graph --date=short --pretty=\"format:%C(auto)%cd %h%d %s\" (echo {} | string sub -s 3 | cut -d\" \" -f1) | head -10' | sed 's/^..//' | cut -d' ' -f1 | sed 's#^remotes/##' | xargs git checkout"
   vi  = "!git ls-files $1 | fzf | xargs -o \"$EDITOR\""
   af  = "!git ls-files -m | fzf | xargs git add"
@@ -39,16 +38,16 @@
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
   default = simple
-[difftool "icdiff"]
-  cmd = "icdiff --line-numbers \"$LOCAL\" \"$REMOTE\""
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [help]
   autocorrect = 10
 [include]
   path = config.mac
   path = config.local
+[icdiff]
+  options = --highlight --line-numbers
