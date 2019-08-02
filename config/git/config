@@ -33,7 +33,7 @@
   fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
   co  = "!git branch -a --color=always | rg -v '/HEAD\\s' | sort | fzf --ansi --multi --tac --preview-window right:70% --preview 'git log --oneline --graph --date=short --pretty=\"format:%C(auto)%cd %h%d %s\" (echo {} | string sub -s 3 | cut -d\" \" -f1) | head -10' | sed 's/^..//' | cut -d' ' -f1 | sed 's#^remotes/##' | xargs git checkout"
   vi  = "!git ls-files $1 | fzf | xargs -o \"$EDITOR\""
-  af  = "!git ls-files -m | fzf | xargs git add"
+  af  = "!git ls-files -m | fzf --preview 'git diff {} | bat -ldiff --color=always --italic-text=always' | xargs git add"
   fzf = "!git ls-files | fzf | xargs git $1"
 [push]
   ; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
