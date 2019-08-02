@@ -44,4 +44,15 @@ rake vim:update        # update vim plugins
 rake vim:cleanup       # clean vim plugins
 ```
 
+Required Packages
+-----------------
+
+fd
+fzf
+bat
+fasd
+icdiff
+figlet
+ripgrep
+
 Thanks to [ryanb](https://github.com/ryanb/dotfiles) for the starting point.
