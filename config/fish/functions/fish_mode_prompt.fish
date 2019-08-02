@@ -65,7 +65,7 @@ if test $__fish_active_key_bindings = "fish_vi_key_bindings" -o $__fish_active_k
       changeCursor "underscore"
     case visual
       if set -q HAS_UTF
-        printf '🕯️'
+        printf '🔎'
       else
         printf "$__fish_mode_prompt_visual V "
       end
