@@ -114,8 +114,8 @@ if status --is-interactive
     set -l color0F '#d65d0e'
 
     if test (which fd)
-      set -x FZF_DEFAULT_COMMAND 'fd --type f -I'
-      set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+      set -x FZF_DEFAULT_COMMAND 'fd --type f --no-ignore'
+      set -x FZF_CTRL_T_COMMAND 'fd --type f . "$dir"'
     end
     set -x FZF_DEFAULT_OPTS "
   --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D
