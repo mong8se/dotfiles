@@ -314,9 +314,22 @@ set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 " Dirvish
 nmap <silent> \ :Dirvish<CR>
 nmap <silent> - <Plug>(dirvish_up)
-autocmd FileType dirvish call fugitive#detect(@%)               " enable git functions in dirvish view
-" autocmd FileType dirvish nnoremap gh <silent> :keeppatterns g@\v/\.[^\/]+/?$@d " remove dot files
-autocmd FileType dirvish :sort ,^.*[\/],
+augroup dirvish_config
+  autocmd!
+
+  " enable git functions in dirvish view
+  autocmd FileType dirvish call fugitive#detect(@%)
+
+  " Map `gr` to reload.
+  autocmd FileType dirvish nnoremap <silent><buffer>
+    \ gr :<C-U>Dirvish %<CR>
+
+  " Map `gh` to hide dot-prefixed files.  Press `R` to "toggle" (reload).
+  autocmd FileType dirvish nnoremap <silent><buffer>
+    \ gh :silent keeppatterns g@\v/\.[^\/]+/?$@d _<cr>:setl cole=3<cr>
+
+  autocmd FileType dirvish :sort ,^.*[\/],
+augroup END
 
 " buffers
 nmap <silent> ]b :bn<CR>
