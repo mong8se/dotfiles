@@ -349,19 +349,6 @@ nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)
 " vim-sneak
 let g:sneak#streak = 1
 
-" Incsearch
-let g:incsearch#auto_nohlsearch = 1
-let g:incsearch#magic = '\v' " very magic
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)zz
-map n  <Plug>(incsearch-nohl-n)zz
-map N  <Plug>(incsearch-nohl-N)zz
-map *  <Plug>(incsearch-nohl-*)zz
-map #  <Plug>(incsearch-nohl-#)zz
-map g* <Plug>(incsearch-nohl-g*)zz
-map g# <Plug>(incsearch-nohl-g#)zz
-
 " Neomake
 " autocmd! BufWritePost * silent! Neomake
 " autocmd! BufReadPost * silent! Neomake
