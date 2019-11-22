@@ -371,7 +371,7 @@ let g:asyncomplete_auto_popup = 1
 
 " set completeopt=noinsert,menuone,noselect
 
-autocmd FileType javascript setlocal formatprg=prettier\ --parser=babylon\ --stdin\ --stdin-filepath=%
+autocmd FileType javascript setlocal formatprg=prettier\ --parser=babel\ --stdin\ --stdin-filepath=%
 autocmd FileType css setlocal formatprg=prettier\ --parser=css\ --stdin\ --stdin-filepath=%
 autocmd FileType json setlocal formatprg=prettier\ --parser=json-stringify\ --stdin\ --stdin-filepath=%
 autocmd FileType yaml setlocal formatprg=prettier\ --parser=yaml\ --stdin\ --stdin-filepath=%
