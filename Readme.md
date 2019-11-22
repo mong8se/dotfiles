@@ -54,5 +54,6 @@ fasd
 icdiff
 figlet
 ripgrep
+starship
 
 Thanks to [ryanb](https://github.com/ryanb/dotfiles) for the starting point.

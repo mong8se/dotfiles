@@ -86,11 +86,9 @@ function zle-line-init zle-keymap-select {
   case $KEYMAP in
     vicmd)
       print -n "0"
-      VIM_PS1="⌨ "
       ;;
     viins|main)
       print -n "1"
-      VIM_PS1="  "
       ;;
   esac
   print -n "\a"
@@ -104,10 +102,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 autoload -U colors && colors
-PS1='%(1j.[%F{green}%j%f].)%S%(!.%F{red}.%F{blue})│%m│%s%f$VIM_PS1'
-
 autoload -Uz vcs_info
-RPS1='${vcs_info_msg_0_}%S %3~ %s'
 
 # customize vcs info on prompt
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
@@ -178,5 +173,7 @@ export PASSWORD_STORE_DIR=~/Dropbox/.password-store
 
 # FZF defaults
 export FZF_DEFAULT_OPTS='--height 40% --reverse'
+
+eval "$(starship init zsh)"
 
 xsource $ZDOTDIR/local.zsh
