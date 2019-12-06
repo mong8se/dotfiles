@@ -9,6 +9,7 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'chriskempson/base16-vim'
 Plug 'gruvbox-community/gruvbox'
+Plug 'caglartoklu/borlandp.vim'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
