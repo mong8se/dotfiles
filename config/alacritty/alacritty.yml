@@ -65,3 +65,7 @@ font:
 
   # Point size
   size: 14.0
+
+selection:
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  save_to_clipboard: true
