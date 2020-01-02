@@ -54,6 +54,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set autoindent
+set smarttab
 
 set title
 set scrolloff=5
@@ -363,11 +364,6 @@ let g:lsp_signs_warning = {'text': '‼'}
 " autocmd BufEnter  *  call ncm2#enable_for_buffer()
 
 " set completeopt=noinsert,menuone,noselect
-
-autocmd FileType javascript setlocal formatprg=prettier\ --parser=babel\ --stdin\ --stdin-filepath=%
-autocmd FileType css setlocal formatprg=prettier\ --parser=css\ --stdin\ --stdin-filepath=%
-autocmd FileType json setlocal formatprg=prettier\ --parser=json-stringify\ --stdin\ --stdin-filepath=%
-autocmd FileType yaml setlocal formatprg=prettier\ --parser=yaml\ --stdin\ --stdin-filepath=%
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']

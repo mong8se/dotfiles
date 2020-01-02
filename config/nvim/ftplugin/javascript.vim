@@ -1,3 +1,1 @@
-setlocal expandtab
-setlocal smarttab
-setlocal autoindent
+setlocal formatprg=prettier\ --parser=babel\ --stdin
