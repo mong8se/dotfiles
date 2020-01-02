@@ -349,23 +349,16 @@ nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)
 " vim-sneak
 let g:sneak#streak = 1
 
-" Neomake
-" autocmd! BufWritePost * silent! Neomake
-" autocmd! BufReadPost * silent! Neomake
-" nmap <silent> ]e :lnext<CR>
-" nmap <silent> [e :lprevious<CR>
-nmap <silent> ]e <Plug>(ale_next)
-nmap <silent> [e <Plug>(ale_previous)
-nnoremap <silent> <Leader>ga :ALEFix<cr>
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = ['prettier']
-let g:ale_fixers['css'] = ['prettier']
-let g:ale_fixers['json'] = ['prettier']
-
+" asyncomplete
+nmap <silent> ]e <Plug>(lsp-next-error)
+nmap <silent> [e <Plug>(lsp-previous-error)
 let g:asyncomplete_remove_duplicates = 1
 let g:asyncomplete_smart_completion = 1
 let g:asyncomplete_auto_popup = 1
-
+let g:lsp_signs_error = {'text': '✖'}
+let g:lsp_signs_hint = {'text': '✨'}
+let g:lsp_signs_information = {'text': 'ℹ'}
+let g:lsp_signs_warning = {'text': '‼'}
 
 " autocmd BufEnter  *  call ncm2#enable_for_buffer()
 
