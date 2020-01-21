@@ -1,4 +1,4 @@
-#!/bin/env fish
+#!/usr/bin/env fish
 
 if not set -q hostname
     set -g hostname (hostname -s)
