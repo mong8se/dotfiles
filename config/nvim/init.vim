@@ -141,6 +141,11 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 noremap <F1> <Nop>
 noremap! <F1> <Esc>
 
+" C-\ collides with abduco
+if exists(':tnoremap')
+  tnoremap <C-w><C-w> <C-\><C-n>
+endif
+
 " q in normal mode in a help file closes the help
 " similar to what happens in dirvish or fugitive
 autocmd FileType help nmap <silent> <buffer> q :helpclose<CR>
@@ -372,6 +377,9 @@ let g:sneak#streak = 1
 " asyncomplete
 nmap <silent> ]e <Plug>(lsp-next-error)
 nmap <silent> [e <Plug>(lsp-previous-error)
+nmap <silent> ]w <Plug>(lsp-next-warning)
+nmap <silent> [w <Plug>(lsp-previous-warning)
+
 let g:asyncomplete_remove_duplicates = 1
 let g:asyncomplete_smart_completion = 1
 let g:asyncomplete_auto_popup = 1
