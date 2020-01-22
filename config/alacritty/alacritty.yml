@@ -8,11 +8,10 @@
 #   - (Linux) user login shell
 #   - (Windows) powershell
 shell:
-  program: /usr/local/bin/tmux
+  program: /usr/local/bin/fish
   args:
-    - new-session
-    - -A
-    - -s alacritty
+    - -c
+    - '/usr/local/bin/abduco -A alacritty /usr/local/bin/nvim'
 
 # Font configuration (changes require restart)
 font:
