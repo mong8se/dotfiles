@@ -30,7 +30,7 @@ namespace :submodule do
   desc 'update git submodules to their latest master'
   task update: 'submodule:init' do
     system <<-'UPDATE'
-      git submodule foreach 'git checkout master && git pull origin master';
+      git submodule update --remote;
       cd Resources/fasd;
       echo 'Install fasd...';
       make install;
