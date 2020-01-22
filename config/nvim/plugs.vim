@@ -6,6 +6,7 @@ call plug#begin("~/.config/nvim/plugged")
 
 set rtp+=~/.dotfiles/Resources/fzf
 Plug 'junegunn/fzf.vim'
+" Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 
 Plug 'chriskempson/base16-vim'
 Plug 'gruvbox-community/gruvbox'
@@ -55,6 +56,8 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-file.vim'
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+Plug 'vimwiki/vimwiki'
 
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' } " gs
