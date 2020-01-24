@@ -3,7 +3,7 @@ if not set -q __base16_path
 end
 
 function __base16_schemes
-  ls $__base16_path/*.sh | perl -ne 'print "$1\n" if /^.*base16-(.+).sh$/g'
+  ls $__base16_path/*.sh | string replace -f -r '^.*/base16-(.+)\.sh$' '$1'
 end
 
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
