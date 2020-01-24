@@ -89,7 +89,7 @@ if status --is-interactive
     end
 
     # Remove the environment variable as it's the default, not user set
-    set -e BASE16
+    set -e BASE16_THEME
 
     set -x fish_color_error brred --italics
     set -x fish_color_autosuggestion brblack --italics

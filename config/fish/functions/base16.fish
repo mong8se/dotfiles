@@ -16,7 +16,7 @@ function base16 -d "Activate base16 terminal color scheme"
       set new_theme (__base16_schemes | string split " " | fzf)
     end
 
-    set -xg BASE16 base16-{$new_theme}
+    set -xg BASE16_THEME base16-{$new_theme}
     sh {$__base16_path}/base16-{$new_theme}.sh
   else
     echo "base16 doing nothing: Non interactive shell"
