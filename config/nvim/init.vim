@@ -342,9 +342,6 @@ nmap <silent> - <Plug>(dirvish_up)
 augroup dirvish_config
   autocmd!
 
-  " enable git functions in dirvish view
-  autocmd FileType dirvish call fugitive#detect(@%)
-
   " Map `gr` to reload.
   autocmd FileType dirvish nnoremap <silent><buffer>
     \ gr :<C-U>Dirvish %<CR>
