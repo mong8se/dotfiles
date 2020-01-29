@@ -262,9 +262,13 @@ let g:startify_custom_header =
 let g:startify_list_order = [['// here'], 'dir', ['// anywhere'], 'files', ['// bookmarks'], 'bookmarks', ['// sessions'], 'sessions']
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 
-" delimitMate
-let delimitMate_expand_space = 1
-let delimitMate_expand_cr    = 2
+" Pair expansion is dot-repeatable by default:
+let g:pear_tree_repeatable_expand = 0
+
+" Smart pairs are disabled by default:
+let g:pear_tree_smart_openers = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
 
 " Fugitive
 nmap <silent> <leader>gs :Gstatus<cr>
@@ -393,12 +397,13 @@ let g:lsp_signs_hint = {'text': '✨'}
 let g:lsp_signs_information = {'text': 'ℹ'}
 let g:lsp_signs_warning = {'text': '‼'}
 
-" autocmd BufEnter  *  call ncm2#enable_for_buffer()
-
-" set completeopt=noinsert,menuone,noselect
-
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=81 cterm=underline
+augroup END
 
 " pretend these plugins are already loaded, so they don't load
 let loaded_2html_plugin = 1

@@ -14,20 +14,24 @@ Plug 'caglartoklu/borlandp.vim'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-apathy'
 
 Plug 'rbong/vim-crystalline'
+" Plug 'itchyny/lightline.vim'
 
-Plug 'roman/golden-ratio'
+Plug 'roman/golden-ratio' " C-W \
 
 Plug 'unblevable/quick-scope' " f F t T
 Plug 'justinmk/vim-sneak'     " s or z with an operator
+
+Plug 'machakann/vim-sandwich' " sa sd sr
+Plug 'tmsvg/pear-tree'
 
 Plug 'justinmk/vim-dirvish'          " leader f
 
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
+Plug 'tpope/vim-apathy' " ]f
 
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify' " ]c [c
@@ -36,16 +40,12 @@ Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' "gc
-Plug 'tpope/vim-surround'      " cs ds ys
 Plug 'tommcdo/vim-exchange'    " cx
-
-Plug 'Raimondi/delimitMate'
-Plug 'michaeljsmith/vim-indent-object' " ai
-Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
-Plug 'wellle/targets.vim'
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'RRethy/vim-illuminate'
+Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
+Plug 'wellle/context.vim'
 
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
