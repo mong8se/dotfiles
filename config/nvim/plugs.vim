@@ -19,7 +19,6 @@ Plug 'tpope/vim-apathy'
 Plug 'rbong/vim-crystalline'
 
 Plug 'roman/golden-ratio'
-Plug 'ciaranm/securemodelines'
 
 Plug 'unblevable/quick-scope' " f F t T
 Plug 'justinmk/vim-sneak'     " s or z with an operator

@@ -25,6 +25,14 @@ if ! has('nvim')
   set ttymouse=sgr   " mouse works past 223 columns
 end
 
+if exists('+modelineexpr')
+  set nomodelineexpr
+else
+  " disable modelines if lacking above feature
+  set modelines=0
+  set nomodeline
+end
+
 set showmatch " show matching brackets
 
 set hlsearch
