@@ -37,6 +37,9 @@ set showmatch " show matching brackets
 
 set hlsearch
 set incsearch " show incremental search results
+if has("inccommand")
+  set inccommand=nosplit
+end
 
 set ignorecase
 set smartcase

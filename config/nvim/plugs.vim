@@ -22,6 +22,8 @@ Plug 'roman/golden-ratio' " C-W \
 
 Plug 'unblevable/quick-scope' " f F t T
 Plug 'justinmk/vim-sneak'     " s or z with an operator
+Plug 'danilamihailov/beacon.nvim'
+Plug 'psliwka/vim-smoothie'
 
 Plug 'machakann/vim-sandwich' " sa sd sr
 Plug 'tmsvg/pear-tree'
