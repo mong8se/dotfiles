@@ -3,7 +3,7 @@
 
 thefuck --alias | source
 
-set -gx JAVA_HOME (/usr/libexec/java_home -v 1.8)
+set -gx JAVA_HOME (/usr/libexec/java_home)
 set -gx ANDROID_HOME {$HOME}/Library/Android/sdk
 set PATH $PATH {$ANDROID_HOME}/platform-tools {$ANDROID_HOME}/tools {$HOME}/Library/Python/3.6/bin
 
