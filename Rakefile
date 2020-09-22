@@ -134,7 +134,7 @@ def link_file(file)
   File.symlink repo_file(file), dot_file(file)
 end
 
-def invalid_file?(file)
+def is_invalid_file_for_target?(file)
   file_name = File.basename(file)
   return(
     (!IS_MAC && file_name.match(/^mac\.|\.mac$/)) ||
@@ -166,7 +166,7 @@ def install_files(dir = '*', recurse = false)
   replace_all = false
 
   Dir.glob(dir).each do |file|
-    if invalid_file?(file)
+    if is_invalid_file_for_target?(file)
       puts_message 'ignoring', file
       next
     end
@@ -208,8 +208,8 @@ def delete_correct_files(files, implode, delete_all)
   Dir[files].each do |file_name|
     next unless File.symlink?(file_name)
     target = File.readlink(file_name)
-    next unless File.dirname(target).start_with?(File.dirname(__FILE__))
-    next unless implode || !File.exist?(target)
+    next unless File.dirname(target).start_with?(REPO_LOCATION)
+    next unless implode || !File.exist?(target) || is_invalid_file_for_target?(target)
 
     delete_me, delete_all = delete_prompt(file_name, delete_all)
 
