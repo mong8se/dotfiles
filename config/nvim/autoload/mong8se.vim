@@ -8,9 +8,9 @@ endfunction
 " g:LoadRcFiles('first', 'second', third') would load:
 " mac.first.second.third.vim
 " local.first.second.third.vim
-" _hostname.first.second.third.vim
+" _machine.first.second.third.vim
 function! mong8se#LoadRCFiles(...)
-  for l:rc_type in ['mac', '_' . sha256( mong8se#shortHostname() )[0:11], 'local']
+  for l:rc_type in ['mac', '_machine', 'local']
     if l:rc_type == 'mac' && !has('macunix')
       continue
     endif

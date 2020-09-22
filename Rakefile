@@ -70,7 +70,7 @@ task :install do
 end
 
 desc 'make dot file symlinks'
-task :make_links do
+task :make_alias_links do
   replace_all = false
   {
     'config/nvim' => 'vim', 'config/nvim/init.vim' => 'vimrc'
@@ -95,6 +95,7 @@ task :make_links do
     else
       puts_message 'linking', link
     end
+
     File.symlink target, link
   end
 end
@@ -110,7 +111,7 @@ task :implode do
 end
 
 desc 'install new and remove old symlinks'
-task update: %i[install make_links] do
+task update: %i[install make_alias_links] do
   delete_files(false, true)
 end
 
@@ -143,7 +144,9 @@ def is_invalid_file_for_target?(file)
 end
 
 def dot_file(file)
-  File.join DOT_LOCATION, ".#{file}"
+  # Determine destination name
+  # replace hostname sha with word 'machine'
+  File.join DOT_LOCATION, ".#{file.sub(HOST,'machine')}"
 end
 
 def repo_file(file)

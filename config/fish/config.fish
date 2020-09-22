@@ -133,4 +133,4 @@ end
 
 starship init fish | source
 
-xsource _(printf "$hostname" | /usr/bin/shasum -p -a 256 | cut -c1-12).fish local.fish
+xsource _machine.fish local.fish
