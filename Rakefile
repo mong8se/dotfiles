@@ -145,10 +145,14 @@ def is_invalid_file_for_target?(file)
   )
 end
 
+def dot_basename(file)
+  ".#{file.sub(HOST, 'machine')}"
+end
+
 def dot_file(file)
   # Determine destination name
   # replace hostname sha with word 'machine'
-  File.join DOT_LOCATION, ".#{file.sub(HOST, 'machine')}"
+  File.join DOT_LOCATION, dot_basename(file)
 end
 
 def repo_file(file)
@@ -157,7 +161,7 @@ end
 
 def format_message(verb, file)
   "#{verb.rjust(9, ' ')} #{
-    file.start_with?('/') ? file : dot_file(file).sub("#{DOT_LOCATION}/", '')
+    file.start_with?('/') ? file : dot_basename(file)
   }"
 end
 
