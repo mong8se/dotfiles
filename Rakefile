@@ -156,7 +156,9 @@ def repo_file(file)
 end
 
 def format_message(verb, file)
-  "#{verb} #{file.start_with?('/') ? file : dot_file(file)}"
+  "#{verb} #{
+    file.start_with?('/') ? file : dot_file(file).sub("#{DOT_LOCATION}/", '')
+  }"
 end
 
 def puts_message(verb, file)
@@ -172,7 +174,7 @@ def install_files(dir = '*', recurse = false)
 
   Dir.glob(dir).each do |file|
     if is_invalid_file_for_target?(file)
-      puts_message 'ignoring', file
+      puts_message 'ignoring ', file
       next
     end
 
