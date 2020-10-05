@@ -1,6 +1,6 @@
 require 'rake'
 require 'socket'
-require 'digest/sha2'
+require 'digest/md5'
 
 IS_MAC = RUBY_PLATFORM.downcase.include?('darwin')
 
@@ -57,7 +57,9 @@ namespace :vim do
 end
 
 SKIP_FILES = %w[Resources Rakefile Readme.md config]
-HOST = Digest::SHA2.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).slice(0, 12)
+HOST =
+  Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
+    .slice(0, 12)
 
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION = ENV['HOME']
@@ -146,7 +148,7 @@ end
 def dot_file(file)
   # Determine destination name
   # replace hostname sha with word 'machine'
-  File.join DOT_LOCATION, ".#{file.sub(HOST,'machine')}"
+  File.join DOT_LOCATION, ".#{file.sub(HOST, 'machine')}"
 end
 
 def repo_file(file)
@@ -154,7 +156,7 @@ def repo_file(file)
 end
 
 def format_message(verb, file)
-  "#{verb} #{file.start_with?('/') ? '' : '~/.'}#{file}"
+  "#{verb} #{file.start_with?('/') ? file : dot_file(file)}"
 end
 
 def puts_message(verb, file)
@@ -176,7 +178,7 @@ def install_files(dir = '*', recurse = false)
 
     if recurse && File.directory?(file)
       install_directory(file)
-    elsif File.exist?(dot_file(file))
+    elsif File.symlink?(dot_file(file)) || File.exist?(dot_file(file))
       if File.identical? file, dot_file(file)
         puts_message 'identical', file
       elsif replace_all
@@ -212,7 +214,10 @@ def delete_correct_files(files, implode, delete_all)
     next unless File.symlink?(file_name)
     target = File.readlink(file_name)
     next unless File.dirname(target).start_with?(REPO_LOCATION)
-    next unless implode || !File.exist?(target) || is_invalid_file_for_target?(target)
+    unless implode || !File.exist?(target) ||
+             is_invalid_file_for_target?(target)
+      next
+    end
 
     delete_me, delete_all = delete_prompt(file_name, delete_all)
 
