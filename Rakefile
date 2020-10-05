@@ -156,7 +156,7 @@ def repo_file(file)
 end
 
 def format_message(verb, file)
-  "#{verb.ljust(9, ' ')} #{
+  "#{verb.rjust(9, ' ')} #{
     file.start_with?('/') ? file : dot_file(file).sub("#{DOT_LOCATION}/", '')
   }"
 end
