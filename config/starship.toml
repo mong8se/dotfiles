@@ -1,2 +1,5 @@
 [character]
 use_symbol_for_status = true
+
+[git_status]
+disabled = true
