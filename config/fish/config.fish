@@ -14,10 +14,10 @@ function fish_greeting
 end
 
 if test (which nvim)
-    set -x EDITOR nvim
+    set -x EDITOR (which nvim)
     set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
 else
-    set -x EDITOR vi
+    set -x EDITOR (which vim)
 end
 
 function _run_fasd -e fish_preexec
@@ -54,7 +54,7 @@ if status --is-interactive
     end
 
     abbr -a gls git ls-files
-    if [ "$EDITOR" = "nvim" ]
+    if string match --quiet '*nvim' "$EDITOR"
         abbr -a vi nvim
         if test (which abduco)
           abbr -a av abduco -A nvim nvim
@@ -63,7 +63,8 @@ if status --is-interactive
     abbr -a em emacsclient
     abbr -a cd.. cd ..
     if set -q KITTY_WINDOW_ID
-      abbr -a icat kitty +kitten icat
+      alias icat="kitty +kitten icat"
+      alias kg="kitty +kitten hyperlinked_grep"
     end
 
     # Feature Switches
