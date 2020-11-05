@@ -64,6 +64,12 @@ HOST =
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION = ENV['HOME']
 
+ALIAS_MAPPING = {
+  'vim' => 'dotfiles/config/nvim',
+  'vimrc' => 'dotfiles/config/nvim/init.vim',
+  'config/nvim/autoload/plug.vim' => 'dotfiles/Resources/vim-plug/plug.vim'
+}
+
 desc 'install .dotfiles into home directory'
 task :install do
   install_files Dir['*'].reject { |file| SKIP_FILES.include? file }
@@ -74,11 +80,7 @@ end
 desc 'make dot file symlinks'
 task :make_alias_links do
   replace_all = false
-  {
-    'config/nvim' => 'vim',
-    'config/nvim/init.vim' => 'vimrc',
-    'dotfiles/Resources/vim-plug/plug.vim' => 'config/nvim/autoload/plug.vim'
-  }.each_pair do |raw_target, raw_link|
+  ALIAS_MAPPING.each_pair do |raw_link, raw_target|
     target = dot_file(raw_target)
     link = dot_file(raw_link)
 
@@ -213,6 +215,9 @@ def delete_files(implode = false, delete_all = false)
   delete_all =
     delete_correct_files("#{ENV['HOME']}/.[^.]*", implode, delete_all)
   delete_correct_files("#{ENV['HOME']}/.config/**/*", implode, delete_all)
+  ALIAS_MAPPING.each_key do |link|
+    delete_correct_files(dot_file(link), implode, delete_all)
+  end
 end
 
 def delete_correct_files(files, implode, delete_all)
