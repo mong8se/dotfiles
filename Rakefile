@@ -75,7 +75,9 @@ desc 'make dot file symlinks'
 task :make_alias_links do
   replace_all = false
   {
-    'config/nvim' => 'vim', 'config/nvim/init.vim' => 'vimrc'
+    'config/nvim' => 'vim',
+    'config/nvim/init.vim' => 'vimrc',
+    'dotfiles/Resources/vim-plug/plug.vim' => 'config/nvim/autoload/plug.vim'
   }.each_pair do |raw_target, raw_link|
     target = dot_file(raw_target)
     link = dot_file(raw_link)
@@ -160,9 +162,7 @@ def repo_file(file)
 end
 
 def format_message(verb, file)
-  "#{verb.rjust(9, ' ')} #{
-    file.start_with?('/') ? file : dot_basename(file)
-  }"
+  "#{verb.rjust(9, ' ')} #{file.start_with?('/') ? file : dot_basename(file)}"
 end
 
 def puts_message(verb, file)
