@@ -17,7 +17,7 @@
 	path = Resources/fzf
 	url = https://github.com/junegunn/fzf.git
 [submodule "emacs.d"]
-	path = emacs.d
+	path = home/emacs.d
         url = https://github.com/hlissner/doom-emacs
 	branch = develop
         depth = 1

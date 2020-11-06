@@ -66,11 +66,6 @@ def dot_file(file)
   File.join DOT_LOCATION, dot_basename(file)
 end
 
-def repo_file(file)
-  File.join REPO_LOCATION, file
-end
-
-SKIP_FILES = %w[Resources Rakefile Readme.md config]
 HOST =
   Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
     .slice(0, 12)
@@ -79,16 +74,16 @@ ALIAS_MAPPING = {
   dot_file('vim') => dot_file('config/nvim'),
   dot_file('vimrc') => dot_file('config/nvim/init.vim'),
   dot_file('config/nvim/autoload/plug.vim') =>
-    repo_file('Resources/vim-plug/plug.vim'),
-  '/usr/local/bin/fasd' => repo_file('Resources/fasd/fasd'),
-  '/usr/local/share/man/man1/fasd.1' => repo_file('Resources/fasd/fasd.1')
+    File.expand_path('Resources/vim-plug/plug.vim'),
+  '/usr/local/bin/fasd' => File.expand_path('Resources/fasd/fasd'),
+  '/usr/local/share/man/man1/fasd.1' =>
+    File.expand_path('Resources/fasd/fasd.1')
 }
 
 desc 'install .dotfiles into home directory'
 task :install do
-  install_files Dir['*'].reject { |file| SKIP_FILES.include? file }
-  install_files Dir['config/*'].reject { |file| File.directory?(file) }
-  Dir['config/*'].each { |dir| install_directory(dir) }
+  Dir.chdir('home') { install_files Dir['*'] }
+  install_directory('config')
 end
 
 desc 'make dot file symlinks'
@@ -149,7 +144,7 @@ end
 
 def link_file(file)
   puts_message 'linking', file
-  File.symlink repo_file(file), dot_file(file)
+  File.symlink File.expand_path(file), dot_file(file)
 end
 
 def is_invalid_file_for_target?(file)
@@ -211,7 +206,7 @@ end
 def delete_files(implode = false, delete_all = false)
   delete_all =
     delete_correct_files(
-      ["#{ENV['HOME']}/.[^.]*", "#{ENV['HOME']}/.config/**/*"],
+      ["#{DOT_LOCATION}/.[^.]*", "#{DOT_LOCATION}/.config/**/*"],
       implode,
       delete_all
     ) { |target| File.dirname(target).start_with?(REPO_LOCATION) }
@@ -270,13 +265,6 @@ def delete_prompt(file_name, delete_all, prompt = 'delet%s')
   end
 
   return delete_me, delete_all
-end
-
-# https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
-desc 'Install profile for iterm2 italics support'
-task 'xterm-italic' do
-  system 'tic Resources/xterm-italic/xterm-256color-italic.terminfo'
-  puts "Set your term to 'xterm-256color-italic'"
 end
 
 task default: 'update'
