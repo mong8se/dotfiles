@@ -92,7 +92,7 @@ task :make_alias_links do
   ALIAS_MAPPING.each_pair do |link, target|
     if File.exist?(link) || File.symlink?(link)
       if File.identical? target, link
-        puts_message '>', link
+        puts_message '', link
         next
       else
         replace_me, replace_all =
@@ -180,7 +180,7 @@ def install_files(dir = '*', recurse = false)
       install_directory(file)
     elsif File.symlink?(dot_file(file)) || File.exist?(dot_file(file))
       if File.identical? file, dot_file(file)
-        puts_message '>', file
+        puts_message '', file
       elsif replace_all
         replace_file(file)
       else
