@@ -31,9 +31,6 @@ namespace :submodule do
   task update: 'submodule:init' do
     system <<-'UPDATE'
       git submodule update --remote;
-      cd Resources/fasd;
-      echo 'Install fasd...';
-      make install;
       cd ../fzf;
       echo 'Install fzf...';
       yes | ./install
@@ -56,18 +53,35 @@ namespace :vim do
   end
 end
 
+REPO_LOCATION = File.dirname(__FILE__)
+DOT_LOCATION = ENV['HOME']
+
+def dot_basename(file)
+  ".#{file.sub(HOST, 'machine')}"
+end
+
+def dot_file(file)
+  # Determine destination name
+  # replace hostname sha with word 'machine'
+  File.join DOT_LOCATION, dot_basename(file)
+end
+
+def repo_file(file)
+  File.join REPO_LOCATION, file
+end
+
 SKIP_FILES = %w[Resources Rakefile Readme.md config]
 HOST =
   Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
     .slice(0, 12)
 
-REPO_LOCATION = File.dirname(__FILE__)
-DOT_LOCATION = ENV['HOME']
-
 ALIAS_MAPPING = {
-  'vim' => 'dotfiles/config/nvim',
-  'vimrc' => 'dotfiles/config/nvim/init.vim',
-  'config/nvim/autoload/plug.vim' => 'dotfiles/Resources/vim-plug/plug.vim'
+  dot_file('vim') => dot_file('config/nvim'),
+  dot_file('vimrc') => dot_file('config/nvim/init.vim'),
+  dot_file('config/nvim/autoload/plug.vim') =>
+    repo_file('Resources/vim-plug/plug.vim'),
+  '/usr/local/bin/fasd' => repo_file('Resources/fasd/fasd'),
+  '/usr/local/share/man/man1/fasd.1' => repo_file('Resources/fasd/fasd.1')
 }
 
 desc 'install .dotfiles into home directory'
@@ -80,10 +94,7 @@ end
 desc 'make dot file symlinks'
 task :make_alias_links do
   replace_all = false
-  ALIAS_MAPPING.each_pair do |raw_link, raw_target|
-    target = dot_file(raw_target)
-    link = dot_file(raw_link)
-
+  ALIAS_MAPPING.each_pair do |link, target|
     if File.exist?(link) || File.symlink?(link)
       if File.identical? target, link
         puts_message '>', link
@@ -149,20 +160,6 @@ def is_invalid_file_for_target?(file)
   )
 end
 
-def dot_basename(file)
-  ".#{file.sub(HOST, 'machine')}"
-end
-
-def dot_file(file)
-  # Determine destination name
-  # replace hostname sha with word 'machine'
-  File.join DOT_LOCATION, dot_basename(file)
-end
-
-def repo_file(file)
-  File.join REPO_LOCATION, file
-end
-
 def format_message(verb, file)
   "#{verb.rjust(9, ' ')} #{file.start_with?('/') ? file : dot_basename(file)}"
 end
@@ -213,18 +210,23 @@ end
 
 def delete_files(implode = false, delete_all = false)
   delete_all =
-    delete_correct_files("#{ENV['HOME']}/.[^.]*", implode, delete_all)
-  delete_correct_files("#{ENV['HOME']}/.config/**/*", implode, delete_all)
-  ALIAS_MAPPING.each_key do |link|
-    delete_correct_files(dot_file(link), implode, delete_all)
+    delete_correct_files(
+      ["#{ENV['HOME']}/.[^.]*", "#{ENV['HOME']}/.config/**/*"],
+      implode,
+      delete_all
+    ) { |target| File.dirname(target).start_with?(REPO_LOCATION) }
+  ALIAS_MAPPING.each do |file_name, correct_target|
+    delete_correct_files(file_name, implode, delete_all) do |target|
+      target == correct_target
+    end
   end
 end
 
 def delete_correct_files(files, implode, delete_all)
-  Dir[files].each do |file_name|
+  Dir.glob(files).each do |file_name|
     next unless File.symlink?(file_name)
     target = File.readlink(file_name)
-    next unless File.dirname(target).start_with?(REPO_LOCATION)
+    next unless yield target
     unless implode || !File.exist?(target) ||
              is_invalid_file_for_target?(target)
       next
