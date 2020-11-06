@@ -31,7 +31,7 @@ namespace :submodule do
   task update: 'submodule:init' do
     system <<-'UPDATE'
       git submodule update --remote;
-      cd ../fzf;
+      cd Resources/fzf;
       echo 'Install fzf...';
       yes | ./install
     UPDATE
