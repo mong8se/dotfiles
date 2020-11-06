@@ -1,1 +1,2 @@
-set millermode
+set millerview
+set vicmd=nvim
