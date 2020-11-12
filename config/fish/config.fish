@@ -76,21 +76,7 @@ if status --is-interactive
     # end
 
     # Set Base16 Shell Colors
-    if set -q ITERM_PROFILE
-        switch "$ITERM_PROFILE"
-            case light
-                base16 gruvbox-light-soft
-            case dark
-                base16 gruvbox-dark-soft
-            case '*'
-                base16 eighties
-        end
-    else
-        base16 gruvbox-dark-soft
-    end
-
-    # Remove the environment variable as it's the default, not user set
-    set -e BASE16_THEME
+    base16 gruvbox-dark-soft false
 
     set -x fish_color_error brred --italics
     set -x fish_color_autosuggestion brblack --italics

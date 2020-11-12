@@ -8,15 +8,19 @@ end
 
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
 
-function base16 -d "Activate base16 terminal color scheme"
+function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_env
   if status --is-interactive
-    set -l new_theme "$argv[1]"
 
     if test -z "$new_theme"
       set new_theme (__base16_schemes | string split " " | fzf)
     end
 
-    set -xg BASE16_THEME base16-{$new_theme}
+    if test -n "$skip_env"
+      set -e BASE16_THEME
+    else
+      set -xg BASE16_THEME base16-{$new_theme}
+    end
+
     sh {$__base16_path}/base16-{$new_theme}.sh
   else
     echo "base16 doing nothing: Non interactive shell"
