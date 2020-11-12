@@ -111,6 +111,11 @@ if status --is-interactive
   --height 40% --reverse --extended --cycle
   "
 
+  function autoGrowl -d "Auto Growl" -e fish_postexec
+    if test $CMD_DURATION -gt 5000
+      growl finished: $argv
+    end
+  end
 end
 
 if test (uname) = "Darwin"
