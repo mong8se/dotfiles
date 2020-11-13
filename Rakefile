@@ -108,6 +108,7 @@ task :make_alias_links do
       puts_message 'linking', link
     end
 
+    mkdir_p(File.dirname(link))
     File.symlink target, link
   end
 end
@@ -133,7 +134,7 @@ task :hostname do
 end
 
 def install_directory(dir)
-  Dir.mkdir(dot_file(dir)) unless File.exist?(dot_file(dir))
+  mkdir(dot_file(dir)) unless File.exist?(dot_file(dir))
   install_files File.join(dir, '*'), true
 end
 
