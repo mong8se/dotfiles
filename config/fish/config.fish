@@ -113,6 +113,7 @@ if status --is-interactive
 
   function autoGrowl -d "Auto Growl" -e fish_postexec
     if test $CMD_DURATION -gt 5000
+      printf "\a"
       growl finished: $argv
     end
   end
