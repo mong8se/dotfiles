@@ -52,3 +52,5 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! gruvbox-theme)
+(package! tree-sitter)
+(package! tree-sitter-langs)
