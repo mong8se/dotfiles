@@ -70,6 +70,7 @@ set smarttab
 set title
 set scrolloff=5
 set nowrap
+set whichwrap=<,>,b
 set sidescroll=1
 set sidescrolloff=5
 set virtualedit=block,insert " allow cursor to go where there is nothing
