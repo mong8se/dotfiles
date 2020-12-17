@@ -6,14 +6,11 @@ endfunction
 " Source a local configuration file if available.
 " Takes arguments and constructs filename for example:
 " g:LoadRcFiles('first', 'second', third') would load:
-" mac.first.second.third.vim
+" _platform.first.second.third.vim
 " local.first.second.third.vim
 " _machine.first.second.third.vim
 function! mong8se#LoadRCFiles(...)
-  for l:rc_type in ['mac', '_machine', 'local']
-    if l:rc_type == 'mac' && !has('macunix')
-      continue
-    endif
+  for l:rc_type in ['_platform', '_machine', 'local']
     let l:rc_file = join([l:rc_type] + a:000 + ['vim'], '.')
     execute 'runtime' l:rc_file
   endfor

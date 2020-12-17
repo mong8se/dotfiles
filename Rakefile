@@ -2,24 +2,20 @@ require 'rake'
 require 'socket'
 require 'digest/md5'
 
-IS_MAC = RUBY_PLATFORM.downcase.include?('darwin')
-
-if IS_MAC && File.exist?('/etc/zshenv')
-  puts(<<-'WARNING')
- WARNING: Detected /etc/zshenv on OS X
-
- Vim subshell paths will be messed up unless you do:
-
- sudo mv /etc/zshenv /etc/zprofile
-
- Be sure to merge them if zprofile exits!
-
- See: https://github.com/b4winckler/macvim/wiki/Troubleshooting#rename-the-etczshenv-file-to-etczprofile
-
- WARNING
-end
-
+PLATFORM =
+  if RUBY_PLATFORM.downcase.include?('darwin')
+    'mac'
+  elsif RUBY_PLATFORM.downcase.include?('linux')
+    'linux'
+  else
+    'unknown'
+  end
 VI_BIN = `which nvim || which vim || which vi`.chomp
+REPO_LOCATION = File.dirname(__FILE__)
+DOT_LOCATION = ENV['HOME']
+HOST =
+  Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
+    .slice(0, 12)
 
 namespace :submodule do
   desc 'init git submodules'
@@ -53,11 +49,8 @@ namespace :vim do
   end
 end
 
-REPO_LOCATION = File.dirname(__FILE__)
-DOT_LOCATION = ENV['HOME']
-
 def dot_basename(file)
-  ".#{file.sub(HOST, 'machine')}"
+  '.' + file.sub(/_#{HOST}\b/, '_machine').sub(/_#{PLATFORM}\b/, '_platform')
 end
 
 def dot_file(file)
@@ -65,10 +58,6 @@ def dot_file(file)
   # replace hostname sha with word 'machine'
   File.join DOT_LOCATION, dot_basename(file)
 end
-
-HOST =
-  Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
-    .slice(0, 12)
 
 ALIAS_MAPPING = {
   dot_file('vim') => dot_file('config/nvim'),
@@ -150,10 +139,7 @@ end
 
 def is_invalid_file_for_target?(file)
   file_name = File.basename(file)
-  return(
-    (!IS_MAC && file_name.match(/^mac\.|\.mac$/)) ||
-      file_name.match(/^_(?!#{HOST})/)
-  )
+  return file_name.match(/^_(?!#{HOST}|#{PLATFORM})/)
 end
 
 def format_message(verb, file)

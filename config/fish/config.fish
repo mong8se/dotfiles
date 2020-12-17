@@ -119,10 +119,7 @@ if status --is-interactive
   end
 end
 
-if test (uname) = "Darwin"
-    set -x IS_MAC 0
-    xsource mac.fish
-end
+xsource _platform.fish
 
 starship init fish | source
 

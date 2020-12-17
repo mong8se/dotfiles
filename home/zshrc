@@ -133,9 +133,7 @@ alias hag="history -1000 | ag "
 # color ls
 alias ls="ls -G "
 
-if [[ `uname` == Darwin ]] then
-    xsource $ZDOTDIR/mac.zsh
-fi
+xsource "$ZDOTDIR/_platform.zsh"
 xsource "$ZDOTDIR/_machine.zsh"
 xsource $ZDOTDIR/*.plugin.zsh
 

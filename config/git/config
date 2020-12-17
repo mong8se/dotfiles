@@ -47,7 +47,7 @@
 [help]
   autocorrect = 10
 [include]
-  path = config.mac
+  path = _platform.config
   path = config.local
 [icdiff]
   options = --highlight --line-numbers

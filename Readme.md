@@ -3,25 +3,25 @@ What? More Dotfiles?!
 
 Config Order
 ------------
-_Note:_ `hostname` below is the output of the "rake hostname" task. `mac` files are only loaded if on a mac.
+_Note:_ `hostname` below is the output of the "rake hostname" task. `_platform` files are only loaded if they're _mac or _linux prefixed files on the correct platform.
 
 * vim
     1. plugs.vim
-    1. mac.plugs.vim
+    1. _platform.plugs.vim
     1. _`hostname`.plugs.vim
     1. local.plugs.vim
     1. vimrc
-    1. mac.vim
+    1. _platform.vim
     1. _`hostname`.vim
     1. local.vim
 * fish
     1. config.fish
-    1. mac.fish
+    1. _platform.fish
     1. _`hostname`.fish
     1. local.fish
 * zsh
     1. zshrc
-    1. mac.zsh
+    1. _platform.zsh
     1. _`hostname`.zsh
     1. local.zsh
 
