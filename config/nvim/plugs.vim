@@ -46,7 +46,10 @@ Plug 'tommcdo/vim-exchange'    " cx
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'RRethy/vim-illuminate'
+
 Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
+Plug 'Yggdroot/indentLine'
+
 Plug 'wellle/context.vim'
 
 Plug 'prabirshrestha/async.vim'
