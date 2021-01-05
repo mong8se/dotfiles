@@ -1,8 +1,1 @@
-vimperator/info/default/history-*
-vim/plugged/*
-vim/.netrwhist
-vim/tmp/*
-vim/spell/*
-zsh/logs/*
-zsh/cache/*
-emacs.d/autosaves/*
+*local*
