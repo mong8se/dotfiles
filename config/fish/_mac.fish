@@ -31,7 +31,7 @@ function autoGruv -d "Auto Gruv" -e fish_prompt
     if isDarkMode
       base16 gruvbox-dark-soft false
     else
-      base16 solarized-light false
+      base16 atelier-lakeside-light false
     end
   end
 end
