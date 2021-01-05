@@ -1,5 +1,5 @@
 if not set -q __base16_path
-  set -g __base16_path $RESOURCES/base16-shell/scripts
+  set -g __base16_path $DOTFILES_RESOURCES/base16-shell/scripts
 end
 
 function __base16_schemes
@@ -18,7 +18,7 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
     if test -n "$skip_env"
       set -e BASE16_THEME
     else
-      set -xg BASE16_THEME base16-{$new_theme}
+      set -xg BASE16_THEME {$new_theme}
     end
 
     sh {$__base16_path}/base16-{$new_theme}.sh
