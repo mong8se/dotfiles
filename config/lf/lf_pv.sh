@@ -7,5 +7,5 @@ case "$1" in
     *.7z) 7z l "$1";;
     *.pdf) pdftotext "$1" -;;
     # *) bat --plain --color always "$1" ;;
-    *) highlight --base16="$BASE16_THEME" "$1" || bat --plain --color always "$1" || cat "$1" ;;
+    *) highlight -O ansi --base16="$BASE16_THEME" "$1" || bat --plain --color always "$1" || cat "$1" ;;
 esac
