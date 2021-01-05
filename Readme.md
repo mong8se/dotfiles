@@ -47,6 +47,7 @@ rake vim:cleanup       # clean vim plugins
 Required Packages
 -----------------
 
+lf
 fd
 fzf
 bat
@@ -55,5 +56,6 @@ icdiff
 figlet
 ripgrep
 starship
+highlight
 
 Thanks to [ryanb](https://github.com/ryanb/dotfiles) for the starting point.
