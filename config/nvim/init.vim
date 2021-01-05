@@ -239,7 +239,7 @@ endif
 
 if $BASE16_THEME != ""
   let base16colorspace=256
-  colorscheme $BASE16_THEME
+  colorscheme base16-$BASE16_THEME
 else
   if $TERM_PROGRAM == "iTerm" && $ITERM_PROFILE == "light"
     set background=light
