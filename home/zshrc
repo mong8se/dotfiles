@@ -137,10 +137,10 @@ xsource "$ZDOTDIR/_platform.zsh"
 xsource "$ZDOTDIR/_machine.zsh"
 xsource $ZDOTDIR/*.plugin.zsh
 
-xsource "$DOTFILE_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILE_RESOURCES/git-flow-completion/git-flow-completion.zsh"
+xsource "$DOTFILES_RESOURCES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "$DOTFILES_RESOURCES/git-flow-completion/git-flow-completion.zsh"
 
 # Base16 Shell
-BASE16_SHELL="$DOTFILE_RESOURCES/base16-shell/scripts/base16-bespin.sh"
+BASE16_SHELL="$DOTFILES_RESOURCES/base16-shell/scripts/base16-bespin.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # fasd

@@ -22,7 +22,7 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
     end
 
     sh {$__base16_path}/base16-{$new_theme}.sh
-    source {$RESOURCES}/base16-fzf/fish/base16-{$new_theme}.fish
+    source {$DOTFILES_RESOURCES}/base16-fzf/fish/base16-{$new_theme}.fish
   else
     echo "base16 doing nothing: Non interactive shell"
   end

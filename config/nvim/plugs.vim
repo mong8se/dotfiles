@@ -4,7 +4,7 @@ filetype off
 
 call plug#begin("~/.config/nvim/plugged")
 
-set rtp+=$RESOURCES/fzf
+set rtp+=$DOTFILES_RESOURCES/fzf
 Plug 'junegunn/fzf.vim'
 " Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 
