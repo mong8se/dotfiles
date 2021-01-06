@@ -13,6 +13,7 @@ PLATFORM =
 VI_BIN = `which nvim || which vim || which vi`.chomp
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION = ENV['HOME']
+HOMEBREW_PREFIX = ENV['HOMEBREW_PREFIX'] || '/usr/local'
 HOST =
   Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
     .slice(0, 12)
@@ -64,8 +65,8 @@ ALIAS_MAPPING = {
   dot_file('vimrc') => dot_file('config/nvim/init.vim'),
   dot_file('config/nvim/autoload/plug.vim') =>
     File.expand_path('Resources/vim-plug/plug.vim'),
-  '/usr/local/bin/fasd' => File.expand_path('Resources/fasd/fasd'),
-  '/usr/local/share/man/man1/fasd.1' =>
+  "#{HOMEBREW_PREFIX}/bin/fasd" => File.expand_path('Resources/fasd/fasd'),
+  "#{HOMEBREW_PREFIX}/share/man/man1/fasd.1" =>
     File.expand_path('Resources/fasd/fasd.1')
 }
 
