@@ -23,15 +23,14 @@ if not set -q HOMEBREW_PREFIX
 end
 
 function fish_greeting
-  if type -P (which figlet) >/dev/null
-    and test -x (which figlet)
+  if type -q figlet
     set_color red
     figlet -c -w $COLUMNS -f smslant $hostname
     set_color normal
   end
 end
 
-if test (which nvim)
+if type -q nvim
   set -x EDITOR (which nvim)
   set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
 else
@@ -62,7 +61,7 @@ if status --is-interactive
   abbr -a gls git ls-files
   if string match --quiet '*nvim' "$EDITOR"
     abbr -a vi nvim
-    if test (which abduco)
+    if type -q abduco
       abbr -a av abduco -A nvim nvim
     end
   end
@@ -79,7 +78,7 @@ if status --is-interactive
   set -x fish_color_error brred --italics
   set -x fish_color_autosuggestion brblack --italics
 
-  if test (which fd)
+  if type -q fd
     set -x FZF_DEFAULT_COMMAND 'fd --type f --no-ignore'
     set -x FZF_CTRL_T_COMMAND 'fd --type f . "$dir"'
   end
@@ -91,7 +90,7 @@ if status --is-interactive
     end
   end
 
-  if test (which fasd)
+  if type -q fasd
     function _run_fasd -e fish_preexec
       fasd --proc (fasd --sanitize "$argv") >"/dev/null" 2>&1
     end
@@ -109,7 +108,7 @@ if status --is-interactive
     fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o $EDITOR
   end
 
-  if test (which starship)
+  if type -q starship
     starship init fish | source
   end
 end
