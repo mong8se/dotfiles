@@ -8,6 +8,18 @@ if not set -q DOTFILES_RESOURCES
   set -x DOTFILES_RESOURCES ~/.dotfiles/Resources
 end
 
+if not set -q HOMEBREW_PREFIX
+  eval (
+  if test -x /home/linuxbrew/.linuxbrew/bin/brew
+    /home/linuxbrew/.linuxbrew/bin/brew shellenv
+  else if test -x ~/.linuxbrew/bin/brew
+    ~/.linuxbrew/bin/brew shellenv
+  else
+    brew shellenv
+  end
+  )
+end
+
 function fish_greeting
   if type -P (which figlet) >/dev/null
     and test -x (which figlet)
