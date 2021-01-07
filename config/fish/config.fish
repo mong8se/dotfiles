@@ -16,7 +16,7 @@ if not set -q HOMEBREW_PREFIX
       break
     end
   end
- 
+
   if test -n "$brew_path"
     eval ($brew_path shellenv)
   end
@@ -36,22 +36,6 @@ if test (which nvim)
   set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
 else
   set -x EDITOR (which vim)
-end
-
-function _run_fasd -e fish_preexec
-  fasd --proc (fasd --sanitize "$argv") >"/dev/null" 2>&1
-end
-
-function z
-  if count $argv >/dev/null
-    cd (fasd -dl1 "$argv")
-  else
-    cd (fasd -dlR | fzf)
-  end
-end
-
-function fv
-  fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o $EDITOR
 end
 
 function xsource -d "Source list of files if they exist."
@@ -89,14 +73,6 @@ if status --is-interactive
     alias kg="kitty +kitten hyperlinked_grep"
   end
 
-  # Feature Switches
-  # if set -q ITERM_PROFILE
-  # set -x HAS_UTF 0
-  # set -x fish_emoji_width 2
-  # else if set -q KITTY_WINDOW_ID
-  set -e HAS_UTF
-  # end
-
   # Set Base16 Shell Colors
   base16 gruvbox-dark-soft false
 
@@ -114,10 +90,30 @@ if status --is-interactive
       growl finished: $argv
     end
   end
+
+  if test (which fasd)
+    function _run_fasd -e fish_preexec
+      fasd --proc (fasd --sanitize "$argv") >"/dev/null" 2>&1
+    end
+  end
+
+  function z
+    if count $argv >/dev/null
+      cd (fasd -dl1 "$argv")
+    else
+      cd (fasd -dlR | fzf)
+    end
+  end
+
+  function fv
+    fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o $EDITOR
+  end
+
+  if test (which starship)
+    starship init fish | source
+  end
 end
 
 xsource _platform.fish
-
-starship init fish | source
 
 xsource _machine.fish local.fish
