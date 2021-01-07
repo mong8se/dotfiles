@@ -9,15 +9,17 @@ if not set -q DOTFILES_RESOURCES
 end
 
 if not set -q HOMEBREW_PREFIX
-  eval (
-  if test -x /home/linuxbrew/.linuxbrew/bin/brew
-    /home/linuxbrew/.linuxbrew/bin/brew shellenv
-  else if test -x ~/.linuxbrew/bin/brew
-    ~/.linuxbrew/bin/brew shellenv
-  else
-    brew shellenv
+  set -l brew_path
+  for test_path in /home/linuxbrew/.linuxbrew/bin/brew ~/.linuxbrew/bin/brew /usr/local/bin/brew
+    if test -x $test_path
+      set brew_path "$test_path"
+      break
+    end
   end
-  )
+ 
+  if test -n "$brew_path"
+    eval ($brew_path shellenv)
+  end
 end
 
 function fish_greeting
