@@ -29,6 +29,17 @@ namespace :submodule do
   end
 end
 
+namespace :fzf do
+  desc 'install fzf'
+  task :install do
+    system <<-'UPDATE'
+      cd Resources/fzf;
+      echo 'Install fzf...';
+      yes | ./install --xdg --no-update-rc
+    UPDATE
+  end
+end
+
 namespace :vim do
   desc 'install vim plugins'
   task :install do

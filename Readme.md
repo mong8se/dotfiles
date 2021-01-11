@@ -49,7 +49,6 @@ Required Packages
 
 lf
 fd
-fzf
 bat
 fasd
 icdiff

@@ -10,6 +10,9 @@
 [submodule "Resources/vim-plug"]
 	path = Resources/vim-plug
 	url = https://github.com/junegunn/vim-plug
+[submodule "Resources/fzf"]
+	path = Resources/fzf
+	url = https://github.com/junegunn/fzf.git
 [submodule "emacs.d"]
 	path = home/emacs.d
 	url = https://github.com/hlissner/doom-emacs
