@@ -13,7 +13,6 @@ PLATFORM =
 VI_BIN = `which nvim || which vim || which vi`.chomp
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION = ENV['HOME']
-HOMEBREW_PREFIX = ENV['HOMEBREW_PREFIX'] || '/usr/local'
 HOST =
   Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
     .slice(0, 12)
@@ -26,12 +25,7 @@ namespace :submodule do
 
   desc 'update git submodules to their latest master'
   task update: 'submodule:init' do
-    system <<-'UPDATE'
-      git submodule update --remote;
-      cd Resources/fzf;
-      echo 'Install fzf...';
-      yes | ./install
-    UPDATE
+    system 'git submodule update --remote'
   end
 end
 
@@ -64,10 +58,7 @@ ALIAS_MAPPING = {
   dot_file('vim') => dot_file('config/nvim'),
   dot_file('vimrc') => dot_file('config/nvim/init.vim'),
   dot_file('config/nvim/autoload/plug.vim') =>
-    File.expand_path('Resources/vim-plug/plug.vim'),
-  "#{HOMEBREW_PREFIX}/bin/fasd" => File.expand_path('Resources/fasd/fasd'),
-  "#{HOMEBREW_PREFIX}/share/man/man1/fasd.1" =>
-    File.expand_path('Resources/fasd/fasd.1')
+    File.expand_path('Resources/vim-plug/plug.vim')
 }
 
 desc 'install .dotfiles into home directory'
