@@ -31,17 +31,24 @@ Rake tasks
 ```
 rake hostname          # first 12 characters of a sha2 digest of the non-fully-qualified hostname
 
-rake update            # install new and remove old symlinks *default*
+rake init              # Initialize new dotfiles install
 rake install           # install .dotfiles into home directory
+rake update            # install new and remove old symlinks
+rake upgrade           # Update submodules, vim, and fzf
+
 rake cleanup           # clean up .dotfile symlinks that are no longer there
 rake implode           # remove all .dotfile symlinks
+
+rake make_alias_links  # make dot file symlinks
 
 rake submodule:init    # init git submodules
 rake submodule:update  # update git submodules to their latest master
 
+rake vim:cleanup       # clean vim plugins
 rake vim:install       # install vim plugins
 rake vim:update        # update vim plugins
-rake vim:cleanup       # clean vim plugins
+
+rake fzf:install       # install fzf
 ```
 
 Required Packages
