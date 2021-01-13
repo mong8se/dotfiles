@@ -90,18 +90,49 @@ if status --is-interactive
     end
   end
 
-  if type -q fasd
-    function _run_fasd -e fish_preexec
-      fasd --proc (fasd --sanitize "$argv") >"/dev/null" 2>&1
+  if type -q fre
+    if type -q disown
+      function __fasd_run -e fish_preexec
+        command fre --add (pwd) > "/dev/null" 2>&1 &; disown
+      end
+    else
+      function __fasd_run -e fish_preexec
+        command fre --add (pwd) > "/dev/null" 2>&1 &
+      end
+    end
+
+    function __fasd_query
+      if count $argv > "/dev/null"
+        command fre --sorted | grep -m 1 $argv
+      else
+        command fre --sorted | fzf
+      end
+    end
+
+  else if type -q fasd
+    if type -q disown
+      function __fasd_run -e fish_preexec
+        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) > "/dev/null" 2>&1 &; disown
+      end
+    else
+      function __fasd_run -e fish_preexec
+        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) > "/dev/null" 2>&1 &
+      end
+    end
+
+    function __fasd_query
+      if count $argv > "/dev/null"
+        command fasd -dl1 "$argv"
+      else
+        command fasd -dlR | fzf
+      end
     end
   end
 
   function z
-    if count $argv >/dev/null
-      cd (fasd -dl1 "$argv")
-    else
-      cd (fasd -dlR | fzf)
-    end
+    set -l result (__fasd_query $argv)
+    test -z "$result"; and return
+    test -d "$result"; and cd "$result"
   end
 
   function fv
