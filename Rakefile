@@ -30,15 +30,15 @@ end
 namespace :vim do
   desc 'install vim plugins'
   task :install do
-    exec "#{VI_BIN} -u config/nvim/plugs.vim +PlugInstall +qall"
+    system "#{VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall"
   end
   desc 'update vim plugins'
   task :update do
-    exec "#{VI_BIN} -u config/nvim/plugs.vim +PlugUpdate +qall"
+    system "#{VI_BIN} -u config/nvim/plugs.vim -es +PlugUpdate"
   end
   desc 'clean vim plugins'
   task :cleanup do
-    exec "#{VI_BIN} -u config/nvim/plugs.vim +PlugClean +qall"
+    system "#{VI_BIN} -u config/nvim/plugs.vim -es +PlugClean"
   end
 end
 
@@ -104,7 +104,7 @@ task :hostname do
 end
 
 desc 'Initialize new dotfiles install'
-task init: %i[submodule:init submodule:update vim:install fzf:install install] do puts "installing" end
+task init: %i[submodule:init submodule:update vim:install fzf:install install]
 
 desc 'Update submodules, vim, and fzf'
 task upgrade: %i[submodule:update vim:update fzf:install]
