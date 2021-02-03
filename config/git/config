@@ -51,3 +51,5 @@
   path = config.local
 [icdiff]
   options = --highlight --line-numbers
+[init]
+	defaultBranch = main
