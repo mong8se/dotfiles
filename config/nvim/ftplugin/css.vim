@@ -1,2 +1,2 @@
 setlocal iskeyword+=-
-setlocal formatprg=prettier\ --parser=css\ --stdin
+setlocal formatprg=prettier\ --parser=css

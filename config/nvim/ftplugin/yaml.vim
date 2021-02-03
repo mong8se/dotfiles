@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=yaml\ --stdin
+setlocal formatprg=prettier\ --parser=yaml

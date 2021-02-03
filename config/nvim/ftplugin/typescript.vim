@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=typescript\ --stdin
+setlocal formatprg=prettier\ --parser=typescript

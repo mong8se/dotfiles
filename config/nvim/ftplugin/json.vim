@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=json-stringify\ --stdin
+setlocal formatprg=prettier\ --parser=json-stringify

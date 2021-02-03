@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=babel\ --stdin
+setlocal formatprg=prettier\ --parser=babel
