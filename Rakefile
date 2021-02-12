@@ -42,7 +42,6 @@ namespace :vim do
   end
 end
 
-
 ALIAS_MAPPING = {
   dot_file('vim') => dot_file('config/nvim'),
   dot_file('vimrc') => dot_file('config/nvim/init.vim'),
