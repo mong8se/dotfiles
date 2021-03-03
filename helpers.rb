@@ -1,3 +1,7 @@
+#!/usr/bin/env ruby
+
+STDOUT.sync = true
+
 PLATFORM =
   if RUBY_PLATFORM.downcase.include?('darwin')
     'mac'
@@ -9,9 +13,11 @@ PLATFORM =
 
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION = ENV['HOME']
-raise "HOME environment variable is not set" unless DOT_LOCATION && DOT_LOCATION.length > 0
+unless DOT_LOCATION && DOT_LOCATION.length > 0
+  raise 'HOME environment variable is not set'
+end
 HOST = ENV['HOST42']
-raise "HOST42 environment variable is not set" unless HOST && HOST.length > 0
+raise 'HOST42 environment variable is not set' unless HOST && HOST.length > 0
 
 def dot_basename(file)
   '.' + file.sub(/_#{HOST}\b/, '_machine').sub(/_#{PLATFORM}\b/, '_platform')
@@ -21,6 +27,39 @@ def dot_file(file)
   # Determine destination name
   # replace hostname sha with word 'machine'
   File.join DOT_LOCATION, dot_basename(file)
+end
+
+ALIAS_MAPPING = {
+  dot_file('vim') => dot_file('config/nvim'),
+  dot_file('vimrc') => dot_file('config/nvim/init.vim'),
+  dot_file('config/nvim/autoload/plug.vim') =>
+    File.expand_path('Resources/vim-plug/plug.vim')
+}
+
+def make_alias_links
+  replace_all = false
+  ALIAS_MAPPING.each_pair do |link, target|
+    if File.exist?(link) || File.symlink?(link)
+      if File.identical? target, link
+        puts_message '', link
+        next
+      else
+        replace_me, replace_all =
+          delete_prompt(link, replace_all, prompt = 'replac%s')
+
+        if replace_me || replace_all
+          FileUtils.remove_entry_secure link, true
+        else
+          next
+        end
+      end
+    else
+      puts_message 'linking', link
+    end
+
+    mkdir_p(File.dirname(link))
+    File.symlink target, link
+  end
 end
 
 def install_directory(dir)
@@ -153,4 +192,25 @@ def delete_prompt(file_name, delete_all, prompt = 'delet%s')
   end
 
   return delete_me, delete_all
+end
+
+def usage
+  puts "Usage: #{__FILE__} command"
+  exit
+end
+
+case ARGV[0]
+when 'install'
+  Dir.chdir('home') { install_files Dir['*'] }
+  install_directory('config')
+when 'cleanup'
+  delete_files
+when 'autocleanup'
+  delete_files(false, true)
+when 'implode'
+  delete_files(true)
+when 'make_alias_links'
+  make_alias_links
+else
+  usage
 end
