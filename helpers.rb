@@ -17,7 +17,6 @@ unless DOT_LOCATION && DOT_LOCATION.length > 0
   raise 'HOME environment variable is not set'
 end
 HOST = ENV['HOST42']
-raise 'HOST42 environment variable is not set' unless HOST && HOST.length > 0
 
 def dot_basename(file)
   '.' + file.sub(/_#{HOST}\b/, '_machine').sub(/_#{PLATFORM}\b/, '_platform')
@@ -195,8 +194,25 @@ def delete_prompt(file_name, delete_all, prompt = 'delet%s')
 end
 
 def usage
-  puts "Usage: #{__FILE__} command"
+  puts <<-USAGE
+  Usage: #{__FILE__} command
+
+    Commands:
+      install
+      make_alias_links
+      cleanup
+      autocleanup
+      implode
+  USAGE
   exit
+end
+
+unless HOST && HOST.length > 0
+  puts <<-WARN
+  Warning: HOST42 environment variable is not set
+
+  WARN
+  usage
 end
 
 case ARGV[0]
