@@ -1,6 +1,3 @@
-require 'digest/md5'
-require 'socket'
-
 PLATFORM =
   if RUBY_PLATFORM.downcase.include?('darwin')
     'mac'
@@ -12,9 +9,9 @@ PLATFORM =
 
 REPO_LOCATION = File.dirname(__FILE__)
 DOT_LOCATION = ENV['HOME']
-HOST =
-  Digest::MD5.hexdigest(Socket.gethostname.gsub(/\..+$/, '')).to_i(16).to_s(36)
-    .slice(0, 12)
+raise "HOME environment variable is not set" unless DOT_LOCATION && DOT_LOCATION.length > 0
+HOST = ENV['HOST42']
+raise "HOST42 environment variable is not set" unless HOST && HOST.length > 0
 
 def dot_basename(file)
   '.' + file.sub(/_#{HOST}\b/, '_machine').sub(/_#{PLATFORM}\b/, '_platform')

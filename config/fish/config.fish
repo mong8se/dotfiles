@@ -65,12 +65,16 @@ if status --is-interactive
       abbr -a av abduco -A nvim nvim
     end
   end
+
   abbr -a em emacsclient
   abbr -a cd.. cd ..
+
   if set -q KITTY_WINDOW_ID
     alias icat="kitty +kitten icat"
     alias kg="kitty +kitten hyperlinked_grep"
   end
+
+  alias run="bash ./Taskfile"
 
   # Set Base16 Shell Colors
   base16 gruvbox-dark-soft false

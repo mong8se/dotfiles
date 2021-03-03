@@ -2,6 +2,8 @@
 
 # https://github.com/adriancooney/Taskfile
 
+set -e
+
 function stringToMd5ToHexToBase42(){
   # trim new line and md5
   MD5=$(tr -d '\n' <<< $1 | openssl dgst -md5 -r)
@@ -41,9 +43,11 @@ function stringToMd5ToHexToBase42(){
   done && echo
 }
 
+# What do you get if you multiply six by nine
+export HOST42=$(stringToMd5ToHexToBase42 $(hostname))
+
 function task:hostname {
-  # What do you get if you multiply six by nine
-  stringToMd5ToHexToBase42 $(hostname)
+  echo $HOST42
   echo
 }
 
@@ -55,11 +59,11 @@ function task:submodule:update {
   git submodule update --remote
 }
 
-function task:fzf:install {
+function task:fzf:install {(
   cd Resources/fzf;
   echo 'Install fzf...';
   yes | ./install --xdg --no-update-rc
-}
+)}
 
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
@@ -73,6 +77,50 @@ function task:vi:update {
 
 function task:vi:cleanup {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugClean
+}
+
+function task:make_alias_links {
+  rake make_alias_links
+}
+
+function task:cleanup {
+  rake cleanup
+}
+
+function task:autocleanup {
+  rake autocleanup
+}
+
+function task:implode {
+  rake implode
+}
+
+function task:install {
+  rake install
+}
+
+function task:update {
+  task:install
+  task:make_alias_links
+  task:autocleanup
+}
+
+function task:init {
+  task:submodule:init
+  task:submodule:update
+  task:vi:install
+  task:fzf:install
+  task:install
+}
+
+function task:upgrade {
+  task:submodule:update
+  task:vi:update
+  task:fzf:install
+}
+
+function task:default {
+  task:update
 }
 
 function task:help {
