@@ -3,9 +3,12 @@
 # Taskfile format from here https://github.com/adriancooney/Taskfile
 
 function stringToMd5ToHexToBase36(){
-  # trim new lines at every pipe
+  # trim new line and md5
+  MD5=$(tr -d '\n' <<< $1 | openssl dgst -md5 -r)
+
   # switch to lower case because bc demands it
-  HEXVALUE=$(tr -d '\n' <<< $1 | md5 | tr -d '\n' | tr "[:lower:]" "[:upper:]")
+  # strip trailing *stdin\n from openssl output
+  HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 
   # set up an array of our base 36 characters
   # to look up each digit against
@@ -37,6 +40,7 @@ function stringToMd5ToHexToBase36(){
 
 function task:hostname {
   stringToMd5ToHexToBase36 $(hostname)
+  echo
 }
 
 function task:submodule:init {
