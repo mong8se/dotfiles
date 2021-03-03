@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# Taskfile format from here https://github.com/adriancooney/Taskfile
+
+function stringToMd5ToHexToBase36(){
+  # trim new lines at every pipe
+  # switch to lower case because bc demands it
+  HEXVALUE=$(tr -d '\n' <<< $1 | md5 | tr -d '\n' | tr "[:lower:]" "[:upper:]")
+
+  # set up an array of our base 36 characters
+  # to look up each digit against
+  BASE36=($(echo {0..9} {a..z}))
+
+  # it's important obase come before ibase so you can
+  # specify the obase in base 10. Otherwise you have
+  # to specify the obase in the base of the ibase
+  for i in $(BC_LINE_LENGTH=39 bc <<< "obase=36; ibase=16; $HEXVALUE"); do
+
+    # bc is going to output each digit as a zero led
+    # two digit string followed by a space (3 chars):
+    #
+    # 01 35 12
+    #
+    # So we're using bc's built in line break
+    # to truncate at our 12 characters of output, by
+    # setting its line length to 3 chars x 12 + 1 (39)
+    # after which bc puts a \ and a new line
+    # so we detect the \ and break the loop
+    if [ $i = '\' ] ; then break ; fi
+
+    # we need to cast to base 10 in the array
+    # look up because bash will barf on the 
+    # leading zeros
+    echo -n ${BASE36[$(( 10#$i ))]}
+  done && echo
+}
+
+function task:hostname {
+  stringToMd5ToHexToBase36 $(hostname)
+}
+
+function task:submodule:init {
+  git submodule update --init --recursive
+}
+
+function task:submodule:update {
+  git submodule update --remote
+}
+
+function task:fzf:install {
+  cd Resources/fzf;
+  echo 'Install fzf...';
+  yes | ./install --xdg --no-update-rc
+}
+
+VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
+
+function task:vi:install {
+  ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
+}
+
+function task:vi:update {
+  ${VI_BIN} -u config/nvim/plugs.vim -es +PlugUpdate
+}
+
+function task:vi:cleanup {
+  ${VI_BIN} -u config/nvim/plugs.vim -es +PlugClean
+}
+
+function task:help {
+  echo "$0 <task> <args>"
+  echo "Tasks:"
+
+    # We pick out the `task:*` functions
+    compgen -A function | sed -En 's/task:(.*)/\1/p' | cat -n
+  }
+
+TIMEFORMAT="Task completed in %3lR"
+time "task:${@:-default}"
