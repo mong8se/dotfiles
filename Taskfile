@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Taskfile format from here https://github.com/adriancooney/Taskfile
+# https://github.com/adriancooney/Taskfile
 
-function stringToMd5ToHexToBase36(){
+function stringToMd5ToHexToBase42(){
   # trim new line and md5
   MD5=$(tr -d '\n' <<< $1 | openssl dgst -md5 -r)
 
@@ -10,36 +10,40 @@ function stringToMd5ToHexToBase36(){
   # strip trailing *stdin\n from openssl output
   HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 
-  # set up an array of our base 36 characters
+  # set up an array of our base 42 characters
   # to look up each digit against
-  BASE36=($(echo {0..9} {a..z}))
+  BASE42=($(echo {0..8} {a..z} M O A Z A M I))
 
   # it's important obase come before ibase so you can
   # specify the obase in base 10. Otherwise you have
   # to specify the obase in the base of the ibase
-  for i in $(BC_LINE_LENGTH=39 bc <<< "obase=36; ibase=16; $HEXVALUE"); do
+  for i in $(BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
+
+    # We're using bc's built in line break
+    # to truncate at 13 characters
 
     # bc is going to output each digit as a zero led
     # two digit string followed by a space (3 chars):
     #
-    # 01 35 12
-    #
-    # So we're using bc's built in line break
-    # to truncate at our 12 characters of output, by
-    # setting its line length to 3 chars x 12 + 1 (39)
-    # after which bc puts a \ and a new line
+    #   01 35 12
+
+    # so we're setting its line length to
+    #    3 chars x (13 + 1) = 42
+
+    # after that bc puts a \ and a new line
     # so we detect the \ and break the loop
     if [ $i = '\' ] ; then break ; fi
 
     # we need to cast to base 10 in the array
     # look up because bash will barf on the 
     # leading zeros
-    echo -n ${BASE36[$(( 10#$i ))]}
+    echo -n ${BASE42[$(( 10#$i ))]}
   done && echo
 }
 
 function task:hostname {
-  stringToMd5ToHexToBase36 $(hostname)
+  # What do you get if you multiply six by nine
+  stringToMd5ToHexToBase42 $(hostname)
   echo
 }
 
@@ -75,9 +79,9 @@ function task:help {
   echo "$0 <task> <args>"
   echo "Tasks:"
 
-    # We pick out the `task:*` functions
-    compgen -A function | sed -En 's/task:(.*)/\1/p' | cat -n
-  }
+  # We pick out the `task:*` functions
+  compgen -A function | sed -En 's/task:(.*)/\1/p' | cat -n
+}
 
 TIMEFORMAT="Task completed in %3lR"
 time "task:${@:-default}"
