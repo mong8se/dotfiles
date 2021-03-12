@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require "FileUtils"
+
 STDOUT.sync = true
 
 PLATFORM =
@@ -56,7 +58,7 @@ def make_alias_links
       puts_message 'linking', link
     end
 
-    mkdir_p(File.dirname(link))
+    FileUtils.mkdir_p(File.dirname(link))
     File.symlink target, link
   end
 end
