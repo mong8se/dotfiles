@@ -64,7 +64,7 @@ def make_alias_links
 end
 
 def install_directory(dir)
-  mkdir(dot_file(dir)) unless File.exist?(dot_file(dir))
+  Dir.mkdir(dot_file(dir)) unless File.exist?(dot_file(dir))
   install_files File.join(dir, '*'), true
 end
 
