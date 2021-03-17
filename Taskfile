@@ -80,23 +80,23 @@ function task:vi:cleanup {
 }
 
 function task:make_alias_links {
-  ruby ./helpers.rb make_alias_links
+  node ./helpers.js make_alias_links
 }
 
 function task:cleanup {
-  ruby ./helpers.rb cleanup
+  node ./helpers.js cleanup
 }
 
 function task:autocleanup {
-  ruby ./helpers.rb autocleanup
+  node ./helpers.js autocleanup
 }
 
 function task:implode {
-  ruby ./helpers.rb implode
+  node ./helpers.js implode
 }
 
 function task:install {
-  ruby ./helpers.rb install
+  node ./helpers.js install
 }
 
 function task:update {
