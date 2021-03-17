@@ -207,54 +207,35 @@ function installDirectory(dir, relativeTo) {
   return installFiles(dir, relativeTo, true);
 }
 
-function findDotLinks(dir, preFilter) {
+const flatten = ([...list]) => [].concat(...list);
+
+function findDotLinks(dir, preFilter, recursive = false) {
   let isLink = (item) => item.isSymbolicLink();
   const byFilter = preFilter
     ? (item) => preFilter(item) && isLink(item)
     : isLink;
 
   return fs.readdir(dir, { withFileTypes: true }).then((list) =>
-    list.filter(byFilter).map((item) => {
-      item.path = path.join(dir, item.name);
-      return item;
-    })
+    Promise.all(
+      list.map((item) => {
+        item.path = path.join(dir, item.name);
+        if (item.isDirectory() && recursive) {
+          return findDotLinks(item.path, preFilter, recursive);
+        }
+        if (byFilter(item)) {
+          return item;
+        }
+        return [];
+      })
+    ).then(flatten)
   );
-}
-
-const flatten = ([...list]) => [].concat(...list);
-
-function findConfigLinks() {
-  return fs
-    .readdir(path.join(DOT_LOCATION, ".config"), { withFileTypes: true })
-    .then((list) =>
-      Promise.all(
-        list
-          .filter((dir) => dir.isDirectory())
-          .map((dir) =>
-            findDotLinks(path.join(DOT_LOCATION, ".config", dir.name))
-          )
-      )
-    )
-    .then(flatten);
 }
 
 function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
   if (deleteAll) activateAll(deleteAllScope);
 
-  return Promise.all([
-    Promise.all([
-      findDotLinks(DOT_LOCATION, (item) => item.name.startsWith(".")),
-
-      findDotLinks(path.join(DOT_LOCATION, ".config")),
-      findConfigLinks(),
-    ])
-      .then(flatten)
-      .then((list) =>
-        deleteCorrectFiles(list, implode, deleteAllScope, (target) =>
-          target.startsWith(REPO_LOCATION)
-        )
-      ),
+  return Promise.all(
     Object.entries(ALIAS_MAPPING).map(([fileName, correctTarget]) =>
       findDotLinks(
         path.dirname(fileName),
@@ -267,11 +248,23 @@ function deleteFiles(implode = false, deleteAll = false) {
           (target) => target === correctTarget
         )
       )
-    ),
-  ]);
+    )
+  ).then(() =>
+    Promise.all([
+      findDotLinks(DOT_LOCATION, (item) => item.name.startsWith(".")),
+      findDotLinks(path.join(DOT_LOCATION, ".config"), false, true),
+    ])
+      .then(flatten)
+      .then((list) =>
+        deleteCorrectFiles(list, implode, deleteAllScope, (target) =>
+          target.startsWith(REPO_LOCATION)
+        )
+      )
+  );
 }
 
 function deleteCorrectFiles(list, implode, deleteAll, validate) {
+  const emptyDirectories = {};
   return Promise.all(
     list.map((file) => {
       if (!file.isSymbolicLink()) return false;
@@ -279,26 +272,32 @@ function deleteCorrectFiles(list, implode, deleteAll, validate) {
       return fs.readlink(file.path).then((target) => {
         if (
           !validate(target) ||
-          (!implode && exists(target) && !isInvalidFileForTarget(target))
+          (!implode && !isInvalidFileForTarget(target) && exists(target))
         )
           return false;
         return deletePrompt(file.path, deleteAll).then((deleteMe) => {
           if (!deleteMe) return false;
           let fileDir = path.dirname(file.path);
-          return fs.unlink(file.path).then(() =>
-            fs.readdir(fileDir).then((list) => {
-              if (!list || list.length !== 0) return false;
-              return deletePrompt(
-                fileDir,
-                deleteAll,
-                makePrompt("remov%s empty directory")
-              ).then((deleteMe) => (deleteMe ? fs.rmdir(fileDir) : false));
-            })
-          );
+          return fs
+            .unlink(file.path)
+            .then(() => fs.readdir(fileDir))
+            .then((list) => {
+              if (list && list.length === 0) emptyDirectories[fileDir] = true;
+            });
         });
       });
     })
-  );
+  ).then(() => {
+    return Promise.all(
+      Object.keys(emptyDirectories).map((dir) =>
+        deletePrompt(
+          dir,
+          deleteAll,
+          makePrompt("remov%s empty directory")
+        ).then((deleteMe) => (deleteMe && exists(dir) ? fs.rmdir(dir) : false))
+      )
+    );
+  });
 }
 
 function deletePrompt(
