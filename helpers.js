@@ -30,7 +30,7 @@ const main = (args) => {
     case "install":
       return Promise.all([
         installFiles("home", "home"),
-        installDirectory("config"),
+        installFiles("config", false, true),
       ]);
     case "cleanup":
       return deleteFiles();
@@ -178,14 +178,14 @@ function makeAliasLinks() {
   );
 }
 
-function installFiles(dir, relativeTo = false, recurse = false) {
+function installFiles(dir, basePathToOmit = false, recurse = false) {
   return fs.readdir(dir, { withFileTypes: true }).then((list) =>
     Promise.all(
       list.map((entry) => {
         let relativeTarget = path.join(dir, entry.name);
         let dotFile = resolveDotFile(
-          relativeTo
-            ? path.relative(relativeTo, relativeTarget)
+          basePathToOmit
+            ? path.relative(basePathToOmit, relativeTarget)
             : relativeTarget
         );
         let targetFile = path.resolve(relativeTarget);
@@ -194,17 +194,13 @@ function installFiles(dir, relativeTo = false, recurse = false) {
           return queueMessage("ignoring", dotFile);
 
         if (recurse & entry.isDirectory()) {
-          return installDirectory(relativeTarget, relativeTo);
+          return installFiles(relativeTarget, basePathToOmit, true);
         } else {
           return decideLink(dotFile, targetFile);
         }
       })
     )
   );
-}
-
-function installDirectory(dir, relativeTo) {
-  return installFiles(dir, relativeTo, true);
 }
 
 const flatten = ([...list]) => [].concat(...list);
@@ -263,7 +259,7 @@ function deleteFiles(implode = false, deleteAll = false) {
   );
 }
 
-function deleteCorrectFiles(list, implode, deleteAll, validate) {
+function deleteCorrectFiles(list, implode, deleteAll, preFilter) {
   const emptyDirectories = {};
   return Promise.all(
     list.map((file) => {
@@ -271,7 +267,7 @@ function deleteCorrectFiles(list, implode, deleteAll, validate) {
 
       return fs.readlink(file.path).then((target) => {
         if (
-          !validate(target) ||
+          !preFilter(target) ||
           (!implode && !isInvalidFileForTarget(target) && exists(target))
         )
           return false;
@@ -294,7 +290,7 @@ function deleteCorrectFiles(list, implode, deleteAll, validate) {
           dir,
           deleteAll,
           makePrompt("remov%s empty directory")
-        ).then((deleteMe) => (deleteMe && exists(dir) ? fs.rmdir(dir) : false))
+        ).then((deleteMe) => (deleteMe ? fs.rmdir(dir) : false))
       )
     );
   });
