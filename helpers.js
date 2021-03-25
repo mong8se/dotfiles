@@ -83,20 +83,15 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-let pq = Promise.resolve();
-const queue = (f) => {
-  pq = pq.then(f);
-  return pq;
-};
+const queue = ((pq) => (f) => (pq = pq.then(f)))(Promise.resolve());
 
 const formatMessage = (verb, file) =>
   `${verb.padStart(9, " ")} ${
     file.startsWith("/") ? path.relative(DOT_LOCATION, file) : dotBasename(file)
   }`;
 
-const queueMessage = (verb, file) => {
-  return queue(() => console.log(formatMessage(verb, file)));
-};
+const queueMessage = (verb, file) =>
+  queue(() => console.log(formatMessage(verb, file)));
 
 const allValues = {};
 const activateAll = (scope) => (allValues[scope] = Promise.resolve(true));
