@@ -129,11 +129,9 @@ augroup FocusIssues
   " Remove ALL autocommands for the current group.
   autocmd!
 
-  " Leave insert or replace mode on focus lost
-  autocmd BufLeave,FocusLost * if mode() =~ '[iR]' | stopinsert | endif
-
-  " When focus is lost, save the buffer if it is modified and has a filename
-  autocmd BufLeave,FocusLost * if @% != '' && &modified | write | endif
+  " When focus is lost, leave insert or replace mode and
+  " save the buffer if it is modified and has a filename
+  autocmd BufLeave,FocusLost * stopinsert | if !empty(@%) | update | endif
 augroup END
 
 "------------------------------------------------------------
