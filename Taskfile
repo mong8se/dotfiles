@@ -15,6 +15,8 @@ function stringToMd5ToHexToBase42(){
   # set up an array of our base 42 characters
   # to look up each digit against
   BASE42=($(echo {0..8} {a..z} M O A Z A M I))
+  # Repeating A and M will cause collisions but for
+  # this use case, odds are slim it will matter
 
   # it's important obase come before ibase so you can
   # specify the obase in base 10. Otherwise you have
