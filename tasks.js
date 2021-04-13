@@ -94,7 +94,7 @@ const queueMessage = (verb, file) =>
   queue(() => console.log(formatMessage(verb, file)));
 
 const allValues = {};
-const activateAll = (scope) => (allValues[scope] = Promise.resolve(true));
+const setScopeToAll = (scope) => (allValues[scope] = Promise.resolve(true));
 
 const queueQuestion = function (query, allScope) {
   if (!allValues.hasOwnProperty(allScope))
@@ -112,7 +112,7 @@ const queueQuestion = function (query, allScope) {
             }
           })
             .then((answer) => {
-              if (answer === "a") activateAll(allScope);
+              if (answer === "a") setScopeToAll(allScope);
 
               return answer;
             })
@@ -126,8 +126,8 @@ const isInvalidFileForTarget = (file) => {
   return invalidPattern.test(path.basename(file));
 };
 
-function decideLink(link, target) {
-  return Promise.all([
+const decideLink = (link, target) =>
+  Promise.all([
     fs.lstat(link).catch(() => false),
     fs.stat(link).catch(() => false),
     fs.stat(target).catch(() => false),
@@ -163,18 +163,16 @@ function decideLink(link, target) {
           return;
       }
     });
-}
 
-function makeAliasLinks() {
-  return Promise.all(
+const makeAliasLinks = () =>
+  Promise.all(
     Object.entries(ALIAS_MAPPING).map(([link, target]) =>
       decideLink(link, target)
     )
   );
-}
 
-function installFiles(dir, basePathToOmit = false, recurse = false) {
-  return fs.readdir(dir, { withFileTypes: true }).then((list) =>
+const installFiles = (dir, basePathToOmit = false, recurse = false) =>
+  fs.readdir(dir, { withFileTypes: true }).then((list) =>
     Promise.all(
       list.map((entry) => {
         let relativeTarget = path.join(dir, entry.name);
@@ -196,12 +194,11 @@ function installFiles(dir, basePathToOmit = false, recurse = false) {
       })
     )
   );
-}
 
 const flatten = ([...list]) => [].concat(...list);
 
 function findDotLinks(dir, preFilter, recursive = false) {
-  let isLink = (item) => item.isSymbolicLink();
+  const isLink = (item) => item.isSymbolicLink();
   const byFilter = preFilter
     ? (item) => preFilter(item) && isLink(item)
     : isLink;
@@ -224,7 +221,7 @@ function findDotLinks(dir, preFilter, recursive = false) {
 
 function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
-  if (deleteAll) activateAll(deleteAllScope);
+  if (deleteAll) setScopeToAll(deleteAllScope);
 
   return Promise.all(
     Object.entries(ALIAS_MAPPING).map(([fileName, correctTarget]) =>
@@ -291,12 +288,12 @@ function deleteCorrectFiles(list, implode, deleteAll, preFilter) {
   });
 }
 
-function deletePrompt(
+const deletePrompt = (
   fileName,
   deleteAllScope,
   prompt = makePrompt("delet%s")
-) {
-  return queueQuestion(
+) =>
+  queueQuestion(
     `${formatMessage(prompt("e"), fileName)}? [ynaq] `,
     deleteAllScope
   ).then((answer) => {
@@ -312,12 +309,11 @@ function deletePrompt(
         return false;
     }
   });
-}
 
 const makePrompt = (verb) => (ending) => util.format(verb, ending);
 
 if (require.main === module) {
   main(process.argv.slice(2))
-    .then(() => rl.close())
-    .catch((e) => console.log("WHOOPS:", e));
+    .catch((e) => console.log("WHOOPS:", e))
+    .finally(() => rl.close());
 }
