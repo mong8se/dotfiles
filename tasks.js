@@ -181,15 +181,13 @@ const installFiles = (dir, basePathToOmit = false, recurse = false) =>
             ? path.relative(basePathToOmit, relativeTarget)
             : relativeTarget
         );
-        let targetFile = path.resolve(relativeTarget);
-
-        if (isInvalidFileForTarget(entry.name))
-          return queueMessage("ignoring", dotFile);
 
         if (recurse & entry.isDirectory()) {
           return installFiles(relativeTarget, basePathToOmit, true);
         } else {
-          return decideLink(dotFile, targetFile);
+          return isInvalidFileForTarget(entry.name)
+            ? queueMessage("ignoring", dotFile)
+            : decideLink(dotFile, path.resolve(relativeTarget));
         }
       })
     )
