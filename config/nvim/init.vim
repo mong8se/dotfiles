@@ -85,24 +85,16 @@ set ttyfast
 set splitright " new vertical splits are to the right
 set splitbelow " new horizontal splits are below
 
-" Use a .vim_tmp directory in the project root, .config/nvim/tmp in your home dir, or
-" lastly current folder.
-set directory=./.vim_tmp,~/.config/nvim/tmp,.,/tmp
-set backupdir=./.vim_tmp,~/.config/nvim/tmp,.,/tmp
-
 if has('persistent_undo')
-  set undodir=./.vim_tmp,~/.config/nvim/tmp,.,/tmp
   set undofile
 endif
 
 if ! has('nvim')
-  " put viminfo in .config/nvim/tmp
-  set viminfo='100,n$HOME/.config/nvim/tmp/viminfo
+  " follow nvim more closely
+  set viminfo='100,n$HOME/.local/share/vim/viminfo
 
   " Add matching plugin to super power %
   runtime! macros/matchit.vim
-else
-  set shada=!,'100,<50,s10,h,n$HOME/.config/nvim/tmp/main.shada
 end
 
 set foldlevelstart=99
