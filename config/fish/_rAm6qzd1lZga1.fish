@@ -25,7 +25,7 @@ function pumlw -d "Watch plantuml and icat output"
   set -l icat
 
   if set -q KITTY_WINDOW_ID
-    set icat "kitty +kitten icat"
+    set icat "kitty +kitten icat --scale-up"
   else if set -q ITERM_SESSION_ID
     set icat imgcat
     echo $icat
