@@ -59,3 +59,8 @@
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+(use-package! super-save
+  :ensure t
+  :config
+  (super-save-mode +1))

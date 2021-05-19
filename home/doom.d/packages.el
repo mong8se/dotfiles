@@ -54,3 +54,4 @@
 (package! gruvbox-theme)
 (package! tree-sitter)
 (package! tree-sitter-langs)
+(package! super-save)
