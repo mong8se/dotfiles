@@ -24,15 +24,13 @@ endif
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 
-Plug 'rbong/vim-crystalline'
-" Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 
 Plug 'roman/golden-ratio' " C-W \
 
 Plug 'unblevable/quick-scope' " f F t T
 Plug 'justinmk/vim-sneak'     " s or z with an operator
 Plug 'danilamihailov/beacon.nvim'
-" Plug 'psliwka/vim-smoothie'
 
 Plug 'machakann/vim-sandwich' " sa sd sr
 Plug 'tmsvg/pear-tree'
@@ -61,12 +59,10 @@ endif
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' "gc
-Plug 'tommcdo/vim-exchange'    " cx
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'RRethy/vim-illuminate'
 
-Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
 Plug 'Yggdroot/indentLine'
 
 if has('nvim')

@@ -202,7 +202,7 @@ vnoremap > >gv
 nnoremap <silent> <Leader>tn :call mong8se#ToggleNumberMode()<CR>
 
 nnoremap <silent> <Leader>tb :call mong8se#ScrollBindAllWindows()<CR>
-nnoremap <silent> <leader>tc :Telescope colorscheme<cr>
+nnoremap <silent> <Leader>tc :Telescope colorscheme<cr>
 
 nnoremap [<cr>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<cr>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
@@ -292,23 +292,9 @@ nmap <silent> <leader>gh :SignifyToggleHighlight<CR>
 nmap <silent> <leader>gf :SignifyFold<CR>
 nmap <silent> <leader>gr :SignifyRefresh<CR>
 
-" Crystalline
-function! StatusLine(current, width)
-  return (a:current ? crystalline#mode() . '%#Crystalline#' : '%#CrystallineInactive#')
-        \ . ' %f%h%w%m%r '
-        \ . (a:current ? '%#CrystallineFill# %{fugitive#head()} ' : '')
-        \ . '%=' . (a:current ? '%#Crystalline# %{&paste?"PASTE ":""}%{&spell?"SPELL ":""}' . crystalline#mode_color() : '')
-        \ . (a:width > 80 ? ' %{&ft}[%{&enc}][%{&ffs}] %l/%L %c%V %P ' : ' ')
-endfunction
+" So signs and number share a column when numbers are on
+set signcolumn=number
 
-function! TabLine()
-  let l:vimlabel = has("nvim") ?  " NVIM " : " VIM "
-  return crystalline#bufferline(2, len(l:vimlabel), 1) . '%=%#CrystallineTab# ' . l:vimlabel
-endfunction
-
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_tabline_fn = 'TabLine'
-let g:crystalline_theme = 'onedark'
 set showtabline=2
 
 " CtrlSF
@@ -382,7 +368,7 @@ nmap <silent> [t :tabprevious<CR>
 
 " Golden Ratio
 let g:golden_ratio_autocommand = 0
-nmap <silent> <leader>gr <Plug>(golden_ratio_toggle)
+nmap <silent> <leader>tg <Plug>(golden_ratio_toggle)
 " compare to <C-W>=
 nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)
 
