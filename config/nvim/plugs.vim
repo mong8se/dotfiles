@@ -39,8 +39,12 @@ Plug 'tmsvg/pear-tree'
 
 Plug 'justinmk/vim-dirvish'          " leader f
 
+if has('nvim')
+  Plug 'glepnir/dashboard-nvim'
+else
+  Plug 'mhinz/vim-startify'
+endif
 Plug 'EinfachToll/DidYouMean'
-Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-apathy' " ]f
 

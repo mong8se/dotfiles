@@ -199,16 +199,17 @@ vnoremap < <gv
 vnoremap > >gv
 
 " custom functions
-nnoremap <silent> <Leader>n :call mong8se#ToggleNumberMode()<CR>
+nnoremap <silent> <Leader>tn :call mong8se#ToggleNumberMode()<CR>
 
-nnoremap <silent> <Leader>sb :call mong8se#ScrollBindAllWindows()<CR>
+nnoremap <silent> <Leader>tb :call mong8se#ScrollBindAllWindows()<CR>
+nnoremap <silent> <leader>tc :Telescope colorscheme<cr>
 
 nnoremap [<cr>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<cr>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 if has('spell')
   set spelllang=en_us
-  nnoremap <silent> <Leader>sc :setlocal spell!<CR>
+  nnoremap <silent> <Leader>ts :setlocal spell!<CR>
 endif
 
 if has("user_commands")
@@ -260,6 +261,9 @@ let g:startify_custom_header =
 let g:startify_list_order = [['// here'], 'dir', ['// anywhere'], 'files', ['// bookmarks'], 'bookmarks', ['// sessions'], 'sessions']
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 
+" dashboard-nvim
+let g:dashboard_default_executive ='telescope'
+
 " Pair expansion is dot-repeatable by default:
 let g:pear_tree_repeatable_expand = 0
 
@@ -310,15 +314,29 @@ set showtabline=2
 nmap     <leader>/ <Plug>CtrlSFPrompt
 nmap     <leader>* <Plug>CtrlSFCwordExec
 vmap     <leader>/ <Plug>CtrlSFVwordExec
-nnoremap <silent> <leader>r :CtrlSFOpen<CR>
+nnoremap <silent> <leader>sr :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
 if has('nvim')
   nnoremap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
   nnoremap <silent> <Leader>f :Telescope find_files<CR>
-  nnoremap <silent> <Leader>c :Telescope commands<CR>
-  nnoremap <silent> <Leader>a :Telescope live_grep<CR>
+  nnoremap <silent> <Leader>h :Telescope commands<CR>
+  " search
+  nnoremap <silent> <Leader>sg :Telescope live_grep<CR>
+  nnoremap <silent> <Leader>sh :Telescope search_history<CR>
+  nnoremap <silent> <Leader>sf :Telescope current_buffer_fuzzy_find<CR>
+  " code
+  nnoremap <silent> <Leader>cr :Telescope lsp_references<CR>
+  nnoremap <silent> <Leader>cj :Telescope lsp_document_symbols<CR>
+  nnoremap <silent> <Leader>cJ :Telescope lsp_dynamic_workspace_symbols<CR>
+  nnoremap <silent> <Leader>ca :Telescope lsp_code_actions<CR>
+  nnoremap <silent> <Leader>cd :Telescope lsp_definitions<CR>
+  nnoremap <silent> <Leader>ci :Telescope lsp_implementations<CR>
+  nnoremap <silent> <Leader>ct :Telescope treesitter<CR>
+  " insert
+  nnoremap <silent> <Leader>ir :Telescope registers<CR>
+
 else
   " FZF
   nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
@@ -452,6 +470,10 @@ else
   let g:lsp_signs_hint = {'text': '✨'}
   let g:lsp_signs_information = {'text': 'ℹ'}
   let g:lsp_signs_warning = {'text': '‼'}
+
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 endif
 
 " Only show quick-scope highlights after f/F/t/T is pressed
@@ -466,10 +488,6 @@ augroup END
 let loaded_2html_plugin = 1
 let loaded_matchparen   = 1
 let loaded_netrw        = 1
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 " vim-illuminate
 hi illuminatedWord cterm=underline gui=underline
