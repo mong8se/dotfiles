@@ -123,7 +123,7 @@ augroup FocusIssues
 
   " When focus is lost, leave insert or replace mode and
   " save the buffer if it is modified and has a filename
-  autocmd BufLeave,FocusLost * stopinsert | if !empty(@%) | update | endif
+  autocmd BufLeave,FocusLost * if !empty(@%) | stopinsert | update | endif
 augroup END
 
 "------------------------------------------------------------
