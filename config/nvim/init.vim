@@ -389,6 +389,9 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 " vim-illuminate
 hi illuminatedWord cterm=underline gui=underline
 
+" indentLine
+let g:indentLine_char = "⡇"
+
 "------------------------------------------------------------
 " LOCALS
 
