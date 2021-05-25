@@ -242,7 +242,11 @@ else
   let g:gruvbox_contrast_light="hard"
   let g:gruvbox_invert_selection=0
   let g:gruvbox_hls_cursor="fg0"
-  colorscheme gruvbox
+  if has('nvim')
+    colorscheme gruvbox-flat
+  else
+    colorscheme gruvbox
+  endif
 endif
 
 " need to install with `rake xterm-italic`
@@ -269,7 +273,11 @@ nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>gc :Gcommit<cr>
 nmap <silent> <leader>gl :Gclog<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
-nmap <silent> <leader>gb :Gbrowse<cr>
+if has('nvim')
+  nmap <silent> <leader>gb :Telescope git_branches<cr>
+else
+  nmap <silent> <leader>gb :Gbrowse<cr>
+endif
 
 " vim-signify
 let g:signify_vcs_list = [ 'git' ]
@@ -306,15 +314,18 @@ nnoremap <silent> <leader>r :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
-" FZF
-nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
-nnoremap <silent> <Leader>f :Files<CR>
-nnoremap <silent> <Leader>c :Commands<CR>
-nnoremap <Leader>a :Rg 
-autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
-" Using floating windows of Neovim to start fzf
 if has('nvim')
-  let $FZF_DEFAULT_OPTS .= ' --border --margin=0,2'
+  nnoremap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
+  nnoremap <silent> <Leader>f :Telescope find_files<CR>
+  nnoremap <silent> <Leader>c :Telescope commands<CR>
+  nnoremap <silent> <Leader>a :Telescope live_grep<CR>
+else
+  " FZF
+  nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
+  nnoremap <silent> <Leader>f :Files<CR>
+  nnoremap <silent> <Leader>c :Commands<CR>
+  nnoremap <Leader>a :Rg
+  autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
 endif
 
 " Ripgrep
@@ -340,7 +351,11 @@ augroup END
 " buffers
 nmap <silent> ]b :bn<CR>
 nmap <silent> [b :bp<CR>
-nnoremap <silent> <Leader><Space> :Buffers<CR>
+if has('nvim')
+  nnoremap <silent> <Leader><Space> :lua require'telescope.builtin'.buffers{sort_lastused=1}<CR>
+else
+  nnoremap <silent> <Leader><Space> :Buffers<CR>
+endif
 
 " tabs
 nmap <silent> ]t :tabnext<CR>
@@ -355,19 +370,89 @@ nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)
 " vim-sneak
 let g:sneak#streak = 1
 
-" asyncomplete
-nmap <silent> ]e <Plug>(lsp-next-error)
-nmap <silent> [e <Plug>(lsp-previous-error)
-nmap <silent> ]w <Plug>(lsp-next-warning)
-nmap <silent> [w <Plug>(lsp-previous-warning)
+if has('nvim')
 
-let g:asyncomplete_remove_duplicates = 1
-let g:asyncomplete_smart_completion = 1
-let g:asyncomplete_auto_popup = 1
-let g:lsp_signs_error = {'text': '✖'}
-let g:lsp_signs_hint = {'text': '✨'}
-let g:lsp_signs_information = {'text': 'ℹ'}
-let g:lsp_signs_warning = {'text': '‼'}
+lua << EOF
+-- Compe setup
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    nvim_lsp = true;
+  };
+}
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  else
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+require'lspconfig'.tsserver.setup{}
+require'lspconfig'.html.setup{}
+require'lspconfig'.cssls.setup{}
+require'lspconfig'.jsonls.setup{}
+EOF
+
+else
+  " asyncomplete
+  nmap <silent> ]e <Plug>(lsp-next-error)
+  nmap <silent> [e <Plug>(lsp-previous-error)
+  nmap <silent> ]w <Plug>(lsp-next-warning)
+  nmap <silent> [w <Plug>(lsp-previous-warning)
+
+  let g:asyncomplete_remove_duplicates = 1
+  let g:asyncomplete_smart_completion = 1
+  let g:asyncomplete_auto_popup = 1
+  let g:lsp_signs_error = {'text': '✖'}
+  let g:lsp_signs_hint = {'text': '✨'}
+  let g:lsp_signs_information = {'text': 'ℹ'}
+  let g:lsp_signs_warning = {'text': '‼'}
+endif
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']

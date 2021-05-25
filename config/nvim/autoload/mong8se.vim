@@ -41,6 +41,15 @@ function! mong8se#ScrollBindAllWindows()
   endif
 endfunction
 
+" Telescope
+function! mong8se#ActivateGitOrFiles()
+  if exists('b:git_dir')
+    Telescope git_files
+  else
+    Telescope find_files
+  endif
+endfunction
+
 " fzf
 function! mong8se#ActivateFZF()
   if exists('b:git_dir')

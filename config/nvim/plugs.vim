@@ -4,13 +4,22 @@ filetype off
 
 call plug#begin("~/.config/nvim/plugged")
 
-set rtp+=$DOTFILES_RESOURCES/fzf
-Plug 'junegunn/fzf.vim'
-" Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
+if has('nvim')
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+else
+  set rtp+=$DOTFILES_RESOURCES/fzf
+  Plug 'junegunn/fzf.vim'
+endif
 
 Plug 'chriskempson/base16-vim'
-Plug 'gruvbox-community/gruvbox'
 Plug 'caglartoklu/borlandp.vim'
+if has('nvim')
+  Plug 'eddyekofo94/gruvbox-flat.nvim'
+else
+  Plug 'gruvbox-community/gruvbox'
+endif
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
@@ -39,6 +48,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify' " ]c [c
 
 Plug 'sheerun/vim-polyglot'
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+  Plug 'romgrk/nvim-treesitter-context'
+else
+  Plug 'wellle/context.vim'
+endif
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' "gc
@@ -50,20 +65,24 @@ Plug 'RRethy/vim-illuminate'
 Plug 'nathanaelkane/vim-indent-guides' " <leader> ig
 Plug 'Yggdroot/indentLine'
 
-Plug 'wellle/context.vim'
+if has('nvim')
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/nvim-compe'
+else
+  Plug 'prabirshrestha/async.vim'
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'ryanolsonx/vim-lsp-javascript'
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'ryanolsonx/vim-lsp-javascript'
-
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-file.vim'
-Plug 'prabirshrestha/asyncomplete-buffer.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-file.vim'
+  Plug 'prabirshrestha/asyncomplete-buffer.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+endif
 
 Plug 'vimwiki/vimwiki'
 
 Plug 'severin-lemaignan/vim-minimap', { 'on': 'Minimap' }
+Plug 'itchyny/calendar.vim', { 'on': 'Calendar' }
 Plug 'mtth/scratch.vim', { 'on': 'Scratch' } " gs
 
 call mong8se#LoadRCFiles('plugs')
