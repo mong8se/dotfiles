@@ -267,10 +267,9 @@ let g:pear_tree_smart_backspace = 1
 " Fugitive
 nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>gc :Gcommit<cr>
-nmap <silent> <leader>gl :Glog<cr>
+nmap <silent> <leader>gl :Gclog<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
 nmap <silent> <leader>gb :Gbrowse<cr>
-autocmd FileType gitcommit setlocal spell textwidth=72
 
 " vim-signify
 let g:signify_vcs_list = [ 'git' ]
