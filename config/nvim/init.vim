@@ -200,8 +200,8 @@ vnoremap > >gv
 
 " custom functions
 nnoremap <silent> <Leader>tn :call mong8se#ToggleNumberMode()<CR>
-
 nnoremap <silent> <Leader>tb :call mong8se#ScrollBindAllWindows()<CR>
+
 nnoremap <silent> <Leader>tc :Telescope colorscheme<cr>
 
 nnoremap [<cr>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
@@ -307,12 +307,13 @@ let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
 if has('nvim')
   nnoremap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
-  nnoremap <silent> <Leader>f :Telescope find_files<CR>
-  nnoremap <silent> <Leader>h :Telescope commands<CR>
+  nnoremap <silent> <Leader>ff :Telescope find_files<CR>
+
+  nnoremap <silent> <Leader>: :Telescope commands<CR>
   " search
-  nnoremap <silent> <Leader>sg :Telescope live_grep<CR>
+  nnoremap <silent> <Leader>sp :Telescope live_grep<CR>
   nnoremap <silent> <Leader>sh :Telescope search_history<CR>
-  nnoremap <silent> <Leader>sf :Telescope current_buffer_fuzzy_find<CR>
+  nnoremap <silent> <Leader>sb :Telescope current_buffer_fuzzy_find<CR>
   " code
   nnoremap <silent> <Leader>cr :Telescope lsp_references<CR>
   nnoremap <silent> <Leader>cj :Telescope lsp_document_symbols<CR>
@@ -327,9 +328,9 @@ if has('nvim')
 else
   " FZF
   nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
-  nnoremap <silent> <Leader>f :Files<CR>
-  nnoremap <silent> <Leader>c :Commands<CR>
-  nnoremap <Leader>a :Rg
+  nnoremap <silent> <Leader>ff :Files<CR>
+  nnoremap <silent> <Leader>: :Commands<CR>
+  nnoremap <Leader>sp :Rg
   autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
 endif
 
@@ -337,8 +338,9 @@ endif
 set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 
 " Dirvish
-nmap <silent> \ :Dirvish<CR>
-nmap <silent> - <Plug>(dirvish_up)
+nmap <silent> <Leader>fb :Dirvish<CR>
+nmap <silent> <Leader>fB <Plug>(dirvish_up)
+
 augroup dirvish_config
   autocmd!
 
