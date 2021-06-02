@@ -301,29 +301,35 @@ set showtabline=2
 nmap     <leader>/ <Plug>CtrlSFPrompt
 nmap     <leader>* <Plug>CtrlSFCwordExec
 vmap     <leader>/ <Plug>CtrlSFVwordExec
-nnoremap <silent> <leader>sr :CtrlSFOpen<CR>
+nmap <silent> <leader>sr :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
 if has('nvim')
-  nnoremap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
-  nnoremap <silent> <Leader>ff :Telescope find_files<CR>
+  nmap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
+  nmap <silent> <Leader>ff :Telescope find_files<CR>
 
-  nnoremap <silent> <Leader>: :Telescope commands<CR>
+  nmap <silent> <Leader>: :Telescope commands<CR>
   " search
-  nnoremap <silent> <Leader>sp :Telescope live_grep<CR>
-  nnoremap <silent> <Leader>sh :Telescope search_history<CR>
-  nnoremap <silent> <Leader>sb :Telescope current_buffer_fuzzy_find<CR>
+  nmap <silent> <Leader>sp :Telescope live_grep<CR>
+  nmap <silent> <Leader>sh :Telescope search_history<CR>
+  nmap <silent> <Leader>sb :Telescope current_buffer_fuzzy_find<CR>
   " code
-  nnoremap <silent> <Leader>cr :Telescope lsp_references<CR>
-  nnoremap <silent> <Leader>cj :Telescope lsp_document_symbols<CR>
-  nnoremap <silent> <Leader>cJ :Telescope lsp_dynamic_workspace_symbols<CR>
-  nnoremap <silent> <Leader>ca :Telescope lsp_code_actions<CR>
-  nnoremap <silent> <Leader>cd :Telescope lsp_definitions<CR>
-  nnoremap <silent> <Leader>ci :Telescope lsp_implementations<CR>
-  nnoremap <silent> <Leader>ct :Telescope treesitter<CR>
+  nmap <silent> <Leader>cr :Telescope lsp_references<CR>
+  nmap <silent> <Leader>cj :Telescope lsp_document_symbols<CR>
+  nmap <silent> <Leader>cJ :Telescope lsp_dynamic_workspace_symbols<CR>
+  nmap <silent> <Leader>ca :Telescope lsp_code_actions<CR>
+  nmap <silent> <Leader>cd :Telescope lsp_definitions<CR>
+  nmap <silent> <Leader>ci :Telescope lsp_implementations<CR>
+  nmap <silent> <Leader>ct :Telescope treesitter<CR>
+  nmap <silent> <Leader>cr :lua vim.lsp.buf.rename()<CR>
+  nmap <silent> <Leader>ce :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+
   " insert
-  nnoremap <silent> <Leader>ir :Telescope registers<CR>
+  nmap <silent> <Leader>ir :Telescope registers<CR>
+
+  nmap <silent> [e :lua vim.lsp.diagnostic.goto_prev()<CR>
+  nmap <silent> ]e :lua vim.lsp.diagnostic.goto_next()<CR>
 
 else
   " FZF
