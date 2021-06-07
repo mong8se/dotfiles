@@ -54,14 +54,15 @@ rake fzf:install       # install fzf
 Required Packages
 -----------------
 
-lf
-fd
 bat
+bc
 fasd
-icdiff
+fd
 figlet
+highlight
+icdiff
+lf
 ripgrep
 starship
-highlight
 
 Thanks to [ryanb](https://github.com/ryanb/dotfiles) for the starting point.
