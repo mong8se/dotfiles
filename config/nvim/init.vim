@@ -347,20 +347,6 @@ set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 nmap <silent> <Leader>fb :Dirvish<CR>
 nmap <silent> <Leader>fB <Plug>(dirvish_up)
 
-augroup dirvish_config
-  autocmd!
-
-  " Map `gr` to reload.
-  autocmd FileType dirvish nnoremap <silent><buffer>
-    \ gr :<C-U>Dirvish %<CR>
-
-  " Map `gh` to hide dot-prefixed files.  Press `R` to "toggle" (reload).
-  autocmd FileType dirvish nnoremap <silent><buffer>
-    \ gh :silent keeppatterns g@\v/\.[^\/]+/?$@d _<cr>:setl cole=3<cr>
-
-  autocmd FileType dirvish :sort ,^.*[\/],
-augroup END
-
 " buffers
 nmap <silent> ]b :bn<CR>
 nmap <silent> [b :bp<CR>
