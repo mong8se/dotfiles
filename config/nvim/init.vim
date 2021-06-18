@@ -307,7 +307,7 @@ let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
 if has('nvim')
   nmap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
-  nmap <silent> <Leader>ff :Telescope find_files<CR>
+  nmap <silent> <Leader>pf :Telescope find_files<CR>
 
   nmap <silent> <Leader>: :Telescope commands<CR>
   " search
@@ -334,7 +334,7 @@ if has('nvim')
 else
   " FZF
   nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
-  nnoremap <silent> <Leader>ff :Files<CR>
+  nnoremap <silent> <Leader>pf :Files<CR>
   nnoremap <silent> <Leader>: :Commands<CR>
   nnoremap <Leader>sp :Rg
   autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
@@ -344,8 +344,8 @@ endif
 set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 
 " Dirvish
-nmap <silent> <Leader>fb :Dirvish<CR>
-nmap <silent> <Leader>fB <Plug>(dirvish_up)
+nmap <silent> <Leader>ff :Dirvish<CR>
+nmap <silent> <Leader>f- <Plug>(dirvish_up)
 
 " buffers
 nmap <silent> ]b :bn<CR>
