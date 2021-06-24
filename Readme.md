@@ -59,6 +59,7 @@ bc
 fasd
 fd
 figlet
+git-delta
 highlight
 icdiff
 lf

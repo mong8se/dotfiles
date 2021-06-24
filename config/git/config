@@ -27,8 +27,6 @@
   keepBackup = false
 [difftool]
   prompt = true
-[pager]
-  difftool = true
 [alias]
   fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
   co  = "!git branch -a --color=always | rg -v '/HEAD\\s' | sort | fzf --ansi --multi --tac --preview-window right:70% --preview 'git log --oneline --graph --date=short --pretty=\"format:%C(auto)%cd %h%d %s\" (echo {} | string sub -s 3 | cut -d\" \" -f1) | head -10' | sed 's/^..//' | cut -d' ' -f1 | sed 's#^remotes/##' | xargs git checkout"
@@ -53,3 +51,21 @@
   options = --highlight --line-numbers
 [init]
 	defaultBranch = main
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
