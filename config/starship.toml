@@ -3,3 +3,6 @@ error_symbol = "[✖](bold red)"
 
 [git_status]
 disabled = true
+
+[package]
+display_private = true
