@@ -61,7 +61,6 @@ fd
 figlet
 git-delta
 highlight
-icdiff
 lf
 ripgrep
 starship

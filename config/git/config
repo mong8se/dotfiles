@@ -47,8 +47,6 @@
 [include]
 	path = _platform.config
 	path = config.local
-[icdiff]
-	options = --highlight --line-numbers
 [init]
 	defaultBranch = main
 
