@@ -305,6 +305,19 @@ nmap <silent> <leader>sr :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
 let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 
+" https://vim.fandom.com/wiki/Search_for_visually_selected_text
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+
 if has('nvim')
   nmap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
   nmap <silent> <Leader>pf :Telescope find_files<CR>
