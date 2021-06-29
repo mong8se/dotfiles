@@ -94,25 +94,7 @@ if status --is-interactive
     end
   end
 
-  if type -q zoxide
-    if type -q disown
-      function __fasd_run --on-variable PWD
-        command zoxide add (pwd) > "/dev/null" 2>&1 &; disown
-      end
-    else
-      function __fasd_run --on-variable PWD
-        command zoxide add (pwd) > "/dev/null" 2>&1 &
-      end
-    end
-
-    function __fasd_query
-      if count $argv > "/dev/null"
-        command zoxide query -- $argv
-      else
-        command zoxide query -i
-      end
-    end
-  else if type -q fre
+  if type -q fre
     if type -q disown
       function __fasd_run --on-variable PWD
         command fre --add (pwd) > "/dev/null" 2>&1 &; disown
@@ -128,6 +110,25 @@ if status --is-interactive
         command fre --sorted | grep -m 1 $argv
       else
         command fre --sorted | fzf
+      end
+    end
+
+  else if type -q zoxide
+    if type -q disown
+      function __fasd_run --on-variable PWD
+        command zoxide add (pwd) > "/dev/null" 2>&1 &; disown
+      end
+    else
+      function __fasd_run --on-variable PWD
+        command zoxide add (pwd) > "/dev/null" 2>&1 &
+      end
+    end
+
+    function __fasd_query
+      if count $argv > "/dev/null"
+        command zoxide query -- $argv
+      else
+        command zoxide query -i
       end
     end
 
