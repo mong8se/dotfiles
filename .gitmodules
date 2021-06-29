@@ -1,6 +1,7 @@
 [submodule "Resources/grml-etc-core"]
 	path = Resources/grml-etc-core
 	url = https://github.com/grml/grml-etc-core.git
+	branch = master
 [submodule "Resources/zsh-syntax-highlighting"]
 	path = Resources/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -10,9 +11,11 @@
 [submodule "Resources/vim-plug"]
 	path = Resources/vim-plug
 	url = https://github.com/junegunn/vim-plug
+	branch = master
 [submodule "Resources/fzf"]
 	path = Resources/fzf
 	url = https://github.com/junegunn/fzf.git
+	branch = master
 [submodule "emacs.d"]
 	path = home/emacs.d
 	url = https://github.com/hlissner/doom-emacs
@@ -21,6 +24,8 @@
 [submodule "Resources/base16-shell"]
 	path = Resources/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
+	branch = master
 [submodule "Resources/base16-fzf"]
 	path = Resources/base16-fzf
 	url = https://github.com/fnune/base16-fzf.git
+	branch = master
