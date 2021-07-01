@@ -328,7 +328,7 @@ if has('nvim')
   nmap <silent> <Leader>sh :Telescope search_history<CR>
   nmap <silent> <Leader>sb :Telescope current_buffer_fuzzy_find<CR>
   " code
-  nmap <silent> <Leader>cr :Telescope lsp_references<CR>
+  nmap <silent> <Leader>c/ :Telescope lsp_references<CR>
   nmap <silent> <Leader>cj :Telescope lsp_document_symbols<CR>
   nmap <silent> <Leader>cJ :Telescope lsp_dynamic_workspace_symbols<CR>
   nmap <silent> <Leader>ca :Telescope lsp_code_actions<CR>
