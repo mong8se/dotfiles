@@ -6,10 +6,6 @@
 	path = Resources/vim-plug
 	url = https://github.com/junegunn/vim-plug
 	branch = master
-[submodule "Resources/fzf"]
-	path = Resources/fzf
-	url = https://github.com/junegunn/fzf.git
-	branch = master
 [submodule "emacs.d"]
 	path = home/emacs.d
 	url = https://github.com/hlissner/doom-emacs

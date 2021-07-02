@@ -17,12 +17,6 @@ function task:submodule:update {
   git submodule update --remote
 }
 
-function task:fzf:install {(
-  cd Resources/fzf;
-  echo 'Install fzf...';
-  yes | ./install --xdg --no-update-rc
-)}
-
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
 function task:vi:install {
@@ -75,14 +69,12 @@ function task:init {
   task:submodule:init
   task:submodule:update
   task:vi:install
-  task:fzf:install
   task:install
 }
 
 function task:upgrade {
   task:submodule:update
   task:vi:update
-  task:fzf:install
 }
 
 function task:default {
