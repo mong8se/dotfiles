@@ -70,14 +70,6 @@ const dotBasename = (file) =>
 
 const resolveDotFile = (file) => path.join(DOT_LOCATION, dotBasename(file));
 
-const ALIAS_MAPPING = {
-  [resolveDotFile("vim")]: resolveDotFile("config/nvim"),
-  [resolveDotFile("vimrc")]: resolveDotFile("config/nvim/init.vim"),
-  [resolveDotFile("config/nvim/autoload/plug.vim")]: path.resolve(
-    "Resources/vim-plug/plug.vim"
-  ),
-};
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -164,11 +156,24 @@ const decideLink = (link, target) =>
       }
     });
 
-const makeAliasLinks = () =>
-  Promise.all(
-    Object.entries(ALIAS_MAPPING).map(([link, target]) =>
-      decideLink(link, target)
+const readAliasFile = () =>
+  fs
+    .readFile("aliases.json")
+    .then((aliases) =>
+      JSON.parse(aliases, (_, value) =>
+        typeof value === "string" ? value.replace(/^~/, DOT_LOCATION) : value
+      )
     )
+    .then((list) =>
+      Object.entries(list).map(([link, target]) => [
+        resolveDotFile(link),
+        path.resolve(target),
+      ])
+    );
+
+const makeAliasLinks = () =>
+  readAliasFile().then((aliasList) =>
+    Promise.all(aliasList.map(([link, target]) => decideLink(link, target)))
   );
 
 const installFiles = (dir, basePathToOmit = false, recurse = false) =>
@@ -221,32 +226,36 @@ function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
   if (deleteAll) setScopeToAll(deleteAllScope);
 
-  return Promise.all(
-    Object.entries(ALIAS_MAPPING).map(([fileName, correctTarget]) =>
-      findDotLinks(
-        path.dirname(fileName),
-        (entry) => entry.name === path.basename(fileName)
-      ).then((list) =>
-        deleteCorrectFiles(
-          list,
-          implode,
-          deleteAllScope,
-          (target) => target === correctTarget
+  return readAliasFile()
+    .then((aliasList) =>
+      Promise.all(
+        aliasList.map(([fileName, correctTarget]) =>
+          findDotLinks(
+            path.dirname(fileName),
+            (entry) => entry.name === path.basename(fileName)
+          ).then((list) =>
+            deleteCorrectFiles(
+              list,
+              implode,
+              deleteAllScope,
+              (target) => target === correctTarget
+            )
+          )
         )
       )
     )
-  ).then(() =>
-    Promise.all([
-      findDotLinks(DOT_LOCATION, (item) => item.name.startsWith(".")),
-      findDotLinks(path.join(DOT_LOCATION, ".config"), false, true),
-    ])
-      .then(flatten)
-      .then((list) =>
-        deleteCorrectFiles(list, implode, deleteAllScope, (target) =>
-          target.startsWith(REPO_LOCATION)
+    .then(() =>
+      Promise.all([
+        findDotLinks(DOT_LOCATION, (item) => item.name.startsWith(".")),
+        findDotLinks(path.join(DOT_LOCATION, ".config"), false, true),
+      ])
+        .then(flatten)
+        .then((list) =>
+          deleteCorrectFiles(list, implode, deleteAllScope, (target) =>
+            target.startsWith(REPO_LOCATION)
+          )
         )
-      )
-  );
+    );
 }
 
 function deleteCorrectFiles(list, implode, deleteAll, preFilter) {
