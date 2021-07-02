@@ -37,6 +37,14 @@ function task:vi:cleanup {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugClean
 }
 
+function task:homebrew:install {
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
+function task:homebrew:bundle {
+  brew bundle --no-lock
+}
+
 function task:make_alias_links {
   node ./tasks.js make_alias_links
 }
