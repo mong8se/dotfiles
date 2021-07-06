@@ -4,137 +4,133 @@
 
 set -e
 
-function task:hostname {
+function hostname {
   echo $HOST42
   echo
 }
 
-function task:submodule:init {
+function submodule:init {
   git submodule update --init --recursive
 }
 
-function task:submodule:update {
+function submodule:update {
   git submodule update --remote
 }
 
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
-function task:vi:install {
+function vi:install {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
 }
 
-function task:vi:update {
+function vi:update {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugUpdate
 }
 
-function task:vi:cleanup {
+function vi:cleanup {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugClean
 }
 
-function task:homebrew:install {
+function homebrew:install {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
-function task:homebrew:bundle {
+function homebrew:bundle {
   brew bundle --no-lock
 }
 
-function task:make_alias_links {
+function make_alias_links {
   node ./tasks.js make_alias_links
 }
 
-function task:cleanup {
+function cleanup {
   node ./tasks.js cleanup
 }
 
-function task:autocleanup {
+function autocleanup {
   node ./tasks.js autocleanup
 }
 
-function task:implode {
+function implode {
   node ./tasks.js implode
 }
 
-function task:install {
+function install {
   node ./tasks.js install
 }
 
-function task:update {
-  task:install
-  task:make_alias_links
-  task:autocleanup
+function update {
+  install
+  make_alias_links
+  autocleanup
 }
 
-function task:init {
-  task:submodule:init
-  task:submodule:update
-  task:vi:install
-  task:install
+function init {
+  submodule:init
+  submodule:update
+  vi:install
+  install
 }
 
-function task:upgrade {
-  task:submodule:update
-  task:vi:update
+function upgrade {
+  submodule:update
+  vi:update
 }
 
-function task:default {
-  task:update
+function default {
+  update
 }
 
-function task:help {
+function help {
   echo "$0 <task> <args>"
   echo "Tasks:"
 
-  # We pick out the `task:*` functions and omit default
-  compgen -A function | sed -En 's/task:(.*)/\1/p' | grep -v default | cat -n
+  compgen -A function | sed -E '/(help|default)/d' | cat -n
+  type default | sed -E 's/^.*default is a function$// ; s/^/    /'
   echo
-  type task:default | sed -E '/is a function$/d ; s/task:(.*)/\1/ ; s/^/    /'
-  echo
-}
-
-function stringToMd5ToHexToBase42(){
-  # trim new line and md5
-  MD5=$(tr -d '\n' <<< $1 | openssl dgst -md5 -r)
-
-  # switch to lower case because bc demands it
-  # strip trailing *stdin\n from openssl output
-  HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
-
-  # set up an array of our base 42 characters
-  # to look up each digit against
-  BASE42=($(echo {0..8} {a..z} M O A Z A M I))
-  # Repeating A and M will cause collisions but for
-  # this use case, odds are slim it will matter
-
-  # it's important obase come before ibase so you can
-  # specify the obase in base 10. Otherwise you have
-  # to specify the obase in the base of the ibase
-  for i in $(BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
-
-    # We're using bc's built in line break
-    # to truncate at 13 characters
-
-    # bc is going to output each digit as a zero led
-    # two digit string followed by a space (3 chars):
-    #
-    #   01 35 12
-
-    # so we're setting its line length to
-    #    3 chars x (13 + 1) = 42
-
-    # after that bc puts a \ and a new line
-    # so we detect the \ and break the loop
-    if [ $i = '\' ] ; then break ; fi
-
-    # we need to cast to base 10 in the array
-    # look up because bash will barf on the 
-    # leading zeros
-    echo -n ${BASE42[$(( 10#$i ))]}
-  done && echo
 }
 
 # What do you get if you multiply six by nine
-export HOST42=$(stringToMd5ToHexToBase42 $(hostname))
+export HOST42
+
+# set up an array of our base 42 characters
+# to look up each digit against
+BASE42=($(echo {0..8} {a..z} M O A Z A M I))
+# Repeating A and M will cause collisions but for
+# this use case, odds are slim it will matter
+
+# trim new line and md5 the hostname
+MD5=$(/bin/hostname | tr -d "\n" | openssl dgst -md5 -r)
+
+# switch to lower case because bc demands it
+# strip trailing *stdin\n from openssl output
+HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
+
+# it's important obase come before ibase so you can
+# specify the obase in base 10. Otherwise you have
+# to specify the obase in the base of the ibase
+for i in $(BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
+
+  # We're using bc's built in line break
+  # to truncate at 13 characters
+
+  # bc is going to output each digit as a zero led
+  # two digit string followed by a space (3 chars):
+  #
+  #   01 35 12
+
+  # so we're setting its line length to
+  #    3 chars x (13 + 1) = 42
+
+  # after that bc puts a \ and a new line
+  # so we detect the \ and break the loop
+  if [ $i = '\' ] ; then break ; fi
+
+  # we need to cast to base 10 in the array
+  # look up because bash will barf on the
+  # leading zeros
+  HOST42=$HOST42${BASE42[$(( 10#$i ))]}
+done
 
 TIMEFORMAT="Task completed in %3lR"
-time "task:${@:-default}"
+time "${@:-default}"
