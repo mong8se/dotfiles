@@ -85,8 +85,11 @@ function task:help {
   echo "$0 <task> <args>"
   echo "Tasks:"
 
-  # We pick out the `task:*` functions
-  compgen -A function | sed -En 's/task:(.*)/\1/p' | cat -n
+  # We pick out the `task:*` functions and omit default
+  compgen -A function | sed -En 's/task:(.*)/\1/p' | grep -v default | cat -n
+  echo
+  type task:default | sed -E '/is a function$/d ; s/task:(.*)/\1/ ; s/^/    /'
+  echo
 }
 
 function stringToMd5ToHexToBase42(){
