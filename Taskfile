@@ -84,9 +84,9 @@ function default {
 function help {
   echo "$0 <task> <args>"
   echo "Tasks:"
-
   compgen -A function | sed -E '/(help|default)/d' | cat -n
-  type default | sed -E 's/^.*default is a function$// ; s/^/    /'
+  echo
+  type default | sed -e '1d; 2s/()/task:/; s/^/    /'
   echo
 }
 
