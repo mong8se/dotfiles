@@ -5,26 +5,28 @@
 Uses [Taskfile](https://github.com/adriancooney/Taskfile) for running tasks, once the fish config is in place there is an alias for `run` to `./Taskfile`
 
     ./Taskfile <task> <args>
-    tasks:
-     1	autocleanup         # clean up stale symlinks that point to .dotfiles/ without prompting
-     2	cleanup             # clean up stale symlinks that point to .dotfiles/
-     3	help                # this output
-     4	homebrew:bundle     # install all brews in Brewfile
-     5	homebrew:install    # install homebrew itself
-     6	hostname            # print hash of hostname
-     7	implode             # remove all symlinks that point to .dotfiles/ without asking
-     8	init                # do initial tasks for new install
-    *9	install             # create symlinks for .dotfiles/home and ./dotfiles/config
-    10	make_alias_links    # create symlinks from aliases.json file, see below
-    11	submodule:init      # initialize all git submodules
-    12	submodule:update    # update all git submodules to their latest of the branch they're tracking
-    13	update              # create all symlinks and clean up stale ones
-    14	upgrade             # update submodules and vi
-    15	vi:cleanup          # Ask `vim-plug` to clean plugins
-    16	vi:install          # Ask `vim-plug` to install plugins
-    17	vi:update           # Ask `vim-plug` to update plugins
+    Tasks:
+         1	autocleanup         # clean up stale symlinks that point to .dotfiles/ without prompting
+         2	cleanup             # clean up stale symlinks that point to .dotfiles/
+         3	homebrew:bundle     # install all brews in Brewfile
+         4	homebrew:install    # install homebrew itself
+         5	hostname            # print hash of hostname
+         6	implode             # remove all symlinks that point to .dotfiles/ without asking
+         7	init                # do initial tasks for new install
+         8	install             # create symlinks for .dotfiles/home and ./dotfiles/config
+         9	make_alias_links    # create symlinks from aliases.json file, see below
+        10	submodule:init      # initialize all git submodules
+        11	submodule:update    # update all git submodules to their latest of the branch they're tracking
+        12	update              # create all symlinks and clean up stale ones
+        13	upgrade             # update submodules and vi
+        14	vi:cleanup          # Ask `vim-plug` to clean plugins
+        15	vi:install          # Ask `vim-plug` to install plugins
+        16	vi:update           # Ask `vim-plug` to update plugins
 
-    * Default task
+    default task:
+    {
+        update
+    }
 
 ## Config Order
 
