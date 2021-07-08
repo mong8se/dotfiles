@@ -19,6 +19,9 @@ function submodule:update {
 
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
+export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+TASKS=$REPO_LOCATION/Resources/tasks.js
+
 function vi:install {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
 }
@@ -36,27 +39,27 @@ function homebrew:install {
 }
 
 function homebrew:bundle {
-  brew bundle --no-lock
+  brew bundle --no-lock --file $REPO_LOCATION/Resources/Brewfile
 }
 
 function make_alias_links {
-  node ./tasks.js make_alias_links
+  node $TASKS make_alias_links
 }
 
 function cleanup {
-  node ./tasks.js cleanup
+  node $TASKS cleanup
 }
 
 function autocleanup {
-  node ./tasks.js autocleanup
+  node $TASKS autocleanup
 }
 
 function implode {
-  node ./tasks.js implode
+  node $TASKS implode
 }
 
 function install {
-  node ./tasks.js install
+  node $TASKS install
 }
 
 function update {

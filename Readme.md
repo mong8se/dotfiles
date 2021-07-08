@@ -53,7 +53,7 @@ Notes:
     1. _`hostname`.zsh
     1. local.zsh
 
-## aliases.json
+## Resources/aliases.json
 
 Format of file:
 

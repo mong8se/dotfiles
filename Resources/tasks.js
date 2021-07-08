@@ -20,9 +20,12 @@ function usage() {
   return Promise.resolve();
 }
 
+const REPO_LOCATION = process.env.REPO_LOCATION;
+const DOT_LOCATION = process.env.HOME;
+
 const main = (args) => {
-  if (!THIS.machine) {
-    console.warn("Warning: HOST42 environment variable is not set");
+  if (!(THIS.machine && REPO_LOCATION && DOT_LOCATION)) {
+    console.warn("Warning: Required environment variable(s) missing");
     return usage();
   }
 
@@ -45,8 +48,6 @@ const main = (args) => {
   }
 };
 
-const REPO_LOCATION = __dirname;
-const DOT_LOCATION = process.env.HOME;
 const THIS = {
   platform: ((value) => {
     switch (value) {
@@ -158,7 +159,7 @@ const decideLink = (link, target) =>
 
 const readAliasFile = () =>
   fs
-    .readFile("aliases.json")
+    .readFile(`${REPO_LOCATION}/Resources/aliases.json`)
     .then((aliases) =>
       JSON.parse(aliases, (_, value) =>
         typeof value === "string" ? value.replace(/^~/, DOT_LOCATION) : value
