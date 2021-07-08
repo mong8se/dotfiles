@@ -23,6 +23,7 @@ function rv
 end
 
 if set -q ITERM_PROFILE
+  function fish_mode_prompt; end
   test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish ; or echo "iTerm2 shell extensions not installed."
 end
 
