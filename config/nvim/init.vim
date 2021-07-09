@@ -489,6 +489,16 @@ hi illuminatedWord cterm=underline gui=underline
 " indentLine
 let g:indentLine_char = "⡇"
 
+if has('nvim')
+lua << EOF
+  require'lualine'.setup{
+    options = {theme = 'wombat'}
+  }
+  require("bufferline").setup{}
+EOF
+
+end
+
 "------------------------------------------------------------
 " LOCALS
 

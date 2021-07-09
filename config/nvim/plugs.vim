@@ -24,7 +24,13 @@ endif
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 
-Plug 'itchyny/lightline.vim'
+if has('nvim')
+  Plug 'hoob3rt/lualine.nvim'
+  Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
+  Plug 'akinsho/nvim-bufferline.lua'
+else
+  Plug 'itchyny/lightline.vim'
+end
 
 Plug 'roman/golden-ratio' " C-W \
 
