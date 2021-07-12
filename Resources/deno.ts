@@ -8,9 +8,20 @@ import {
 
 import { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
 
+const REPO_LOCATION = Deno.env.get("REPO_LOCATION")!;
+if (!REPO_LOCATION) {
+  console.error("REPO_LOCATION environment variable is not set");
+  Deno.exit(2);
+}
+
+const DOT_LOCATION = Deno.env.get("HOME")!;
+if (!DOT_LOCATION) {
+  console.error("HOME environment variable is not set");
+  Deno.exit(2);
+}
+
 const usage = () => {
-  const __filename = new URL("", import.meta.url);
-  console.log(`Usage: ${__filename}
+  console.log(`Usage: ${new URL("", import.meta.url).pathname}
 
   Commands:
     install
@@ -23,9 +34,9 @@ const usage = () => {
   return Promise.resolve();
 };
 
-const main = () => {
+const main = async () => {
   if (!THIS.machine) {
-    console.warn("Warning: Required environment variable(s) missing");
+    console.warn("Warning: HOST42 environment variable is not set");
     return usage();
   }
 
@@ -36,11 +47,11 @@ const main = () => {
         installFiles("config", null, true),
       ]);
     case "cleanup":
-    return deleteFiles();
+      return deleteFiles();
     case "autocleanup":
-    // return deleteFiles(false, true);
+      return deleteFiles(false, true);
     case "implode":
-    // return deleteFiles(true);
+      return deleteFiles(true);
     case "make_alias_links":
       return makeAliasLinks();
     default:
@@ -61,18 +72,6 @@ const THIS = {
   })(Deno.build.os),
   machine: Deno.env.get("HOST42"),
 };
-
-const REPO_LOCATION = Deno.env.get("REPO_LOCATION");
-if (!REPO_LOCATION) {
-  console.error("REPO_LOCATION env not set");
-  Deno.exit(2);
-}
-
-const DOT_LOCATION = Deno.env.get("HOME");
-if (!DOT_LOCATION) {
-  console.error("DOT_LOCATION env not set");
-  Deno.exit(2);
-}
 
 const dotBasename = (file: string) =>
   "." +
@@ -98,46 +97,48 @@ const formatMessage = (verb: string, file: string) =>
 const queueMessage = (verb: string, file: string) =>
   queue(() => console.log(formatMessage(verb, file)));
 
-type AllResponse = boolean | string;
-const allValues: Record<string, Promise<AllResponse>> = {};
+const allValues: Record<string, Promise<boolean>> = {};
 const setScopeToAll = (scope: string) =>
   (allValues[scope] = Promise.resolve(true));
 
-const queueQuestion = function (query: string, allScope: string) {
+const queueQuestion = async function (query: string, allScope: string) {
   if (!allValues.hasOwnProperty(allScope))
     allValues[allScope] = Promise.resolve(false);
 
-  return queue(() =>
-    allValues[allScope]
-      .then((all: AllResponse) => (all ? "a" : prompt(query)))
-      .then((answer) => {
-        if (answer === "a") setScopeToAll(allScope);
+  return queue(async () => {
+    const all: boolean = await allValues[allScope];
+    const answer = all ? "a" : await prompt(query);
+    if (answer === "a") setScopeToAll(allScope);
 
-        return answer;
-      })
-  );
+    return answer;
+  });
 };
 
 const decoder = new TextDecoder("utf-8");
 type AliasPair = [string, string];
-const readAliasFile = () =>
-  Deno.readFile(`${REPO_LOCATION}/Resources/aliases.json`)
-    .then((aliases: Uint8Array) =>
-      JSON.parse(decoder.decode(aliases), (_, value) =>
-        typeof value === "string" ? value.replace(/^~/, DOT_LOCATION) : value
-      )
-    )
-    .then((list: Record<string, string>): AliasPair[] =>
-      Object.entries(list).map(([link, target]) => [
-        resolveDotFile(link),
-        resolve(target),
-      ])
-    );
-
-const makeAliasLinks = () =>
-  readAliasFile().then((aliasList: AliasPair[]) =>
-    Promise.all(aliasList.map(([link, target]) => decideLink(link, target)))
+const readAliasFile = async (): Promise<AliasPair[]> => {
+  const aliases: Uint8Array = await Deno.readFile(
+    `${REPO_LOCATION}/Resources/aliases.json`
   );
+
+  const list: Record<string, string> = JSON.parse(
+    decoder.decode(aliases),
+    (_, value) =>
+      typeof value === "string" ? value.replace(/^~/, DOT_LOCATION) : value
+  );
+
+  return Object.entries(list).map(
+    ([link, target]): AliasPair => [resolveDotFile(link), resolve(target)]
+  );
+};
+
+const makeAliasLinks = async () => {
+  const aliasList: AliasPair[] = await readAliasFile();
+
+  return Promise.all(
+    aliasList.map(([link, target]) => decideLink(link, target))
+  );
+};
 
 const installFiles = async (
   dir: string,
@@ -160,42 +161,46 @@ const installFiles = async (
   }
 };
 
-const decideLink = (link: string, target: string) =>
-  Promise.allSettled([Deno.lstat(link), Deno.stat(link), Deno.stat(target)])
-    .then(([linkStats, linkTargetStats, targetStats]) => {
-      if (targetStats.status === "rejected") return "skip";
-      if (linkStats.status === "rejected") return "link";
-      if (
-        linkTargetStats.status === "fulfilled" &&
-        linkTargetStats.value.ino === targetStats.value.ino &&
-        linkTargetStats.value.dev === targetStats.value.dev
-      )
-        return "skip";
-      return deletePrompt(
-        link,
-        "decideLink",
-        makePrompt("replac%s")
-      ).then((deleteMe: boolean) =>
-        deleteMe ? Deno.remove(link).then(() => "silentlink") : "silentskip"
-      );
-    })
-    .then((result: string) => {
-      switch (result) {
-        case "link":
-          queueMessage("linking", link);
-        case "silentlink":
-          Deno.mkdir(dirname(link), { recursive: true }).then(() =>
-            Deno.symlink(target, link)
-          );
-          break;
-        case "skip":
-          queueMessage("", link);
-        default:
-          return;
-      }
-    });
+const decideLink = async (link: string, target: string) => {
+  const [linkStats, linkTargetStats, targetStats] = await Promise.allSettled([
+    Deno.lstat(link),
+    Deno.stat(link),
+    Deno.stat(target),
+  ]);
 
-const flatten = ([...list]) => [].concat(...list);
+  let result: string;
+
+  if (targetStats.status === "rejected") result = "skip";
+  else if (linkStats.status === "rejected") result = "link";
+  else if (
+    linkTargetStats.status === "fulfilled" &&
+    linkTargetStats.value.ino === targetStats.value.ino &&
+    linkTargetStats.value.dev === targetStats.value.dev
+  )
+    result = "skip";
+  else {
+    if (await deletePrompt(link, "decideLink", makePrompt("replac%s"))) {
+      await Deno.remove(link);
+      result = "silentlink";
+    } else {
+      result = "silentskip";
+    }
+  }
+
+  switch (result) {
+    case "link":
+      queueMessage("linking", link);
+    case "silentlink":
+      await Deno.mkdir(dirname(link), { recursive: true });
+      await Deno.symlink(target, link);
+      break;
+    case "skip":
+      queueMessage("", link);
+    default:
+      return;
+  }
+};
+
 interface DotEntry extends Deno.DirEntry {
   path: string;
 }
@@ -210,119 +215,150 @@ async function findDotLinks(
     ? (item: Deno.DirEntry) => preFilter(item) && isLink(item)
     : isLink;
 
-  const results: DotEntry[] = [];
+  let results: DotEntry[] = [];
 
   for await (const item of Deno.readDir(dir)) {
     const result: DotEntry = { ...item, path: join(dir, item.name) };
     if (result.isDirectory && recursive) {
       let more = await findDotLinks(result.path, preFilter, recursive);
-      results.concat(more);
+      results = results.concat(more);
     } else if (byFilter(result)) {
-      results.concat(result);
+      results.push(result);
     }
   }
-  return flatten(results);
+
+  return results;
 }
 
-function deleteFiles(implode = false, deleteAll = false) {
+async function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
   if (deleteAll) setScopeToAll(deleteAllScope);
 
-  return readAliasFile()
-    .then((aliasList: AliasPair[]) =>
-      Promise.all(
-        aliasList.map(([fileName, correctTarget]) =>
-          findDotLinks(
-            dirname(fileName),
-            (entry: Deno.DirEntry) => entry.name === basename(fileName)
-          ).then((list) =>
-            deleteCorrectFiles(
-              list,
-              implode,
-              deleteAllScope,
-              (target: string) => target === correctTarget
-            )
-          )
-        )
-      )
-    )
-    .then(() =>
-      Promise.all([
-        findDotLinks(DOT_LOCATION, (item: DotEntry) => item.name.startsWith(".")),
-        findDotLinks(join(DOT_LOCATION, ".config"), false, true),
-      ])
-        .then(flatten)
-        .then((list) =>
-          deleteCorrectFiles(list, implode, deleteAllScope, (target: string) =>
-            target.startsWith(REPO_LOCATION)
-          )
-        )
-    );
+  const aliasList: AliasPair[] = await readAliasFile();
+  await Promise.all(
+    aliasList.map(async ([fileName, correctTarget]) => {
+      const list = await findDotLinks(
+        dirname(fileName),
+        (entry: Deno.DirEntry) => entry.name === basename(fileName)
+      );
+
+      return deleteCorrectFiles(
+        list,
+        implode,
+        deleteAllScope,
+        (target: string) => target === correctTarget
+      );
+    })
+  );
+
+  const list = await Promise.all([
+    findDotLinks(DOT_LOCATION, (item: DotEntry) => item.name.startsWith(".")),
+    findDotLinks(join(DOT_LOCATION, ".config"), false, true),
+  ]);
+
+  return deleteCorrectFiles(
+    list.flat(),
+    implode,
+    deleteAllScope,
+    (target: string) => target.startsWith(REPO_LOCATION)
+  );
 }
 
-function deleteCorrectFiles(list: DotEntry[], implode = false, deleteAll: string | undefined , preFilter: Function) {
-  const emptyDirectories = {};
-  return Promise.all(
-    list.map((file: DotEntry) => {
+async function deleteCorrectFiles(
+  list: DotEntry[],
+  implode = false,
+  deleteAll: string,
+  preFilter: Function
+) {
+  const emptyDirectories: Record<string, boolean> = {};
+
+  await Promise.all(
+    list.map(async (file: DotEntry) => {
       if (!file.isSymlink) return false;
 
-      return Deno.readLink(file.path).then((target) => {
-        if (
-          !preFilter(target) ||
-          (!implode && !isInvalidFileForTarget(target) && exists(target))
-        )
-          return false;
-        return deletePrompt(file.path, deleteAll).then((deleteMe) => {
-          if (!deleteMe) return false;
-          let fileDir = dirname(file.path);
-          return Deno.remove(file.path)
-            .then(() => readDir(fileDir))
-            .then((list) => {
-              if (list && list.length === 0) emptyDirectories[fileDir] = true;
-            });
-        });
-      });
+      const target = await Deno.readLink(file.path);
+
+      if (!preFilter(target)) return false;
+
+      const targetExists = await exists(target);
+
+      if (!implode && !isInvalidFileForTarget(target) && exists(target))
+        return false;
+
+      const deleteMe = await deletePrompt(file.path, deleteAll);
+
+      if (!deleteMe) return false;
+
+      let fileDir = dirname(file.path);
+
+      await Deno.remove(file.path);
+
+      let dirIsEmpty = true;
+      for await (const dirEntry of Deno.readDir(fileDir)) {
+        dirIsEmpty = false;
+        break;
+        console.log("never");
+      }
+
+      if (dirIsEmpty) emptyDirectories[fileDir] = true;
     })
-  ).then(() => {
-    return Promise.all(
-      Object.keys(emptyDirectories).map((dir) =>
-        deletePrompt(
-          dir,
-          deleteAll,
-          makePrompt("remov%s empty directory")
-        ).then((deleteMe) => (deleteMe ? Deno.remove(dir) : false))
-      )
-    );
-  });
+  );
+
+  await Promise.all(
+    Object.keys(emptyDirectories).map(async (dir) => {
+      const deleteMe = await deletePrompt(
+        dir,
+        deleteAll,
+        makePrompt("remov%s empty directory")
+      );
+
+      if (deleteMe) Deno.remove(dir);
+    })
+  );
 }
 
-const deletePrompt = (
+const deletePrompt = async (
   fileName: string,
   deleteAllScope: string,
   promptText = makePrompt("delet%s")
-) =>
-  queueQuestion(
+) => {
+  const answer = await queueQuestion(
     `${formatMessage(promptText("e"), fileName)}? [ynaq] `,
     deleteAllScope
-  ).then((answer) => {
-    switch (answer) {
-      case "y":
-      case "a":
-        console.log(promptText("ing"), fileName);
-        return true;
-      case "q":
-        Deno.exit();
-      default:
-        console.log("skipping", fileName);
-        return false;
-    }
-  });
+  );
+
+  switch (answer) {
+    case "y":
+    case "a":
+      console.log(promptText("ing"), fileName);
+      return true;
+    case "q":
+      Deno.exit();
+    default:
+      console.log("skipping", fileName);
+      return false;
+  }
+};
 
 const makePrompt = (verb: string) => (ending: string) => sprintf(verb, ending);
 
+async function exists(filePath: string): Promise<boolean> {
+  try {
+    await Deno.lstat(filePath);
+    return true;
+  } catch (err) {
+    if (err instanceof Deno.errors.NotFound) {
+      return false;
+    }
+
+    throw err;
+  }
+}
+
 if (import.meta.main) {
-  main()
-    .then(() => console.log("Complete"))
-    .catch((e) => console.log("WHOOPS:", e));
-  // .finally(() => rl.close());
+  try {
+    await main();
+  } catch (e) {
+    console.log("WHOOPS:", e);
+  }
 }
