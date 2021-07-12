@@ -20,7 +20,7 @@ function submodule:update {
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-TASKS=$REPO_LOCATION/Resources/tasks.js
+TASKS="-q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/tasks.ts"
 
 function vi:install {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
@@ -43,23 +43,23 @@ function homebrew:bundle {
 }
 
 function make_alias_links {
-  node $TASKS make_alias_links
+  deno $TASKS make_alias_links
 }
 
 function cleanup {
-  node $TASKS cleanup
+  deno $TASKS cleanup
 }
 
 function autocleanup {
-  node $TASKS autocleanup
+  deno $TASKS autocleanup
 }
 
 function implode {
-  node $TASKS implode
+  deno $TASKS implode
 }
 
 function install {
-  node $TASKS install
+  deno $TASKS install
 }
 
 function update {

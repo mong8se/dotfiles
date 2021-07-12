@@ -8,19 +8,8 @@ import {
 
 import { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
 
-const REPO_LOCATION = Deno.env.get("REPO_LOCATION")!;
-if (!REPO_LOCATION) {
-  console.error("REPO_LOCATION environment variable is not set");
-  Deno.exit(2);
-}
-
-const DOT_LOCATION = Deno.env.get("HOME")!;
-if (!DOT_LOCATION) {
-  console.error("HOME environment variable is not set");
-  Deno.exit(2);
-}
-
-const usage = () => {
+const usage = (warning?: string) => {
+  if (warning) console.warn("Warning:", warning);
   console.log(`Usage: ${new URL("", import.meta.url).pathname}
 
   Commands:
@@ -31,15 +20,10 @@ const usage = () => {
     implode
   `);
 
-  return Promise.resolve();
+  Deno.exit(warning ? 2 : 0);
 };
 
 const main = async () => {
-  if (!THIS.machine) {
-    console.warn("Warning: HOST42 environment variable is not set");
-    return usage();
-  }
-
   switch (Deno.args[0]) {
     case "install":
       return Promise.all([
@@ -59,7 +43,13 @@ const main = async () => {
   }
 };
 
-const THIS = {
+const REPO_LOCATION =
+  Deno.env.get("REPO_LOCATION")! ||
+  usage("REPO_LOCATION environment variable is not set");
+const DOT_LOCATION =
+  Deno.env.get("HOME")! || usage("HOME environment variable is not set");
+
+const THIS: Record<string, string> = {
   platform: ((value) => {
     switch (value) {
       case "darwin":
@@ -70,7 +60,8 @@ const THIS = {
         return "unknown";
     }
   })(Deno.build.os),
-  machine: Deno.env.get("HOST42"),
+  machine:
+    Deno.env.get("HOST42")! || usage("HOST42 environment variable is not set"),
 };
 
 const dotBasename = (file: string) =>
@@ -97,24 +88,8 @@ const formatMessage = (verb: string, file: string) =>
 const queueMessage = (verb: string, file: string) =>
   queue(() => console.log(formatMessage(verb, file)));
 
-const allValues: Record<string, Promise<boolean>> = {};
-const setScopeToAll = (scope: string) =>
-  (allValues[scope] = Promise.resolve(true));
-
-const queueQuestion = async function (query: string, allScope: string) {
-  if (!allValues.hasOwnProperty(allScope))
-    allValues[allScope] = Promise.resolve(false);
-
-  return queue(async () => {
-    const all: boolean = await allValues[allScope];
-    const answer = all ? "a" : await prompt(query);
-    if (answer === "a") setScopeToAll(allScope);
-
-    return answer;
-  });
-};
-
 const decoder = new TextDecoder("utf-8");
+
 type AliasPair = [string, string];
 const readAliasFile = async (): Promise<AliasPair[]> => {
   const aliases: Uint8Array = await Deno.readFile(
@@ -180,7 +155,6 @@ const decideLink = async (link: string, target: string) => {
     result = "skip";
   else {
     if (await deletePrompt(link, "decideLink", makePrompt("replac%s"))) {
-      await Deno.remove(link);
       result = "silentlink";
     } else {
       result = "silentskip";
@@ -217,14 +191,19 @@ async function findDotLinks(
 
   let results: DotEntry[] = [];
 
-  for await (const item of Deno.readDir(dir)) {
-    const result: DotEntry = { ...item, path: join(dir, item.name) };
-    if (result.isDirectory && recursive) {
-      let more = await findDotLinks(result.path, preFilter, recursive);
-      results = results.concat(more);
-    } else if (byFilter(result)) {
-      results.push(result);
+  try {
+    for await (const item of Deno.readDir(dir)) {
+      const result: DotEntry = { ...item, path: join(dir, item.name) };
+      if (result.isDirectory && recursive) {
+        let more = await findDotLinks(result.path, preFilter, recursive);
+        results = results.concat(more);
+      } else if (byFilter(result)) {
+        results.push(result);
+      }
     }
+  } catch (err) {
+    if (err instanceof Deno.errors.NotFound) return [];
+    throw err;
   }
 
   return results;
@@ -280,64 +259,64 @@ async function deleteCorrectFiles(
 
       if (!preFilter(target)) return false;
 
-      const targetExists = await exists(target);
-
-      if (!implode && !isInvalidFileForTarget(target) && exists(target))
+      if (!implode && !isInvalidFileForTarget(target) && (await exists(target)))
         return false;
 
-      const deleteMe = await deletePrompt(file.path, deleteAll);
-
-      if (!deleteMe) return false;
+      if (!(await deletePrompt(file.path, deleteAll))) return false;
 
       let fileDir = dirname(file.path);
 
-      await Deno.remove(file.path);
-
-      let dirIsEmpty = true;
-      for await (const dirEntry of Deno.readDir(fileDir)) {
-        dirIsEmpty = false;
-        break;
-        console.log("never");
+      for await (const _ of Deno.readDir(fileDir)) {
+        return true;
       }
 
-      if (dirIsEmpty) emptyDirectories[fileDir] = true;
+      emptyDirectories[fileDir] = true;
     })
   );
 
   await Promise.all(
-    Object.keys(emptyDirectories).map(async (dir) => {
-      const deleteMe = await deletePrompt(
-        dir,
-        deleteAll,
-        makePrompt("remov%s empty directory")
-      );
-
-      if (deleteMe) Deno.remove(dir);
-    })
+    Object.keys(emptyDirectories).map(
+      async (dir) =>
+        await deletePrompt(
+          dir,
+          deleteAll,
+          makePrompt("remov%s empty directory")
+        )
+    )
   );
 }
+
+const scopeIsAll: Record<string, Promise<boolean>> = {};
+const setScopeToAll = (scope: string) =>
+  (scopeIsAll[scope] = Promise.resolve(true));
 
 const deletePrompt = async (
   fileName: string,
   deleteAllScope: string,
   promptText = makePrompt("delet%s")
 ) => {
-  const answer = await queueQuestion(
-    `${formatMessage(promptText("e"), fileName)}? [ynaq] `,
-    deleteAllScope
-  );
+  if (!scopeIsAll.hasOwnProperty(deleteAllScope))
+    scopeIsAll[deleteAllScope] = Promise.resolve(false);
 
-  switch (answer) {
-    case "y":
-    case "a":
-      console.log(promptText("ing"), fileName);
-      return true;
-    case "q":
-      Deno.exit();
-    default:
-      console.log("skipping", fileName);
-      return false;
-  }
+  return await queue(async () => {
+    let answer = (await scopeIsAll[deleteAllScope])
+      ? "y"
+      : prompt(`${formatMessage(promptText("e"), fileName)}? [ynaq] `);
+
+    switch (answer) {
+      case "q":
+        Deno.exit();
+      case "a":
+        setScopeToAll(deleteAllScope);
+      case "y":
+        console.log(promptText("ing"), fileName);
+        await Deno.remove(fileName);
+        return true;
+      default:
+        console.log("skipping", fileName);
+        return false;
+    }
+  });
 };
 
 const makePrompt = (verb: string) => (ending: string) => sprintf(verb, ending);
