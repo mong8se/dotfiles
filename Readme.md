@@ -1,4 +1,7 @@
-# What? More Dotfiles?!
+# What? More Dotfiles?! -- NOW CONFIG FREE!
+
+No configuration necessary dotfile management, just files and folder and
+(new!) symlinks in the appropriate tree shape.
 
 ## Taskfile
 
@@ -14,14 +17,13 @@ Uses [Taskfile](https://github.com/adriancooney/Taskfile) for running tasks, onc
          6	implode             # remove all symlinks that point to .dotfiles/ without asking
          7	init                # do initial tasks for new install
          8	install             # create symlinks for .dotfiles/home and ./dotfiles/config
-         9	make_alias_links    # create symlinks from aliases.json file, see below
-        10	submodule:init      # initialize all git submodules
-        11	submodule:update    # update all git submodules to their latest of the branch they're tracking
-        12	update              # create all symlinks and clean up stale ones
-        13	upgrade             # update submodules and vi
-        14	vi:cleanup          # Ask `vim-plug` to clean plugins
-        15	vi:install          # Ask `vim-plug` to install plugins
-        16	vi:update           # Ask `vim-plug` to update plugins
+         9	submodule:init      # initialize all git submodules
+        10	submodule:update    # update all git submodules to their latest of the branch they're tracking
+        11	update              # create all symlinks and clean up stale ones
+        12	upgrade             # update submodules and vi
+        13	vi:cleanup          # Ask `vim-plug` to clean plugins
+        14	vi:install          # Ask `vim-plug` to install plugins
+        15	vi:update           # Ask `vim-plug` to update plugins
 
     default task:
     {
@@ -55,21 +57,31 @@ Notes:
     1. _`hostname`.zsh
     1. local.zsh
 
-## Resources/aliases.json
+## Aliases (symlinks to spawn symlinks)
 
-Format of file:
+If you create a symlink inside `.dotfiles` that is a valid _relative_ path
+to a file inside `.dotfiles`, when the link is created it will point
+directly to the target of the symlink, not the intermediary symlink.
 
-    {
-      "vim": "~/.config/nvim",
-      "vimrc": "~/.config/nvim/init.vim",
-      "config/nvim/autoload/plug.vim": "./Resources/vim-plug/plug.vim"
-    }
+For example start in your dot files:
 
-Key is the name of the dotfile to create, will be placed in home
-directory and prefixed with . automatically
+    cd ~/.dotfiles
 
-Value is the target the symlink should point to, a leading ~ will be expanded to
-home
+This step isn't strictly necessary but will allow tab completion of your
+target
+
+    cd home
+
+Now make a relative link to your target file (you'd link to `home/vimrc` if
+you skipped above step)
+
+    ln -s ../config/nvim/init.vim vimrc
+
+Now you will have a symlink in `.dotfiles/home/vimrc` that points to
+`.dotfiles/config/nvim/init.vim` but relatively.
+
+When you run install your `~/.vimrc` will point to your
+`.dotfiles/config/nvim/init.vim` ... not to the symlink `home/vimrc`
 
 ## Thanks
 

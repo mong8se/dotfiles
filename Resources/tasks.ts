@@ -5,24 +5,16 @@ import {
   relative,
   resolve,
 } from "https://deno.land/std@0.100.0/path/mod.ts";
-
 import { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
-
 const usage = (warning?: string) => {
   if (warning) console.warn("Warning:", warning);
-  console.log(`Usage: ${new URL("", import.meta.url).pathname}
-
-  Commands:
-    install
-    make_alias_links
-    cleanup
-    autocleanup
-    implode
-  `);
-
+  console.log(
+    `Usage: ${
+      new URL("", import.meta.url).pathname
+    } Commands: install cleanup autocleanup implode `
+  );
   Deno.exit(warning ? 2 : 0);
 };
-
 const main = async () => {
   switch (Deno.args[0]) {
     case "install":
@@ -36,19 +28,15 @@ const main = async () => {
       return deleteFiles(false, true);
     case "implode":
       return deleteFiles(true);
-    case "make_alias_links":
-      return makeAliasLinks();
     default:
       return usage();
   }
 };
-
 const REPO_LOCATION =
   Deno.env.get("REPO_LOCATION")! ||
   usage("REPO_LOCATION environment variable is not set");
 const DOT_LOCATION =
   Deno.env.get("HOME")! || usage("HOME environment variable is not set");
-
 const THIS: Record<string, string> = {
   platform: ((value) => {
     switch (value) {
@@ -63,58 +51,25 @@ const THIS: Record<string, string> = {
   machine:
     Deno.env.get("HOST42")! || usage("HOST42 environment variable is not set"),
 };
-
 const dotBasename = (file: string) =>
   "." +
   Object.entries(THIS).reduce(
     (value, [label, search]) => value.replace("_" + search, "_" + label),
     file
   );
-
 const resolveDotFile = (file: string) => join(DOT_LOCATION, dotBasename(file));
-
 const invalidPattern = new RegExp(`^_(?!${Object.values(THIS).join("|")})`);
 const isInvalidFileForTarget = (file: string) => {
   return invalidPattern.test(basename(file));
 };
-
 const queue = ((pq) => (f: () => any) => (pq = pq.then(f)))(Promise.resolve());
-
 const formatMessage = (verb: string, file: string) =>
   `${verb.padStart(9, " ")} ${
     file.startsWith("/") ? relative(DOT_LOCATION, file) : dotBasename(file)
   }`;
-
 const queueMessage = (verb: string, file: string) =>
   queue(() => console.log(formatMessage(verb, file)));
-
 const decoder = new TextDecoder("utf-8");
-
-type AliasPair = [string, string];
-const readAliasFile = async (): Promise<AliasPair[]> => {
-  const aliases: Uint8Array = await Deno.readFile(
-    `${REPO_LOCATION}/Resources/aliases.json`
-  );
-
-  const list: Record<string, string> = JSON.parse(
-    decoder.decode(aliases),
-    (_, value) =>
-      typeof value === "string" ? value.replace(/^~/, DOT_LOCATION) : value
-  );
-
-  return Object.entries(list).map(
-    ([link, target]): AliasPair => [resolveDotFile(link), resolve(target)]
-  );
-};
-
-const makeAliasLinks = async () => {
-  const aliasList: AliasPair[] = await readAliasFile();
-
-  return Promise.all(
-    aliasList.map(([link, target]) => decideLink(link, target))
-  );
-};
-
 const installFiles = async (
   dir: string,
   basePathToOmit?: string | null,
@@ -125,7 +80,6 @@ const installFiles = async (
     let dotFile = resolveDotFile(
       basePathToOmit ? relative(basePathToOmit, relativeTarget) : relativeTarget
     );
-
     if (recurse && entry.isDirectory) {
       await installFiles(relativeTarget, basePathToOmit, true);
     } else {
@@ -135,16 +89,20 @@ const installFiles = async (
     }
   }
 };
-
 const decideLink = async (link: string, target: string) => {
-  const [linkStats, linkTargetStats, targetStats] = await Promise.allSettled([
+  const [
+    linkStats,
+    linkTargetStats,
+    targetStats,
+    targetsTarget,
+  ] = await Promise.allSettled([
     Deno.lstat(link),
     Deno.stat(link),
     Deno.stat(target),
+    Deno.readLink(target),
   ]);
 
   let result: string;
-
   if (targetStats.status === "rejected") result = "skip";
   else if (linkStats.status === "rejected") result = "link";
   else if (
@@ -160,13 +118,17 @@ const decideLink = async (link: string, target: string) => {
       result = "silentskip";
     }
   }
-
   switch (result) {
     case "link":
       queueMessage("linking", link);
     case "silentlink":
       await Deno.mkdir(dirname(link), { recursive: true });
-      await Deno.symlink(target, link);
+      await Deno.symlink(
+        targetsTarget.status === "fulfilled"
+          ? resolve(dirname(target), targetsTarget.value)
+          : target,
+        link
+      );
       break;
     case "skip":
       queueMessage("", link);
@@ -174,11 +136,9 @@ const decideLink = async (link: string, target: string) => {
       return;
   }
 };
-
 interface DotEntry extends Deno.DirEntry {
   path: string;
 }
-
 async function findDotLinks(
   dir: string,
   action: (file: DotEntry) => void,
@@ -189,9 +149,7 @@ async function findDotLinks(
   const byFilter = preFilter
     ? (item: Deno.DirEntry) => preFilter(item) && isLink(item)
     : isLink;
-
   let results: DotEntry[] = [];
-
   try {
     for await (const item of Deno.readDir(dir)) {
       const result: DotEntry = { ...item, path: join(dir, item.name) };
@@ -212,31 +170,12 @@ async function findDotLinks(
     if (err instanceof Deno.errors.NotFound) return [];
     throw err;
   }
-
   return results;
 }
-
 async function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
   if (deleteAll) setScopeToAll(deleteAllScope, true);
-
-  const aliasList: AliasPair[] = await readAliasFile();
   const list = await Promise.all([
-    ...aliasList.map(
-      async ([fileName, correctTarget]) =>
-        await findDotLinks(
-          dirname(fileName),
-          (file: DotEntry) =>
-            deleteFileIfNecessary(
-              file,
-              implode,
-              deleteAllScope,
-              (target: string) => target === correctTarget
-            ),
-          false,
-          (entry: Deno.DirEntry) => entry.name === basename(fileName)
-        )
-    ),
     findDotLinks(
       DOT_LOCATION,
       (file: DotEntry) =>
@@ -255,23 +194,17 @@ async function deleteFiles(implode = false, deleteAll = false) {
       true
     ),
   ]);
-
   const emptyDirectories: Record<string, boolean> = {};
-
   await Promise.all(
     list.flat().map(async (file) => {
       let fileDir = dirname(file.path);
-
       if (emptyDirectories[fileDir] === true) return;
-
       for await (const _ of Deno.readDir(fileDir)) {
         return;
       }
-
       emptyDirectories[fileDir] = true;
     })
   );
-
   await Promise.all(
     Object.keys(emptyDirectories).map(
       async (dir) =>
@@ -279,7 +212,6 @@ async function deleteFiles(implode = false, deleteAll = false) {
     )
   );
 }
-
 async function deleteFileIfNecessary(
   file: DotEntry,
   implode = false,
@@ -287,44 +219,34 @@ async function deleteFileIfNecessary(
   preFilter: (target: string) => boolean
 ) {
   if (!file.isSymlink) return false;
-
   try {
     const target = await Deno.readLink(file.path);
-
     if (!preFilter(target)) return false;
-
     if (!implode && !isInvalidFileForTarget(target) && (await exists(target)))
       return false;
-
     return await deletePrompt(file.path, deleteAll);
   } catch (err) {
     if (err instanceof Deno.errors.NotFound) {
       return false;
     }
-
     throw err;
   }
 }
-
 const scopeIsAll: Record<string, Promise<boolean>> = {};
 const setScopeToAll = (scope: string, value: boolean) =>
   (scopeIsAll[scope] = Promise.resolve(value));
-
 const deletePrompt = async (
   fileName: string,
   deleteAllScope: string,
   verbTemplate = "delet%s"
 ) => {
   const conjugateWith = makeConjugator(verbTemplate);
-
   if (!scopeIsAll.hasOwnProperty(deleteAllScope))
     setScopeToAll(deleteAllScope, false);
-
   return await queue(async () => {
     let answer = (await scopeIsAll[deleteAllScope])
       ? "y"
       : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq] `);
-
     switch (answer) {
       case "q":
         Deno.exit();
@@ -340,10 +262,8 @@ const deletePrompt = async (
     }
   });
 };
-
 const makeConjugator = (verb: string) => (ending: string) =>
   sprintf(verb, ending);
-
 async function exists(filePath: string): Promise<boolean> {
   try {
     await Deno.lstat(filePath);
@@ -352,11 +272,9 @@ async function exists(filePath: string): Promise<boolean> {
     if (err instanceof Deno.errors.NotFound) {
       return false;
     }
-
     throw err;
   }
 }
-
 if (import.meta.main) {
   try {
     await main();

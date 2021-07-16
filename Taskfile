@@ -42,10 +42,6 @@ function homebrew:bundle {
   brew bundle --no-lock --file $REPO_LOCATION/Resources/Brewfile
 }
 
-function make_alias_links {
-  deno $TASKS make_alias_links
-}
-
 function cleanup {
   deno $TASKS cleanup
 }
@@ -64,7 +60,6 @@ function install {
 
 function update {
   install
-  make_alias_links
   autocleanup
 }
 
