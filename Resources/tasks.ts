@@ -92,6 +92,7 @@ const installFiles = async (
     let dotFile = resolveDotFile(
       basePathToOmit ? relative(basePathToOmit, relativeTarget) : relativeTarget
     );
+
     if (recurse && entry.isDirectory) {
       await installFiles(relativeTarget, basePathToOmit, true);
     } else {
@@ -131,6 +132,7 @@ const decideLink = async (link: string, target: string) => {
       result = "silentskip";
     }
   }
+
   switch (result) {
     case "link":
       queueMessage("linking", link);
@@ -160,11 +162,13 @@ async function findDotLinks(
   recursive = false,
   preFilter?: (item: Deno.DirEntry) => boolean
 ): Promise<DotEntry[]> {
+
   const isLink = (item: Deno.DirEntry) => item.isSymlink;
   const byFilter = preFilter
     ? (item: Deno.DirEntry) => preFilter(item) && isLink(item)
     : isLink;
   let results: DotEntry[] = [];
+
   try {
     for await (const item of Deno.readDir(dir)) {
       const result = item as DotEntry;
@@ -186,12 +190,15 @@ async function findDotLinks(
     if (err instanceof Deno.errors.NotFound) return [];
     throw err;
   }
+
   return results;
 }
 
 async function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
+
   if (deleteAll) setScopeToAll(deleteAllScope, true);
+
   const list = await Promise.all([
     findDotLinks(
       DOT_LOCATION,
@@ -211,6 +218,7 @@ async function deleteFiles(implode = false, deleteAll = false) {
       true
     ),
   ]);
+
   const emptyDirectories: Record<string, boolean> = {};
   await Promise.all(
     list.flat().map(async (file) => {
@@ -222,6 +230,7 @@ async function deleteFiles(implode = false, deleteAll = false) {
       emptyDirectories[fileDir] = true;
     })
   );
+
   await Promise.all(
     Object.keys(emptyDirectories).map(
       async (dir) =>
@@ -237,6 +246,7 @@ async function deleteFileIfNecessary(
   preFilter: (target: string) => boolean
 ) {
   if (!file.isSymlink) return false;
+
   try {
     const target = await Deno.readLink(file.path);
     if (!preFilter(target)) return false;
@@ -261,8 +271,10 @@ const deletePrompt = async (
   verbTemplate = "delet%s"
 ) => {
   const conjugateWith = makeConjugator(verbTemplate);
+
   if (!scopeIsAll.hasOwnProperty(deleteAllScope))
     setScopeToAll(deleteAllScope, false);
+
   return await queue(async () => {
     let answer = (await scopeIsAll[deleteAllScope])
       ? "y"
