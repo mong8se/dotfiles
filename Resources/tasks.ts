@@ -5,7 +5,9 @@ import {
   relative,
   resolve,
 } from "https://deno.land/std@0.100.0/path/mod.ts";
+
 import { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
+
 const usage = (warning?: string) => {
   if (warning) console.warn("Warning:", warning);
   console.log(
@@ -15,6 +17,7 @@ const usage = (warning?: string) => {
   );
   Deno.exit(warning ? 2 : 0);
 };
+
 const main = async () => {
   switch (Deno.args[0]) {
     case "install":
@@ -32,11 +35,14 @@ const main = async () => {
       return usage();
   }
 };
+
 const REPO_LOCATION =
   Deno.env.get("REPO_LOCATION")! ||
   usage("REPO_LOCATION environment variable is not set");
+
 const DOT_LOCATION =
   Deno.env.get("HOME")! || usage("HOME environment variable is not set");
+
 const THIS: Record<string, string> = {
   platform: ((value) => {
     switch (value) {
@@ -51,25 +57,31 @@ const THIS: Record<string, string> = {
   machine:
     Deno.env.get("HOST42")! || usage("HOST42 environment variable is not set"),
 };
+
 const dotBasename = (file: string) =>
   "." +
   Object.entries(THIS).reduce(
     (value, [label, search]) => value.replace("_" + search, "_" + label),
     file
   );
+
 const resolveDotFile = (file: string) => join(DOT_LOCATION, dotBasename(file));
+
 const invalidPattern = new RegExp(`^_(?!${Object.values(THIS).join("|")})`);
 const isInvalidFileForTarget = (file: string) => {
   return invalidPattern.test(basename(file));
 };
+
 const queue = ((pq) => (f: () => any) => (pq = pq.then(f)))(Promise.resolve());
+
 const formatMessage = (verb: string, file: string) =>
   `${verb.padStart(9, " ")} ${
     file.startsWith("/") ? relative(DOT_LOCATION, file) : dotBasename(file)
   }`;
+
 const queueMessage = (verb: string, file: string) =>
   queue(() => console.log(formatMessage(verb, file)));
-const decoder = new TextDecoder("utf-8");
+
 const installFiles = async (
   dir: string,
   basePathToOmit?: string | null,
@@ -89,6 +101,7 @@ const installFiles = async (
     }
   }
 };
+
 const decideLink = async (link: string, target: string) => {
   const [
     linkStats,
@@ -136,9 +149,11 @@ const decideLink = async (link: string, target: string) => {
       return;
   }
 };
+
 interface DotEntry extends Deno.DirEntry {
   path: string;
 }
+
 async function findDotLinks(
   dir: string,
   action: (file: DotEntry) => void,
@@ -152,7 +167,8 @@ async function findDotLinks(
   let results: DotEntry[] = [];
   try {
     for await (const item of Deno.readDir(dir)) {
-      const result: DotEntry = { ...item, path: join(dir, item.name) };
+      const result = item as DotEntry;
+      result.path = join(dir, item.name);
       if (result.isDirectory && recursive) {
         let more = await findDotLinks(
           result.path,
@@ -172,6 +188,7 @@ async function findDotLinks(
   }
   return results;
 }
+
 async function deleteFiles(implode = false, deleteAll = false) {
   const deleteAllScope = "deleteFiles";
   if (deleteAll) setScopeToAll(deleteAllScope, true);
@@ -212,6 +229,7 @@ async function deleteFiles(implode = false, deleteAll = false) {
     )
   );
 }
+
 async function deleteFileIfNecessary(
   file: DotEntry,
   implode = false,
@@ -232,9 +250,11 @@ async function deleteFileIfNecessary(
     throw err;
   }
 }
+
 const scopeIsAll: Record<string, Promise<boolean>> = {};
 const setScopeToAll = (scope: string, value: boolean) =>
   (scopeIsAll[scope] = Promise.resolve(value));
+
 const deletePrompt = async (
   fileName: string,
   deleteAllScope: string,
@@ -262,8 +282,10 @@ const deletePrompt = async (
     }
   });
 };
+
 const makeConjugator = (verb: string) => (ending: string) =>
   sprintf(verb, ending);
+
 async function exists(filePath: string): Promise<boolean> {
   try {
     await Deno.lstat(filePath);
@@ -275,6 +297,7 @@ async function exists(filePath: string): Promise<boolean> {
     throw err;
   }
 }
+
 if (import.meta.main) {
   try {
     await main();
