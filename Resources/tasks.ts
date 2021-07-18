@@ -22,15 +22,15 @@ const main = async () => {
   switch (Deno.args[0]) {
     case "install":
       return Promise.all([
-        installFiles("home", "home"),
-        installFiles("config", null, true),
+        installFiles("home", { basePathToOmit: "home" }),
+        installFiles("config", { recurse: true }),
       ]);
     case "cleanup":
       return deleteFiles();
     case "autocleanup":
-      return deleteFiles(false, true);
+      return deleteFiles({ withoutPrompting: true });
     case "implode":
-      return deleteFiles(true);
+      return deleteFiles({ implode: true });
     default:
       return usage();
   }
@@ -43,7 +43,11 @@ const REPO_LOCATION =
 const DOT_LOCATION =
   Deno.env.get("HOME")! || usage("HOME environment variable is not set");
 
-const THIS: Record<string, string> = {
+type ThisThing = {
+  platform: "mac" | "linux" | "unknown";
+  machine: string;
+};
+const THIS: ThisThing = {
   platform: ((value) => {
     switch (value) {
       case "darwin":
@@ -82,19 +86,24 @@ const formatMessage = (verb: string, file: string) =>
 const queueMessage = (verb: string, file: string) =>
   queue(() => console.log(formatMessage(verb, file)));
 
+type InstallOptions = {
+  basePathToOmit?: string;
+  recurse?: boolean;
+};
 const installFiles = async (
   dir: string,
-  basePathToOmit?: string | null,
-  recurse = false
+  options: InstallOptions
 ): Promise<void> => {
   for await (const entry of Deno.readDir(dir)) {
     let relativeTarget = join(dir, entry.name);
     let dotFile = resolveDotFile(
-      basePathToOmit ? relative(basePathToOmit, relativeTarget) : relativeTarget
+      options.basePathToOmit
+        ? relative(options.basePathToOmit, relativeTarget)
+        : relativeTarget
     );
 
-    if (recurse && entry.isDirectory) {
-      await installFiles(relativeTarget, basePathToOmit, true);
+    if (options.recurse && entry.isDirectory) {
+      await installFiles(relativeTarget, options);
     } else {
       isInvalidFileForTarget(entry.name)
         ? queueMessage("ignoring", dotFile)
@@ -123,10 +132,10 @@ const decideLink = async (link: string, target: string) => {
     linkTargetStats.status === "fulfilled" &&
     linkTargetStats.value.ino === targetStats.value.ino &&
     linkTargetStats.value.dev === targetStats.value.dev
-  )
+  ) {
     result = "skip";
-  else {
-    if (await deletePrompt(link, "decideLink", "replac%s")) {
+  } else {
+    if (await deletePrompt(link, "replac%s")) {
       result = "silentlink";
     } else {
       result = "silentskip";
@@ -156,34 +165,31 @@ interface DotEntry extends Deno.DirEntry {
   path: string;
 }
 
+type DirEntryFilter = (item: Deno.DirEntry) => boolean;
+type FindDotLinksOptions = {
+  implode?: boolean;
+  recursive?: boolean;
+  preFilter?: DirEntryFilter;
+};
+
 async function findDotLinks(
   dir: string,
-  action: (file: DotEntry) => void,
-  recursive = false,
-  preFilter?: (item: Deno.DirEntry) => boolean
+  options: FindDotLinksOptions
 ): Promise<DotEntry[]> {
 
-  const isLink = (item: Deno.DirEntry) => item.isSymlink;
-  const byFilter = preFilter
-    ? (item: Deno.DirEntry) => preFilter(item) && isLink(item)
-    : isLink;
   let results: DotEntry[] = [];
 
   try {
     for await (const item of Deno.readDir(dir)) {
       const result = item as DotEntry;
       result.path = join(dir, item.name);
-      if (result.isDirectory && recursive) {
-        let more = await findDotLinks(
-          result.path,
-          action,
-          recursive,
-          preFilter
-        );
+      if (result.isDirectory && options.recursive) {
+        let more = await findDotLinks(result.path, options);
         results = results.concat(more);
-      } else if (byFilter(result)) {
-        action(result);
-        results.push(result);
+      } else if (options.preFilter ? options.preFilter(result) : true) {
+        if (await deleteFileIfNecessary(result, options.implode)) {
+          results.push(result);
+        }
       }
     }
   } catch (err) {
@@ -194,29 +200,22 @@ async function findDotLinks(
   return results;
 }
 
-async function deleteFiles(implode = false, deleteAll = false) {
-  const deleteAllScope = "deleteFiles";
-
-  if (deleteAll) setScopeToAll(deleteAllScope, true);
+type DeleteFilesOptions = {
+  implode?: boolean;
+  withoutPrompting?: boolean;
+};
+async function deleteFiles(options: DeleteFilesOptions = {}) {
+  if (options.withoutPrompting) setShouldDeleteAll();
 
   const list = await Promise.all([
-    findDotLinks(
-      DOT_LOCATION,
-      (file: DotEntry) =>
-        deleteFileIfNecessary(file, implode, deleteAllScope, (target: string) =>
-          target.startsWith(REPO_LOCATION)
-        ),
-      false,
-      (item: Deno.DirEntry) => item.name.startsWith(".")
-    ),
-    findDotLinks(
-      join(DOT_LOCATION, ".config"),
-      (file: DotEntry) =>
-        deleteFileIfNecessary(file, implode, deleteAllScope, (target: string) =>
-          target.startsWith(REPO_LOCATION)
-        ),
-      true
-    ),
+    findDotLinks(DOT_LOCATION, {
+      implode: options.implode,
+      preFilter: (item: Deno.DirEntry) => item.name.startsWith("."),
+    }),
+    findDotLinks(join(DOT_LOCATION, ".config"), {
+      implode: options.implode,
+      recursive: true,
+    }),
   ]);
 
   const emptyDirectories: Record<string, boolean> = {};
@@ -233,57 +232,47 @@ async function deleteFiles(implode = false, deleteAll = false) {
 
   await Promise.all(
     Object.keys(emptyDirectories).map(
-      async (dir) =>
-        await deletePrompt(dir, deleteAllScope, "remov%s empty directory")
+      async (dir) => await deletePrompt(dir, "remov%s empty directory")
     )
   );
 }
 
-async function deleteFileIfNecessary(
-  file: DotEntry,
-  implode = false,
-  deleteAll: string,
-  preFilter: (target: string) => boolean
-) {
+async function deleteFileIfNecessary(file: DotEntry, implode = false) {
   if (!file.isSymlink) return false;
 
   try {
     const target = await Deno.readLink(file.path);
-    if (!preFilter(target)) return false;
-    if (!implode && !isInvalidFileForTarget(target) && (await exists(target)))
+    if (!target.startsWith(REPO_LOCATION)) return false;
+
+    if (!implode && !isInvalidFileForTarget(target) && (await exists(target))) {
       return false;
-    return await deletePrompt(file.path, deleteAll);
+    }
+
+    return await deletePrompt(file.path);
   } catch (err) {
     if (err instanceof Deno.errors.NotFound) {
       return false;
     }
+
     throw err;
   }
 }
 
-const scopeIsAll: Record<string, Promise<boolean>> = {};
-const setScopeToAll = (scope: string, value: boolean) =>
-  (scopeIsAll[scope] = Promise.resolve(value));
+let shouldDeleteAll = Promise.resolve(false);
+const setShouldDeleteAll = () => (shouldDeleteAll = Promise.resolve(true));
 
-const deletePrompt = async (
-  fileName: string,
-  deleteAllScope: string,
-  verbTemplate = "delet%s"
-) => {
+const deletePrompt = async (fileName: string, verbTemplate = "delet%s") : Promise<boolean> => {
   const conjugateWith = makeConjugator(verbTemplate);
 
-  if (!scopeIsAll.hasOwnProperty(deleteAllScope))
-    setScopeToAll(deleteAllScope, false);
-
   return await queue(async () => {
-    let answer = (await scopeIsAll[deleteAllScope])
+    let answer = (await shouldDeleteAll)
       ? "y"
       : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq] `);
     switch (answer) {
       case "q":
         Deno.exit();
       case "a":
-        setScopeToAll(deleteAllScope, true);
+        setShouldDeleteAll();
       case "y":
         console.log(conjugateWith("ing"), fileName);
         await Deno.remove(fileName);
