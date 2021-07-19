@@ -76,15 +76,18 @@ const isInvalidFileForTarget = (file: string) => {
   return invalidPattern.test(basename(file));
 };
 
-const queue = ((pq) => (f: () => any) => (pq = pq.then(f)))(Promise.resolve());
+const queue = ((pq: Promise<any>) => (f: () => any) =>
+  pq.then(() => (pq = Promise.resolve(f()))))(Promise.resolve());
+
+const queueMessage = (text: string) => queue(() => console.log(text));
 
 const formatMessage = (verb: string, file: string) =>
   `${verb.padStart(9, " ")} ${
     file.startsWith("/") ? relative(DOT_LOCATION, file) : dotBasename(file)
   }`;
 
-const queueMessage = (verb: string, file: string) =>
-  queue(() => console.log(formatMessage(verb, file)));
+const queueMessageForFile = (verb: string, file: string) =>
+  queueMessage(formatMessage(verb, file));
 
 type InstallOptions = {
   basePathToOmit?: string;
@@ -106,7 +109,7 @@ const installFiles = async (
       await installFiles(relativeTarget, options);
     } else {
       isInvalidFileForTarget(entry.name)
-        ? queueMessage("ignoring", dotFile)
+        ? await queueMessageForFile("ignoring", dotFile)
         : await decideLink(dotFile, resolve(relativeTarget));
     }
   }
@@ -144,7 +147,7 @@ const decideLink = async (link: string, target: string) => {
 
   switch (result) {
     case "link":
-      queueMessage("linking", link);
+      await queueMessageForFile("linking", link);
     case "silentlink":
       await Deno.mkdir(dirname(link), { recursive: true });
       await Deno.symlink(
@@ -155,7 +158,7 @@ const decideLink = async (link: string, target: string) => {
       );
       break;
     case "skip":
-      queueMessage("", link);
+      await queueMessageForFile("", link);
     default:
       return;
   }
@@ -176,7 +179,6 @@ async function findDotLinks(
   dir: string,
   options: FindDotLinksOptions
 ): Promise<DotEntry[]> {
-
   let results: DotEntry[] = [];
 
   try {
@@ -261,27 +263,40 @@ async function deleteFileIfNecessary(file: DotEntry, implode = false) {
 let shouldDeleteAll = Promise.resolve(false);
 const setShouldDeleteAll = () => (shouldDeleteAll = Promise.resolve(true));
 
-const deletePrompt = async (fileName: string, verbTemplate = "delet%s") : Promise<boolean> => {
+const queuePrompt = (text: string) => queue(() => prompt(text));
+
+const deletePrompt = async (
+  fileName: string,
+  verbTemplate = "delet%s"
+): Promise<boolean> => {
   const conjugateWith = makeConjugator(verbTemplate);
 
-  return await queue(async () => {
-    let answer = (await shouldDeleteAll)
-      ? "y"
-      : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq] `);
-    switch (answer) {
-      case "q":
-        Deno.exit();
-      case "a":
-        setShouldDeleteAll();
-      case "y":
-        console.log(conjugateWith("ing"), fileName);
-        await Deno.remove(fileName);
-        return true;
-      default:
-        console.log("skipping", fileName);
-        return false;
-    }
-  });
+  let answer = (await shouldDeleteAll)
+    ? "y"
+    : await queuePrompt(
+        `${formatMessage(conjugateWith("e"), fileName)}? [ynaq?] `
+      );
+
+  switch (answer) {
+    case "?":
+      await queueMessage(
+        // prettier -ignore
+        `y - yes
+ n - no`
+      );
+      return await deletePrompt(fileName, verbTemplate);
+    case "q":
+      Deno.exit();
+    case "a":
+      setShouldDeleteAll();
+    case "y":
+      await queueMessageForFile(conjugateWith("ing"), fileName);
+      await Deno.remove(fileName);
+      return true;
+    default:
+      await queueMessageForFile("skipping", fileName);
+      return false;
+  }
 };
 
 const makeConjugator = (verb: string) => (ending: string) =>
