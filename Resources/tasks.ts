@@ -237,22 +237,14 @@ async function deleteFiles(options: DeleteFilesOptions = {}) {
 async function deleteFileIfNecessary(file: DotEntry, implode = false) {
   if (!file.isSymlink) return false;
 
-  try {
-    const target = await Deno.readLink(file.path);
-    if (!target.startsWith(REPO_LOCATION)) return false;
+  const target = await Deno.readLink(file.path);
+  if (!target.startsWith(REPO_LOCATION)) return false;
 
-    if (!implode && !isInvalidFileForTarget(target) && (await exists(target))) {
-      return false;
-    }
-
-    return await queueDeletePrompt(file.path);
-  } catch (err) {
-    if (err instanceof Deno.errors.NotFound) {
-      return false;
-    }
-
-    throw err;
+  if (!implode && !isInvalidFileForTarget(target) && (await exists(target))) {
+    return false;
   }
+
+  return await queueDeletePrompt(file.path);
 }
 
 let shouldDeleteAll = Promise.resolve(false);
@@ -292,9 +284,10 @@ const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
 
 const queueDeletePrompt = async (
   ...args: Parameters<typeof deletePrompt>
-): ReturnType<typeof deletePrompt> => queue(() => {
-  return deletePrompt(...args);
-})
+): ReturnType<typeof deletePrompt> =>
+  queue(() => {
+    return deletePrompt(...args);
+  });
 
 function deleteHelpMessage() {
   console.log(
