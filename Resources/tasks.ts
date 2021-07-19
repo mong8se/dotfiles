@@ -271,13 +271,7 @@ const deletePrompt = async (
 
   switch (answer) {
     case "?":
-      console.log(
-        // prettier-ignore
-        `y - yes
-n - no
-a - all
-q - quit`
-      );
+      deleteHelpMessage();
       return await deletePrompt(fileName, verbTemplate);
     case "q":
       Deno.exit();
@@ -297,9 +291,19 @@ const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
   (waitForIt = waitForIt.then(f)))(Promise.resolve());
 
 const queueDeletePrompt = async (
-  fileName: string,
-  verbTemplate = "delet%s"
-): Promise<boolean> => queue(() => deletePrompt(fileName, verbTemplate));
+  ...args: Parameters<typeof deletePrompt>
+): ReturnType<typeof deletePrompt> => queue(() => {
+  return deletePrompt(...args);
+})
+
+function deleteHelpMessage() {
+  console.log(
+    `y - yes
+n - no
+a - all
+q - quit`
+  );
+}
 
 async function exists(filePath: string): Promise<boolean> {
   try {
