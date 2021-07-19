@@ -21,10 +21,7 @@ const usage = (warning?: string) => {
 const main = async () => {
   switch (Deno.args[0]) {
     case "install":
-      return Promise.all([
-        installFiles("home", { basePathToOmit: "home" }),
-        installFiles("config", { recurse: true }),
-      ]);
+      return installFiles();
     case "cleanup":
       return deleteFiles();
     case "autocleanup":
@@ -84,14 +81,24 @@ const formatMessage = (verb: string, file: string) =>
 const messageForFile = (verb: string, file: string) =>
   console.log(formatMessage(verb, file));
 
-type InstallOptions = {
-  basePathToOmit?: string;
-  recurse?: boolean;
+const installFiles = async () => {
+  for await (const fileList of [
+    findDotFiles("home", { basePathToOmit: "home" }),
+    findDotFiles("config", { recurse: true }),
+  ]) {
+    for await (const [dotFile, target] of fileList) {
+      await decideLink(dotFile, target);
+    }
+  }
 };
-const installFiles = async (
+
+async function* findDotFiles(
   dir: string,
-  options: InstallOptions
-): Promise<void> => {
+  options: {
+    basePathToOmit?: string;
+    recurse?: boolean;
+  }
+): AsyncGenerator<[string, string], void, void> {
   for await (const entry of Deno.readDir(dir)) {
     let relativeTarget = join(dir, entry.name);
     let dotFile = resolveDotFile(
@@ -101,16 +108,16 @@ const installFiles = async (
     );
 
     if (options.recurse && entry.isDirectory) {
-      await installFiles(relativeTarget, options);
+      yield* findDotFiles(relativeTarget, options);
     } else {
       isInvalidFileForTarget(entry.name)
         ? messageForFile("ignoring", dotFile)
-        : await decideLink(dotFile, resolve(relativeTarget));
+        : yield [dotFile, resolve(relativeTarget)];
     }
   }
-};
+}
 
-const decideLink = async (link: string, target: string) => {
+const decideLink = async (link: string, target: string): Promise<boolean> => {
   const [
     linkStats,
     linkTargetStats,
@@ -151,11 +158,11 @@ const decideLink = async (link: string, target: string) => {
           : target,
         link
       );
-      break;
+      return true;
     case "skip":
       messageForFile("", link);
     default:
-      return;
+      return false;
   }
 };
 
@@ -203,7 +210,7 @@ async function deleteFiles(options: DeleteFilesOptions = {}) {
         return;
       }
 
-      return await queueDeletePrompt(fileDir, "remov%s empty directory")
+      return await queueDeletePrompt(fileDir, "remov%s empty directory");
     })
   );
 }
@@ -256,12 +263,12 @@ const deletePrompt = async (
 const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
   (waitForIt = waitForIt.then(f)))(Promise.resolve());
 
-const queueDeletePrompt = async (
-  ...args: Parameters<typeof deletePrompt>
-): ReturnType<typeof deletePrompt> =>
-  queue(() => {
-    return deletePrompt(...args);
-  });
+function wrapWithQueue(fn: (...args: any) => any) {
+  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> =>
+    queue(() => fn(...args));
+}
+
+const queueDeletePrompt = wrapWithQueue(deletePrompt);
 
 function deleteHelpMessage() {
   console.log(
