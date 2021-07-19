@@ -163,38 +163,19 @@ interface DotEntry extends Deno.DirEntry {
   path: string;
 }
 
-type DirEntryFilter = (item: Deno.DirEntry) => boolean;
-type FindDotLinksOptions = {
-  implode?: boolean;
-  recursive?: boolean;
-  preFilter?: DirEntryFilter;
-};
-
-async function findDotLinks(
+async function* findDotLinks(
   dir: string,
-  options: FindDotLinksOptions
-): Promise<DotEntry[]> {
-  let results: DotEntry[] = [];
-
-  try {
-    for await (const item of Deno.readDir(dir)) {
-      const result = item as DotEntry;
-      result.path = join(dir, item.name);
-      if (result.isDirectory && options.recursive) {
-        let more = await findDotLinks(result.path, options);
-        results = results.concat(more);
-      } else if (options.preFilter ? options.preFilter(result) : true) {
-        if (await deleteFileIfNecessary(result, options.implode)) {
-          results.push(result);
-        }
-      }
+  recursive = false
+): AsyncGenerator<DotEntry, void, void> {
+  for await (const item of Deno.readDir(dir)) {
+    const result = item as DotEntry;
+    result.path = join(dir, item.name);
+    if (result.isDirectory && recursive) {
+      yield* findDotLinks(result.path, recursive);
+    } else {
+      yield result;
     }
-  } catch (err) {
-    if (err instanceof Deno.errors.NotFound) return [];
-    throw err;
   }
-
-  return results;
 }
 
 type DeleteFilesOptions = {
@@ -204,33 +185,26 @@ type DeleteFilesOptions = {
 async function deleteFiles(options: DeleteFilesOptions = {}) {
   if (options.withoutPrompting) setShouldDeleteAll();
 
-  const list = await Promise.all([
-    findDotLinks(DOT_LOCATION, {
-      implode: options.implode,
-      preFilter: (item: Deno.DirEntry) => item.name.startsWith("."),
-    }),
-    findDotLinks(join(DOT_LOCATION, ".config"), {
-      implode: options.implode,
-      recursive: true,
-    }),
-  ]);
+  for await (const item of findDotLinks(DOT_LOCATION)) {
+    if (item.name.startsWith(".")) {
+      await deleteFileIfNecessary(item, options.implode);
+    }
+  }
 
-  const emptyDirectories: Record<string, boolean> = {};
+  const dirs: Set<string> = new Set();
+  for await (const item of findDotLinks(join(DOT_LOCATION, ".config"), true)) {
+    if (await deleteFileIfNecessary(item, options.implode))
+      dirs.add(dirname(item.path));
+  }
+
   await Promise.all(
-    list.flat().map(async (file) => {
-      let fileDir = dirname(file.path);
-      if (emptyDirectories[fileDir] === true) return;
+    [...dirs].map(async (fileDir: string) => {
       for await (const _ of Deno.readDir(fileDir)) {
         return;
       }
-      emptyDirectories[fileDir] = true;
-    })
-  );
 
-  await Promise.all(
-    Object.keys(emptyDirectories).map(
-      async (dir) => await queueDeletePrompt(dir, "remov%s empty directory")
-    )
+      return await queueDeletePrompt(fileDir, "remov%s empty directory")
+    })
   );
 }
 
