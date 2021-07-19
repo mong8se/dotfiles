@@ -76,18 +76,13 @@ const isInvalidFileForTarget = (file: string) => {
   return invalidPattern.test(basename(file));
 };
 
-const queue = ((pq: Promise<any>) => (f: () => any) =>
-  pq.then(() => (pq = Promise.resolve(f()))))(Promise.resolve());
-
-const queueMessage = (text: string) => queue(() => console.log(text));
-
 const formatMessage = (verb: string, file: string) =>
   `${verb.padStart(9, " ")} ${
     file.startsWith("/") ? relative(DOT_LOCATION, file) : dotBasename(file)
   }`;
 
-const queueMessageForFile = (verb: string, file: string) =>
-  queueMessage(formatMessage(verb, file));
+const messageForFile = (verb: string, file: string) =>
+  console.log(formatMessage(verb, file));
 
 type InstallOptions = {
   basePathToOmit?: string;
@@ -109,7 +104,7 @@ const installFiles = async (
       await installFiles(relativeTarget, options);
     } else {
       isInvalidFileForTarget(entry.name)
-        ? await queueMessageForFile("ignoring", dotFile)
+        ? messageForFile("ignoring", dotFile)
         : await decideLink(dotFile, resolve(relativeTarget));
     }
   }
@@ -138,7 +133,7 @@ const decideLink = async (link: string, target: string) => {
   ) {
     result = "skip";
   } else {
-    if (await deletePrompt(link, "replac%s")) {
+    if (await queueDeletePrompt(link, "replac%s")) {
       result = "silentlink";
     } else {
       result = "silentskip";
@@ -147,7 +142,7 @@ const decideLink = async (link: string, target: string) => {
 
   switch (result) {
     case "link":
-      await queueMessageForFile("linking", link);
+      messageForFile("linking", link);
     case "silentlink":
       await Deno.mkdir(dirname(link), { recursive: true });
       await Deno.symlink(
@@ -158,7 +153,7 @@ const decideLink = async (link: string, target: string) => {
       );
       break;
     case "skip":
-      await queueMessageForFile("", link);
+      messageForFile("", link);
     default:
       return;
   }
@@ -234,7 +229,7 @@ async function deleteFiles(options: DeleteFilesOptions = {}) {
 
   await Promise.all(
     Object.keys(emptyDirectories).map(
-      async (dir) => await deletePrompt(dir, "remov%s empty directory")
+      async (dir) => await queueDeletePrompt(dir, "remov%s empty directory")
     )
   );
 }
@@ -250,7 +245,7 @@ async function deleteFileIfNecessary(file: DotEntry, implode = false) {
       return false;
     }
 
-    return await deletePrompt(file.path);
+    return await queueDeletePrompt(file.path);
   } catch (err) {
     if (err instanceof Deno.errors.NotFound) {
       return false;
@@ -263,26 +258,25 @@ async function deleteFileIfNecessary(file: DotEntry, implode = false) {
 let shouldDeleteAll = Promise.resolve(false);
 const setShouldDeleteAll = () => (shouldDeleteAll = Promise.resolve(true));
 
-const queuePrompt = (text: string) => queue(() => prompt(text));
-
 const deletePrompt = async (
   fileName: string,
   verbTemplate = "delet%s"
 ): Promise<boolean> => {
-  const conjugateWith = makeConjugator(verbTemplate);
+  const conjugateWith = (ending: string): string =>
+    sprintf(verbTemplate, ending);
 
   let answer = (await shouldDeleteAll)
     ? "y"
-    : await queuePrompt(
-        `${formatMessage(conjugateWith("e"), fileName)}? [ynaq?] `
-      );
+    : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq?] `);
 
   switch (answer) {
     case "?":
-      await queueMessage(
-        // prettier -ignore
+      console.log(
+        // prettier-ignore
         `y - yes
- n - no`
+n - no
+a - all
+q - quit`
       );
       return await deletePrompt(fileName, verbTemplate);
     case "q":
@@ -290,17 +284,22 @@ const deletePrompt = async (
     case "a":
       setShouldDeleteAll();
     case "y":
-      await queueMessageForFile(conjugateWith("ing"), fileName);
+      messageForFile(conjugateWith("ing"), fileName);
       await Deno.remove(fileName);
       return true;
     default:
-      await queueMessageForFile("skipping", fileName);
+      messageForFile("skipping", fileName);
       return false;
   }
 };
 
-const makeConjugator = (verb: string) => (ending: string) =>
-  sprintf(verb, ending);
+const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
+  (waitForIt = waitForIt.then(f)))(Promise.resolve());
+
+const queueDeletePrompt = async (
+  fileName: string,
+  verbTemplate = "delet%s"
+): Promise<boolean> => queue(() => deletePrompt(fileName, verbTemplate));
 
 async function exists(filePath: string): Promise<boolean> {
   try {
