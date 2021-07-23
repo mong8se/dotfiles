@@ -190,7 +190,7 @@ type DeleteFilesOptions = {
   withoutPrompting?: boolean;
 };
 async function deleteFiles(options: DeleteFilesOptions = {}) {
-  if (options.withoutPrompting) setShouldDeleteAll();
+  if (options.withoutPrompting) shouldDelete.all = true;
 
   for await (const item of findDotLinks(DOT_LOCATION)) {
     if (item.name.startsWith(".")) {
@@ -204,6 +204,7 @@ async function deleteFiles(options: DeleteFilesOptions = {}) {
       dirs.add(dirname(item.path));
   }
 
+  if (!options.withoutPrompting) shouldDelete.all = false;
   await Promise.all(
     [...dirs].map(async (fileDir: string) => {
       for await (const _ of Deno.readDir(fileDir)) {
@@ -228,8 +229,15 @@ async function deleteFileIfNecessary(file: DotEntry, implode = false) {
   return await queueDeletePrompt(file.path);
 }
 
-let shouldDeleteAll = Promise.resolve(false);
-const setShouldDeleteAll = () => (shouldDeleteAll = Promise.resolve(true));
+const shouldDelete = new Proxy(
+  {} as Record<string, Promise<boolean> | boolean>,
+  {
+    set: (target, prop: string, value: boolean) => {
+      target[prop] = Promise.resolve(value);
+      return true;
+    },
+  }
+);
 
 const deletePrompt = async (
   fileName: string,
@@ -238,7 +246,7 @@ const deletePrompt = async (
   const conjugateWith = (ending: string): string =>
     sprintf(verbTemplate, ending);
 
-  let answer = (await shouldDeleteAll)
+  let answer = (await shouldDelete.all)
     ? "y"
     : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq?] `);
 
@@ -249,7 +257,7 @@ const deletePrompt = async (
     case "q":
       Deno.exit();
     case "a":
-      setShouldDeleteAll();
+      shouldDelete.all = true;
     case "y":
       messageForFile(conjugateWith("ing"), fileName);
       await Deno.remove(fileName);
