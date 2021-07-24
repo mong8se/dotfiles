@@ -87,7 +87,18 @@ const installFiles = async () => {
     findDotFiles("config", { recurse: true }),
   ]) {
     for await (const [dotFile, target] of fileList) {
-      await decideLink(dotFile, target);
+      if (await decideLink(dotFile, target)) {
+        const [targetsTarget] = await Promise.allSettled([
+          Deno.readLink(target),
+          Deno.mkdir(dirname(dotFile), { recursive: true }),
+        ]);
+        await Deno.symlink(
+          targetsTarget.status === "fulfilled"
+            ? resolve(dirname(target), targetsTarget.value)
+            : target,
+          dotFile
+        );
+      }
     }
   }
 };
@@ -118,51 +129,25 @@ async function* findDotFiles(
 }
 
 const decideLink = async (link: string, target: string): Promise<boolean> => {
-  const [
-    linkStats,
-    linkTargetStats,
-    targetStats,
-    targetsTarget,
-  ] = await Promise.allSettled([
+  const [linkStats, linkTargetStats, targetStats] = await Promise.allSettled([
     Deno.lstat(link),
     Deno.stat(link),
     Deno.stat(target),
-    Deno.readLink(target),
   ]);
 
-  let result: string;
-  if (targetStats.status === "rejected") result = "skip";
-  else if (linkStats.status === "rejected") result = "link";
-  else if (
-    linkTargetStats.status === "fulfilled" &&
-    linkTargetStats.value.ino === targetStats.value.ino &&
-    linkTargetStats.value.dev === targetStats.value.dev
-  ) {
-    result = "skip";
-  } else {
-    if (await queueDeletePrompt(link, "replac%s")) {
-      result = "silentlink";
-    } else {
-      result = "silentskip";
-    }
-  }
-
-  switch (result) {
-    case "link":
-      messageForFile("linking", link);
-    case "silentlink":
-      await Deno.mkdir(dirname(link), { recursive: true });
-      await Deno.symlink(
-        targetsTarget.status === "fulfilled"
-          ? resolve(dirname(target), targetsTarget.value)
-          : target,
-        link
-      );
-      return true;
-    case "skip":
-      messageForFile("", link);
-    default:
+  switch (true) {
+    case targetStats.status === "rejected":
+      messageForFile("skipping", link);
       return false;
+    case linkStats.status === "rejected":
+      messageForFile("linking", link);
+      return true;
+    case linkTargetStats.status === "fulfilled" && // @ts-ignore seems to be a TS bug
+      identical(linkTargetStats.value, targetStats.value):
+      messageForFile("", link);
+      return false;
+    default:
+      return await queueDeletePrompt(link, "replac%s");
   }
 };
 
@@ -194,14 +179,13 @@ async function deleteFiles(options: DeleteFilesOptions = {}) {
 
   for await (const item of findDotLinks(DOT_LOCATION)) {
     if (item.name.startsWith(".")) {
-      await deleteFileIfNecessary(item, options.implode);
+      await decideDelete(item, options.implode);
     }
   }
 
   const dirs: Set<string> = new Set();
   for await (const item of findDotLinks(join(DOT_LOCATION, ".config"), true)) {
-    if (await deleteFileIfNecessary(item, options.implode))
-      dirs.add(dirname(item.path));
+    if (await decideDelete(item, options.implode)) dirs.add(dirname(item.path));
   }
 
   if (!options.withoutPrompting) shouldDelete.all = false;
@@ -216,15 +200,15 @@ async function deleteFiles(options: DeleteFilesOptions = {}) {
   );
 }
 
-async function deleteFileIfNecessary(file: DotEntry, implode = false) {
+async function decideDelete(file: DotEntry, implode = false) {
   if (!file.isSymlink) return false;
 
   const target = await Deno.readLink(file.path);
-  if (!target.startsWith(REPO_LOCATION)) return false;
-
-  if (!implode && !isInvalidFileForTarget(target) && (await exists(target))) {
+  if (
+    !target.startsWith(REPO_LOCATION) ||
+    (!implode && !isInvalidFileForTarget(target) && (await exists(target)))
+  )
     return false;
-  }
 
   return await queueDeletePrompt(file.path);
 }
@@ -287,7 +271,7 @@ q - quit`
   );
 }
 
-async function exists(filePath: string): Promise<boolean> {
+const exists = async (filePath: string): Promise<boolean> => {
   try {
     await Deno.lstat(filePath);
     return true;
@@ -297,7 +281,10 @@ async function exists(filePath: string): Promise<boolean> {
     }
     throw err;
   }
-}
+};
+
+const identical = (first: Deno.FileInfo, second: Deno.FileInfo): boolean =>
+  first.ino === second.ino && first.dev === second.dev;
 
 if (import.meta.main) {
   try {
