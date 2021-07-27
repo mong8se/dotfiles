@@ -118,12 +118,12 @@ augroup CursorLine
 augroup END
 
 augroup FocusIssues
-  " Remove ALL autocommands for the current group.
   autocmd!
 
-  " When focus is lost, leave insert or replace mode and
-  " save the buffer if it is modified and has a filename
-  autocmd BufLeave,FocusLost,VimSuspend * stopinsert | if !empty(@%) | update | endif
+  " leave insert or replace mode
+  autocmd BufEnter,WinLeave,FocusLost,VimSuspend * if empty(&buftype) | stopinsert | endif
+  " Save the buffer if it is modified and has a filename
+  autocmd BufLeave,FocusLost,VimSuspend  if !empty(@%) | update | endif
 augroup END
 
 "------------------------------------------------------------
@@ -199,8 +199,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " custom functions
-nnoremap <silent> <Leader>tn :call mong8se#ToggleNumberMode()<CR>
-nnoremap <silent> <Leader>tb :call mong8se#ScrollBindAllWindows()<CR>
+nmap <silent> <Leader>tn <Plug>(mong8se_toggle_numbers)
+nnoremap <silent> <Leader>tb <Plug>(mong8se_scrollbind)<CR>
 
 nnoremap <silent> <Leader>tc :Telescope colorscheme<cr>
 
@@ -319,7 +319,7 @@ vnoremap <silent> # :<C-U>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 
 if has('nvim')
-  nmap <silent> <Leader>p :call mong8se#ActivateGitOrFiles()<CR>
+  nmap <silent> <Leader>p <Plug>(mong8se_p)
   nmap <silent> <Leader>pf :Telescope find_files<CR>
 
   nmap <silent> <Leader>: :Telescope commands<CR>
