@@ -122,8 +122,9 @@ augroup FocusIssues
 
   " leave insert or replace mode
   autocmd BufEnter,WinLeave,FocusLost,VimSuspend * if empty(&buftype) | stopinsert | endif
+
   " Save the buffer if it is modified and has a filename
-  autocmd BufLeave,FocusLost,VimSuspend  if !empty(@%) | update | endif
+  autocmd BufLeave,FocusLost,VimSuspend * if !empty(@%) | update | endif
 augroup END
 
 "------------------------------------------------------------
