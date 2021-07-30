@@ -92,7 +92,7 @@ const installFiles = async () => {
           Deno.readLink(target),
           Deno.mkdir(dirname(dotFile), { recursive: true }),
         ]);
-        await Deno.symlink(
+        Deno.symlink(
           targetsTarget.status === "fulfilled"
             ? resolve(dirname(target), targetsTarget.value)
             : target,
