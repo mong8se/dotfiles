@@ -28,8 +28,10 @@ if has('nvim')
   Plug 'hoob3rt/lualine.nvim'
   Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
   Plug 'akinsho/nvim-bufferline.lua'
+  Plug 'lukas-reineke/indent-blankline.nvim'
 else
   Plug 'itchyny/lightline.vim'
+  Plug 'Yggdroot/indentLine'
 end
 
 Plug 'roman/golden-ratio' " C-W \
@@ -69,8 +71,6 @@ Plug 'tomtom/tcomment_vim' "gc
 
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'RRethy/vim-illuminate'
-
-Plug 'Yggdroot/indentLine'
 
 if has('nvim')
   Plug 'neovim/nvim-lspconfig'

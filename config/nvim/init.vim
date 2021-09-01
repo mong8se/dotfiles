@@ -539,8 +539,13 @@ lua << EOF
     options = {theme = 'wombat'}
   }
   require("bufferline").setup{}
-EOF
 
+  require("indent_blankline").setup {
+      show_current_context = true,
+      buftype_exclude = {"terminal"}
+  }
+EOF
+else
 end
 
 "------------------------------------------------------------
