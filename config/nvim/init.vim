@@ -338,6 +338,7 @@ if has('nvim')
   nmap <silent> <Leader>ct :Telescope treesitter<CR>
   nmap <silent> <Leader>cr :lua vim.lsp.buf.rename()<CR>
   nmap <silent> <Leader>ce :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+  nmap <silent> <Leader>cz :lua vim.lsp.buf.type_definition()<CR>
 
   " insert
   nmap <silent> <Leader>ir :Telescope registers<CR>
@@ -445,11 +446,52 @@ vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
--- require'lspconfig'.tsserver.setup{}
-require'lspconfig'.denols.setup{}
+require'lspconfig'.tsserver.setup{}
+-- require'lspconfig'.denols.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.cssls.setup{}
 require'lspconfig'.jsonls.setup{}
+
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+}
+
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+    enable = true,
+
+    -- Automatically jump forward to textobj, similar to targets.vim 
+    lookahead = true,
+
+    keymaps = {
+      -- You can use the capture groups defined in textobjects.scm
+      ["af"] = "@function.outer",
+      ["if"] = "@function.inner",
+      ["ac"] = "@class.outer",
+      ["ic"] = "@class.inner",
+
+      -- Or you can define your own textobjects like this
+      ["iF"] = {
+        python = "(function_definition) @function",
+        cpp = "(function_definition) @function",
+        c = "(function_definition) @function",
+        java = "(method_declaration) @function",
+        },
+      },
+    },
+  swap = {
+  enable = true,
+  swap_next = {
+    ["]a"] = "@parameter.inner",
+    },
+  swap_previous = {
+    ["[a"] = "@parameter.inner",
+    },
+  },
+},
+}
 EOF
 
 else
