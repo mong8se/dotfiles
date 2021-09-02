@@ -97,8 +97,14 @@ if ! has('nvim')
   runtime! macros/matchit.vim
 end
 
-set foldlevelstart=99
-set foldmethod=manual
+if has('nvim')
+  set foldlevelstart=3
+  set foldmethod=expr
+  set foldexpr=nvim_treesitter#foldexpr()
+else
+  set foldlevelstart=99
+  set foldmethod=manual
+end
 
 if has('clipboard') && !exists("g:gui_oni")
   if has('x11') && version >= 703
@@ -451,6 +457,12 @@ require'lspconfig'.tsserver.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.cssls.setup{}
 require'lspconfig'.jsonls.setup{}
+  require'lspconfig'.gopls.setup {
+    on_attach = function(client)
+      -- [[ other on_attach code ]]
+      require 'illuminate'.on_attach(client)
+    end,
+  }
 
 require'treesitter-context'.setup{
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -491,6 +503,21 @@ require'nvim-treesitter.configs'.setup {
     },
   },
 },
+  highlight = {
+  enable = true,
+  -- custom_captures = {
+  -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+  -- ["foo.bar"] = "Identifier",
+  -- },
+  -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+  -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+  -- Using this option may slow down your editor, and you may see some duplicate highlights.
+  -- Instead of true it can also be a list of languages
+  additional_vim_regex_highlighting = false,
+  },
+indent = {
+enable = true
+}
 }
 EOF
 
@@ -528,7 +555,7 @@ let loaded_matchparen   = 1
 let loaded_netrw        = 1
 
 " vim-illuminate
-hi illuminatedWord cterm=underline gui=underline
+" hi illuminatedWord cterm=underline gui=underline
 
 " indentLine
 let g:indentLine_char = "⡇"
