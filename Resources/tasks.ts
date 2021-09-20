@@ -8,16 +8,6 @@ import {
 
 import { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
 
-const usage = (warning?: string) => {
-  if (warning) console.warn("Warning:", warning);
-  console.log(
-    `Usage: ${
-      new URL("", import.meta.url).pathname
-    } Commands: install cleanup autocleanup implode `
-  );
-  Deno.exit(warning ? 2 : 0);
-};
-
 const main = async () => {
   switch (Deno.args[0]) {
     case "install":
@@ -33,16 +23,31 @@ const main = async () => {
   }
 };
 
-const REPO_LOCATION =
-  Deno.env.get("REPO_LOCATION")! ||
-  usage("REPO_LOCATION environment variable is not set");
+const usage = (warning?: string) => {
+  if (warning) console.warn("Warning:", warning);
+  console.log(
+    `Usage: ${
+      new URL("", import.meta.url).pathname
+    } Commands: install cleanup autocleanup implode `
+  );
+  Deno.exit(warning ? 2 : 0);
+};
 
-const DOT_LOCATION =
-  Deno.env.get("HOME")! || usage("HOME environment variable is not set");
+function envOrBust(name: string): string {
+  const ev = Deno.env.get(name);
+  if (ev === undefined) {
+    return usage(`Required environment variable "${name}" missing.`);
+  } else {
+    return ev;
+  }
+}
+
+const REPO_LOCATION = envOrBust("REPO_LOCATION");
+const DOT_LOCATION = envOrBust("HOME");
 
 type ThisThing = {
   platform: "mac" | "linux" | "unknown";
-  machine: string;
+  machine?: string;
 };
 const THIS: ThisThing = {
   platform: ((value) => {
@@ -55,8 +60,7 @@ const THIS: ThisThing = {
         return "unknown";
     }
   })(Deno.build.os),
-  machine:
-    Deno.env.get("HOST42")! || usage("HOST42 environment variable is not set"),
+  machine: envOrBust("HOST42"),
 };
 
 const dotBasename = (file: string) =>

@@ -98,7 +98,7 @@ if ! has('nvim')
 end
 
 if has('nvim')
-  set foldlevelstart=3
+  set foldlevelstart=5
   set foldmethod=expr
   set foldexpr=nvim_treesitter#foldexpr()
 else
