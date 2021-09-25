@@ -1,4 +1,10 @@
-fzf_key_bindings
+if type -q fzf_fish_bindings
+  fzf_fish_bindings
+else if test -f /usr/share/fzf/shell/key-bindings.fish
+  source /usr/share/fzf/shell/key-bindings.fish
+else
+  echo "No fd or rg, FZF falling back."
+end
 
 function bind_bang
   switch (commandline -t)
