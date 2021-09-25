@@ -34,6 +34,15 @@ function vi:cleanup {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugClean
 }
 
+function deno:install {
+  export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
+  export ASDF_DATA_DIR="$ASDF_DIR"
+  . $ASDF_DIR/asdf.sh
+  asdf plugin add deno
+  asdf install deno latest
+  asdf global deno latest
+}
+
 function homebrew:install {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
@@ -66,6 +75,7 @@ function update {
 function init {
   submodule:init
   submodule:update
+  deno:install
   vi:install
   install
 }

@@ -19,3 +19,6 @@
 	path = Resources/base16-fzf
 	url = https://github.com/fnune/base16-fzf.git
 	branch = master
+[submodule "Resources/asdf"]
+	path = Resources/asdf
+	url = https://github.com/asdf-vm/asdf.git

@@ -167,6 +167,10 @@ if status --is-interactive
   end
 end
 
+set -x ASDF_DIR "$DOTFILES_RESOURCES/asdf"
+set -x ASDF_DATA_DIR "$ASDF_DIR"
+source $ASDF_DIR/asdf.fish
+
 xsource _platform.fish
 
 xsource _machine.fish local.fish
