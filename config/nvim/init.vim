@@ -107,12 +107,11 @@ else
 end
 
 if has('clipboard') && !exists("g:gui_oni")
-  if has('x11') && version >= 703
-    " Default yank and paste go to system clipboard
-    set clipboard=unnamedplus
+  if has('unnamedplus')
+    set clipboard^=unnamed,unnamedplus
   else
-    set clipboard=unnamed
-  endif
+    set clipboard^=unnamed
+  end
 endif
 
 " cursorline only for active window
