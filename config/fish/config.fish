@@ -85,6 +85,9 @@ if status --is-interactive
   if type -q fd
     set -x FZF_DEFAULT_COMMAND 'fd --type f --no-ignore'
     set -x FZF_CTRL_T_COMMAND 'fd --type f . "$dir"'
+  else if type -q rg
+    set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore-vcs --hidden'
+    set -x FZF_CTRL_T_COMMAND 'rg --files . "$dir"'
   end
 
   function autoGrowl -d "Auto Growl" -e fish_postexec

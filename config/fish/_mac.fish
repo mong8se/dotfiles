@@ -10,10 +10,6 @@ function isDarkMode -d "Is Mac currently in Dark mode"
   defaults read -g AppleInterfaceStyle > /dev/null 2>&1
 end
 
-function flush_dns -d "Flush DNS Cache"
-  /usr/bin/dscacheutil -flushcache
-end
-
 function pman -d "Open man page in Preview"
   man -t $argv | open -f -a /Applications/Preview.app
 end
