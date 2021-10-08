@@ -97,44 +97,19 @@ if status --is-interactive
     end
   end
 
-  if type -q fre
-    if type -q disown
-      function __fasd_run --on-variable PWD
-        command fre --add (pwd) > "/dev/null" 2>&1 &; disown
-      end
-    else
-      function __fasd_run --on-variable PWD
-        command fre --add (pwd) > "/dev/null" 2>&1 &
-      end
-    end
-
-    function __fasd_query
+  if type -q zoxide
+    zoxide init fish --no-aliases | source
+    function z
       if count $argv > "/dev/null"
-        command fre --sorted | grep -m 1 $argv
+        set -xg __zoxide_last_argv $argv
+        __zoxide_z $argv
       else
-        command fre --sorted | fzf
+        __zoxide_zi
       end
     end
-
-  else if type -q zoxide
-    if type -q disown
-      function __fasd_run --on-variable PWD
-        command zoxide add (pwd) > "/dev/null" 2>&1 &; disown
-      end
-    else
-      function __fasd_run --on-variable PWD
-        command zoxide add (pwd) > "/dev/null" 2>&1 &
-      end
+    function zz
+      __zoxide_z $__zoxide_last_argv
     end
-
-    function __fasd_query
-      if count $argv > "/dev/null"
-        command zoxide query -- $argv
-      else
-        command zoxide query -i
-      end
-    end
-
   else if type -q fasd
     if type -q disown
       function __fasd_run --on-variable PWD
@@ -153,12 +128,11 @@ if status --is-interactive
         command fasd -dlR | fzf
       end
     end
-  end
-
-  function z
-    set -l result (__fasd_query $argv)
-    test -z "$result"; and return
-    test -d "$result"; and cd "$result"
+    function z
+      set -l result (__fasd_query $argv)
+      test -z "$result"; and return
+      test -d "$result"; and cd "$result"
+    end
   end
 
   function fv
