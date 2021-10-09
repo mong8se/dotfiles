@@ -39,8 +39,11 @@ end
 
 function xsource -d "Source list of files if they exist."
   for file in $argv
-    if test -f "$__fish_config_dir/$file"
-      source "$__fish_config_dir/$file"
+    if test ! (string match '/*' "$file")
+      set file "$__fish_config_dir/$file"
+    end
+    if test -f "$file"
+      source "$file"
     end
   end
 end
