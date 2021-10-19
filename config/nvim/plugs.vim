@@ -29,6 +29,7 @@ if has('nvim')
   Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
   Plug 'akinsho/nvim-bufferline.lua'
   Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'folke/trouble.nvim'
 else
   Plug 'itchyny/lightline.vim'
   Plug 'Yggdroot/indentLine'

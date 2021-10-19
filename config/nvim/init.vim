@@ -210,6 +210,14 @@ nnoremap <silent> <Leader>tb <Plug>(mong8se_scrollbind)<CR>
 
 nnoremap <silent> <Leader>tc :Telescope colorscheme<cr>
 
+" Trouble
+nnoremap <leader>tt <cmd>TroubleToggle<cr>
+nnoremap <leader>tw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
+nnoremap <leader>td <cmd>TroubleToggle lsp_document_diagnostics<cr>
+nnoremap <leader>tq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>tl <cmd>TroubleToggle loclist<cr>
+nnoremap gR <cmd>TroubleToggle lsp_references<cr>
+
 nnoremap [<cr>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<cr>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
@@ -371,7 +379,7 @@ nmap <silent> <Leader>f- <Plug>(dirvish_up)
 nmap <silent> ]b :bn<CR>
 nmap <silent> [b :bp<CR>
 if has('nvim')
-  nnoremap <silent> <Leader><Space> :lua require'telescope.builtin'.buffers{sort_lastused=1}<CR>
+  nnoremap <silent> <Leader><Space> :lua require'telescope.builtin'.buffers{sort_lastused=1, ignore_current_buffer=1}<CR>
 else
   nnoremap <silent> <Leader><Space> :Buffers<CR>
 endif
@@ -392,6 +400,16 @@ let g:sneak#streak = 1
 if has('nvim')
 
 lua << EOF
+require('telescope').setup{
+defaults = {
+  path_display={
+    smart=1,
+    truncate=3
+  }
+  }
+}
+
+
 -- Compe setup
 require'compe'.setup {
   enabled = true;
@@ -493,31 +511,39 @@ require'nvim-treesitter.configs'.setup {
       },
     },
   swap = {
-  enable = true,
-  swap_next = {
-    ["]a"] = "@parameter.inner",
-    },
-  swap_previous = {
-    ["[a"] = "@parameter.inner",
+    enable = true,
+    swap_next = {
+      ["]a"] = "@parameter.inner",
+      },
+    swap_previous = {
+      ["[a"] = "@parameter.inner",
+      },
     },
   },
-},
-  highlight = {
-  enable = true,
-  -- custom_captures = {
-  -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-  -- ["foo.bar"] = "Identifier",
-  -- },
-  -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-  -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-  -- Using this option may slow down your editor, and you may see some duplicate highlights.
-  -- Instead of true it can also be a list of languages
-  additional_vim_regex_highlighting = false,
-  },
-indent = {
-enable = true
+    highlight = {
+    enable = true,
+    -- custom_captures = {
+    -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+    -- ["foo.bar"] = "Identifier",
+    -- },
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+    },
+  indent = {
+  enable = true
+  }
 }
+
+require("trouble").setup {
+-- your configuration comes here
+-- or leave it empty to use the default settings
+-- refer to the configuration section below
 }
+
+
 EOF
 
 else
