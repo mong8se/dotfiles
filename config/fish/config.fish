@@ -75,9 +75,10 @@ if status --is-interactive
   if set -q KITTY_WINDOW_ID
     alias icat="kitty +kitten icat"
     alias kg="kitty +kitten hyperlinked_grep"
+    alias ssh="kitty +kitten ssh"
   end
 
-  alias run="bash ./Taskfile"
+  alias task="bash ./Taskfile"
 
   # Set Base16 Shell Colors
   base16 gruvbox-dark-soft false
