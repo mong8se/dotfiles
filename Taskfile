@@ -20,7 +20,7 @@ function submodule:update {
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-TASKS="-q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/tasks.ts"
+TASKS="-q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function vi:install {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
