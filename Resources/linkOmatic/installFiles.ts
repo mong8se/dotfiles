@@ -1,10 +1,11 @@
 import { resolve, dirname, join, relative } from "./deps.ts";
-
 import { messageForFile } from "./messages.ts";
-
 import { queueDeletePrompt } from "./deleteFiles.ts";
-
-import { resolveDotFile, isInvalidFileForTarget, identical } from "./fileUtils.ts";
+import {
+  resolveDotFile,
+  isInvalidFileForTarget,
+  identical,
+} from "./fileUtils.ts";
 
 export default async function installFiles() {
   for await (const fileList of [
@@ -60,19 +61,19 @@ const decideLink = async (link: string, target: string): Promise<boolean> => {
     Deno.stat(target),
   ]);
 
-  switch (true) {
-    case targetStats.status === "rejected":
-      messageForFile("skipping", link);
-      return false;
-    case linkStats.status === "rejected":
-      messageForFile("linking", link);
-      return true;
-    case linkTargetStats.status === "fulfilled" &&
-      targetStats.status === "fulfilled" &&
-      identical(linkTargetStats.value, targetStats.value):
-      messageForFile("", link);
-      return false;
-    default:
-      return await queueDeletePrompt(link, "replac%s");
+  if (targetStats.status === "rejected") {
+    messageForFile("skipping", link);
+    return false;
+  } else if (linkStats.status === "rejected") {
+    messageForFile("linking", link);
+    return true;
+  } else if (
+    linkTargetStats.status === "fulfilled" &&
+    identical(linkTargetStats.value, targetStats.value)
+  ) {
+    messageForFile("", link);
+    return false;
+  } else {
+    return await queueDeletePrompt(link, "replac%s");
   }
 };

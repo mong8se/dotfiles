@@ -25,10 +25,10 @@ const THIS: ThisThing = {
 
 function envOrBust(name: string): string {
   const ev = Deno.env.get(name);
-  if (ev === undefined) {
-    return usage(`Required environment variable "${name}" missing.`);
-  } else {
+  if (typeof ev === "string") {
     return ev;
+  } else {
+    return usage(`Required environment variable "${name}" missing.`);
   }
 }
 
@@ -56,9 +56,6 @@ export const exists = async (filePath: string): Promise<boolean> => {
   }
 };
 
-export const resolveDotFile = (file: string) =>
-  join(DOT_LOCATION, dotBasename(file));
-
 export const pointsToRepo = (target: string): boolean =>
   target.startsWith(REPO_LOCATION);
 
@@ -67,5 +64,9 @@ export const dotLocation = (subPath?: string) => {
   return DOT_LOCATION;
 };
 
-export const identical = (first: Deno.FileInfo, second: Deno.FileInfo): boolean =>
-  first.ino === second.ino && first.dev === second.dev;
+export const resolveDotFile = (file: string) => dotLocation(dotBasename(file));
+
+export const identical = (
+  first: Deno.FileInfo,
+  second: Deno.FileInfo
+): boolean => first.ino === second.ino && first.dev === second.dev;

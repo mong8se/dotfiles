@@ -1,14 +1,11 @@
 import { dirname, join, sprintf } from "./deps.ts";
-
 import {
   wrapWithQueue,
   deleteHelpMessage,
   formatMessage,
   messageForFile,
 } from "./messages.ts";
-
 import { DotEntry } from "./types.ts";
-
 import {
   exists,
   pointsToRepo,
