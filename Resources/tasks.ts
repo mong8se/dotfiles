@@ -4,7 +4,11 @@ import {
   join,
   relative,
   resolve,
-} from "https://deno.land/std@0.100.0/path/mod.ts";
+} from "https://deno.land/std@0.113.0/path/mod.ts";
+
+import {
+  bold
+} from "https://deno.land/std@0.113.0/fmt/colors.ts";
 
 import { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
 
@@ -78,7 +82,7 @@ const isInvalidFileForTarget = (file: string) => {
 };
 
 const formatMessage = (verb: string, file: string) =>
-  `${verb.padStart(9, " ")} ${
+  `${bold(verb.padStart(9, " "))} ${
     file.startsWith("/") ? relative(DOT_LOCATION, file) : dotBasename(file)
   }`;
 
@@ -146,7 +150,7 @@ const decideLink = async (link: string, target: string): Promise<boolean> => {
     case linkStats.status === "rejected":
       messageForFile("linking", link);
       return true;
-    case linkTargetStats.status === "fulfilled" && // @ts-ignore seems to be a TS bug
+    case linkTargetStats.status === "fulfilled" && targetStats.status === "fulfilled" &&
       identical(linkTargetStats.value, targetStats.value):
       messageForFile("", link);
       return false;
