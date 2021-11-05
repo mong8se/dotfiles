@@ -92,7 +92,7 @@ function default {
 function help {
   echo "$0 <task> <args>"
   echo "Tasks:"
-  compgen -A function | sed -E '/(help|default)/d' | cat -n
+  compgen -A function | grep -v 'help\|default' | cat -n
   echo
   type default | sed -e '1d; 2s/()/task:/; s/^/    /'
   echo
