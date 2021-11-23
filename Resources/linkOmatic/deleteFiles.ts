@@ -1,16 +1,12 @@
-import { dirname, join, sprintf } from "./deps.ts";
-import {
-  wrapWithQueue,
-  deleteHelpMessage,
-  formatMessage,
-  messageForFile,
-} from "./messages.ts";
+import { dirname } from "./deps.ts";
+import { queueDeletePrompt } from "./messages.ts";
 import { DotEntry } from "./types.ts";
 import {
   exists,
   pointsToRepo,
-  dotLocation,
-  isInvalidFileForTarget,
+  absoluteDotfile,
+  isInvalidFileToTarget,
+  findDotLinks,
 } from "./fileUtils.ts";
 
 type DeleteFilesOptions = {
@@ -21,14 +17,14 @@ type DeleteFilesOptions = {
 export default async function deleteFiles(options: DeleteFilesOptions = {}) {
   if (options.withoutPrompting) shouldDelete.all = true;
 
-  for await (const item of findDotLinks(dotLocation())) {
+  for await (const item of findDotLinks(absoluteDotfile())) {
     if (item.name.startsWith(".")) {
       await decideDelete(item, options.implode);
     }
   }
 
   const dirs: Set<string> = new Set();
-  for await (const item of findDotLinks(dotLocation(".config"), true)) {
+  for await (const item of findDotLinks(absoluteDotfile(".config"), true)) {
     if (await decideDelete(item, options.implode)) dirs.add(dirname(item.path));
   }
 
@@ -39,24 +35,9 @@ export default async function deleteFiles(options: DeleteFilesOptions = {}) {
         return;
       }
 
-      return await queueDeletePrompt(fileDir, "remov%s empty directory");
+      return await deletePrompt(fileDir, "remov%s empty directory");
     })
   );
-}
-
-async function* findDotLinks(
-  dir: string,
-  recursive = false
-): AsyncGenerator<DotEntry, void, void> {
-  for await (const item of Deno.readDir(dir)) {
-    const result = item as DotEntry;
-    result.path = join(dir, item.name);
-    if (result.isDirectory && recursive) {
-      yield* findDotLinks(result.path, recursive);
-    } else {
-      yield result;
-    }
-  }
 }
 
 async function decideDelete(file: DotEntry, implode = false) {
@@ -64,12 +45,12 @@ async function decideDelete(file: DotEntry, implode = false) {
 
   const target = await Deno.readLink(file.path);
   if (
-    !pointsToRepo(target) ||
-    (!implode && !isInvalidFileForTarget(target) && (await exists(target)))
+    pointsToRepo(target) &&
+    (implode || isInvalidFileToTarget(target) || !(await exists(target)))
   )
-    return false;
+    return await deletePrompt(file.path);
 
-  return await queueDeletePrompt(file.path);
+  return false;
 }
 
 const shouldDelete = new Proxy(
@@ -82,33 +63,23 @@ const shouldDelete = new Proxy(
   }
 );
 
-const deletePrompt = async (
+export const deletePrompt = async (
   fileName: string,
   verbTemplate = "delet%s"
 ): Promise<boolean> => {
-  const conjugateWith = (ending: string): string =>
-    sprintf(verbTemplate, ending);
-
-  let answer = (await shouldDelete.all)
-    ? "y"
-    : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq?] `);
+  const answer = await queueDeletePrompt(
+    fileName,
+    verbTemplate,
+    shouldDelete.all
+  );
 
   switch (answer) {
-    case "?":
-      deleteHelpMessage();
-      return await deletePrompt(fileName, verbTemplate);
-    case "q":
-      Deno.exit();
     case "a":
       shouldDelete.all = true;
     case "y":
-      messageForFile(conjugateWith("ing"), fileName);
       await Deno.remove(fileName);
       return true;
     default:
-      messageForFile("skipping", fileName);
       return false;
   }
 };
-
-export const queueDeletePrompt = wrapWithQueue(deletePrompt);

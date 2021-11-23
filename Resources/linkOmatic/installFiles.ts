@@ -1,15 +1,15 @@
-import { resolve, dirname, join, relative } from "./deps.ts";
+import { resolve, dirname } from "./deps.ts";
 import { messageForFile } from "./messages.ts";
-import { queueDeletePrompt } from "./deleteFiles.ts";
+import { deletePrompt } from "./deleteFiles.ts";
 import {
-  resolveDotFile,
-  isInvalidFileForTarget,
+  findDotFiles,
   identical,
+  isInvalidFileToTarget,
 } from "./fileUtils.ts";
 
 export default async function installFiles() {
   for await (const fileList of [
-    findDotFiles("home", { basePathToOmit: "home" }),
+    findDotFiles("home", { nameRelativeToBase: true }),
     findDotFiles("config", { recurse: true }),
   ]) {
     for await (const [dotFile, target] of fileList) {
@@ -29,32 +29,12 @@ export default async function installFiles() {
   }
 }
 
-async function* findDotFiles(
-  dir: string,
-  options: {
-    basePathToOmit?: string;
-    recurse?: boolean;
-  }
-): AsyncGenerator<[string, string], void, void> {
-  for await (const entry of Deno.readDir(dir)) {
-    let relativeTarget = join(dir, entry.name);
-    let dotFile = resolveDotFile(
-      options.basePathToOmit
-        ? relative(options.basePathToOmit, relativeTarget)
-        : relativeTarget
-    );
-
-    if (options.recurse && entry.isDirectory) {
-      yield* findDotFiles(relativeTarget, options);
-    } else {
-      isInvalidFileForTarget(entry.name)
-        ? messageForFile("ignoring", dotFile)
-        : yield [dotFile, resolve(relativeTarget)];
-    }
-  }
-}
-
 const decideLink = async (link: string, target: string): Promise<boolean> => {
+  if (isInvalidFileToTarget(target)) {
+    messageForFile("ignoring", link);
+    return false;
+  }
+
   const [linkStats, linkTargetStats, targetStats] = await Promise.allSettled([
     Deno.lstat(link),
     Deno.stat(link),
@@ -74,6 +54,6 @@ const decideLink = async (link: string, target: string): Promise<boolean> => {
     messageForFile("", link);
     return false;
   } else {
-    return await queueDeletePrompt(link, "replac%s");
+    return await deletePrompt(link, "replac%s");
   }
 };
