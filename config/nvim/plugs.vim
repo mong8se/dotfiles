@@ -38,7 +38,9 @@ end
 Plug 'roman/golden-ratio' " C-W \
 
 Plug 'unblevable/quick-scope' " f F t T
-Plug 'justinmk/vim-sneak'     " s or z with an operator
+"Plug 'justinmk/vim-sneak'     " s or z with an operator
+Plug 'ggandor/lightspeed.nvim'
+
 Plug 'danilamihailov/beacon.nvim'
 
 Plug 'machakann/vim-sandwich' " sa sd sr
