@@ -8,4 +8,4 @@ export {
 
 export { bold } from "https://deno.land/std@0.113.0/fmt/colors.ts";
 
-export { sprintf } from "https://deno.land/std@0.100.0/fmt/printf.ts";
+export { sprintf } from "https://deno.land/std@0.113.0/fmt/printf.ts";

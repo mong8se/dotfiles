@@ -1,5 +1,5 @@
 import { resolve, dirname } from "./deps.ts";
-import { messageForFile } from "./messages.ts";
+import { fileLog } from "./messages.ts";
 import { deletePrompt } from "./deleteFiles.ts";
 import {
   findDotFiles,
@@ -31,7 +31,7 @@ export default async function installFiles() {
 
 const decideLink = async (link: string, target: string): Promise<boolean> => {
   if (isInvalidFileToTarget(target)) {
-    messageForFile("ignoring", link);
+    fileLog.info("ignoring", link);
     return false;
   }
 
@@ -42,16 +42,16 @@ const decideLink = async (link: string, target: string): Promise<boolean> => {
   ]);
 
   if (targetStats.status === "rejected") {
-    messageForFile("skipping", link);
+    fileLog.info("skipping", link);
     return false;
   } else if (linkStats.status === "rejected") {
-    messageForFile("linking", link);
+    fileLog.info("linking", link);
     return true;
   } else if (
     linkTargetStats.status === "fulfilled" &&
     identical(linkTargetStats.value, targetStats.value)
   ) {
-    messageForFile("", link);
+    fileLog.info("", link);
     return false;
   } else {
     return await deletePrompt(link, "replac%s");

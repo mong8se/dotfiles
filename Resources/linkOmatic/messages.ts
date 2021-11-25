@@ -2,18 +2,41 @@ import { bold, sprintf } from "./deps.ts";
 
 import { relativeDotfile } from "./fileUtils.ts";
 
+import * as log from "https://deno.land/std@0.116.0/log/mod.ts";
+
+await log.setup({
+  handlers: {
+    functionFmt: new log.handlers.ConsoleHandler("DEBUG", {
+      formatter: (logRecord: log.LogRecord) => {
+        return layoutMessage(
+          logRecord.msg,
+          logRecord.loggerName === "fileLogger"
+            ? relativeDotfile(logRecord.args.shift() as string)
+            : logRecord.args.join(" ")
+        );
+      },
+    }),
+  },
+  loggers: {
+    default: {
+      level: "INFO",
+      handlers: ["functionFmt"],
+    },
+    fileLogger: {
+      level: "INFO",
+      handlers: ["functionFmt"],
+    },
+  },
+});
+
+export const fileLog = log.getLogger("fileLogger");
+
 const layoutMessage = (first: string, rest: string) =>
   `${bold(first.padStart(9, " "))} ${rest}`;
 
-const formatMessage = (verb: string, file: string) =>
-  layoutMessage(verb, relativeDotfile(file));
-
-export const messageForFile = (verb: string, file: string) =>
-  console.log(formatMessage(verb, file));
-
 export const usage = (warning?: string) => {
-  if (warning) console.warn("Warning:", warning);
-  console.log(
+  if (warning) log.warning("Warning:", warning);
+  log.info(
     `Usage: ${
       new URL("", import.meta.url).pathname
     } Commands: install cleanup autocleanup implode `
@@ -23,7 +46,7 @@ export const usage = (warning?: string) => {
 
 function deleteHelpMessage() {
   ["yes", "no", "all", "quit"].forEach((option) =>
-    console.log(layoutMessage(option[0], ` - ${option}`))
+    log.info(layoutMessage(option[0], ` - ${option}`))
   );
 }
 
@@ -36,7 +59,12 @@ const deletePrompt = async (
 
   const answer = (await deleteAll)
     ? "y"
-    : prompt(`${formatMessage(conjugateWith("e"), fileName)}? [ynaq?] `);
+    : prompt(
+        `${layoutMessage(
+          conjugateWith("e"),
+          relativeDotfile(fileName)
+        )}? [ynaq?] `
+      );
 
   switch (answer) {
     case "?":
@@ -44,18 +72,20 @@ const deletePrompt = async (
       return await deletePrompt(fileName, verbTemplate, deleteAll);
     case "a":
     case "y":
-      messageForFile(conjugateWith("ing"), fileName);
+      fileLog.info(conjugateWith("ing"), fileName);
       return answer;
     case "q":
       Deno.exit();
     default:
-      messageForFile("skipping", fileName);
+      fileLog.info("skipping", fileName);
       return "n";
   }
 };
 
-const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
-  (waitForIt = waitForIt.then(f)))(Promise.resolve());
+const queue = (
+  (waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
+    (waitForIt = waitForIt.then(f))
+)(Promise.resolve());
 
 function wrapWithQueue(fn: (...args: any) => any) {
   return (...args: Parameters<typeof fn>): ReturnType<typeof fn> =>
