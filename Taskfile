@@ -20,7 +20,6 @@ function submodule:update {
 VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
 
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-TASKS="-q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function vi:install {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
@@ -50,6 +49,13 @@ function homebrew:install {
 function homebrew:bundle {
   brew bundle --no-lock --file $REPO_LOCATION/Resources/Brewfile
 }
+
+function test() {
+  cd Resources/linkOmatic
+  deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
+}
+
+TASKS="-q run --allow-read --allow-write --allow-env""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function cleanup {
   deno $TASKS cleanup
