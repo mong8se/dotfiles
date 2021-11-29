@@ -55,7 +55,7 @@ function test() {
   deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
 }
 
-TASKS="-q run --allow-read --allow-write --allow-env""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
+TASKS="-q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function cleanup {
   deno $TASKS cleanup

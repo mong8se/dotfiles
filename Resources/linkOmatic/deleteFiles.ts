@@ -3,24 +3,18 @@ import { queueDeletePrompt } from "./messages.ts";
 import { DotEntry } from "./types.ts";
 import {
   exists,
-  pointsToRepo,
   absoluteDotfile,
   isInvalidFileToTarget,
   findDotLinks,
 } from "./fileUtils.ts";
 
-type DeleteFilesOptions = {
-  implode?: boolean;
-  withoutPrompting?: boolean;
-};
-
-export default async function deleteFiles(options: DeleteFilesOptions = {}) {
+export default async function deleteFiles(
+  options: { implode?: boolean; withoutPrompting?: boolean } = {}
+) {
   if (options.withoutPrompting) shouldDelete.all = true;
 
   for await (const item of findDotLinks(absoluteDotfile())) {
-    if (item.name.startsWith(".")) {
-      await decideDelete(item, options.implode);
-    }
+    if (item.name.startsWith(".")) await decideDelete(item, options.implode);
   }
 
   const dirs: Set<string> = new Set();
@@ -41,12 +35,10 @@ export default async function deleteFiles(options: DeleteFilesOptions = {}) {
 }
 
 async function decideDelete(file: DotEntry, implode = false) {
-  if (!file.isSymlink) return false;
-
-  const target = await Deno.readLink(file.path);
   if (
-    pointsToRepo(target) &&
-    (implode || isInvalidFileToTarget(target) || !(await exists(target)))
+    implode ||
+    isInvalidFileToTarget(file.target) ||
+    !(await exists(file.target))
   )
     return await deletePrompt(file.path);
 

@@ -1,14 +1,9 @@
 import { basename, join, relative, resolve } from "./deps.ts";
 import { usage } from "./messages.ts";
-import { DotEntry } from "./types.ts";
+import { ThisThing, DotEntry } from "./types.ts";
 
 const REPO_LOCATION = envOrBust("REPO_LOCATION");
 const DOT_LOCATION = envOrBust("HOME");
-
-type ThisThing = {
-  platform: "mac" | "linux" | "unknown";
-  machine?: string;
-};
 
 const THIS: ThisThing = {
   platform: ((value) => {
@@ -57,9 +52,6 @@ export const exists = async (filePath: string): Promise<boolean> => {
   }
 };
 
-export const pointsToRepo = (target: string): boolean =>
-  target.startsWith(REPO_LOCATION);
-
 export const absoluteDotfile = (subPath?: string) => {
   if (subPath) return join(DOT_LOCATION, subPath);
   return DOT_LOCATION;
@@ -75,12 +67,12 @@ export const identical = (
   second: Deno.FileInfo
 ): boolean => first.ino === second.ino && first.dev === second.dev;
 
-export async function* findDotFiles(
+export async function* getDotFiles(
   dir: string,
   options: {
-    nameRelativeToBase?: boolean
-    baseToOmit?: string
-    recurse?: boolean
+    nameRelativeToBase?: boolean;
+    baseToOmit?: string;
+    recurse?: boolean;
   }
 ): AsyncGenerator<[string, string], void, void> {
   if (options.nameRelativeToBase) {
@@ -92,7 +84,7 @@ export async function* findDotFiles(
     const relativeTarget = join(dir, entry.name);
 
     if (options.recurse && entry.isDirectory) {
-      yield* findDotFiles(relativeTarget, options);
+      yield* getDotFiles(relativeTarget, options);
     } else {
       yield [
         absoluteDotfile(
@@ -113,12 +105,20 @@ export async function* findDotLinks(
   recursive = false
 ): AsyncGenerator<DotEntry, void, void> {
   for await (const item of Deno.readDir(dir)) {
-    const result = item as DotEntry;
-    result.path = join(dir, item.name);
-    if (result.isDirectory && recursive) {
-      yield* findDotLinks(result.path, recursive);
+    const path = join(dir, item.name);
+    if (item.isDirectory && recursive) {
+      yield* findDotLinks(path, recursive);
     } else {
-      yield result;
+      if (item.isSymlink) {
+        const target = await Deno.readLink(path);
+        if (target.startsWith(REPO_LOCATION)) {
+          yield {
+            name: item.name,
+            path,
+            target,
+          }
+        }
+      }
     }
   }
 }

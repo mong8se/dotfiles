@@ -40,14 +40,6 @@ Deno.test("exists is false for bad file", async () => {
   assert(!result);
 });
 
-Deno.test("pointsToRepo is true for REPO_LOCATION", () => {
-  assert(self.pointsToRepo("/some/repo/some/path"));
-});
-
-Deno.test("pointsToRepo is false for anything else", () => {
-  assert(!self.pointsToRepo("anything/some/repo/some/path"));
-});
-
 Deno.test("absoluteDotfile returns HOME by default", () => {
   assertEquals("/some/home", self.absoluteDotfile());
 });
@@ -95,10 +87,10 @@ Deno.test("identical returns false for different files", () => {
   assert(!self.identical(first, second));
 });
 
-Deno.test("findDotFiles to be implemented", () => {
-  unimplemented("findDotFiles to be implemented");
+Deno.test("getDotFiles to be implemented", () => {
+  unimplemented("getDotFiles to be implemented");
 });
 
-Deno.test("findDotLinks to be implemented", () => {
-  unimplemented("findDotLinks to be implemented");
+Deno.test("findSymlinks to be implemented", () => {
+  unimplemented("findSymlinks to be implemented");
 });

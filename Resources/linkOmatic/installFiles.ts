@@ -2,15 +2,15 @@ import { resolve, dirname } from "./deps.ts";
 import { fileLog } from "./messages.ts";
 import { deletePrompt } from "./deleteFiles.ts";
 import {
-  findDotFiles,
+  getDotFiles,
   identical,
   isInvalidFileToTarget,
 } from "./fileUtils.ts";
 
 export default async function installFiles() {
   for await (const fileList of [
-    findDotFiles("home", { nameRelativeToBase: true }),
-    findDotFiles("config", { recurse: true }),
+    getDotFiles("home", { nameRelativeToBase: true }),
+    getDotFiles("config", { recurse: true }),
   ]) {
     for await (const [dotFile, target] of fileList) {
       if (await decideLink(dotFile, target)) {
