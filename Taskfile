@@ -26,7 +26,7 @@ function vi:install {
 }
 
 function vi:update {
-  ${VI_BIN} -u config/nvim/plugs.vim -es +PlugUpdate
+  ${VI_BIN} -u config/nvim/plugs.vim -es +PlugUpdate +TSUpdate
 }
 
 function vi:cleanup {
