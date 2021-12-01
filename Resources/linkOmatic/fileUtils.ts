@@ -1,32 +1,6 @@
+import { DotEntry } from "./types.ts";
 import { basename, join, relative, resolve } from "./deps.ts";
-import { usage } from "./messages.ts";
-import { ThisThing, DotEntry } from "./types.ts";
-
-const REPO_LOCATION = envOrBust("REPO_LOCATION");
-const DOT_LOCATION = envOrBust("HOME");
-
-const THIS: ThisThing = {
-  platform: ((value) => {
-    switch (value) {
-      case "darwin":
-        return "mac";
-      case "linux":
-        return "linux";
-      default:
-        return "unknown";
-    }
-  })(Deno.build.os),
-  machine: envOrBust("HOST42"),
-};
-
-function envOrBust(name: string): string {
-  const ev = Deno.env.get(name);
-  if (typeof ev === "string") {
-    return ev;
-  } else {
-    return usage(`Required environment variable "${name}" missing.`);
-  }
-}
+import THIS, { DOT_LOCATION, REPO_LOCATION } from "./env.ts";
 
 const dotfileNameFromTarget = (file: string) =>
   "." +
@@ -52,6 +26,13 @@ export const exists = async (filePath: string): Promise<boolean> => {
   }
 };
 
+export const directoryIsEmpty = async (dirPath: string): Promise<boolean> => {
+  for await (const _ of Deno.readDir(dirPath)) {
+    return false;
+  }
+  return true;
+};
+
 export const absoluteDotfile = (subPath?: string) => {
   if (subPath) return join(DOT_LOCATION, subPath);
   return DOT_LOCATION;
@@ -74,7 +55,7 @@ export async function* getDotFiles(
     baseToOmit?: string;
     recurse?: boolean;
   }
-): AsyncGenerator<[string, string], void, void> {
+): AsyncGenerator<[string, string]> {
   if (options.nameRelativeToBase) {
     options.baseToOmit = dir;
     delete options.nameRelativeToBase;
@@ -102,22 +83,26 @@ export async function* getDotFiles(
 
 export async function* findDotLinks(
   dir: string,
-  recursive = false
-): AsyncGenerator<DotEntry, void, void> {
+  options: {
+    recursive?: boolean;
+    filter?: (arg: Deno.DirEntry) => boolean;
+  } = {}
+): AsyncGenerator<DotEntry> {
   for await (const item of Deno.readDir(dir)) {
     const path = join(dir, item.name);
-    if (item.isDirectory && recursive) {
-      yield* findDotLinks(path, recursive);
-    } else {
-      if (item.isSymlink) {
-        const target = await Deno.readLink(path);
-        if (target.startsWith(REPO_LOCATION)) {
-          yield {
-            name: item.name,
-            path,
-            target,
-          }
-        }
+    if (options.recursive && item.isDirectory) {
+      yield* findDotLinks(path, options);
+    } else if (item.isSymlink) {
+      const target = await Deno.readLink(path);
+      if (
+        target.startsWith(REPO_LOCATION) &&
+        (!options.filter || options.filter(item))
+      ) {
+        yield {
+          name: item.name,
+          path,
+          target,
+        };
       }
     }
   }

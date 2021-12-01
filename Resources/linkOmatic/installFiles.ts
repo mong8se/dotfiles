@@ -12,7 +12,7 @@ export default async function installFiles() {
     getDotFiles("home", { nameRelativeToBase: true }),
     getDotFiles("config", { recurse: true }),
   ]) {
-    for await (const [dotFile, target] of fileList) {
+   for await (const [dotFile, target] of fileList) {
       if (await decideLink(dotFile, target)) {
         const [targetsTarget] = await Promise.allSettled([
           Deno.readLink(target),

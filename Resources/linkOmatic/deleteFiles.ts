@@ -6,6 +6,7 @@ import {
   absoluteDotfile,
   isInvalidFileToTarget,
   findDotLinks,
+  directoryIsEmpty,
 } from "./fileUtils.ts";
 
 export default async function deleteFiles(
@@ -13,23 +14,24 @@ export default async function deleteFiles(
 ) {
   if (options.withoutPrompting) shouldDelete.all = true;
 
-  for await (const item of findDotLinks(absoluteDotfile())) {
-    if (item.name.startsWith(".")) await decideDelete(item, options.implode);
+  for await (const item of findDotLinks(absoluteDotfile(), {
+    filter: (item) => item.name.startsWith("."),
+  })) {
+    decideDelete(item, options.implode);
   }
 
   const dirs: Set<string> = new Set();
-  for await (const item of findDotLinks(absoluteDotfile(".config"), true)) {
+  for await (const item of findDotLinks(absoluteDotfile(".config"), {
+    recursive: true,
+  })) {
     if (await decideDelete(item, options.implode)) dirs.add(dirname(item.path));
   }
 
   if (!options.withoutPrompting) shouldDelete.all = false;
   await Promise.all(
     [...dirs].map(async (fileDir: string) => {
-      for await (const _ of Deno.readDir(fileDir)) {
-        return;
-      }
-
-      return await deletePrompt(fileDir, "remov%s empty directory");
+      if (await directoryIsEmpty(fileDir))
+        return deletePrompt(fileDir, "remov%s empty directory");
     })
   );
 }

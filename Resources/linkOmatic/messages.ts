@@ -1,5 +1,7 @@
 import { bold, sprintf } from "./deps.ts";
 
+import { commands } from "./cli.ts";
+
 import { relativeDotfile } from "./fileUtils.ts";
 
 import * as log from "https://deno.land/std@0.116.0/log/mod.ts";
@@ -36,17 +38,14 @@ const layoutMessage = (first: string, rest: string) =>
 
 export const usage = (warning?: string) => {
   if (warning) log.warning("Warning:", warning);
-  log.info(
-    `Usage: ${
-      new URL("", import.meta.url).pathname
-    } Commands: install cleanup autocleanup implode `
-  );
+  log.info("Usage:", new URL("", import.meta.url).pathname, "<command>", "\n");
+  log.info("Commands:", ...Object.keys(commands), "\n");
   Deno.exit(warning ? 2 : 0);
 };
 
 function deleteHelpMessage() {
   ["yes", "no", "all", "quit"].forEach((option) =>
-    log.info(layoutMessage(option[0], ` - ${option}`))
+    log.info(option[0], `- ${option}`)
   );
 }
 

@@ -3,24 +3,18 @@ import deleteFiles from "./deleteFiles.ts";
 
 import { usage } from "./messages.ts";
 
-const main = async () => {
-  switch (Deno.args[0]) {
-    case "install":
-      return installFiles();
-    case "cleanup":
-      return deleteFiles();
-    case "autocleanup":
-      return deleteFiles({ withoutPrompting: true });
-    case "implode":
-      return deleteFiles({ implode: true });
-    default:
-      return usage();
-  }
+export const commands: Record<string, () => void> = {
+  install: installFiles,
+  cleanup: deleteFiles,
+  autocleanup: deleteFiles.bind(null, { withoutPrompting: true }),
+  implode: deleteFiles.bind(null, { implode: true }),
+  default: usage,
 };
 
 if (import.meta.main) {
   try {
-    await main();
+    const command = Deno.args[0];
+    (commands[command] || commands["default"])();
   } catch (e) {
     console.error("Unexpected: ", e);
   }
