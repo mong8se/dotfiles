@@ -1,59 +1,75 @@
-import { resolve, dirname } from "./deps.ts";
+import { dirname } from "./deps.ts";
 import { fileLog } from "./messages.ts";
 import { deletePrompt } from "./deleteFiles.ts";
 import {
-  getDotFiles,
+  getDotFilesAndTargets,
   identical,
   isInvalidFileToTarget,
 } from "./fileUtils.ts";
 
 export default async function installFiles() {
   for await (const fileList of [
-    getDotFiles("home", { nameRelativeToBase: true }),
-    getDotFiles("config", { recurse: true }),
+    getDotFilesAndTargets("home", { nameRelativeToBase: true }),
+    getDotFilesAndTargets("config", { recurse: true }),
   ]) {
-   for await (const [dotFile, target] of fileList) {
-      if (await decideLink(dotFile, target)) {
-        const [targetsTarget] = await Promise.allSettled([
-          Deno.readLink(target),
-          Deno.mkdir(dirname(dotFile), { recursive: true }),
-        ]);
-        Deno.symlink(
-          targetsTarget.status === "fulfilled"
-            ? resolve(dirname(target), targetsTarget.value)
-            : target,
-          dotFile
-        );
+    for await (const [dotFile, target] of fileList) {
+      if (await decideLink(target, dotFile)) {
+        await Deno.mkdir(dirname(dotFile), { recursive: true });
+        Deno.symlink(target, dotFile);
       }
     }
   }
 }
 
-const decideLink = async (link: string, target: string): Promise<boolean> => {
+const decideLink = async (target: string, link: string): Promise<boolean> => {
   if (isInvalidFileToTarget(target)) {
     fileLog.info("ignoring", link);
     return false;
   }
 
-  const [linkStats, linkTargetStats, targetStats] = await Promise.allSettled([
-    Deno.lstat(link),
-    Deno.stat(link),
-    Deno.stat(target),
-  ]);
+  let linkStats, linkTargetStats, oldLink, newTargetStats;
 
-  if (targetStats.status === "rejected") {
+  try {
+    newTargetStats = await Deno.stat(target);
+  } catch {
     fileLog.info("skipping", link);
     return false;
-  } else if (linkStats.status === "rejected") {
+  }
+
+  try {
+    linkStats = await Deno.lstat(link);
+  } catch {
     fileLog.info("linking", link);
     return true;
-  } else if (
-    linkTargetStats.status === "fulfilled" &&
-    identical(linkTargetStats.value, targetStats.value)
-  ) {
-    fileLog.info("", link);
-    return false;
-  } else {
-    return await deletePrompt(link, "replac%s");
   }
+
+  try {
+    linkTargetStats = await Deno.stat(link);
+    if (identical(linkTargetStats, newTargetStats)) {
+      fileLog.info("", link);
+      return false;
+    }
+  } catch {
+    linkTargetStats = false;
+  }
+
+  try {
+    if (linkStats.isSymlink) oldLink = await Deno.readLink(link);
+  } catch {
+    oldLink = false;
+  }
+
+  if (oldLink) {
+    fileLog.warning(
+      "found",
+      link,
+      `Link already exists and points elsewhere: ${oldLink} ${
+        linkTargetStats ? "" : "(dead)"
+      }`
+    );
+  } else {
+    fileLog.warning("found", link, `File exists and is not a link`);
+  }
+
+  return await deletePrompt(link, "replac%s");
 };

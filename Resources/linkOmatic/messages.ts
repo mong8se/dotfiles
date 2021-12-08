@@ -10,12 +10,12 @@ await log.setup({
   handlers: {
     functionFmt: new log.handlers.ConsoleHandler("DEBUG", {
       formatter: (logRecord: log.LogRecord) => {
-        return layoutMessage(
-          logRecord.msg,
-          logRecord.loggerName === "fileLogger"
-            ? relativeDotfile(logRecord.args.shift() as string)
-            : logRecord.args.join(" ")
-        );
+        const data = logRecord.args.slice() as string[];
+        if (logRecord.loggerName === "fileLogger" && logRecord.args.length) {
+          data[0] = relativeDotfile(data[0] as string);
+        }
+
+        return layoutMessage(logRecord.msg, ...data);
       },
     }),
   },
@@ -33,8 +33,8 @@ await log.setup({
 
 export const fileLog = log.getLogger("fileLogger");
 
-const layoutMessage = (first: string, rest: string) =>
-  `${bold(first.padStart(9, " "))} ${rest}`;
+const layoutMessage = (first: string, ...rest: string[]) =>
+  sprintf("% 18s %s", bold(first), rest.join(" | "));
 
 export const usage = (warning?: string) => {
   if (warning) log.warning("Warning:", warning);
@@ -81,10 +81,8 @@ const deletePrompt = async (
   }
 };
 
-const queue = (
-  (waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
-    (waitForIt = waitForIt.then(f))
-)(Promise.resolve());
+const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
+  (waitForIt = waitForIt.then(f)))(Promise.resolve());
 
 function wrapWithQueue(fn: (...args: any) => any) {
   return (...args: Parameters<typeof fn>): ReturnType<typeof fn> =>

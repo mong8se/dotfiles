@@ -1,5 +1,5 @@
 import { DotEntry } from "./types.ts";
-import { basename, join, relative, resolve } from "./deps.ts";
+import { dirname, basename, join, relative, resolve } from "./deps.ts";
 import THIS, { DOT_LOCATION, REPO_LOCATION } from "./env.ts";
 
 const dotfileNameFromTarget = (file: string) =>
@@ -48,7 +48,7 @@ export const identical = (
   second: Deno.FileInfo
 ): boolean => first.ino === second.ino && first.dev === second.dev;
 
-export async function* getDotFiles(
+export async function* getDotFilesAndTargets(
   dir: string,
   options: {
     nameRelativeToBase?: boolean;
@@ -65,7 +65,7 @@ export async function* getDotFiles(
     const relativeTarget = join(dir, entry.name);
 
     if (options.recurse && entry.isDirectory) {
-      yield* getDotFiles(relativeTarget, options);
+      yield* getDotFilesAndTargets(relativeTarget, options);
     } else {
       yield [
         absoluteDotfile(
@@ -75,7 +75,12 @@ export async function* getDotFiles(
               : relativeTarget
           )
         ),
-        resolve(relativeTarget),
+        entry.isSymlink
+          ? resolve(
+              dirname(relativeTarget),
+              await Deno.readLink(relativeTarget)
+            )
+          : resolve(relativeTarget),
       ];
     }
   }
