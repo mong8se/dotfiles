@@ -40,12 +40,12 @@ Deno.test("exists is false for bad file", async () => {
   assert(!result);
 });
 
-Deno.test("absoluteDotfile returns HOME by default", () => {
-  assertEquals("/some/home", self.absoluteDotfile());
+Deno.test("fullDotfilePath returns HOME by default", () => {
+  assertEquals("/some/home", self.fullDotfilePath());
 });
 
-Deno.test("absoluteDotfile returns HOME joined to subpath", () => {
-  assertEquals("/some/home/sub/path", self.absoluteDotfile("sub/path"));
+Deno.test("fullDotfilePath returns HOME joined to subpath", () => {
+  assertEquals("/some/home/sub/path", self.fullDotfilePath("sub/path"));
 });
 
 Deno.test("relativeDotFile returns subpath for fullpath", () => {

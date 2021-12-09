@@ -1,5 +1,12 @@
-import { DotEntry } from "./types.ts";
-import { dirname, basename, join, relative, resolve } from "./deps.ts";
+import { DotEntry, DotLink } from "./types.ts";
+import {
+  basename,
+  dirname,
+  isAbsolute,
+  join,
+  relative,
+  resolve,
+} from "./deps.ts";
 import THIS, { DOT_LOCATION, REPO_LOCATION } from "./env.ts";
 
 const dotfileNameFromTarget = (file: string) =>
@@ -33,54 +40,54 @@ export const directoryIsEmpty = async (dirPath: string): Promise<boolean> => {
   return true;
 };
 
-export const absoluteDotfile = (subPath?: string) => {
-  if (subPath) return join(DOT_LOCATION, subPath);
+export const fullDotfilePath = (relativePath?: string) => {
+  if (relativePath) return join(DOT_LOCATION, relativePath);
   return DOT_LOCATION;
 };
 
 export const relativeDotfile = (file: string) =>
-  file.startsWith("/")
-    ? relative(absoluteDotfile(), file)
+  isAbsolute(file)
+    ? relative(fullDotfilePath(), file)
     : dotfileNameFromTarget(file);
+
+const resolvedDotfilePath = (
+  relativeTarget: string,
+  relativeToBase?: boolean
+) =>
+  fullDotfilePath(
+    dotfileNameFromTarget(
+      relativeToBase
+        ? relativeTarget.split("/").slice(1).join("/")
+        : relativeTarget
+    )
+  );
+
+const getFinalTarget = async (entry: Deno.DirEntry, relativeTarget: string) =>
+  entry.isSymlink
+    ? resolve(dirname(relativeTarget), await Deno.readLink(relativeTarget))
+    : resolve(relativeTarget);
 
 export const identical = (
   first: Deno.FileInfo,
   second: Deno.FileInfo
 ): boolean => first.ino === second.ino && first.dev === second.dev;
 
-export async function* getDotFilesAndTargets(
+export async function* getDotLinks(
   dir: string,
   options: {
     nameRelativeToBase?: boolean;
-    baseToOmit?: string;
     recurse?: boolean;
   }
-): AsyncGenerator<[string, string]> {
-  if (options.nameRelativeToBase) {
-    options.baseToOmit = dir;
-    delete options.nameRelativeToBase;
-  }
-
+): AsyncGenerator<DotLink> {
   for await (const entry of Deno.readDir(dir)) {
     const relativeTarget = join(dir, entry.name);
 
     if (options.recurse && entry.isDirectory) {
-      yield* getDotFilesAndTargets(relativeTarget, options);
+      yield* getDotLinks(relativeTarget, options);
     } else {
       yield [
-        absoluteDotfile(
-          dotfileNameFromTarget(
-            options.baseToOmit
-              ? relative(options.baseToOmit, relativeTarget)
-              : relativeTarget
-          )
-        ),
-        entry.isSymlink
-          ? resolve(
-              dirname(relativeTarget),
-              await Deno.readLink(relativeTarget)
-            )
-          : resolve(relativeTarget),
+        resolvedDotfilePath(relativeTarget, options.nameRelativeToBase),
+        await getFinalTarget(entry, relativeTarget),
       ];
     }
   }

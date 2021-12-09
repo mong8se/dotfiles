@@ -3,3 +3,8 @@ export type DotEntry = {
   name: string;
   target: string;
 }
+
+export type DotLink = [
+  dotFile: string,
+  target: string
+]

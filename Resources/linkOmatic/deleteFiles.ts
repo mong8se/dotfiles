@@ -3,7 +3,7 @@ import { queueDeletePrompt } from "./messages.ts";
 import { DotEntry } from "./types.ts";
 import {
   exists,
-  absoluteDotfile,
+  fullDotfilePath,
   isInvalidFileToTarget,
   findDotLinks,
   directoryIsEmpty,
@@ -14,14 +14,14 @@ export default async function deleteFiles(
 ) {
   if (options.withoutPrompting) shouldDelete.all = true;
 
-  for await (const item of findDotLinks(absoluteDotfile(), {
+  for await (const item of findDotLinks(fullDotfilePath(), {
     filter: (item) => item.name.startsWith("."),
   })) {
     decideDelete(item, options.implode);
   }
 
   const dirs: Set<string> = new Set();
-  for await (const item of findDotLinks(absoluteDotfile(".config"), {
+  for await (const item of findDotLinks(fullDotfilePath(".config"), {
     recursive: true,
   })) {
     if (await decideDelete(item, options.implode)) dirs.add(dirname(item.path));
