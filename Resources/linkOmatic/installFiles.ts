@@ -8,10 +8,10 @@ export default async function installFiles() {
     getDotLinks("home", { nameRelativeToBase: true }),
     getDotLinks("config", { recurse: true }),
   ]) {
-    for await (const [dotFile, target] of fileList) {
-      if (await decideLink(target, dotFile)) {
-        await Deno.mkdir(dirname(dotFile), { recursive: true });
-        Deno.symlink(target, dotFile);
+    for await (const {target, link} of fileList) {
+      if (await decideLink(target, link)) {
+        await Deno.mkdir(dirname(link), { recursive: true });
+        Deno.symlink(target, link);
       }
     }
   }

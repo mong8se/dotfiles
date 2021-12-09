@@ -1,4 +1,4 @@
-import { DotEntry, DotLink } from "./types.ts";
+import { DotEntry } from "./types.ts";
 import {
   basename,
   dirname,
@@ -78,17 +78,17 @@ export async function* getDotLinks(
     nameRelativeToBase?: boolean;
     recurse?: boolean;
   }
-): AsyncGenerator<DotLink> {
+): AsyncGenerator<DotEntry> {
   for await (const entry of Deno.readDir(dir)) {
     const relativeTarget = join(dir, entry.name);
 
     if (options.recurse && entry.isDirectory) {
       yield* getDotLinks(relativeTarget, options);
     } else {
-      yield [
-        resolvedDotfilePath(relativeTarget, options.nameRelativeToBase),
-        await getFinalTarget(entry, relativeTarget),
-      ];
+      yield {
+        link: resolvedDotfilePath(relativeTarget, options.nameRelativeToBase),
+        target: await getFinalTarget(entry, relativeTarget),
+      };
     }
   }
 }
@@ -111,8 +111,7 @@ export async function* findDotLinks(
         (!options.filter || options.filter(item))
       ) {
         yield {
-          name: item.name,
-          path,
+          link: path,
           target,
         };
       }

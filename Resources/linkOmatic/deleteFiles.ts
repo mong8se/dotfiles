@@ -8,26 +8,30 @@ import {
   findDotLinks,
   directoryIsEmpty,
 } from "./fileUtils.ts";
+import { storeAndGetValue } from "./utils.ts";
+
+const shouldDeleteAll = storeAndGetValue(false);
 
 export default async function deleteFiles(
   options: { implode?: boolean; withoutPrompting?: boolean } = {}
 ) {
-  if (options.withoutPrompting) shouldDelete.all = true;
+  if (options.withoutPrompting) shouldDeleteAll(true);
 
-  for await (const item of findDotLinks(fullDotfilePath(), {
+  for await (const dotEntry of findDotLinks(fullDotfilePath(), {
     filter: (item) => item.name.startsWith("."),
   })) {
-    decideDelete(item, options.implode);
+    decideDelete(dotEntry, options.implode);
   }
 
   const dirs: Set<string> = new Set();
-  for await (const item of findDotLinks(fullDotfilePath(".config"), {
+  for await (const dotEntry of findDotLinks(fullDotfilePath(".config"), {
     recursive: true,
   })) {
-    if (await decideDelete(item, options.implode)) dirs.add(dirname(item.path));
+    if (await decideDelete(dotEntry, options.implode))
+      dirs.add(dirname(dotEntry.link));
   }
 
-  if (!options.withoutPrompting) shouldDelete.all = false;
+  if (!options.withoutPrompting) shouldDeleteAll(false);
   await Promise.all(
     [...dirs].map(async (fileDir: string) => {
       if (await directoryIsEmpty(fileDir))
@@ -42,20 +46,10 @@ async function decideDelete(file: DotEntry, implode = false) {
     isInvalidFileToTarget(file.target) ||
     !(await exists(file.target))
   )
-    return await deletePrompt(file.path);
+    return await deletePrompt(file.link);
 
   return false;
 }
-
-const shouldDelete = new Proxy(
-  {} as Record<string, Promise<boolean> | boolean>,
-  {
-    set: (target, prop: string, value: boolean) => {
-      target[prop] = Promise.resolve(value);
-      return true;
-    },
-  }
-);
 
 export const deletePrompt = async (
   fileName: string,
@@ -64,12 +58,12 @@ export const deletePrompt = async (
   const answer = await queueDeletePrompt(
     fileName,
     verbTemplate,
-    shouldDelete.all
+    shouldDeleteAll()
   );
 
   switch (answer) {
     case "a":
-      shouldDelete.all = true;
+      shouldDeleteAll(true);
     case "y":
       await Deno.remove(fileName);
       return true;
