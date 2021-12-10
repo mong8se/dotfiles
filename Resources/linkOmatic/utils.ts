@@ -10,11 +10,14 @@ async function* makeValueStore<T>(
   }
 }
 
-export function storeAndGetValue<T>(initalValue: T) {
+export function storeAndGetValue<T>(initalValue: T): StoreAndGetValue<T> {
   const gen = makeValueStore(initalValue);
-  gen.next();
-  return async (value?: T) => {
-    const v = await gen.next(value);
-    return v.value;
-  };
+  const setValue = gen.next.bind(gen);
+
+  return async (callback) =>
+    gen.next().then((current) => callback(current.value, setValue));
 }
+
+export type StoreAndGetValue<T> = (
+  callback: (current: T, set: (value: T) => void) => Promise<any>
+) => Promise<any>;

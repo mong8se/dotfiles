@@ -8,7 +8,7 @@ export default async function installFiles() {
     getDotLinks("home", { nameRelativeToBase: true }),
     getDotLinks("config", { recurse: true }),
   ]) {
-    for await (const {target, link} of fileList) {
+    for await (const { target, link } of fileList) {
       if (await decideLink(target, link)) {
         await Deno.mkdir(dirname(link), { recursive: true });
         Deno.symlink(target, link);
@@ -67,5 +67,9 @@ const decideLink = async (target: string, link: string): Promise<boolean> => {
     fileLog.warning("found", link, `File exists and is not a link`);
   }
 
-  return await deletePrompt(link, "replac%s");
+  return await deletePrompt(link, {
+    verbTemplate: "replac%s",
+    withoutPrompting: false,
+    implode: false,
+  });
 };

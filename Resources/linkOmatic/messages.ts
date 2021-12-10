@@ -4,6 +4,8 @@ import { commands } from "./cli.ts";
 
 import { relativeDotfile } from "./fileUtils.ts";
 
+import { DeleteOptions } from "./types.ts";
+
 import * as log from "https://deno.land/std@0.116.0/log/mod.ts";
 
 await log.setup({
@@ -49,26 +51,20 @@ function deleteHelpMessage() {
   );
 }
 
-const deletePrompt = async (
+export const formatDeletePrompt = (
   fileName: string,
-  verbTemplate = "delet%s",
-  deleteAll: Promise<boolean>
-): Promise<string> => {
-  const conjugateWith = sprintf.bind(null, verbTemplate);
+  options: DeleteOptions
+): string => {
+  const conjugateWith = sprintf.bind(null, options.verbTemplate);
 
-  const answer = (await deleteAll)
-    ? "y"
-    : prompt(
-        `${layoutMessage(
-          conjugateWith("e"),
-          relativeDotfile(fileName)
-        )}? [ynaq?] `
-      );
+  const answer = prompt(
+    `${layoutMessage(conjugateWith("e"), relativeDotfile(fileName))}? [ynaq?] `
+  );
 
   switch (answer) {
     case "?":
       deleteHelpMessage();
-      return await deletePrompt(fileName, verbTemplate, deleteAll);
+      return formatDeletePrompt(fileName, options);
     case "a":
     case "y":
       fileLog.info(conjugateWith("ing"), fileName);
@@ -80,13 +76,3 @@ const deletePrompt = async (
       return "n";
   }
 };
-
-const queue = ((waitForIt: Promise<any>) => async (f: () => Promise<any>) =>
-  (waitForIt = waitForIt.then(f)))(Promise.resolve());
-
-function wrapWithQueue(fn: (...args: any) => any) {
-  return (...args: Parameters<typeof fn>): ReturnType<typeof fn> =>
-    queue(() => fn(...args));
-}
-
-export const queueDeletePrompt = wrapWithQueue(deletePrompt);

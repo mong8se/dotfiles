@@ -1,6 +1,6 @@
 import { dirname } from "./deps.ts";
-import { queueDeletePrompt } from "./messages.ts";
-import { DotEntry } from "./types.ts";
+import { formatDeletePrompt } from "./messages.ts";
+import { DeleteOptions, DotEntry } from "./types.ts";
 import {
   exists,
   fullDotfilePath,
@@ -8,66 +8,79 @@ import {
   findDotLinks,
   directoryIsEmpty,
 } from "./fileUtils.ts";
-import { storeAndGetValue } from "./utils.ts";
+import { storeAndGetValue, StoreAndGetValue } from "./utils.ts";
 
-const shouldDeleteAll = storeAndGetValue(false);
-
-export default async function deleteFiles(
-  options: { implode?: boolean; withoutPrompting?: boolean } = {}
-) {
-  if (options.withoutPrompting) shouldDeleteAll(true);
+export default async function deleteFiles(opts: Partial<DeleteOptions> = {}) {
+  const options: DeleteOptions = {
+    implode: false,
+    withoutPrompting: false,
+    verbTemplate: "delet%s",
+    ...opts,
+  };
 
   for await (const dotEntry of findDotLinks(fullDotfilePath(), {
     filter: (item) => item.name.startsWith("."),
   })) {
-    decideDelete(dotEntry, options.implode);
+    decideDelete(dotEntry, options);
   }
 
   const dirs: Set<string> = new Set();
   for await (const dotEntry of findDotLinks(fullDotfilePath(".config"), {
     recursive: true,
   })) {
-    if (await decideDelete(dotEntry, options.implode))
-      dirs.add(dirname(dotEntry.link));
+    if (await decideDelete(dotEntry, options)) dirs.add(dirname(dotEntry.link));
   }
 
-  if (!options.withoutPrompting) shouldDeleteAll(false);
   await Promise.all(
     [...dirs].map(async (fileDir: string) => {
       if (await directoryIsEmpty(fileDir))
-        return deletePrompt(fileDir, "remov%s empty directory");
+        return deletePrompt(fileDir, {
+          ...options,
+          verbTemplate: "remov%s empty directory",
+        });
     })
   );
 }
 
-async function decideDelete(file: DotEntry, implode = false) {
+async function decideDelete(file: DotEntry, options: DeleteOptions) {
   if (
-    implode ||
+    options.implode ||
     isInvalidFileToTarget(file.target) ||
     !(await exists(file.target))
   )
-    return await deletePrompt(file.link);
+    return await deletePrompt(file.link, options);
 
   return false;
 }
 
+let queueDeletePrompt: StoreAndGetValue<boolean>;
+
 export const deletePrompt = async (
   fileName: string,
-  verbTemplate = "delet%s"
+  options: DeleteOptions
 ): Promise<boolean> => {
-  const answer = await queueDeletePrompt(
-    fileName,
-    verbTemplate,
-    shouldDeleteAll()
-  );
+  const { withoutPrompting } = options;
 
-  switch (answer) {
-    case "a":
-      shouldDeleteAll(true);
-    case "y":
-      await Deno.remove(fileName);
-      return true;
-    default:
-      return false;
+  if (!queueDeletePrompt) {
+    queueDeletePrompt = storeAndGetValue(withoutPrompting);
   }
+
+  return await queueDeletePrompt(
+    async (shouldDeleteAll, setShouldDeleteAll) => {
+      const answer = shouldDeleteAll ? "y" : formatDeletePrompt(
+        fileName,
+        options
+      );
+
+      switch (answer) {
+        case "a":
+          setShouldDeleteAll(true);
+        case "y":
+          await Deno.remove(fileName);
+          return true;
+        default:
+          return false;
+      }
+    }
+  );
 };
