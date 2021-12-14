@@ -1,11 +1,12 @@
-import { usage } from "./messages.ts";
+import { log } from "./deps.ts";
 
 function envOrBust(name: string): string {
   const ev = Deno.env.get(name);
   if (typeof ev === "string") {
     return ev;
   } else {
-    return usage(`Required environment variable "${name}" missing.`);
+    log.error(`Required environment variable "${name}" missing.`);
+    Deno.exit(3)
   }
 }
 

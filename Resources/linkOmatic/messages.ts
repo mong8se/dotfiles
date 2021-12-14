@@ -1,12 +1,10 @@
-import { bold, sprintf } from "./deps.ts";
+import { bold, log, sprintf } from "./deps.ts";
 
 import { commands } from "./cli.ts";
 
 import { relativeDotfile } from "./fileUtils.ts";
 
 import { DeleteOptions } from "./types.ts";
-
-import * as log from "https://deno.land/std@0.116.0/log/mod.ts";
 
 await log.setup({
   handlers: {
