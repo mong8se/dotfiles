@@ -1,5 +1,6 @@
 {
-   "imports": {
-      "../deps.ts": "./deps.ts"
-   }
+  "imports": {
+    "./originalDeps.ts": "../deps.ts",
+    "../deps.ts": "./testDeps.ts"
+  }
 }

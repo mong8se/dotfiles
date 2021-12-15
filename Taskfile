@@ -52,6 +52,7 @@ function homebrew:bundle {
 
 function test() {
   cd Resources/linkOmatic
+  deno run --allow-write __tests__/generateDeps.ts
   deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
 }
 

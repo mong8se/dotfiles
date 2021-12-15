@@ -1,4 +1,4 @@
-import { fromFileUrl } from "./deps.ts";
+import { getCurrentFilename } from "./testDeps.ts";
 import { assert, assertEquals, unimplemented } from "https://deno.land/std@0.115.1/testing/asserts.ts";
 
 import * as mock from "./mocks.ts";
@@ -29,7 +29,7 @@ Deno.test("isInvalidFileToTarget is TRUE for _anythingelse", () => {
 });
 
 Deno.test("exists is true for this file", async () => {
-  const result = await self.exists(fromFileUrl(import.meta.url));
+  const result = await self.exists(getCurrentFilename());
 
   assert(result);
 });
