@@ -77,7 +77,7 @@ export async function* getDotLinks(
   options: {
     nameRelativeToBase?: boolean;
     recurse?: boolean;
-  }
+  } = {}
 ): AsyncGenerator<DotEntry> {
   for await (const entry of Deno.readDir(dir)) {
     const relativeTarget = join(dir, entry.name);

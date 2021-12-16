@@ -63,7 +63,7 @@ async function writeMock(prop: string) {
     encoder.encode(`
  const mockable${prop} = (...args: Parameters<typeof originals.${prop}>) : ReturnType<typeof originals.${prop}> => {
    //@ts-ignore
-   return mockRegistry.${prop} ? handle.${prop}(...args) : originals.${prop}(...args)
+   return mockRegistry.${prop} ? mockRegistry.${prop}(...args) : originals.${prop}(...args)
  }
 export { mockable${prop} as ${prop} };
     `)
@@ -77,7 +77,7 @@ async function writeNestedMock(prop: string) {
    //@ts-ignore
  ${prop} = (...args: Parameters<typeof originals.${prop}>) : ReturnType<typeof originals.${prop}> => {
    //@ts-ignore
-   return mockRegistry.${prop} ? handle.${prop}(...args) : originals.${prop}(...args)
+   return mockRegistry.${prop} ? mockRegistry.${prop}(...args) : originals.${prop}(...args)
  }
     `)
   );
