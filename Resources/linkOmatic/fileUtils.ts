@@ -96,13 +96,13 @@ export async function* getDotLinks(
 export async function* findDotLinks(
   dir: string,
   options: {
-    recursive?: boolean;
+    recurse?: boolean;
     filter?: (arg: Deno.DirEntry) => boolean;
   } = {}
 ): AsyncGenerator<DotEntry> {
   for await (const item of Deno.readDir(dir)) {
     const path = join(dir, item.name);
-    if (options.recursive && item.isDirectory) {
+    if (options.recurse && item.isDirectory) {
       yield* findDotLinks(path, options);
     } else if (item.isSymlink) {
       const target = await Deno.readLink(path);

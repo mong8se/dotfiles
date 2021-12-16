@@ -1,10 +1,8 @@
 import { bold, log, sprintf } from "./deps.ts";
 
-import { commands } from "./cli.ts";
-
 import { relativeDotfile } from "./fileUtils.ts";
 
-import { DeleteOptions } from "./types.ts";
+import { CommandList, DeleteOptions } from "./types.ts";
 
 await log.setup({
   handlers: {
@@ -36,10 +34,10 @@ export const fileLog = log.getLogger("fileLogger");
 const layoutMessage = (first: string, ...rest: string[]) =>
   sprintf("% 18s %s", bold(first), rest.join(" | "));
 
-export const usage = (warning?: string) => {
+export function usage(this: CommandList, warning?: string) {
   if (warning) log.warning("Warning:", warning);
   log.info("Usage:", new URL("", import.meta.url).pathname, "<command>", "\n");
-  log.info("Commands:", ...Object.keys(commands), "\n");
+  log.info("CommandLists:", ...Object.keys(this), "\n");
   Deno.exit(warning ? 2 : 0);
 };
 

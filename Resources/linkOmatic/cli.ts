@@ -3,7 +3,9 @@ import deleteFiles from "./deleteFiles.ts";
 
 import { usage } from "./messages.ts";
 
-export const commands: Record<string, () => void> = {
+import { CommandList } from "./types.ts";
+
+const commands: CommandList = {
   install: installFiles,
   cleanup: deleteFiles,
   autocleanup: deleteFiles.bind(null, { withoutPrompting: true }),
@@ -14,7 +16,7 @@ export const commands: Record<string, () => void> = {
 if (import.meta.main) {
   try {
     const command = Deno.args[0];
-    (commands[command] || commands["default"])();
+    command in commands ? commands[command]() : commands.default();
   } catch (e) {
     console.error("Unexpected: ", e);
   }

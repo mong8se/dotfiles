@@ -1,7 +1,7 @@
 {
   "imports": {
-    "./originalDeps.ts": "../deps.ts",
     "../deps.ts": "./testDeps.ts",
+    "./originalDeps.ts": "../deps.ts",
     "../env.ts": "./testEnv.ts",
     "./originalEnv.ts": "../env.ts"
   }

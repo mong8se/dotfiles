@@ -26,7 +26,7 @@ export default async function deleteFiles(opts: Partial<DeleteOptions> = {}) {
 
   const dirs: Set<string> = new Set();
   for await (const dotEntry of findDotLinks(fullDotfilePath(".config"), {
-    recursive: true,
+    recurse: true,
   })) {
     if (await decideDelete(dotEntry, options)) dirs.add(dirname(dotEntry.link));
   }

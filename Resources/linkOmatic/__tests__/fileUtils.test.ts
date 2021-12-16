@@ -84,8 +84,7 @@ Deno.test("identical returns false for different files", () => {
 });
 
 Deno.test("getDotLinks returns one file", async () => {
-  const readDir = Deno.readDir;
-  Deno.readDir = mock.makeMockReadDir([
+  const cleanupReadDir = mock.makeMockReadDir([
     {
       name: "home",
       isDirectory: true,
@@ -102,12 +101,11 @@ Deno.test("getDotLinks returns one file", async () => {
   }
 
   delete mockRegistry.resolve;
-  Deno.readDir = readDir;
+  cleanupReadDir();
 });
 
 Deno.test("getDotLinks returns more files", async () => {
-  const readDir = Deno.readDir;
-  Deno.readDir = mock.makeMockReadDir([
+  const cleanupReadDir = mock.makeMockReadDir([
     {
       name: "home",
       isDirectory: true,
@@ -133,12 +131,11 @@ Deno.test("getDotLinks returns more files", async () => {
   );
 
   delete mockRegistry.resolve;
-  Deno.readDir = readDir;
+  cleanupReadDir();
 });
 
 Deno.test("getDotLinks removes base", async () => {
-  const readDir = Deno.readDir;
-  Deno.readDir = mock.makeMockReadDir([
+  const cleanupReadDir = mock.makeMockReadDir([
     {
       name: "home",
       isDirectory: true,
@@ -157,14 +154,13 @@ Deno.test("getDotLinks removes base", async () => {
   }
 
   delete mockRegistry.resolve;
-  Deno.readDir = readDir;
+  cleanupReadDir();
 });
 
 Deno.test({
   name: "getDotLinks recurses",
   async fn() {
-    const readDir = Deno.readDir;
-    Deno.readDir = mock.makeMockReadDir([
+    const cleanupReadDir = mock.makeMockReadDir([
       {
         name: "home",
         isDirectory: true,
@@ -196,15 +192,14 @@ Deno.test({
     );
 
     delete mockRegistry.resolve;
-    Deno.readDir = readDir;
+    cleanupReadDir();
   },
 });
 
 Deno.test({
   name: "getDotLinks recurses and removes base",
   async fn() {
-    const readDir = Deno.readDir;
-    Deno.readDir = mock.makeMockReadDir([
+    const cleanupReadDir = mock.makeMockReadDir([
       {
         name: "home",
         isDirectory: true,
@@ -239,7 +234,7 @@ Deno.test({
     );
 
     delete mockRegistry.resolve;
-    Deno.readDir = readDir;
+    cleanupReadDir();
   },
 });
 
@@ -249,8 +244,7 @@ Deno.test({
     const readLink = Deno.readLink;
     Deno.readLink = async () => "some/linked/file";
 
-    const readDir = Deno.readDir;
-    Deno.readDir = mock.makeMockReadDir([
+    const cleanupReadDir = mock.makeMockReadDir([
       {
         name: "home",
         isDirectory: true,
@@ -283,7 +277,7 @@ Deno.test({
     );
 
     delete mockRegistry.resolve;
-    Deno.readDir = readDir;
+    cleanupReadDir();
     Deno.readLink = readLink;
   },
 });
@@ -295,8 +289,7 @@ Deno.test({
     Deno.readLink = async (link) =>
       link === "home/.macho" ? "/some/repo/home/linked" : "/other/location";
 
-    const readDir = Deno.readDir;
-    Deno.readDir = mock.makeMockReadDir([
+    const cleanupReadDir = mock.makeMockReadDir([
       {
         name: "home",
         isDirectory: true,
@@ -332,7 +325,7 @@ Deno.test({
     );
 
     delete mockRegistry.resolve;
-    Deno.readDir = readDir;
+    cleanupReadDir();
     Deno.readLink = readLink;
   },
 });
@@ -343,8 +336,7 @@ Deno.test({
     const readLink = Deno.readLink;
     Deno.readLink = async () => "/some/repo/home/linked";
 
-    const readDir = Deno.readDir;
-    Deno.readDir = mock.makeMockReadDir([
+    const cleanupReadDir = mock.makeMockReadDir([
       {
         name: "home",
         isDirectory: true,
@@ -382,7 +374,7 @@ Deno.test({
     );
 
     delete mockRegistry.resolve;
-    Deno.readDir = readDir;
+    cleanupReadDir();
     Deno.readLink = readLink;
   },
 });
@@ -393,8 +385,7 @@ Deno.test({
     const readLink = Deno.readLink;
     Deno.readLink = async () => "/some/repo/home/linked";
 
-    const readDir = Deno.readDir;
-    Deno.readDir = mock.makeMockReadDir([
+    const cleanupReadDir = mock.makeMockReadDir([
       {
         name: "home",
         isDirectory: true,
@@ -416,7 +407,7 @@ Deno.test({
     mockRegistry.resolve = (s: string, t: string) => `/resolved/to/${s}/${t}`;
 
     const results = [];
-    for await (const file of self.findDotLinks("home", { recursive: true })) {
+    for await (const file of self.findDotLinks("home", { recurse: true })) {
       results.push(file);
     }
 
@@ -431,7 +422,7 @@ Deno.test({
     );
 
     delete mockRegistry.resolve;
-    Deno.readDir = readDir;
+    cleanupReadDir();
     Deno.readLink = readLink;
   },
 });

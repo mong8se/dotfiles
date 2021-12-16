@@ -45,26 +45,31 @@ interface MockDirectory extends Partial<Deno.DirEntry> {
 }
 
 export function makeMockReadDir(values: MockDirectory[]) {
-  return async function* mockReadDir(
+  const originalReadDir = Deno.readDir;
+  Deno.readDir = async function* mockReadDir(
     path: string | URL
   ): AsyncIterable<Deno.DirEntry> {
-    const tree = (path as string).split("/").reduce((subtree: MockDirEntry[], name): MockDirEntry[] => {
-      const result = subtree.find((v) => v.name === name);
-      if (result) {
-        if (isMockDirectory(result)) return result.entries;
-        else return [result];
-      }
-      throw "DIR NOT FOUND";
-    }, values);
+    const tree = (path as string)
+      .split("/")
+      .reduce((subtree: MockDirEntry[], name): MockDirEntry[] => {
+        const result = subtree.find((v) => v.name === name);
+        if (result) {
+          if (isMockDirectory(result)) return result.entries;
+          else return [result];
+        }
+        throw "DIR NOT FOUND";
+      }, values);
 
     for (const entry of tree) {
       yield DirEntry(entry);
     }
   };
+
+  return () => {
+    Deno.readDir = originalReadDir;
+  };
 }
 
-function isMockDirectory(
-  value: MockDirEntry
-): value is MockDirectory {
+function isMockDirectory(value: MockDirEntry): value is MockDirectory {
   return "entries" in value;
 }
