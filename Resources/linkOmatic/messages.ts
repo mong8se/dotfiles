@@ -7,7 +7,7 @@ import { CommandList, DeleteOptions } from "./types.ts";
 await log.setup({
   handlers: {
     functionFmt: new log.handlers.ConsoleHandler("DEBUG", {
-      formatter: (logRecord: log.LogRecord) => {
+      formatter: (logRecord: any) => {
         const data = logRecord.args.slice() as string[];
         if (logRecord.loggerName === "fileLogger" && logRecord.args.length) {
           data[0] = relativeDotfile(data[0] as string);
@@ -36,8 +36,10 @@ const layoutMessage = (first: string, ...rest: string[]) =>
 
 export function usage(this: CommandList, warning?: string) {
   if (warning) log.warning("Warning:", warning);
-  log.info("Usage:", new URL("", import.meta.url).pathname, "<command>", "\n");
-  log.info("CommandLists:", ...Object.keys(this), "\n");
+  log.info("Usage:", `${new URL("", import.meta.url).pathname} <command>`);
+  console.log();
+  log.info("Commands:", ...Object.keys(this));
+  console.log();
   Deno.exit(warning ? 2 : 0);
 };
 

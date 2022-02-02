@@ -8,8 +8,8 @@ import { CommandList } from "./types.ts";
 const commands: CommandList = {
   install: installFiles,
   cleanup: deleteFiles,
-  autocleanup: deleteFiles.bind(null, { withoutPrompting: true }),
-  implode: deleteFiles.bind(null, { implode: true }),
+  autocleanup: deleteFiles.bind(this, { withoutPrompting: true }),
+  implode: deleteFiles.bind(this, { implode: true }),
   default: usage,
 };
 

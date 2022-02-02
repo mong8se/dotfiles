@@ -23,6 +23,7 @@ await Deno.write(
   encoder.encode(`
 // auto generated, do not hand edit!
 
+
 import { fromFileUrl } from "https://deno.land/std@0.115.1/path/mod.ts";
 export const getCurrentFilename = () => fromFileUrl(import.meta.url);
 
@@ -32,6 +33,14 @@ export default mockRegistry;
 
 // copy dependencies from real dependencies
 import * as originals from "./originalDeps.ts";
+
+
+type Constructor = { new (...args: any[]): any };
+function wrapMock<T extends Constructor>(BaseClass: T) {
+    return class extends BaseClass {
+
+    }
+}
 `)
 );
 
@@ -39,65 +48,81 @@ await walkDependencies(deps);
 
 Deno.close(file.rid);
 
-async function walkDependencies(deps: any, path?: string): Promise<any> {
+async function walkDependencies(deps: any, path: string[] = []): Promise<any> {
   return Promise.all(
     Object.entries(deps).map(async ([prop, value]) => {
-      const name = path ? [path, prop].join(".") : prop;
+      const propPath = [...path, prop];
+
       if (typeof value === "function") {
-        return path ? writeNestedMock(name) : writeMock(prop);
+        return writeMock(propPath);
       } else if (typeof value === "object") {
-        if (path) {
-          writeLowerLevelEmptyObject(prop, path);
-        } else {
-          writeTopLevelEmptyObject(prop);
-        }
-        walkDependencies(value, name);
+        writeEmptyObject(propPath);
+        walkDependencies(value, propPath);
       }
     })
   );
 }
 
-async function writeMock(prop: string) {
-  await Deno.write(
-    file.rid,
-    encoder.encode(`
+//  ${prop} = (...args: Parameters<typeof originals.${prop}>) : ReturnType<typeof originals.${prop}> => {
+async function writeMock(propPath: string[]) {
+  const prop = propPath.join(".");
+  if (propPath.length > 1) {
+    if (propPath[propPath.length-1].match(/^[A-Z]/)) {
+    await Deno.write(
+      file.rid,
+      encoder.encode(`
+ ${prop} = class extends originals.${prop} {
+ //@ts-ignore
+   constructor(...args) {
+     return mockRegistry.${prop} ?
+       mockRegistry.${prop}(...args) :
+ //@ts-ignore
+       super(...args)
+   }
+ }
+    `)
+    );
+    } else {
+    await Deno.write(
+      file.rid,
+      encoder.encode(`
+ ${prop} = function(...args: Parameters<typeof originals.${prop}>) : ReturnType<typeof originals.${prop}> {
+   //@ts-ignore
+   return mockRegistry.${prop} ? mockRegistry.${prop}(...args) : originals.${prop}(...args)
+ }
+    `)
+    );
+        }
+  } else {
+    await Deno.write(
+      file.rid,
+      encoder.encode(`
  const mockable${prop} = (...args: Parameters<typeof originals.${prop}>) : ReturnType<typeof originals.${prop}> => {
    //@ts-ignore
    return mockRegistry.${prop} ? mockRegistry.${prop}(...args) : originals.${prop}(...args)
  }
 export { mockable${prop} as ${prop} };
     `)
-  );
+    );
+  }
 }
 
-async function writeNestedMock(prop: string) {
-  await Deno.write(
-    file.rid,
-    encoder.encode(`
-   //@ts-ignore
- ${prop} = (...args: Parameters<typeof originals.${prop}>) : ReturnType<typeof originals.${prop}> => {
-   //@ts-ignore
-   return mockRegistry.${prop} ? mockRegistry.${prop}(...args) : originals.${prop}(...args)
- }
+async function writeEmptyObject(propPath: string[]) {
+  const prop = propPath.join(".");
+  if (propPath.length > 1) {
+    await Deno.write(
+      file.rid,
+      encoder.encode(`
+      ${prop} = {};
     `)
-  );
-}
-
-async function writeTopLevelEmptyObject(prop: string) {
-  await Deno.write(
-    file.rid,
-    encoder.encode(`
+    );
+  } else {
+    await Deno.write(
+      file.rid,
+      encoder.encode(`
       export const ${prop} = {} as Record<string, any>;
       mockRegistry.${prop} = {} as Record<string, any>;
     `)
-  );
-}
-
-async function writeLowerLevelEmptyObject(prop: string, path: string) {
-  await Deno.write(
-    file.rid,
-    encoder.encode(`
-      ${path}.${prop} = {};
-    `)
-  );
+    );
+  }
 }
