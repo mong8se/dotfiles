@@ -206,7 +206,7 @@ vnoremap > >gv
 
 " custom functions
 nmap <silent> <Leader>tn <Plug>(mong8se_toggle_numbers)
-nnoremap <silent> <Leader>tb <Plug>(mong8se_scrollbind)<CR>
+nnoremap <silent> <Leader>tb <Plug>(mong8se_scrollbind)
 
 nnoremap <silent> <Leader>tc :Telescope colorscheme<cr>
 
