@@ -1,8 +1,21 @@
+format = "$fill $all| [ $directory](inverted)$line_break$character"
+
 [character]
-error_symbol = "[✖](bold red)"
+success_symbol = "[🮙](bold green inverted)"
+error_symbol = "[🮙](bold red inverted)"
+vicmd_symbol = "[🮖](bold blue inverted)"
 
 [git_status]
 disabled = true
 
 [package]
 display_private = true
+
+[directory]
+style = "inverted"
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+
+[cmd_duration]
+format = "⏱️[$duration]($style) "
