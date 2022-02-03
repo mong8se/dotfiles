@@ -1,9 +1,9 @@
 format = "$fill $all| [ $directory](inverted)$line_break$character"
 
 [character]
-success_symbol = "[🮙](bold green inverted)"
-error_symbol = "[🮙](bold red inverted)"
-vicmd_symbol = "[🮖](bold blue inverted)"
+success_symbol = "[↘](bold blue)"
+error_symbol = "[↘](bold red)"
+vicmd_symbol = "[↖](bold blue)"
 
 [git_status]
 disabled = true
