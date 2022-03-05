@@ -50,6 +50,32 @@ function homebrew:bundle {
   brew bundle --no-lock --file $REPO_LOCATION/Resources/Brewfile
 }
 
+function os:upgrade {
+  case "$(uname -s)" in
+    Linux)
+      source /etc/os-release
+      case $ID in
+        arch)
+          sudo bash -c 'pacman -Sy archlinux-keyring && pacman -Su'
+          ;;
+        fedora)
+          sudo dnf upgrade --refresh
+          ;;
+        *)
+          echo "Linux distro is unrecognized."
+          ;;
+      esac
+      ;;
+    Darwin)
+      brew update && brew upgrade
+    ;;
+    *)
+      echo "OS is unrecognized."
+    ;;
+  esac
+
+}
+
 function test() {
   cd Resources/linkOmatic
   deno run --allow-write __tests__/generateDeps.ts
