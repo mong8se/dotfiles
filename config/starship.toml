@@ -19,3 +19,4 @@ format = "[$symbol$branch]($style) "
 
 [cmd_duration]
 format = "⏱️[$duration]($style) "
+show_notifications = true
