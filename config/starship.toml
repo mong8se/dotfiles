@@ -22,4 +22,4 @@ format = "⏱️[$duration]($style) "
 show_notifications = true
 
 [fill]
-symbol = "_"
+symbol = " "
