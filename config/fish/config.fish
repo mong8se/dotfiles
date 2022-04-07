@@ -78,8 +78,6 @@ if status --is-interactive
     alias ssh="kitty +kitten ssh"
   end
 
-  alias task="bash ./Taskfile"
-
   # Set Base16 Shell Colors
   base16 gruvbox-dark-soft false
 

@@ -4,6 +4,11 @@
 
 set -e
 
+VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
+
+export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd $REPO_LOCATION
+
 function hostname {
   echo $HOST42
   echo
@@ -16,10 +21,6 @@ function submodule:init {
 function submodule:update {
   git submodule update --remote
 }
-
-VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
-
-export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 function vi:install {
   ${VI_BIN} -u config/nvim/plugs.vim -es +PlugInstall
@@ -114,6 +115,7 @@ function init {
 }
 
 function upgrade {
+  os:upgrade
   submodule:update
   vi:update
 }
