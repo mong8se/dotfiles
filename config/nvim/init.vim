@@ -317,7 +317,7 @@ nmap     <leader>* <Plug>CtrlSFCwordExec
 vmap     <leader>/ <Plug>CtrlSFVwordExec
 nmap <silent> <leader>sr :CtrlSFOpen<CR>
 let g:ctrlsf_default_root = 'project' " search relative to project root
-let g:ctrlsf_ackprg = '/usr/local/bin/rg'
+let g:ctrlsf_ackprg = executable('/usr/local/bin/rg') ? '/usr/local/bin/rg' : '/usr/bin/rg'
 
 " https://vim.fandom.com/wiki/Search_for_visually_selected_text
 " Search for selected text, forwards or backwards.
