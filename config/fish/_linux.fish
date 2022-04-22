@@ -1,4 +1,3 @@
-  if set -q KITTY_WINDOW_ID
-    alias pbcopy="kitty +kitten clipboard"
-    alias pbpaste="kitty +kitten clipboard --get-clipboard"
-  end
+# wl-clipboard
+alias pbcopy="wl-copy"
+alias pbpaste="wl-paste"
