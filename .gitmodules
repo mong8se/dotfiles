@@ -22,3 +22,4 @@
 [submodule "Resources/asdf"]
 	path = Resources/asdf
 	url = https://github.com/asdf-vm/asdf.git
+	branch = master
