@@ -64,6 +64,7 @@ Plug 'sheerun/vim-polyglot'
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+  Plug 'p00f/nvim-ts-rainbow'
   Plug 'romgrk/nvim-treesitter-context'
 else
   Plug 'wellle/context.vim'
