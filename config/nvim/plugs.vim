@@ -4,42 +4,24 @@ filetype off
 
 call plug#begin("~/.config/nvim/plugged")
 
-if has('nvim')
-  Plug 'nvim-lua/popup.nvim'
-  Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim'
-else
-  set rtp+=$DOTFILES_RESOURCES/fzf
-  Plug 'junegunn/fzf.vim'
-endif
+set rtp+=$DOTFILES_RESOURCES/fzf
+Plug 'junegunn/fzf.vim'
 
 Plug 'chriskempson/base16-vim'
 Plug 'caglartoklu/borlandp.vim'
-if has('nvim')
-  Plug 'eddyekofo94/gruvbox-flat.nvim'
-else
-  Plug 'gruvbox-community/gruvbox'
-endif
+Plug 'gruvbox-community/gruvbox'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 
-if has('nvim')
-  Plug 'hoob3rt/lualine.nvim'
-  Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
-  Plug 'akinsho/nvim-bufferline.lua'
-  Plug 'lukas-reineke/indent-blankline.nvim'
-  Plug 'folke/trouble.nvim'
-else
-  Plug 'itchyny/lightline.vim'
-  Plug 'Yggdroot/indentLine'
-end
+Plug 'itchyny/lightline.vim'
+Plug 'Yggdroot/indentLine'
+
 
 Plug 'roman/golden-ratio' " C-W \
 
 Plug 'unblevable/quick-scope' " f F t T
 "Plug 'justinmk/vim-sneak'     " s or z with an operator
-Plug 'ggandor/lightspeed.nvim'
 
 Plug 'danilamihailov/beacon.nvim'
 
@@ -48,11 +30,9 @@ Plug 'tmsvg/pear-tree'
 
 Plug 'justinmk/vim-dirvish'          " leader f
 
-if has('nvim')
-  Plug 'glepnir/dashboard-nvim'
-else
-  Plug 'mhinz/vim-startify'
-endif
+Plug 'glepnir/dashboard-nvim'
+Plug 'mhinz/vim-startify'
+
 Plug 'EinfachToll/DidYouMean'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-apathy' " ]f
@@ -61,14 +41,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify' " ]c [c
 
 Plug 'sheerun/vim-polyglot'
-if has('nvim')
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
-  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-  Plug 'p00f/nvim-ts-rainbow'
-  Plug 'romgrk/nvim-treesitter-context'
-else
-  Plug 'wellle/context.vim'
-endif
+Plug 'wellle/context.vim'
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' "gc
@@ -76,28 +49,14 @@ Plug 'tomtom/tcomment_vim' "gc
 Plug 'dyng/ctrlsf.vim'                 " leader /
 Plug 'RRethy/vim-illuminate'
 
-if has('nvim')
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/cmp-nvim-lsp'
-  Plug 'hrsh7th/cmp-buffer'
-  Plug 'hrsh7th/cmp-path'
-  Plug 'hrsh7th/cmp-cmdline'
-  Plug 'hrsh7th/nvim-cmp'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'ryanolsonx/vim-lsp-javascript'
 
-  " For vsnip users.
-  Plug 'hrsh7th/cmp-vsnip'
-  Plug 'hrsh7th/vim-vsnip'
-  Plug 'hrsh7th/vim-vsnip-integ'
-else
-  Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'ryanolsonx/vim-lsp-javascript'
-
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-file.vim'
-  Plug 'prabirshrestha/asyncomplete-buffer.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-endif
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 Plug 'vimwiki/vimwiki'
 

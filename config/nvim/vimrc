@@ -21,9 +21,7 @@ set cmdheight=2
 set laststatus=2
 
 set mouse=nvi        " mouse for all
-if ! has('nvim')
-  set ttymouse=sgr   " mouse works past 223 columns
-end
+set ttymouse=sgr   " mouse works past 223 columns
 
 if exists('+modelineexpr')
   set nomodelineexpr
@@ -89,22 +87,14 @@ if has('persistent_undo')
   set undofile
 endif
 
-if ! has('nvim')
-  " follow nvim more closely
-  set viminfo='100,n$HOME/.local/share/vim/viminfo
+" follow nvim more closely
+set viminfo='100,n$HOME/.local/share/vim/viminfo
 
-  " Add matching plugin to super power %
-  runtime! macros/matchit.vim
-end
+" Add matching plugin to super power %
+runtime! macros/matchit.vim
 
-if has('nvim')
-  set foldlevelstart=5
-  set foldmethod=expr
-  set foldexpr=nvim_treesitter#foldexpr()
-else
-  set foldlevelstart=99
-  set foldmethod=manual
-end
+set foldlevelstart=99
+set foldmethod=manual
 
 if has('clipboard') && !exists("g:gui_oni")
   if has('unnamedplus')
@@ -238,10 +228,6 @@ endif
 "------------------------------------------------------------
 " COLOR SCHEME
 
-if has('nvim')
-  set termguicolors
-endif
-
 if $BASE16_THEME != ""
   let base16colorspace=256
   colorscheme base16-$BASE16_THEME
@@ -257,11 +243,7 @@ else
   let g:gruvbox_contrast_light="hard"
   let g:gruvbox_invert_selection=0
   let g:gruvbox_hls_cursor="fg0"
-  if has('nvim')
-    colorscheme gruvbox-flat
-  else
-    colorscheme gruvbox
-  endif
+  colorscheme gruvbox
 endif
 
 " need to install with `rake xterm-italic`
@@ -274,9 +256,6 @@ let g:startify_custom_header =
       \ map(split(system('figlet -c -w $COLUMNS -f stampatello //'.mong8se#shortHostname()), '\n'), '"   ". v:val') + ['','']
 let g:startify_list_order = [['// here'], 'dir', ['// anywhere'], 'files', ['// bookmarks'], 'bookmarks', ['// sessions'], 'sessions']
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
-
-" dashboard-nvim
-let g:dashboard_default_executive ='telescope'
 
 " Pair expansion is dot-repeatable by default:
 let g:pear_tree_repeatable_expand = 0
@@ -292,11 +271,7 @@ nmap <silent> <leader>gs :Gstatus<cr>
 nmap <silent> <leader>gc :Gcommit<cr>
 nmap <silent> <leader>gl :Gclog<cr>
 nmap <silent> <leader>gd :Gdiff<cr>
-if has('nvim')
-  nmap <silent> <leader>gb :Telescope git_branches<cr>
-else
-  nmap <silent> <leader>gb :Gbrowse<cr>
-endif
+nmap <silent> <leader>gb :Gbrowse<cr>
 
 " vim-signify
 let g:signify_vcs_list = [ 'git' ]
@@ -332,41 +307,13 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
 
-if has('nvim')
-  nmap <silent> <Leader>p <Plug>(mong8se_p)
-  nmap <silent> <Leader>pf :Telescope find_files<CR>
 
-  nmap <silent> <Leader>: :Telescope commands<CR>
-  " search
-  nmap <silent> <Leader>sp :Telescope live_grep<CR>
-  nmap <silent> <Leader>sh :Telescope search_history<CR>
-  nmap <silent> <Leader>sb :Telescope current_buffer_fuzzy_find<CR>
-  " code
-  nmap <silent> <Leader>c/ :Telescope lsp_references<CR>
-  nmap <silent> <Leader>cj :Telescope lsp_document_symbols<CR>
-  nmap <silent> <Leader>cJ :Telescope lsp_dynamic_workspace_symbols<CR>
-  nmap <silent> <Leader>ca :Telescope lsp_code_actions<CR>
-  nmap <silent> <Leader>cd :Telescope lsp_definitions<CR>
-  nmap <silent> <Leader>ci :Telescope lsp_implementations<CR>
-  nmap <silent> <Leader>ct :Telescope treesitter<CR>
-  nmap <silent> <Leader>cr :lua vim.lsp.buf.rename()<CR>
-  nmap <silent> <Leader>ce :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-  nmap <silent> <Leader>cz :lua vim.lsp.buf.type_definition()<CR>
-
-  " insert
-  nmap <silent> <Leader>ir :Telescope registers<CR>
-
-  nmap <silent> [e :lua vim.lsp.diagnostic.goto_prev()<CR>
-  nmap <silent> ]e :lua vim.lsp.diagnostic.goto_next()<CR>
-
-else
-  " FZF
-  nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
-  nnoremap <silent> <Leader>pf :Files<CR>
-  nnoremap <silent> <Leader>: :Commands<CR>
-  nnoremap <Leader>sp :Rg
-  autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
-endif
+" FZF
+nnoremap <silent> <Leader>p :call mong8se#ActivateFZF()<CR>
+nnoremap <silent> <Leader>pf :Files<CR>
+nnoremap <silent> <Leader>: :Commands<CR>
+nnoremap <Leader>sp :Rg
+autocmd FileType fzf nmap <silent> <buffer> q :close<CR>
 
 " Ripgrep
 set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
@@ -378,11 +325,7 @@ nmap <silent> <Leader>f- <Plug>(dirvish_up)
 " buffers
 nmap <silent> ]b :bn<CR>
 nmap <silent> [b :bp<CR>
-if has('nvim')
-  nnoremap <silent> <Leader><Space> :lua require'telescope.builtin'.buffers{sort_lastused=1, ignore_current_buffer=1}<CR>
-else
-  nnoremap <silent> <Leader><Space> :Buffers<CR>
-endif
+nnoremap <silent> <Leader><Space> :Buffers<CR>
 
 " tabs
 nmap <silent> ]t :tabnext<CR>
@@ -397,204 +340,24 @@ nmap <silent> <C-W>\ <Plug>(golden_ratio_resize)
 " vim-sneak
 let g:sneak#streak = 1
 
-if has('nvim')
 
-lua << EOF
-require('telescope').setup{
-defaults = {
-  path_display={
-    smart=1,
-    truncate=3
-  }
-  }
-}
+" asyncomplete
+nmap <silent> ]e <Plug>(lsp-next-error)
+nmap <silent> [e <Plug>(lsp-previous-error)
+nmap <silent> ]w <Plug>(lsp-next-warning)
+nmap <silent> [w <Plug>(lsp-previous-warning)
 
- -- Setup nvim-cmp.
-  local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
+let g:asyncomplete_remove_duplicates = 1
+let g:asyncomplete_smart_completion = 1
+let g:asyncomplete_auto_popup = 1
+let g:lsp_signs_error = {'text': '✖'}
+let g:lsp_signs_hint = {'text': '✨'}
+let g:lsp_signs_information = {'text': 'ℹ'}
+let g:lsp_signs_warning = {'text': '‼'}
 
-  local feedkey = function(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-  end
-
-  local cmp = require'cmp'
-
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif vim.fn["vsnip#available"](1) == 1 then
-          feedkey("<Plug>(vsnip-expand-or-jump)", "")
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-        end
-      end, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping(function()
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-          feedkey("<Plug>(vsnip-jump-prev)", "")
-        end
-      end, { "i", "s" }),
-    },
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-require'lspconfig'.tsserver.setup{}
--- require'lspconfig'.denols.setup{}
-require'lspconfig'.html.setup{}
-require'lspconfig'.cssls.setup{}
-require'lspconfig'.jsonls.setup{}
-  require'lspconfig'.gopls.setup {
-    on_attach = function(client)
-      -- [[ other on_attach code ]]
-      require 'illuminate'.on_attach(client)
-    end,
-  }
-
-require'treesitter-context'.setup{
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    throttle = true, -- Throttles plugin updates (may improve performance)
-}
-
-require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim 
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        },
-      },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["]a"] = "@parameter.inner",
-        },
-      swap_previous = {
-        ["[a"] = "@parameter.inner",
-        },
-      },
-    },
-  highlight = {
-    enable = true,
-    -- custom_captures = {
-      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-      -- ["foo.bar"] = "Identifier",
-      -- },
-      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-      -- Instead of true it can also be a list of languages
-      additional_vim_regex_highlighting = false,
-      },
-    rainbow = {
-      enable = true,
-      -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-      extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-      max_file_lines = nil, -- Do not enable for files with more than n lines, int
-      -- colors = {}, -- table of hex strings
-      -- termcolors = {} -- table of colour name strings
-      },
-    indent = {
-      enable = true
-      }
-}
-
-require("trouble").setup {
--- your configuration comes here
--- or leave it empty to use the default settings
--- refer to the configuration section below
-}
-
-
-EOF
-
-else
-  " asyncomplete
-  nmap <silent> ]e <Plug>(lsp-next-error)
-  nmap <silent> [e <Plug>(lsp-previous-error)
-  nmap <silent> ]w <Plug>(lsp-next-warning)
-  nmap <silent> [w <Plug>(lsp-previous-warning)
-
-  let g:asyncomplete_remove_duplicates = 1
-  let g:asyncomplete_smart_completion = 1
-  let g:asyncomplete_auto_popup = 1
-  let g:lsp_signs_error = {'text': '✖'}
-  let g:lsp_signs_hint = {'text': '✨'}
-  let g:lsp_signs_information = {'text': 'ℹ'}
-  let g:lsp_signs_warning = {'text': '‼'}
-
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-endif
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 " Only show quick-scope highlights after f/F/t/T is pressed
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
@@ -614,21 +377,6 @@ let loaded_netrw        = 1
 
 " indentLine
 let g:indentLine_char = "⡇"
-
-if has('nvim')
-lua << EOF
-  require'lualine'.setup{
-    options = {theme = 'wombat'}
-  }
-  require("bufferline").setup{}
-
-  require("indent_blankline").setup {
-      show_current_context = true,
-      buftype_exclude = {"terminal"}
-  }
-EOF
-else
-end
 
 "------------------------------------------------------------
 " LOCALS
