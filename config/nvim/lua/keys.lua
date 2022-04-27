@@ -69,7 +69,9 @@ bind("n", "<Leader>tn", function()
   require("mong8se").toggleNumberMode()
 end, { remap=true, silent = true })
 
-bind("n", "<Leader>tb", "<Plug>(mong8se_scrollbind)", { silent = true })
+bind("n", "<Leader>tb",function()
+  require("mong8se").toggleScrollBindAllWindows()
+end, { silent = true })
 
 bind("n", "<Leader>tc", ":Telescope colorscheme<cr>", { silent = true })
 

@@ -4,8 +4,12 @@ local win = vim.wo
 local mong8se = {}
 
 mong8se.loadRCFiles = function(which)
+  local module = which and function(name)
+    return table.concat({ which, name }, ".")
+  end or function(name) return name end
+
   for _, name in pairs({'_platform', '_machine', 'local'}) do
-    pcall(require, (table.concat({ which or "", name }, ".")))
+    pcall(require, module(name))
   end
 end
 
@@ -24,26 +28,26 @@ mong8se.toggleNumberMode = function()
   end
 end
 
--- -- scroll bind all windows, works best with vertical splits
--- function! mong8se#ScrollBindAllWindows()
---   if &scrollbind
---     windo setlocal noscrollbind
---   else
---     windo setlocal scrollbind
---     syncbind
---   endif
--- endfunction
--- 
--- -- Telescope
--- function! mong8se#ActivateGitOrFiles()
---   if exists('b:git_dir')
---     Telescope git_files
---   else
---     Telescope find_files
---   endif
--- endfunction
--- 
--- -- fzf
+-- scroll bind all windows, works best with vertical splits
+mong8se.toggleScrollBindAllWindows = function()
+  if vim.wo.scrollbind then
+      vim.cmd("windo setlocal noscrollbind")
+  else
+      vim.cmd("windo setlocal scrollbind")
+      vim.cmd("syncbind")
+  end
+end
+
+-- Telescope
+mong8se.activateGitOrFiles = function()
+  local telescope = require("telescope.builtin")
+  if vim.b.git_dir then
+    telescope.git_files()
+  else
+    telescope.find_files()
+  end
+end
+
 -- function! mong8se#ActivateFZF()
 --   if exists('b:git_dir')
 --     GitFiles
@@ -51,6 +55,5 @@ end
 --     Files
 --   endif
 -- endfunction
---
 
 return mong8se

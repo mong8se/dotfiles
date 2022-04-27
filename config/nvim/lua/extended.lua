@@ -309,7 +309,10 @@ g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') and '/usr/local/bin/rg' or '/usr/bin/rg'
 
 
-bind('n', '<Leader>p', '<Plug>(mong8se_p)', { remap = true, silent = true })
+bind('n', '<Leader>p', function() 
+  require("mong8se").activateGitOrFiles()
+end, { remap = true, silent = true })
+
 bind('n', '<Leader>pf', ':Telescope find_files<CR>', { remap = true, silent = true })
 
 bind('n', '<Leader>:', ':Telescope commands<CR>', { remap = true, silent = true })
