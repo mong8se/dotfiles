@@ -125,7 +125,7 @@ cmp.setup.cmdline(':', {
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
-bind('n', '<leader>e', function()
+bind('n', '<leader>ee', function()
   vim.diagnostic.open_float()
 end, opts)
 bind('n', '[d', function()
@@ -134,7 +134,7 @@ end, opts)
 bind('n', ']d', function()
   vim.diagnostic.goto_next()
 end, opts)
-bind('n', '<leader>q', function()
+bind('n', '<leader>eq', function()
   vim.diagnostic.setloclist()
 end, opts)
 
@@ -326,22 +326,12 @@ bind('n', '<Leader>ct', ':Telescope treesitter<CR>', { remap = true, silent = tr
 bind('n', '<Leader>cr', function()
   vim.lsp.buf.rename()
 end, { remap = true, silent = true })
-bind('n', '<Leader>ce', function()
-  vim.lsp.diagnostic.show_line_diagnostics()
-end, { remap = true, silent = true })
 bind('n', '<Leader>cz', function()
   vim.lsp.buf.type_definition()
 end, { remap = true, silent = true })
 
 -- insert
 bind('n', '<Leader>ir', ':Telescope registers<CR>', { remap = true, silent = true })
-
-bind('n', '[e', function()
-  vim.lsp.diagnostic.goto_prev()
-end, { remap = true, silent = true })
-bind('n', ']e', function()
-  vim.lsp.diagnostic.goto_next()
-end, { remap = true, silent = true })
 
 -- Dirvish
 bind('n', '<Leader>ff', ':Telescope file_browser default_selection_index=2 initial_mode=normal<CR>', { remap = true, silent = true })
