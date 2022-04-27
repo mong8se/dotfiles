@@ -8,7 +8,7 @@
 	branch = master
 [submodule "emacs.d"]
 	path = home/emacs.d
-	url = https://github.com/hlissner/doom-emacs
+	url = https://github.com/syl20bnr/spacemacs
 	branch = develop
 	depth = 1
 [submodule "Resources/base16-shell"]
