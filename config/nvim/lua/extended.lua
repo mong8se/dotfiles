@@ -5,14 +5,35 @@ local remap = { remap = true }
 
 vim.notify = require("notify")
 
+local fb_actions = require "telescope".extensions.file_browser.actions
 require('telescope').setup {
   defaults = {
     path_display = {
       smart = 1,
       truncate = 3
     }
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
+    },
+    file_browser = {
+      theme = "ivy",
+      mappings = {
+        ["n"] = {
+          ["-"] = fb_actions.goto_parent_dir,
+        },
+      },
+    },
   }
 }
+
+require('telescope').load_extension('fzf')
+require("telescope").load_extension "file_browser"
 
 -- Setup nvim-cmp.
 local has_words_before = function()
@@ -323,8 +344,8 @@ bind('n', ']e', function()
 end, { remap = true, silent = true })
 
 -- Dirvish
-bind('n', '<Leader>ff', ':Dirvish<CR>', { remap = true, silent = true })
-bind('n', '<Leader>f-', '<Plug>(dirvish_up)', { remap = true, silent = true })
+bind('n', '<Leader>ff', ':Telescope file_browser default_selection_index=2 initial_mode=normal<CR>', { remap = true, silent = true })
+bind('n', '<Leader>f-', ':Telescope file_browser path=%:p:h default_selection_index=2 initial_mode=normal<cr>', { remap = true, silent = true })
 
 -- buffers
 bind('n', ']b', ':bn<CR>', { remap = true, silent = true })

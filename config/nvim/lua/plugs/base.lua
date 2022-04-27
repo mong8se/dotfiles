@@ -5,6 +5,9 @@ vim.call('plug#begin', "~/.config/nvim/plugged")
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make' })
+
 Plug 'rcarriga/nvim-notify'
 
 Plug 'chriskempson/base16-vim'
@@ -31,7 +34,7 @@ Plug 'danilamihailov/beacon.nvim'
 Plug 'machakann/vim-sandwich' -- sa sd sr
 Plug 'tmsvg/pear-tree'
 
-Plug 'justinmk/vim-dirvish' -- leader f
+-- Plug 'justinmk/vim-dirvish' -- leader f
 
 Plug 'glepnir/dashboard-nvim'
 
