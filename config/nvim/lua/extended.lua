@@ -3,6 +3,8 @@ local settings = vim.o
 local bind = vim.keymap.set
 local remap = { remap = true }
 
+vim.notify = require("notify")
+
 require('telescope').setup {
   defaults = {
     path_display = {
@@ -101,7 +103,7 @@ cmp.setup.cmdline(':', {
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { remap = false, silent = true }
+local opts = { noremap = true, silent = true }
 bind('n', '<leader>e', function()
   vim.diagnostic.open_float()
 end, opts)
@@ -120,52 +122,24 @@ end, opts)
 local on_attach = function(client, bufnr)
   require 'illuminate'.on_attach(client)
 
-  local opts = { remap = false, silent = true, buffer = bufnr }
-
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  bind('n', '<leader>cD', function()
-    vim.lsp.buf.declaration()
-  end, opts)
-  bind('n', '<leader>cd', function()
-    vim.lsp.buf.definition()
-  end, opts)
-  bind('n', 'K', function()
-    vim.lsp.buf.hover()
-  end, opts)
-  bind('n', '<leader>ci', function()
-    vim.lsp.buf.implementation()
-  end, opts)
-  bind('n', '<C-k>', function()
-    vim.lsp.buf.signature_help()
-  end, opts)
-  bind('n', '<leader>wa', function()
-    vim.lsp.buf.add_workspace_folder()
-  end, opts)
-  bind('n', '<leader>wr', function()
-    vim.lsp.buf.remove_workspace_folder()
-  end, opts)
-  bind('n', '<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, opts)
-  bind('n', '<leader>D', function()
-    vim.lsp.buf.type_definition()
-  end, opts)
-  bind('n', '<leader>rn', function()
-    vim.lsp.buf.rename()
-  end, opts)
-  bind('n', '<leader>ca', function()
-    vim.lsp.buf.code_action()
-  end, opts)
-  bind('n', 'gr', function()
-    vim.lsp.buf.references()
-  end, opts)
-  bind('n', '<leader>f', function()
-    vim.lsp.buf.formatting()
-  end, opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -309,7 +283,7 @@ g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') and '/usr/local/bin/rg' or '/usr/bin/rg'
 
 
-bind('n', '<Leader>p', function() 
+bind('n', '<Leader>p', function()
   require("mong8se").activateGitOrFiles()
 end, { remap = true, silent = true })
 
@@ -373,3 +347,22 @@ bind('n', '<C-W>\\', '<Plug>(golden_ratio_resize)', { remap = true, silent = tru
 g['sneak#streak'] = 1
 
 g.indentLine_char = "⡇"
+
+bind("n", "<leader>xx", "<cmd>Trouble<cr>",
+  { silent = true, noremap = true }
+)
+bind("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
+  { silent = true, noremap = true }
+)
+bind("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
+  { silent = true, noremap = true }
+)
+bind("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
+  { silent = true, noremap = true }
+)
+bind("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
+  { silent = true, noremap = true }
+)
+bind("n", "gR", "<cmd>Trouble lsp_references<cr>",
+  { silent = true, noremap = true }
+)

@@ -5,6 +5,7 @@ vim.call('plug#begin', "~/.config/nvim/plugged")
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'rcarriga/nvim-notify'
 
 Plug 'chriskempson/base16-vim'
 Plug 'caglartoklu/borlandp.vim'
