@@ -48,6 +48,16 @@ mong8se.activateGitOrFiles = function()
   end
 end
 
+mong8se.smartSplit = function(...)
+  local cmd = "split"
+
+  if vim.fn.winwidth(0) > vim.fn.winheight(0) * 2 then
+    cmd = "vsplit"
+  end
+
+  vim.cmd( table.concat({ cmd, ... }, " "))
+end
+
 -- function! mong8se#ActivateFZF()
 --   if exists('b:git_dir')
 --     GitFiles
