@@ -49,6 +49,18 @@ mong8se.activateGitOrFiles = function()
     end
 end
 
+mong8se.directoryFromContext = function()
+    local filename = vim.fn.getreg("%")
+
+    if filename == "" then
+        return "."
+    elseif vim.fn.isdirectory(filename) == 1 then
+        return "%"
+    else
+        return "%:h"
+    end
+end
+
 -- Split either horizontal or vertical, whichever is bigger, arguments
 -- are passed to vim's split command
 mong8se.smartSplit = function(...)
@@ -64,10 +76,10 @@ end
 local function splitCommand(opts)
     local args = opts.fargs
 
-    if (not args[#args]) or vim.startswith(args[#args], "+") then
-        table.insert(args,
-                     (vim.fn.isdirectory(vim.fn.expand("%")) == 1) and "%" or
-                         "%:h")
+    local lastArg = args[#args]
+
+    if not lastArg or vim.startswith(lastArg, "+") then
+        args[#args + 1] = mong8se.directoryFromContext()
     end
 
     mong8se.smartSplit(unpack(args))

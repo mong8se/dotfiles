@@ -322,12 +322,10 @@ bind('n', '<Leader>ir', ':Telescope registers<CR>',
      {remap = true, silent = true})
 
 -- Dirvish
-bind('n', '<Leader>ff',
-     ':edit .<cr>',
-     {remap = true, silent = true})
-bind('n', '<Leader>f-',
-     ':edit %:h<cr>',
-     {remap = true, silent = true})
+bind('n', '<Leader>ff', ':edit .<cr>', {remap = true, silent = true})
+bind('n', '<Leader>f-', function()
+    vim.cmd("edit " .. require("mong8se").directoryFromContext())
+end, {remap = true, silent = true})
 
 -- buffers
 bind('n', ']b', ':bn<CR>', {remap = true, silent = true})
@@ -368,53 +366,47 @@ bind("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
 bind("n", "gR", "<cmd>Trouble lsp_references<cr>",
      {silent = true, noremap = true})
 
-
-
 -- lir
-local actions = require'lir.actions'
+local actions = require 'lir.actions'
 local mark_actions = require 'lir.mark.actions'
-local clipboard_actions = require'lir.clipboard.actions'
+local clipboard_actions = require 'lir.clipboard.actions'
 
 require'lir'.setup {
-  show_hidden_files = false,
-  devicons_enable = true,
-  mappings = {
-    ['<CR>'] = actions.edit,
-    ['<C-s>'] = actions.split,
-    ['<C-v>'] = actions.vsplit,
-    ['<C-t>'] = actions.tabedit,
+    show_hidden_files = false,
+    devicons_enable = true,
+    mappings = {
+        ['<CR>'] = actions.edit,
+        ['<C-s>'] = actions.split,
+        ['<C-v>'] = actions.vsplit,
+        ['<C-t>'] = actions.tabedit,
 
-    ['-']     = actions.up,
-    ['gq']     = actions.quit,
+        ['-'] = actions.up,
+        ['gq'] = actions.quit,
 
-    ['K']     = actions.mkdir,
-    ['N']     = actions.newfile,
-    ['R']     = actions.rename,
-    ['@']     = actions.cd,
-    ['Y']     = actions.yank_path,
-    ['.']     = actions.toggle_show_hidden,
-    ['D']     = actions.delete,
+        ['K'] = actions.mkdir,
+        ['N'] = actions.newfile,
+        ['R'] = actions.rename,
+        ['@'] = actions.cd,
+        ['Y'] = actions.yank_path,
+        ['.'] = actions.toggle_show_hidden,
+        ['D'] = actions.delete,
 
-    ['J'] = function()
-      mark_actions.toggle_mark()
-      vim.cmd('normal! j')
-    end,
-    ['C'] = clipboard_actions.copy,
-    ['X'] = clipboard_actions.cut,
-    ['P'] = clipboard_actions.paste,
-  },
-  hide_cursor = true,
-  on_init = function()
-    -- use visual mode
-    vim.api.nvim_buf_set_keymap(
-      0,
-      "x",
-      "J",
-      ':<C-u>lua require"lir.mark.actions".toggle_mark("v")<CR>',
-      { noremap = true, silent = true }
-    )
+        ['J'] = function()
+            mark_actions.toggle_mark()
+            vim.cmd('normal! j')
+        end,
+        ['C'] = clipboard_actions.copy,
+        ['X'] = clipboard_actions.cut,
+        ['P'] = clipboard_actions.paste
+    },
+    hide_cursor = true,
+    on_init = function()
+        -- use visual mode
+        vim.api.nvim_buf_set_keymap(0, "x", "J",
+                                    ':<C-u>lua require"lir.mark.actions".toggle_mark("v")<CR>',
+                                    {noremap = true, silent = true})
 
-    -- echo cwd
-    vim.api.nvim_echo({ { vim.fn.expand("%:p"), "Normal" } }, false, {})
-  end,
+        -- echo cwd
+        vim.api.nvim_echo({{vim.fn.expand("%:p"), "Normal"}}, false, {})
+    end
 }
