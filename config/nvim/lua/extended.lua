@@ -385,7 +385,7 @@ require'lir'.setup {
     ['<C-t>'] = actions.tabedit,
 
     ['-']     = actions.up,
-    ['q']     = actions.quit,
+    ['gq']     = actions.quit,
 
     ['K']     = actions.mkdir,
     ['N']     = actions.newfile,
@@ -402,29 +402,6 @@ require'lir'.setup {
     ['C'] = clipboard_actions.copy,
     ['X'] = clipboard_actions.cut,
     ['P'] = clipboard_actions.paste,
-  },
-  float = {
-    winblend = 0,
-    curdir_window = {
-      enable = false,
-      highlight_dirname = false
-    },
-
-    -- -- You can define a function that returns a table to be passed as the third
-    -- -- argument of nvim_open_win().
-    -- win_opts = function()
-    --   local width = math.floor(vim.o.columns * 0.8)
-    --   local height = math.floor(vim.o.lines * 0.8)
-    --   return {
-    --     border = {
-    --       "+", "─", "+", "│", "+", "─", "+", "│",
-    --     },
-    --     width = width,
-    --     height = height,
-    --     row = 1,
-    --     col = math.floor((vim.o.columns - width) / 2),
-    --   }
-    -- end,
   },
   hide_cursor = true,
   on_init = function()
