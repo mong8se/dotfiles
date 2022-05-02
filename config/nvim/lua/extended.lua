@@ -264,7 +264,7 @@ g.pear_tree_smart_backspace = 1
 g.pear_tree_ft_disabled = {'TelescopePrompt'}
 
 -- Fugitive
-bind('n', '<leader>gs', ':Gstatus<cr>', {remap = true, silent = true})
+bind('n', '<leader>gs', ':Git<cr>', {remap = true, silent = true})
 bind('n', '<leader>gc', ':Gcommit<cr>', {remap = true, silent = true})
 bind('n', '<leader>gl', ':Gclog<cr>', {remap = true, silent = true})
 bind('n', '<leader>gd', ':Gdiff<cr>', {remap = true, silent = true})
@@ -325,30 +325,6 @@ bind('n', '<Leader>cr', function() vim.lsp.buf.rename() end,
      {remap = true, silent = true})
 bind('n', '<Leader>cz', function() vim.lsp.buf.type_definition() end,
      {remap = true, silent = true})
-
--- insert
-bind('n', '<Leader>ir', ':Telescope registers<CR>',
-     {remap = true, silent = true})
-
--- Dirvish
-bind('n', '<Leader>ff', ':edit .<cr>', {remap = true, silent = true})
-bind('n', '<Leader>f-', function()
-    vim.cmd("edit " .. require("mong8se").directoryFromContext())
-end, {remap = true, silent = true})
-
--- buffers
-bind('n', ']b', ':bn<CR>', {remap = true, silent = true})
-bind('n', '[b', ':bp<CR>', {remap = true, silent = true})
-bind('n', '<Leader><space>', function()
-    require'telescope.builtin'.buffers {
-        sort_lastused = 1,
-        ignore_current_buffer = 1
-    }
-end)
-
--- tabs
-bind('n', ']t', ':tabnext<CR>', {remap = true, silent = true})
-bind('n', '[t', ':tabprevious<CR>', {remap = true, silent = true})
 
 -- Golden Ratio
 g.golden_ratio_autocommand = 0

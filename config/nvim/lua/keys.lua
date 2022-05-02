@@ -90,3 +90,27 @@ if has("spell") then
   vim.o.spelllang = "en_us"
   bind('n', '<silent>', '<Leader>ts :setlocal spell!<CR>')
 end
+
+-- tabs
+bind('n', ']t', ':tabnext<CR>', {remap = true, silent = true})
+bind('n', '[t', ':tabprevious<CR>', {remap = true, silent = true})
+
+-- insert
+bind('n', '<Leader>ir', ':Telescope registers<CR>',
+     {remap = true, silent = true})
+
+-- lir
+bind('n', '<Leader>ff', ':edit .<cr>', {remap = true, silent = true})
+bind('n', '<Leader>f-', function()
+    vim.cmd("edit " .. require("mong8se").directoryFromContext())
+end, {remap = true, silent = true})
+
+-- buffers
+bind('n', ']b', ':bn<CR>', {remap = true, silent = true})
+bind('n', '[b', ':bp<CR>', {remap = true, silent = true})
+bind('n', '<Leader><space>', function()
+    require'telescope.builtin'.buffers {
+        sort_lastused = 1,
+        ignore_current_buffer = 1
+    }
+end)
