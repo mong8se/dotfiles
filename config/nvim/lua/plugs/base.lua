@@ -11,7 +11,7 @@ Plug 'tamago324/lir.nvim'
 
 Plug 'rcarriga/nvim-notify'
 
-Plug 'chriskempson/base16-vim'
+Plug 'RRethy/nvim-base16'
 Plug 'caglartoklu/borlandp.vim'
 Plug 'eddyekofo94/gruvbox-flat.nvim'
 

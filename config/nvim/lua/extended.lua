@@ -233,7 +233,16 @@ require("trouble").setup {
     -- refer to the configuration section below
 }
 
-require'lualine'.setup {options = {theme = 'wombat'}}
+require'lualine'.setup {
+    options = {
+        theme = vim.startswith(g.colors_name, "base16") and "base16" or
+            "gruvbox",
+
+        section_separators = {left = '', right = ''},
+        component_separators = {left = '', right = ''}
+
+    }
+}
 
 require("bufferline").setup {}
 
