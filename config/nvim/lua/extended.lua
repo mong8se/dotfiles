@@ -291,7 +291,7 @@ bind('v', '<leader>/', '<Plug>CtrlSFVwordExec', remap)
 bind('n', '<leader>sr', ':CtrlSFOpen<CR>', {remap = true, silent = true})
 g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg =
-    vim.fn.executable('/usr/local/bin/rg') and '/usr/local/bin/rg' or
+    vim.fn.executable('/usr/local/bin/rg') == 1 and '/usr/local/bin/rg' or
         '/usr/bin/rg'
 
 bind('n', '<Leader>p', function() require("mong8se").activateGitOrFiles() end,

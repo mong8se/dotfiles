@@ -79,8 +79,10 @@ settings.foldexpr = require("nvim-treesitter").foldexpr
 
 if has("clipboard") then
   if has("unnamedplus") then
-    settings.clipboard:prepend("unnamed,unnamedplus")
-  else
+    settings.clipboard:prepend("unnamedplus")
+  end
+
+  if has("unnamed") then
     settings.clipboard:prepend("unnamed")
   end
 end

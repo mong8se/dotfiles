@@ -32,7 +32,6 @@ end
 
 if type -q nvim
   set -x EDITOR (which nvim)
-  set -x NVIM_TUI_ENABLE_CURSOR_SHAPE 1
 else
   set -x EDITOR (which vim)
 end
