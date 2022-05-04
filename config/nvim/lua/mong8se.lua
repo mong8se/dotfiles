@@ -91,9 +91,17 @@ mong8se.splitCommand = function(opts)
     mong8se.smartSplit(unpack(args))
 end
 
-mong8se.visualToSearch = function()
-    local originalValue = fn.getreg("s")
-    cmd('normal! "sy')
+
+local motionCommands = {line= "'[V']", char= "`[v`]", block= "`[\\<c-v>`]"}
+mong8se.visualToSearch = function(mode)
+    if type(mode) ~= "string" then
+        vim.go.operatorfunc = "v:lua.require'mong8se'.visualToSearch"
+        return 'g@'
+    end
+
+    -- TODO: "block" mode doesn't work right or make sense
+    local originalValue = fn.getreginfo("s")
+    cmd('silent noautocmd keepjumps normal! ' .. motionCommands[mode] .. '"sy')
     fn.setreg("/",
               [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
     fn.setreg("s", originalValue)

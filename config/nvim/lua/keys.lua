@@ -114,7 +114,8 @@ bind('n', '<Leader><space>', function()
     }
 end)
 
-bind('v', '/', mong8se.visualToSearch, {noremap = true, silent = true})
+bind('v', '/', mong8se.visualToSearch(), {noremap = true, silent = true})
+bind('n', 'g/', mong8se.visualToSearch(), {noremap = true, silent = true})
 
 -- Map key chord `jk` to <Esc>.
 local lasttime
