@@ -74,6 +74,9 @@ bind("n", "<Leader>tb", mong8se.toggleScrollBindAllWindows, {silent = true})
 
 bind("n", "<Leader>tc", ":Telescope colorscheme<cr>", {silent = true})
 
+bind("n", "<C-w>s", mong8se.splitCommand, { silent = true, noremap=true })
+bind("n", "<C-w><C-s>", mong8se.splitCommand, { silent = true, noremap=true })
+
 -- Trouble
 bind("n", "<leader>tt", "<cmd>TroubleToggle<cr>")
 bind("n", "<leader>tw", "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")

@@ -80,7 +80,7 @@ end
 -- Command that uses smart split and by default opens the current directory
 -- instead of default behavior of repeating same buffer
 mong8se.splitCommand = function(opts)
-    local args = opts.fargs
+    local args = opts and opts.fargs or {}
 
     local lastArg = args[#args]
 
