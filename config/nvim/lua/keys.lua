@@ -1,8 +1,9 @@
+local mong8se = require("mong8se")
 local global = vim.g
 local bind = vim.keymap.set
 local has = vim.fn.has
 
-local remap = { remap = true }
+local remap = {remap = true}
 
 global.mapleader = " "
 
@@ -30,7 +31,9 @@ bind("n", "K", "i<CR><Esc>")
 
 -- Map <C-L> (redraw screen) to also turn off search highlighting until the
 -- next search
-bind("n", "<C-L>", ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>", { silent = true })
+bind("n", "<C-L>",
+     ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
+     {silent = true})
 
 -- Arrow keys move up and down visible lines, not physical lines
 bind("n", "<Down>", "gj")
@@ -65,15 +68,11 @@ bind("v", "<", "<gv")
 bind("v", ">", ">gv")
 
 -- custom functions
-bind("n", "<Leader>tn", function()
-  require("mong8se").toggleNumberMode()
-end, { remap=true, silent = true })
+bind("n", "<Leader>tn", mong8se.toggleNumberMode, {remap = true, silent = true})
 
-bind("n", "<Leader>tb",function()
-  require("mong8se").toggleScrollBindAllWindows()
-end, { silent = true })
+bind("n", "<Leader>tb", mong8se.toggleScrollBindAllWindows, {silent = true})
 
-bind("n", "<Leader>tc", ":Telescope colorscheme<cr>", { silent = true })
+bind("n", "<Leader>tc", ":Telescope colorscheme<cr>", {silent = true})
 
 -- Trouble
 bind("n", "<leader>tt", "<cmd>TroubleToggle<cr>")
@@ -87,8 +86,8 @@ bind("n", "[<cr>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[")
 bind("n", "]<cr>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>")
 
 if has("spell") then
-  vim.o.spelllang = "en_us"
-  bind('n', '<silent>', '<Leader>ts :setlocal spell!<CR>')
+    vim.o.spelllang = "en_us"
+    bind('n', '<silent>', '<Leader>ts :setlocal spell!<CR>')
 end
 
 -- tabs
@@ -101,9 +100,9 @@ bind('n', '<Leader>ir', ':Telescope registers<CR>',
 
 -- lir
 bind('n', '<Leader>ff', ':edit .<cr>', {remap = true, silent = true})
-bind('n', '<Leader>f-', function()
-    vim.cmd("edit " .. require("mong8se").directoryFromContext())
-end, {remap = true, silent = true})
+bind('n', '<Leader>f-',
+     function() vim.cmd("edit " .. mong8se.directoryFromContext()) end,
+     {remap = true, silent = true})
 
 -- buffers
 bind('n', ']b', ':bn<CR>', {remap = true, silent = true})
@@ -115,4 +114,18 @@ bind('n', '<Leader><space>', function()
     }
 end)
 
-bind('v', '/', require("mong8se").visualToSearch, {noremap= true, silent=true})
+bind('v', '/', mong8se.visualToSearch, {noremap = true, silent = true})
+
+-- Map key chord `jk` to <Esc>.
+local lasttime
+
+function JKescape(key)
+    local timediff = vim.fn.reltimefloat(vim.fn.reltime(lasttime))
+    lasttime = vim.fn.reltime()
+    return (timediff <= 0.05 and timediff >= 0.001) and "<BS><Esc>" or key
+end
+
+bind("i", "j", function() return JKescape('j') end,
+     {expr = true, noremap = true, silent = false})
+bind("i", "k", function() return JKescape('k') end,
+     {expr = true, noremap = true, silent = false})
