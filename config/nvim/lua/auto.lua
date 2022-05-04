@@ -18,14 +18,18 @@ autocmd("WinLeave", {
 --  leave insert or replace mode
 autocmd({"BufEnter", "WinLeave", "FocusLost", "VimSuspend"}, {
     pattern = "*",
-    command = "if empty(&buftype) | stopinsert | endif",
+    callback = function()
+        if vim.bo.buftype == "" then vim.cmd("stopinsert") end
+    end,
     group = FocusIssues
 })
 
 --  Save the buffer if it is modified and has a filename
 autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
     pattern = "*",
-    command = "if !empty(@%) | update | endif",
+    callback = function()
+        if vim.fn.getreg("%") ~= "" then vim.cmd("update") end
+    end,
     group = FocusIssues
 })
 
@@ -33,5 +37,8 @@ autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
 -- similar to what happens in fugitive
 autocmd("FileType", {
     pattern = "help",
-    command = "nmap <silent> <buffer> gq :helpclose<CR>"
+    callback = function()
+        vim.keymap.set('n', 'gq', ':helpclose<CR>',
+                       {remap = true, silent = true, buffer = true})
+    end
 })

@@ -2,6 +2,7 @@ local cmd = vim.cmd
 local settings = vim.opt
 local command = vim.api.nvim_create_user_command
 local has = vim.fn.has
+local splitCommand = require("mong8se").splitCommand
 
 cmd("syntax on")
 settings.hidden = true
@@ -36,7 +37,6 @@ settings.inccommand = "nosplit"
 settings.ignorecase = true
 settings.smartcase = true
 
-
 settings.backspace = "indent,eol,start"
 
 settings.startofline = false
@@ -62,8 +62,13 @@ settings.sidescrolloff = 5
 settings.virtualedit = "block,insert"
 
 settings.list = true
-settings.listchars = { tab = "╾╌", trail = "⎵", precedes = "⊲", extends = "⊳" }
-settings.fillchars = { vert = "│", fold = "╍" }
+settings.listchars = {
+    tab = "╾╌",
+    trail = "⎵",
+    precedes = "⊲",
+    extends = "⊳"
+}
+settings.fillchars = {vert = "│", fold = "╍"}
 
 settings.lazyredraw = true
 settings.ttyfast = true
@@ -77,34 +82,22 @@ settings.foldlevelstart = 5
 settings.foldmethod = "expr"
 settings.foldexpr = require("nvim-treesitter").foldexpr
 
-if has("clipboard") then
-  settings.clipboard:prepend("unnamed")
-end
+if has("clipboard") then settings.clipboard:prepend("unnamed") end
 
 if has("user_commands") then
-  command("Q", "q<bang>", { bang = true })
-  command("QA", "qa<bang>", { bang = true })
-  command("Qa", "qa<bang>", { bang = true })
+    command("Q", "q<bang>", {bang = true})
+    command("QA", "qa<bang>", {bang = true})
+    command("Qa", "qa<bang>", {bang = true})
+    command("Split", splitCommand, {nargs = "*"})
+    command("SPlit", splitCommand, {nargs = "*"})
 end
 
-settings.grepprg='rg\\ --vimgrep\\ --no-heading\\ --smart-case'
+settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'
 
 local disabled_built_ins = {
-    "netrw",
-    "netrwPlugin",
-    "netrwSettings",
-    "netrwFileHandlers",
-    "getscript",
-    "getscriptPlugin",
-    "vimball",
-    "vimballPlugin",
-    "2html_plugin",
-    "logipat",
-    "rrhelper",
-    "spellfile_plugin",
-    "matchit"
+    "netrw", "netrwPlugin", "netrwSettings", "netrwFileHandlers", "getscript",
+    "getscriptPlugin", "vimball", "vimballPlugin", "2html_plugin", "logipat",
+    "rrhelper", "spellfile_plugin", "matchit"
 }
 
-for _, plugin in pairs(disabled_built_ins) do
-    vim.g["loaded_" .. plugin] = 1
-end
+for _, plugin in pairs(disabled_built_ins) do vim.g["loaded_" .. plugin] = 1 end

@@ -114,3 +114,5 @@ bind('n', '<Leader><space>', function()
         ignore_current_buffer = 1
     }
 end)
+
+bind('v', '/', require("mong8se").visualToSearch, {noremap= true, silent=true})
