@@ -11,7 +11,7 @@ settings.hidden = true
 settings.encoding = "utf-8"
 
 settings.timeout = true
-settings.timeoutlen = 1000
+settings.timeoutlen = 750
 settings.ttimeout = true
 settings.ttimeoutlen = 10
 
@@ -82,7 +82,7 @@ settings.foldlevelstart = 5
 settings.foldmethod = "expr"
 settings.foldexpr = require("nvim-treesitter").foldexpr
 
-if has("clipboard") then settings.clipboard:prepend("unnamed") end
+-- if has("clipboard") then settings.clipboard:prepend("unnamed") end
 
 if has("user_commands") then
     command("Q", "q<bang>", {bang = true})

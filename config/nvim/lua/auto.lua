@@ -42,3 +42,13 @@ autocmd("FileType", {
                        {remap = true, silent = true, buffer = true})
     end
 })
+
+autocmd("TextYankPost", {
+  pattern = "*",
+  callback = function(...) 
+    if vim.v.event.operator == "y" and vim.v.event.regname == "" then
+      vim.fn.setreg("+", table.concat(vim.v.event.regcontents, '\n'))
+      vim.pretty_print(vim.v.event)
+    end
+   end
+})
