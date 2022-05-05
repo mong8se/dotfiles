@@ -44,7 +44,8 @@ Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-apathy' -- ]f
 
 Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify' -- ]c [c
+-- Plug 'mhinz/vim-signify' -- ]c [c
+Plug 'lewis6991/gitsigns.nvim'
 
 Plug 'sheerun/vim-polyglot'
 

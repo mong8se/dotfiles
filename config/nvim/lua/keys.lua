@@ -70,7 +70,7 @@ bind("v", ">", ">gv")
 -- custom functions
 bind("n", "<Leader>tn", mong8se.toggleNumberMode, {remap = true, silent = true})
 
-bind("n", "<Leader>tb", mong8se.toggleScrollBindAllWindows, {silent = true})
+bind("n", "<Leader>tz", mong8se.toggleScrollBindAllWindows, {silent = true})
 
 bind("n", "<Leader>tc", ":Telescope colorscheme<cr>", {silent = true})
 
@@ -120,16 +120,6 @@ end)
 bind('v', '/', mong8se.visualToSearch(), {noremap = true, silent = true})
 bind('n', 'g/', mong8se.visualToSearch(), {noremap = true, silent = true})
 
--- Map key chord `jk` to <Esc>.
-local lasttime
-
-function JKescape(key)
-    local timediff = vim.fn.reltimefloat(vim.fn.reltime(lasttime))
-    lasttime = vim.fn.reltime()
-    return (timediff <= 0.05 and timediff >= 0.001) and "<BS><Esc>" or key
-end
-
-bind("i", "j", function() return JKescape('j') end,
-     {expr = true, noremap = true, silent = false})
-bind("i", "k", function() return JKescape('k') end,
-     {expr = true, noremap = true, silent = false})
+-- paste from system clipboard and match indent
+bind('n', 'pp', '"+]p', { noremap = true })
+bind('n', 'PP', '"+]P', { noremap = true })
