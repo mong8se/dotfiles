@@ -1,6 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 local CursorLine = vim.api.nvim_create_augroup('CursorLine', {clear = true})
 local FocusIssues = vim.api.nvim_create_augroup('FocusIssues', {clear = true})
+local YankSync = vim.api.nvim_create_augroup('YankSync', {clear = true})
 
 -- cursorline only for active window
 autocmd({"VimEnter", "WinEnter", "BufWinEnter"}, {
@@ -44,11 +45,12 @@ autocmd("FileType", {
 })
 
 autocmd("TextYankPost", {
-  pattern = "*",
-  callback = function(...) 
-    if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-      vim.fn.setreg("+", table.concat(vim.v.event.regcontents, '\n'))
-      vim.pretty_print(vim.v.event)
-    end
-   end
+    pattern = "*",
+    callback = function()
+        if vim.v.event.operator == "y" and vim.v.event.regname == "" then
+            vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"))
+            vim.pretty_print(vim.v.event)
+        end
+    end,
+    group = YankSync
 })
