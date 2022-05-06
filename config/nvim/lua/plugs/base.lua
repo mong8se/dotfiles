@@ -51,7 +51,7 @@ Plug 'sheerun/vim-polyglot'
 Plug('nvim-treesitter/nvim-treesitter', { ["do"] = ':TSUpdate' })
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'p00f/nvim-ts-rainbow'
-Plug 'romgrk/nvim-treesitter-context'
+Plug 'lewis6991/nvim-treesitter-context'
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' -- gc
