@@ -4,6 +4,8 @@ local global = vim.g
 
 global.mapleader = " "
 
+local attachableBindings = {}
+
 register({
     f = {
         name = "file",
@@ -60,18 +62,7 @@ register({
             "LSP Workspace Symbols",
             silent = true
         },
-        a = {
-            ':Telescope lsp_code_actions<CR>',
-            "LSP Code Actions",
-            silent = true
-        },
         t = {':Telescope treesitter<CR>', "Telescope Treesitter", silent = true},
-        r = {function() vim.lsp.buf.rename() end, "LSP Rename", silent = true},
-        z = {
-            function() vim.lsp.buf.type_definition() end,
-            "LSP Type Definition",
-            silent = true
-        }
     },
     p = {
         name = "project",
@@ -235,3 +226,97 @@ register({
     ["<"] = {"<gv", "which_key_ignore", mode = "v"},
     [">"] = {">gv", "which_key_ignore", mode = "v"}
 })
+
+attachableBindings.gitsigns = function(gs, bufnr)
+    register({
+        -- Navigation
+        ["]c"] = { function() if vim.wo.diff then return ']c' end vim.schedule(function() gs.next_hunk() end) return '<Ignore>' end, "Next change", expr = true, buffer = bufnr },
+        ["[c"] = { function() if vim.wo.diff then return '[c' end vim.schedule(function() gs.prev_hunk() end) return '<Ignore>' end, "Previous change", expr = true, buffer = bufnr },
+        -- Actions
+        ["<leader>hs"] = { ':Gitsigns stage_hunk<CR>', "Stage Hunk", buffer = bufnr },
+        ["<leader>hr"] = { ':Gitsigns reset_hunk<CR>', "Reset Hunk", buffer = bufnr },
+        ["<leader>hS"] = { gs.stage_buffer, "Stage Buffer", buffer = bufnr },
+        ["<leader>hu"] = { gs.undo_stage_hunk, "Undo Stage Hunk", buffer = bufnr },
+        ["<leader>hR"] = { gs.reset_buffer, "Reset Buffer", buffer = bufnr },
+        ["<leader>hp"] = { gs.preview_hunk, "Preview Hunk", buffer = bufnr },
+        ["<leader>hb"] = { function() gs.blame_line {full = true} end, "Blame Line", buffer = bufnr },
+        ["<leader>tb"] = { gs.toggle_current_line_blame, "Toggle Blame Current Line", buffer = bufnr },
+        ["<leader>hd"] = { gs.diffthis, "Diff This", buffer = bufnr },
+        ["<leader>hD"] = { function() gs.diffthis('~') end, "Diff This ~", buffer = bufnr },
+        ["<leader>td"] = { gs.toggle_deleted, "Toggle Show Deleted Lines", buffer = bufnr },
+        ["ih"] = { ':<C-U>Gitsigns select_hunk<CR>', "which_key_ignore", buffer = bufnr, mode = 'x' }
+    })
+    register({
+        ["<leader>hs"] = { ':Gitsigns stage_hunk<CR>', "Stage Hunk", mode = "v", buffer = bufnr },
+        ["<leader>hr"] = { ':Gitsigns reset_hunk<CR>', "Reset Hunk", mode = "v", buffer = bufnr },
+        -- Text object
+        ["ih"] = { ':<C-U>Gitsigns select_hunk<CR>', "which_key_ignore", buffer = bufnr, mode = 'o' }
+    })
+end
+
+attachableBindings.lsp = function(bufnr)
+    register({
+        ["gD"] = {
+            '<cmd>lua vim.lsp.buf.declaration()<CR>',
+            "LSP Declaration",
+            silent = true,
+            buffer = bufnr
+        },
+        ["gd"] = {
+            '<cmd>lua vim.lsp.buf.definition()<CR>',
+            "LSP Definition",
+            silent = true,
+            buffer = bufnr
+        },
+        ["K"] = {
+            '<cmd>lua vim.lsp.buf.hover()<CR>',
+            "LSP Hover",
+            silent = true,
+            buffer = bufnr
+        },
+        ["\\"] = {
+            '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+            "LSP Signature Help",
+            silent = true,
+            buffer = bufnr
+        },
+        ["<leader>wa"] = {
+            '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
+            "LSP Add Workspace",
+            silent = true,
+            buffer = bufnr
+        },
+        ["<leader>wr"] = {
+            '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
+            "LSP Remove Workspace",
+            silent = true,
+            buffer = bufnr
+        },
+        ["<leader>wl"] = {
+            '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
+            "LSP List Workspaces",
+            silent = true,
+            buffer = bufnr
+        },
+        ["<leader>cf"] = {
+            '<cmd>lua vim.lsp.buf.formatting()<CR>',
+            "LSP Formatting",
+            silent = true,
+            buffer = bufnr
+        },
+        ["<leader>cr"] = {
+            function() vim.lsp.buf.rename() end,
+            "LSP Rename",
+            silent = true,
+            buffer = bufnr
+        },
+        ["<leader>cd"] = {
+            function() vim.lsp.buf.type_definition() end,
+            "LSP Type Definition",
+            silent = true,
+            buffer = bufnr
+        }
+    })
+end
+
+return attachableBindings
