@@ -2,7 +2,6 @@ local cmd = vim.cmd
 local settings = vim.o
 local global = vim.g
 local env = vim.env
-local has = vim.fn.has
 
 settings.termguicolors = true
 

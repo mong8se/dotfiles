@@ -68,7 +68,7 @@ settings.listchars = {
     precedes = "⊲",
     extends = "⊳"
 }
-settings.fillchars = {vert = "│", fold = "╍"}
+settings.fillchars = { vert = "│", fold = "╍" }
 
 settings.lazyredraw = true
 settings.ttyfast = true
@@ -87,11 +87,11 @@ if has("spell") then
 end
 
 if has("user_commands") then
-    command("Q", "q<bang>", {bang = true})
-    command("QA", "qa<bang>", {bang = true})
-    command("Qa", "qa<bang>", {bang = true})
-    command("Split", splitCommand, {nargs = "*"})
-    command("SPlit", splitCommand, {nargs = "*"})
+    command("Q", "q<bang>", { bang = true })
+    command("QA", "qa<bang>", { bang = true })
+    command("Qa", "qa<bang>", { bang = true })
+    command("Split", splitCommand, { nargs = "*" })
+    command("SPlit", splitCommand, { nargs = "*" })
 end
 
 settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'

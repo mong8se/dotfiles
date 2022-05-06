@@ -1,7 +1,5 @@
 local g = vim.g
 local settings = vim.o
-local bind = vim.keymap.set
-local remap = {remap = true}
 
 vim.notify = require("notify")
 
@@ -97,7 +95,6 @@ cmp.setup.cmdline('/', {sources = {{name = 'buffer'}}})
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
 })
-
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -264,11 +261,8 @@ settings.showtabline = 2
 
 -- CtrlSF
 g.ctrlsf_default_root = 'project' -- search relative to project root
-g.ctrlsf_ackprg =
-    vim.fn.executable('/usr/local/bin/rg') == 1 and '/usr/local/bin/rg' or
-        '/usr/bin/rg'
-
-
+g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') == 1 and
+                      '/usr/local/bin/rg' or '/usr/bin/rg'
 
 -- search
 
@@ -281,7 +275,6 @@ g.golden_ratio_autocommand = 0
 g['sneak#streak'] = 1
 
 g.indentLine_char = "⡇"
-
 
 -- lir
 local actions = require 'lir.actions'
@@ -327,49 +320,49 @@ require'lir'.setup {
     end
 }
 
-require('gitsigns').setup{
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
+require('gitsigns').setup {
+    on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
 
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
+        local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+        end, {expr = true})
+
+        map('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+        end, {expr = true})
+
+        -- Actions
+        map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+        map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+        map('n', '<leader>hS', gs.stage_buffer)
+        map('n', '<leader>hu', gs.undo_stage_hunk)
+        map('n', '<leader>hR', gs.reset_buffer)
+        map('n', '<leader>hp', gs.preview_hunk)
+        map('n', '<leader>hb', function() gs.blame_line {full = true} end)
+        map('n', '<leader>tb', gs.toggle_current_line_blame)
+        map('n', '<leader>hd', gs.diffthis)
+        map('n', '<leader>hD', function() gs.diffthis('~') end)
+        map('n', '<leader>td', gs.toggle_deleted)
+
+        -- Text object
+        map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
-
-    -- Navigation
-    map('n', ']c', function()
-      if vim.wo.diff then return ']c' end
-      vim.schedule(function() gs.next_hunk() end)
-      return '<Ignore>'
-    end, {expr=true})
-
-    map('n', '[c', function()
-      if vim.wo.diff then return '[c' end
-      vim.schedule(function() gs.prev_hunk() end)
-      return '<Ignore>'
-    end, {expr=true})
-
-    -- Actions
-    map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
-    map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
-    map('n', '<leader>hS', gs.stage_buffer)
-    map('n', '<leader>hu', gs.undo_stage_hunk)
-    map('n', '<leader>hR', gs.reset_buffer)
-    map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hb', function() gs.blame_line{full=true} end)
-    map('n', '<leader>tb', gs.toggle_current_line_blame)
-    map('n', '<leader>hd', gs.diffthis)
-    map('n', '<leader>hD', function() gs.diffthis('~') end)
-    map('n', '<leader>td', gs.toggle_deleted)
-
-    -- Text object
-    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-  end
 }
 
 require("which-key").setup {
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
- }
+}
