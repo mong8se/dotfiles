@@ -101,7 +101,7 @@ cmp.setup.cmdline(':', {
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local lsp_on_attach = function(client, bufnr)
     require'illuminate'.on_attach(client)
 
     local opts = {noremap = true, silent = true}
@@ -153,7 +153,7 @@ local servers = {
 }
 for _, cnf in pairs(servers) do
     local server_config = {
-        on_attach = on_attach,
+        on_attach = lsp_on_attach,
         flags = {
             -- This will be the default in neovim 0.7+
             debounce_text_changes = 150
