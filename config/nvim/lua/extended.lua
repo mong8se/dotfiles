@@ -98,18 +98,13 @@ cmp.setup.cmdline(':', {
     sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
 })
 
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = {noremap = true, silent = true}
-bind('n', '<leader>ee', function() vim.diagnostic.open_float() end, opts)
-bind('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
-bind('n', ']d', function() vim.diagnostic.goto_next() end, opts)
-bind('n', '<leader>eq', function() vim.diagnostic.setloclist() end, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     require'illuminate'.on_attach(client)
+
+    local opts = {noremap = true, silent = true}
 
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -263,93 +258,30 @@ g.pear_tree_smart_closers = 1
 g.pear_tree_smart_backspace = 1
 g.pear_tree_ft_disabled = {'TelescopePrompt'}
 
--- Fugitive
-bind('n', '<leader>gs', ':Git<cr>', {remap = true, silent = true})
-bind('n', '<leader>gc', ':Gcommit<cr>', {remap = true, silent = true})
-bind('n', '<leader>gl', ':Gclog<cr>', {remap = true, silent = true})
-bind('n', '<leader>gd', ':Gdiff<cr>', {remap = true, silent = true})
-bind('n', '<leader>gb', ':Telescope git_branches<cr>',
-     {remap = true, silent = true})
-
--- vim-signify
-g.signify_vcs_list = {'git'}
-g.signify_realtime = 1
-bind('n', '<Leader>gt', ':SignifyToggle<CR>', {remap = true, silent = true})
-bind('n', '<leader>gh', ':SignifyToggleHighlight<CR>',
-     {remap = true, silent = true})
-bind('n', '<leader>gf', ':SignifyFold<CR>', {remap = true, silent = true})
-bind('n', '<leader>gr', ':SignifyRefresh<CR>', {remap = true, silent = true})
-
 -- So signs and number share a column when numbers are on
 settings.signcolumn = 'number'
 settings.showtabline = 2
 
 -- CtrlSF
-bind('n', '<leader>/', '<Plug>CtrlSFPrompt', remap)
-bind('n', '<leader>*', '<Plug>CtrlSFCwordExec', remap)
-bind('v', '<leader>/', '<Plug>CtrlSFVwordExec', remap)
-bind('n', '<leader>sr', ':CtrlSFOpen<CR>', {remap = true, silent = true})
 g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg =
     vim.fn.executable('/usr/local/bin/rg') == 1 and '/usr/local/bin/rg' or
         '/usr/bin/rg'
 
-bind('n', '<Leader>p', function() require("mong8se").activateGitOrFiles() end,
-     {remap = true, silent = true})
 
-bind('n', '<Leader>pf', ':Telescope find_files<CR>',
-     {remap = true, silent = true})
-
-bind('n', '<Leader>:', ':Telescope commands<CR>', {remap = true, silent = true})
 
 -- search
-bind('n', '<Leader>sp', ':Telescope live_grep<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>sh', ':Telescope search_history<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>sb', ':Telescope current_buffer_fuzzy_find<CR>',
-     {remap = true, silent = true})
-
--- code
-bind('n', '<Leader>c/', ':Telescope lsp_references<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>cj', ':Telescope lsp_document_symbols<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>cJ', ':Telescope lsp_dynamic_workspace_symbols<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>ca', ':Telescope lsp_code_actions<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>ct', ':Telescope treesitter<CR>',
-     {remap = true, silent = true})
-bind('n', '<Leader>cr', function() vim.lsp.buf.rename() end,
-     {remap = true, silent = true})
-bind('n', '<Leader>cz', function() vim.lsp.buf.type_definition() end,
-     {remap = true, silent = true})
 
 -- Golden Ratio
 g.golden_ratio_autocommand = 0
-bind('n', '<leader>tg', '<Plug>(golden_ratio_toggle)',
-     {remap = true, silent = true})
+
 -- compare to <C-W>=
-bind('n', '<C-W>\\', '<Plug>(golden_ratio_resize)',
-     {remap = true, silent = true})
 
 -- vim-sneak
 g['sneak#streak'] = 1
 
 g.indentLine_char = "⡇"
 
-bind("n", "<leader>xx", "<cmd>Trouble<cr>", {silent = true, noremap = true})
-bind("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
-     {silent = true, noremap = true})
-bind("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
-     {silent = true, noremap = true})
-bind("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
-     {silent = true, noremap = true})
-bind("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
-     {silent = true, noremap = true})
-bind("n", "gR", "<cmd>Trouble lsp_references<cr>",
-     {silent = true, noremap = true})
 
 -- lir
 local actions = require 'lir.actions'
@@ -375,7 +307,6 @@ require'lir'.setup {
         ['Y'] = actions.yank_path,
         ['.'] = actions.toggle_show_hidden,
         ['D'] = actions.delete,
-
         ['J'] = function()
             mark_actions.toggle_mark()
             vim.cmd('normal! j')
@@ -436,3 +367,9 @@ require('gitsigns').setup{
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 }
+
+require("which-key").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+ }

@@ -48,7 +48,7 @@ end
 -- Telescope
 mong8se.activateGitOrFiles = function()
     local telescope = require("telescope.builtin")
-    if vim.b.git_dir then
+    if vim.b.gitsigns_head then
         telescope.git_files()
     else
         telescope.find_files()

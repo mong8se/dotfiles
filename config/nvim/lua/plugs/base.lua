@@ -18,6 +18,7 @@ Plug 'eddyekofo94/gruvbox-flat.nvim'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 
+Plug 'folke/which-key.nvim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
 Plug 'akinsho/nvim-bufferline.lua'
@@ -43,8 +44,6 @@ Plug 'EinfachToll/DidYouMean'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-apathy' -- ]f
 
-Plug 'tpope/vim-fugitive'
--- Plug 'mhinz/vim-signify' -- ]c [c
 Plug 'lewis6991/gitsigns.nvim'
 
 Plug 'sheerun/vim-polyglot'

@@ -82,7 +82,9 @@ settings.foldlevelstart = 5
 settings.foldmethod = "expr"
 settings.foldexpr = require("nvim-treesitter").foldexpr
 
--- if has("clipboard") then settings.clipboard:prepend("unnamed") end
+if has("spell") then
+    vim.o.spelllang = "en_us"
+end
 
 if has("user_commands") then
     command("Q", "q<bang>", {bang = true})
