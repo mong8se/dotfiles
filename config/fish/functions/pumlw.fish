@@ -1,4 +1,3 @@
-
 # brew install entr
 function pumlw -d "Watch plantuml and icat output"
   argparse 't/type=?' -- $argv

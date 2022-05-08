@@ -101,7 +101,7 @@ if status --is-interactive
   if type -q zoxide
     zoxide init fish --no-aliases | source
     function z
-      if count $argv > "/dev/null"
+      if count $argv >/dev/null
         set -xg __zoxide_last_argv $argv
         __zoxide_z $argv
       else
@@ -114,16 +114,17 @@ if status --is-interactive
   else if type -q fasd
     if type -q disown
       function __fasd_run --on-variable PWD
-        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) > "/dev/null" 2>&1 &; disown
+        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) >/dev/null 2>&1 &
+        disown
       end
     else
       function __fasd_run --on-variable PWD
-        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) > "/dev/null" 2>&1 &
+        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) >/dev/null 2>&1 &
       end
     end
 
     function __fasd_query
-      if count $argv > "/dev/null"
+      if count $argv >/dev/null
         command fasd -dl1 "$argv"
       else
         command fasd -dlR | fzf
