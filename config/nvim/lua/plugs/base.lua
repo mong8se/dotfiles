@@ -21,7 +21,6 @@ Plug 'tpope/vim-repeat'
 Plug 'folke/which-key.nvim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
-Plug 'akinsho/nvim-bufferline.lua'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'folke/trouble.nvim'
 
@@ -51,7 +50,6 @@ Plug 'sheerun/vim-polyglot'
 Plug('nvim-treesitter/nvim-treesitter', { ["do"] = ':TSUpdate' })
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'p00f/nvim-ts-rainbow'
-Plug 'lewis6991/nvim-treesitter-context'
 
 Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim' -- gc

@@ -136,11 +136,6 @@ for _, cnf in pairs(servers) do
     require('lspconfig')[lsp].setup(server_config)
 end
 
-require'treesitter-context'.setup {
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    throttle = true -- Throttles plugin updates (may improve performance)
-}
-
 require'nvim-treesitter.configs'.setup {
     textobjects = {
         select = {
@@ -203,8 +198,6 @@ require'lualine'.setup {
     }
 }
 
-require("bufferline").setup {}
-
 require("indent_blankline").setup {
     show_current_context = true,
     buftype_exclude = {"terminal"}
@@ -221,10 +214,6 @@ g.pear_tree_smart_openers = 1
 g.pear_tree_smart_closers = 1
 g.pear_tree_smart_backspace = 1
 g.pear_tree_ft_disabled = {'TelescopePrompt'}
-
--- So signs and number share a column when numbers are on
-settings.signcolumn = 'number'
-settings.showtabline = 2
 
 -- CtrlSF
 g.ctrlsf_default_root = 'project' -- search relative to project root

@@ -53,6 +53,11 @@ settings.expandtab = true
 settings.autoindent = true
 settings.smarttab = true
 
+-- So signs and number share a column when numbers are on
+settings.signcolumn = 'number'
+
+settings.showtabline = 0
+
 settings.title = true
 settings.scrolloff = 5
 settings.wrap = false
