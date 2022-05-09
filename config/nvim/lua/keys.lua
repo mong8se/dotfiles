@@ -62,7 +62,7 @@ register({
             "LSP Workspace Symbols",
             silent = true
         },
-        t = {':Telescope treesitter<CR>', "Telescope Treesitter", silent = true},
+        t = {':Telescope treesitter<CR>', "Telescope Treesitter", silent = true}
     },
     p = {
         name = "project",
@@ -138,11 +138,13 @@ register({
 }, {prefix = "<c-w>"})
 
 register({
-    p = {
+    ["\\"] = {
         [['`[' . strpart(getregtype(), 0, 1) . '`]']],
         "Select just pasted text",
         expr = true
     },
+    p = {'"+]p', "Paste from system clipboard after"},
+    P = {'"+]P', "Paste from system clipboard before"},
     R = {"<cmd>TroubleToggle lsp_references<cr>", "LSP References"},
     ["/"] = {
         mong8se.visualToSearch(),
@@ -153,10 +155,6 @@ register({
 
 register({
     U = {"<C-r>", "Redo"},
-    p = {'p', "which_key_ignore"},
-    ["pp"] = {'"+]p', "Paste from system clipboard after"},
-    P = {'p', "which_key_ignore"},
-    ["PP"] = {'"+]P', "Paste from system clipboard before"},
     ["/"] = {
         mong8se.visualToSearch(),
         "Visual selection to search",
@@ -181,30 +179,47 @@ register({
     ["<S-Down>"] = {"v<Down>", "which_key_ignore"},
     ["<S-Left>"] = {"v<Left>", "which_key_ignore"},
     ["<S-Right>"] = {"v<Right>", "which_key_ignore"},
-    ["[d"] = {
-        function() vim.diagnostic.goto_prev() end,
-        "Previous Diagnostic",
-        silent = true
+    ["+"] = {
+        [[:keeppatterns call search("^\\s*\\S", "e")<CR>]], "which_key_ignore"
     },
-    ["]d"] = {
-        function() vim.diagnostic.goto_next() end,
-        "Next Diagnostic",
-        silent = true
+    ["-"] = {
+        [[:keeppatterns call search("^\\s*\\S", "eb")<CR>]], "which_key_ignore"
+    }
+})
+
+register({
+    ["]"] = {
+        name = "next",
+        t = {':tabnext<CR>', "Next tab", silent = true},
+        b = {':bn<CR>', "Next buffer", silent = true},
+        d = {
+            function() vim.diagnostic.goto_next() end,
+            "Next diagnostic",
+            silent = true
+        },
+        ["<cr>"] = {
+            ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
+            "Make space below",
+            silent = true
+        },
+
     },
-    ["[<cr>"] = {
-        ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
-        "Make space above",
-        silent = true
-    },
-    ["]<cr>"] = {
-        ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
-        "Make space below",
-        silent = true
-    },
-    ["]t"] = {':tabnext<CR>', "Next tab", silent = true},
-    ["[t"] = {':tabprevious<CR>', "Previous tab", silent = true},
-    ["]b"] = {':bn<CR>', "Next buffer", silent = true},
-    ["[b"] = {':bp<CR>', "Previous buffer", silent = true}
+    ["["] = {
+        name = "previous",
+        t = {':tabprevious<CR>', "Previous tab", silent = true},
+        b = {':bp<CR>', "Previous buffer", silent = true},
+        d = {
+            function() vim.diagnostic.goto_prev() end,
+            "Previous diagnostic",
+            silent = true
+        },
+        ["<cr>"] = {
+            ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
+            "Make space above",
+            silent = true
+        },
+
+    }
 })
 
 register({
@@ -230,27 +245,89 @@ register({
 attachableBindings.gitsigns = function(gs, bufnr)
     register({
         -- Navigation
-        ["]c"] = { function() if vim.wo.diff then return ']c' end vim.schedule(function() gs.next_hunk() end) return '<Ignore>' end, "Next change", expr = true, buffer = bufnr },
-        ["[c"] = { function() if vim.wo.diff then return '[c' end vim.schedule(function() gs.prev_hunk() end) return '<Ignore>' end, "Previous change", expr = true, buffer = bufnr },
+        ["]c"] = {
+            function()
+                if vim.wo.diff then return ']c' end
+                vim.schedule(function() gs.next_hunk() end)
+                return '<Ignore>'
+            end,
+            "Next change",
+            expr = true,
+            buffer = bufnr
+        },
+        ["[c"] = {
+            function()
+                if vim.wo.diff then return '[c' end
+                vim.schedule(function() gs.prev_hunk() end)
+                return '<Ignore>'
+            end,
+            "Previous change",
+            expr = true,
+            buffer = bufnr
+        },
         -- Actions
-        ["<leader>hs"] = { ':Gitsigns stage_hunk<CR>', "Stage Hunk", buffer = bufnr },
-        ["<leader>hr"] = { ':Gitsigns reset_hunk<CR>', "Reset Hunk", buffer = bufnr },
-        ["<leader>hS"] = { gs.stage_buffer, "Stage Buffer", buffer = bufnr },
-        ["<leader>hu"] = { gs.undo_stage_hunk, "Undo Stage Hunk", buffer = bufnr },
-        ["<leader>hR"] = { gs.reset_buffer, "Reset Buffer", buffer = bufnr },
-        ["<leader>hp"] = { gs.preview_hunk, "Preview Hunk", buffer = bufnr },
-        ["<leader>hb"] = { function() gs.blame_line {full = true} end, "Blame Line", buffer = bufnr },
-        ["<leader>tb"] = { gs.toggle_current_line_blame, "Toggle Blame Current Line", buffer = bufnr },
-        ["<leader>hd"] = { gs.diffthis, "Diff This", buffer = bufnr },
-        ["<leader>hD"] = { function() gs.diffthis('~') end, "Diff This ~", buffer = bufnr },
-        ["<leader>td"] = { gs.toggle_deleted, "Toggle Show Deleted Lines", buffer = bufnr },
-        ["ih"] = { ':<C-U>Gitsigns select_hunk<CR>', "which_key_ignore", buffer = bufnr, mode = 'x' }
+        ["<leader>hs"] = {
+            ':Gitsigns stage_hunk<CR>',
+            "Stage Hunk",
+            buffer = bufnr
+        },
+        ["<leader>hr"] = {
+            ':Gitsigns reset_hunk<CR>',
+            "Reset Hunk",
+            buffer = bufnr
+        },
+        ["<leader>hS"] = {gs.stage_buffer, "Stage Buffer", buffer = bufnr},
+        ["<leader>hu"] = {gs.undo_stage_hunk, "Undo Stage Hunk", buffer = bufnr},
+        ["<leader>hR"] = {gs.reset_buffer, "Reset Buffer", buffer = bufnr},
+        ["<leader>hp"] = {gs.preview_hunk, "Preview Hunk", buffer = bufnr},
+        ["<leader>hb"] = {
+            function() gs.blame_line {full = true} end,
+            "Blame Line",
+            buffer = bufnr
+        },
+        ["<leader>tb"] = {
+            gs.toggle_current_line_blame,
+            "Toggle Blame Current Line",
+            buffer = bufnr
+        },
+        ["<leader>hd"] = {gs.diffthis, "Diff This", buffer = bufnr},
+        ["<leader>hD"] = {
+            function() gs.diffthis('~') end,
+            "Diff This ~",
+            buffer = bufnr
+        },
+        ["<leader>td"] = {
+            gs.toggle_deleted,
+            "Toggle Show Deleted Lines",
+            buffer = bufnr
+        },
+        ["ih"] = {
+            ':<C-U>Gitsigns select_hunk<CR>',
+            "which_key_ignore",
+            buffer = bufnr,
+            mode = 'x'
+        }
     })
     register({
-        ["<leader>hs"] = { ':Gitsigns stage_hunk<CR>', "Stage Hunk", mode = "v", buffer = bufnr },
-        ["<leader>hr"] = { ':Gitsigns reset_hunk<CR>', "Reset Hunk", mode = "v", buffer = bufnr },
+        ["<leader>hs"] = {
+            ':Gitsigns stage_hunk<CR>',
+            "Stage Hunk",
+            mode = "v",
+            buffer = bufnr
+        },
+        ["<leader>hr"] = {
+            ':Gitsigns reset_hunk<CR>',
+            "Reset Hunk",
+            mode = "v",
+            buffer = bufnr
+        },
         -- Text object
-        ["ih"] = { ':<C-U>Gitsigns select_hunk<CR>', "which_key_ignore", buffer = bufnr, mode = 'o' }
+        ["ih"] = {
+            ':<C-U>Gitsigns select_hunk<CR>',
+            "which_key_ignore",
+            buffer = bufnr,
+            mode = 'o'
+        }
     })
 end
 

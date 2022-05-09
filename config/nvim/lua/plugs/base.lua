@@ -27,17 +27,12 @@ Plug 'folke/trouble.nvim'
 Plug 'roman/golden-ratio' -- C-W \
 
 Plug 'unblevable/quick-scope' -- f F t T
--- Plug 'justinmk/vim-sneak'     " s or z with an operator
 Plug 'ggandor/lightspeed.nvim'
 
 Plug 'danilamihailov/beacon.nvim'
 
 Plug 'machakann/vim-sandwich' -- sa sd sr
 Plug 'tmsvg/pear-tree'
-
--- Plug 'justinmk/vim-dirvish' -- leader f
-
--- Plug 'glepnir/dashboard-nvim'
 
 Plug 'EinfachToll/DidYouMean'
 Plug 'airblade/vim-rooter'
@@ -71,7 +66,7 @@ Plug 'hrsh7th/vim-vsnip-integ'
 
 Plug 'vimwiki/vimwiki'
 
-Plug('severin-lemaignan/vim-minimap', { on = 'Minimap' })
+Plug('wfxr/minimap.vim', {["do"] = ':!cargo install --locked code-minimap'})
 Plug('itchyny/calendar.vim', { on = 'Calendar' })
 Plug('mtth/scratch.vim', { on = 'Scratch' }) -- gs
 

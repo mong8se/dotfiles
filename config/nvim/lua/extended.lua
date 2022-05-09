@@ -289,3 +289,8 @@ require("which-key").setup {
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
 }
+
+
+g.polyglot_disabled = {
+    "rust", "css", "json", "go", "javascript", "typescript", "lua", "html"
+}
