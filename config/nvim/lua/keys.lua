@@ -180,7 +180,9 @@ register({
     ["<S-Left>"] = {"v<Left>", "which_key_ignore"},
     ["<S-Right>"] = {"v<Right>", "which_key_ignore"},
     ["+"] = { "$e^", "which_key_ignore" },
-    ["-"] = { "k$b^", "which_key_ignore" }
+    ["-"] = {
+        [[:keeppatterns call search("^\\s*\\S", "be")<cr>]], "which_key_ignore"
+    }
 })
 
 register({
