@@ -146,6 +146,8 @@ if status --is-interactive
   end
 end
 
+fish_add_path ~/.cargo/bin
+
 set -x ASDF_DIR "$DOTFILES_RESOURCES/asdf"
 set -x ASDF_DATA_DIR "$ASDF_DIR"
 source $ASDF_DIR/asdf.fish
