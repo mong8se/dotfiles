@@ -39,6 +39,13 @@ function deno:install {
   export ASDF_DATA_DIR="$ASDF_DIR"
   . $ASDF_DIR/asdf.sh
   asdf plugin add deno
+  deno:upgrade
+}
+
+function deno:upgrade {
+  export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
+  export ASDF_DATA_DIR="$ASDF_DIR"
+  . $ASDF_DIR/asdf.sh
   asdf install deno latest
   asdf global deno latest
 }
@@ -83,22 +90,22 @@ function test() {
   deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
 }
 
-TASKS="-q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
+command -v link_o_matic >/dev/null 2>&1 && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function cleanup {
-  deno $TASKS cleanup
+  $LINKO cleanup
 }
 
 function autocleanup {
-  deno $TASKS autocleanup
+  $LINKO autocleanup
 }
 
 function implode {
-  deno $TASKS implode
+  $LINKO implode
 }
 
 function install {
-  deno $TASKS install
+  $LINKO install
 }
 
 function update {
