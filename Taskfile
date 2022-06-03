@@ -90,6 +90,10 @@ function test() {
   deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
 }
 
+function lom:install {
+  cargo install --git https://github.com/mong8se/link_o_matic.git
+}
+
 command -v link_o_matic >/dev/null 2>&1 && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function cleanup {
@@ -116,7 +120,7 @@ function update {
 function init {
   submodule:init
   submodule:update
-  deno:install
+  command -v cargo >/dev/null 2>&1 && lom:install || deno:install
   vi:install
   install
 }
@@ -124,6 +128,7 @@ function init {
 function upgrade {
   os:upgrade
   submodule:update
+  command -v cargo >/dev/null 2>&1 && lom:install || deno:install
   vi:update
 }
 
