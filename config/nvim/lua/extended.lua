@@ -1,6 +1,8 @@
 local g = vim.g
 local settings = vim.o
 
+require('Comment').setup()
+
 vim.notify = require("notify")
 
 require('telescope').setup {

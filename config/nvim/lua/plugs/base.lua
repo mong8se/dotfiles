@@ -47,7 +47,7 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'p00f/nvim-ts-rainbow'
 
 Plug 'tpope/vim-abolish'
-Plug 'tomtom/tcomment_vim' -- gc
+Plug 'numToStr/Comment.nvim' -- gc
 
 Plug 'dyng/ctrlsf.vim' -- leader /
 Plug 'RRethy/vim-illuminate'
