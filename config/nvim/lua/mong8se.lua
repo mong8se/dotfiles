@@ -2,9 +2,8 @@ local opt = vim.o
 local win = vim.wo
 local cmd = vim.cmd
 local fn = vim.fn
-
+local api = vim.api
 local mong8se = {}
-
 -- attempt to load rc files if they exists
 -- silently fail if they don't
 -- supports a prefix for a directory name
@@ -91,8 +90,7 @@ mong8se.splitCommand = function(opts)
     mong8se.smartSplit(unpack(args))
 end
 
-
-local motionCommands = {line= "'[V']", char= "`[v`]", block= "`[\\<c-v>`]"}
+local motionCommands = {line = "'[V']", char = "`[v`]", block = "`[\\<c-v>`]"}
 mong8se.visualToSearch = function(mode)
     if type(mode) ~= "string" then
         vim.go.operatorfunc = "v:lua.require'mong8se'.visualToSearch"
@@ -105,6 +103,66 @@ mong8se.visualToSearch = function(mode)
     fn.setreg("/",
               [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
     fn.setreg("s", originalValue)
+end
+
+mong8se.buffers = function()
+    local my_name = 'mong8se-buf'
+    local handles = {}
+    local self = false
+
+    for _, buffer in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
+        local name = buffer.name
+
+        if name:sub(-#my_name) == my_name then
+            self = buffer
+        elseif buffer.loaded then
+            if #name > 0 then
+                table.insert(handles, buffer)
+            end
+        end
+    end
+
+    if not self then
+        self = api.nvim_create_buf(false, true)
+        api.nvim_buf_set_name(self, my_name)
+    end
+
+    api.nvim_buf_set_option(self, 'buflisted', false)
+    api.nvim_buf_set_option(self, 'bufhidden', 'delete')
+    api.nvim_buf_set_option(self, 'buftype', 'nofile')
+    api.nvim_buf_set_option(self, 'swapfile', false)
+
+    api.nvim_buf_set_keymap(self, 'n', "<CR>", '', {
+        callback = function()
+            api.nvim_win_set_buf(0, handles[api.nvim_win_get_cursor(0)[1]].bufnr)
+        end,
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+    api.nvim_buf_set_keymap(self, 'n', "q", '', {
+        callback = function()
+            api.nvim_buf_delete(self, {})
+        end,
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+
+    table.sort(handles, function(a,b)
+        return a.lastused > b.lastused
+    end)
+
+    local names = {}
+    for _, buffer in ipairs(handles) do
+        table.insert(names, buffer.name)
+    end
+
+    api.nvim_buf_set_lines(self, 0, #names, false, names)
+    api.nvim_buf_set_option(self, 'modified', false)
+    api.nvim_buf_set_option(self, 'modifiable', false)
+    api.nvim_win_set_buf(0, self)
+    api.nvim_win_set_cursor(0, { math.min(#names, 2), 0 })
 end
 
 -- function! morng8se#ActivateFZF()

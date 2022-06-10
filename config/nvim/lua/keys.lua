@@ -18,6 +18,13 @@ register({
         },
         f = {"Browse files from root of project"}
     },
+    b = {
+        name = "buffer",
+        b = {mong8se.buffers, "WIP", silent = false},
+        n = {":bn<CR>", "Next"},
+        p = {":bp<CR>", "Previous"},
+        d = {":bufdo ", "Do", silent = false}
+    },
     t = {
         name = "toggle",
         g = {
@@ -114,16 +121,12 @@ register({
 
 register({
     [" "] = {
-        function()
-            require'telescope.builtin'.buffers {
-                sort_lastused = 1,
-                ignore_current_buffer = 1
-            }
-        end, "Buffers"
+        function() require'telescope.builtin'.buffers {sort_lastused = 1} end,
+        "Buffers"
     },
-    ["/"] = {'<Plug>CtrlSFPrompt', "CtrlSF", noremap = false},
+    ["/"] = {'<Plug>CtrlSFPrompt', "CtrlSF", noremap = false, silent = false},
     ["*"] = {'<Plug>CtrlSFCwordExec', "CtrlSF Search word"},
-    [":"] = {':Telescope commands<CR>', "Telescope a command", silent = true}
+    [":"] = {':Telescope commands<CR>', "Telescope a command"}
 }, {prefix = "<leader>"})
 
 register({
@@ -179,7 +182,7 @@ register({
     ["<S-Down>"] = {"v<Down>", "which_key_ignore"},
     ["<S-Left>"] = {"v<Left>", "which_key_ignore"},
     ["<S-Right>"] = {"v<Right>", "which_key_ignore"},
-    ["+"] = { "$e^", "which_key_ignore" },
+    ["+"] = {"$e^", "which_key_ignore"},
     ["-"] = {
         [[:keeppatterns call search("^\\s*\\S", "be")<cr>]], "which_key_ignore"
     }
@@ -199,7 +202,7 @@ register({
             ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
             "Make space below",
             silent = true
-        },
+        }
 
     },
     ["["] = {
@@ -215,7 +218,7 @@ register({
             ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
             "Make space above",
             silent = true
-        },
+        }
 
     }
 })
