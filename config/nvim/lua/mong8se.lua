@@ -108,7 +108,8 @@ mong8se.visualToSearch = function(mode)
 end
 
 mong8se.buffers = function()
-    self = api.nvim_create_buf(false, true)
+    local self = api.nvim_create_buf(false, true)
+    local ns = api.nvim_create_namespace("mong8se-buf")
 
     api.nvim_buf_set_option(self, 'buflisted', false)
     api.nvim_buf_set_option(self, 'bufhidden', 'wipe')
@@ -124,21 +125,21 @@ mong8se.buffers = function()
         silent = true
     })
 
-    render_buffers(self)
+    render_buffers(self, ns)
 
     api.nvim_win_set_buf(0, self)
-    safely_set_cursor(2)
+    safely_set_cursor(self, 2)
 end
 
 function selected_buffer(handles)
     return handles[api.nvim_win_get_cursor(0)[1]].bufnr
 end
 
-function safely_set_cursor(loc)
+function safely_set_cursor(self, loc)
     api.nvim_win_set_cursor(0, { math.min(api.nvim_buf_line_count(self), loc), 0 })
 end
 
-function render_buffers(self)
+function render_buffers(self, ns)
     local handles = {}
     local names = {}
 
@@ -169,17 +170,24 @@ function render_buffers(self)
         end
     end)
 
-    local display_names = {}
-    for _, buffer in ipairs(handles) do
+    api.nvim_buf_set_option(self, 'modifiable', true)
+    api.nvim_buf_set_lines(self, 0, -1, false, {})
+
+    for i, buffer in ipairs(handles) do
         local parts = vim.split(buffer.name, "/")
         local filename = parts[#parts]
 
-        table.insert(display_names, names[filename] > 1 and (parts[#parts-1] .. "/" .. parts[#parts] ) or filename)
+        local add_prefix = names[filename] > 1
+        local display_name = add_prefix and (parts[#parts-1] .. "/" .. parts[#parts] ) or filename
+
+        api.nvim_buf_set_lines(self, i-1, i, false, { display_name })
+        vim.highlight.range(self, ns,
+            "Title",
+            { i-1, (add_prefix and #display_name - #filename or 0)},
+            { i-1, (add_prefix and #display_name or #filename)},
+            {})
     end
 
-    api.nvim_buf_set_option(self, 'modifiable', true)
-    api.nvim_buf_set_lines(self, 0, -1, false, {})
-    api.nvim_buf_set_lines(self, 0, #display_names, false, display_names)
     api.nvim_buf_set_option(self, 'modified', false)
     api.nvim_buf_set_option(self, 'modifiable', false)
 
@@ -196,8 +204,8 @@ function render_buffers(self)
         callback = function()
             local old_line = api.nvim_win_get_cursor(0)[1]
             api.nvim_buf_delete(selected_buffer(handles), {})
-            render_buffers(self)
-            safely_set_cursor(old_line)
+            render_buffers(self, ns)
+            safely_set_cursor(self, old_line)
         end,
         nowait = true,
         noremap = true,
