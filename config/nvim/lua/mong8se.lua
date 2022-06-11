@@ -3,6 +3,8 @@ local win = vim.wo
 local cmd = vim.cmd
 local fn = vim.fn
 local api = vim.api
+local b = vim.b
+
 local mong8se = {}
 -- attempt to load rc files if they exists
 -- silently fail if they don't
@@ -10,9 +12,9 @@ local mong8se = {}
 -- relative to lua folder
 mong8se.loadRCFiles = function(which)
     local module = which and
-                       function(name)
-            return table.concat({which, name}, ".")
-        end or function(name) return name end
+    function(name)
+        return table.concat({which, name}, ".")
+    end or function(name) return name end
 
     for _, name in pairs({'_platform', '_machine', 'local'}) do
         pcall(require, module(name))
@@ -47,7 +49,7 @@ end
 -- Telescope
 mong8se.activateGitOrFiles = function()
     local telescope = require("telescope.builtin")
-    if vim.b.gitsigns_head then
+    if b.gitsigns_head then
         telescope.git_files()
     else
         telescope.find_files()
@@ -101,45 +103,18 @@ mong8se.visualToSearch = function(mode)
     local originalValue = fn.getreginfo("s")
     cmd('silent noautocmd keepjumps normal! ' .. motionCommands[mode] .. '"sy')
     fn.setreg("/",
-              [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
+        [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
     fn.setreg("s", originalValue)
 end
 
 mong8se.buffers = function()
-    local my_name = 'mong8se-buf'
-    local handles = {}
-    local self = false
-
-    for _, buffer in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
-        local name = buffer.name
-
-        if name:sub(-#my_name) == my_name then
-            self = buffer
-        elseif buffer.loaded then
-            if #name > 0 then
-                table.insert(handles, buffer)
-            end
-        end
-    end
-
-    if not self then
-        self = api.nvim_create_buf(false, true)
-        api.nvim_buf_set_name(self, my_name)
-    end
+    self = api.nvim_create_buf(false, true)
 
     api.nvim_buf_set_option(self, 'buflisted', false)
-    api.nvim_buf_set_option(self, 'bufhidden', 'delete')
+    api.nvim_buf_set_option(self, 'bufhidden', 'wipe')
     api.nvim_buf_set_option(self, 'buftype', 'nofile')
     api.nvim_buf_set_option(self, 'swapfile', false)
 
-    api.nvim_buf_set_keymap(self, 'n', "<CR>", '', {
-        callback = function()
-            api.nvim_win_set_buf(0, handles[api.nvim_win_get_cursor(0)[1]].bufnr)
-        end,
-        nowait = true,
-        noremap = true,
-        silent = true
-    })
     api.nvim_buf_set_keymap(self, 'n', "q", '', {
         callback = function()
             api.nvim_buf_delete(self, {})
@@ -149,20 +124,85 @@ mong8se.buffers = function()
         silent = true
     })
 
-    table.sort(handles, function(a,b)
-        return a.lastused > b.lastused
-    end)
+    render_buffers(self)
 
+    api.nvim_win_set_buf(0, self)
+    safely_set_cursor(2)
+end
+
+function selected_buffer(handles)
+    return handles[api.nvim_win_get_cursor(0)[1]].bufnr
+end
+
+function safely_set_cursor(loc)
+    api.nvim_win_set_cursor(0, { math.min(api.nvim_buf_line_count(self), loc), 0 })
+end
+
+function render_buffers(self)
+    local handles = {}
     local names = {}
-    for _, buffer in ipairs(handles) do
-        table.insert(names, buffer.name)
+
+    for _, buffer in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
+        local name = buffer.name
+
+        if #name > 0 then
+            table.insert(handles, buffer)
+
+            local parts = vim.split(buffer.name, "/")
+            local filename = parts[#parts]
+
+            if names[filename] == nil then
+                names[filename] = 1
+            else
+                names[filename] = names[filename] + 1
+            end
+        else
+            vim.pretty_print("no name")
+        end
     end
 
-    api.nvim_buf_set_lines(self, 0, #names, false, names)
+    table.sort(handles, function(a,b)
+        if a.lastused == b.lastused then
+            return a.bufnr > b.bufnr
+        else
+            return a.lastused > b.lastused
+        end
+    end)
+
+    local display_names = {}
+    for _, buffer in ipairs(handles) do
+        local parts = vim.split(buffer.name, "/")
+        local filename = parts[#parts]
+
+        table.insert(display_names, names[filename] > 1 and (parts[#parts-1] .. "/" .. parts[#parts] ) or filename)
+    end
+
+    api.nvim_buf_set_option(self, 'modifiable', true)
+    api.nvim_buf_set_lines(self, 0, -1, false, {})
+    api.nvim_buf_set_lines(self, 0, #display_names, false, display_names)
     api.nvim_buf_set_option(self, 'modified', false)
     api.nvim_buf_set_option(self, 'modifiable', false)
-    api.nvim_win_set_buf(0, self)
-    api.nvim_win_set_cursor(0, { math.min(#names, 2), 0 })
+
+    api.nvim_buf_set_keymap(self, 'n', "<CR>", '', {
+        callback = function()
+            api.nvim_win_set_buf(0, selected_buffer(handles))
+        end,
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+
+    api.nvim_buf_set_keymap(self, 'n', "dd", '', {
+        callback = function()
+            local old_line = api.nvim_win_get_cursor(0)[1]
+            api.nvim_buf_delete(selected_buffer(handles), {})
+            render_buffers(self)
+            safely_set_cursor(old_line)
+        end,
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
 end
 
 -- function! morng8se#ActivateFZF()
