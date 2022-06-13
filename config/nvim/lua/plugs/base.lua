@@ -2,6 +2,9 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', "~/.config/nvim/plugged")
 
+Plug 'mong8se/buffish.nvim'
+-- Plug '~/Projects/buffish.nvim'
+
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'

@@ -20,7 +20,7 @@ register({
     },
     b = {
         name = "buffer",
-        b = {mong8se.buffers, "WIP", silent = false},
+        b = {":Buffish<CR>", "WIP", silent = false},
         n = {":bn<CR>", "Next"},
         p = {":bp<CR>", "Previous"},
         d = {":bufdo ", "Do", silent = false}
