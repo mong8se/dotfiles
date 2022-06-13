@@ -20,7 +20,7 @@ register({
     },
     b = {
         name = "buffer",
-        b = {":Buffish<CR>", "WIP", silent = false},
+        b = {":Buffish<CR>", "WIP", silent = true},
         n = {":bn<CR>", "Next"},
         p = {":bp<CR>", "Previous"},
         d = {":bufdo ", "Do", silent = false}
@@ -120,7 +120,7 @@ register({
 }, {prefix = "<leader>"})
 
 register({
-    [" "] = {mong8se.buffers, "WIP", silent = false},
+    [" "] = {":Buffish<CR>", "WIP", silent = true},
     ["/"] = {'<Plug>CtrlSFPrompt', "CtrlSF", noremap = false, silent = false},
     ["*"] = {'<Plug>CtrlSFCwordExec', "CtrlSF Search word"},
     [":"] = {':Telescope commands<CR>', "Telescope a command"}
