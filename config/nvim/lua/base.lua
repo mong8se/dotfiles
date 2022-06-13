@@ -68,12 +68,12 @@ settings.virtualedit = "block,insert"
 
 settings.list = true
 settings.listchars = {
-    tab = "╾╌",
-    trail = "⎵",
-    precedes = "⊲",
-    extends = "⊳"
+    tab = "▭▱",
+    trail = "▢",
+    precedes = "◁",
+    extends = "▷"
 }
-settings.fillchars = { vert = "│", fold = "╍" }
+settings.fillchars = { vert = "│", fold = "╍", foldopen = "▽", foldclose = "△" }
 
 settings.lazyredraw = true
 settings.ttyfast = true
