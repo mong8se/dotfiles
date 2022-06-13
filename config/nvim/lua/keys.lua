@@ -120,10 +120,7 @@ register({
 }, {prefix = "<leader>"})
 
 register({
-    [" "] = {
-        function() require'telescope.builtin'.buffers {sort_lastused = 1} end,
-        "Buffers"
-    },
+    [" "] = {mong8se.buffers, "WIP", silent = false},
     ["/"] = {'<Plug>CtrlSFPrompt', "CtrlSF", noremap = false, silent = false},
     ["*"] = {'<Plug>CtrlSFCwordExec', "CtrlSF Search word"},
     [":"] = {':Telescope commands<CR>', "Telescope a command"}

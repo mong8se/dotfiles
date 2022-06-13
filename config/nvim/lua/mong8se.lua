@@ -4,6 +4,7 @@ local cmd = vim.cmd
 local fn = vim.fn
 local api = vim.api
 local b = vim.b
+local pretty_print = vim.pretty_print
 
 local mong8se = {}
 -- attempt to load rc files if they exists
@@ -128,6 +129,7 @@ mong8se.buffers = function()
     render_buffers(self, ns)
 
     api.nvim_win_set_buf(0, self)
+    cmd([[syntax match Conceal #^.\+$# conceal]])
     safely_set_cursor(self, 2)
 end
 
@@ -143,7 +145,23 @@ function render_buffers(self, ns)
     local handles = {}
     local names = {}
 
-    for _, buffer in ipairs(vim.fn.getbufinfo({buflisted = 1})) do
+    local old_conceallevel = win.conceallevel
+    win.conceallevel = 1
+    local old_concealcursor = win.concealcursor
+    win.concealcursor = "n"
+
+    local autocmd = vim.api.nvim_create_autocmd
+    local Mong8seBuffer = vim.api.nvim_create_augroup('Mong8seBuffer'..self, {clear = true})
+    autocmd("BufWinLeave", {
+        buffer = self,
+        callback = function()
+            win.conceallevel = old_conceallevel
+            win.concealcursor = old_concealcursor
+        end,
+        group = Mong8seBuffer
+    })
+
+    for _, buffer in ipairs(fn.getbufinfo({buflisted = 1})) do
         local name = buffer.name
 
         if #name > 0 then
@@ -152,13 +170,9 @@ function render_buffers(self, ns)
             local parts = vim.split(buffer.name, "/")
             local filename = parts[#parts]
 
-            if names[filename] == nil then
-                names[filename] = 1
-            else
-                names[filename] = names[filename] + 1
-            end
+            names[filename] = names[filename]==nil and 1 or names[filename] + 1
         else
-            vim.pretty_print("no name")
+            pretty_print("no name")
         end
     end
 
@@ -178,14 +192,14 @@ function render_buffers(self, ns)
         local filename = parts[#parts]
 
         local add_prefix = names[filename] > 1
-        local display_name = add_prefix and (parts[#parts-1] .. "/" .. parts[#parts] ) or filename
 
-        api.nvim_buf_set_lines(self, i-1, i, false, { display_name })
-        vim.highlight.range(self, ns,
-            "Title",
-            { i-1, (add_prefix and #display_name - #filename or 0)},
-            { i-1, (add_prefix and #display_name or #filename)},
-            {})
+        api.nvim_buf_set_lines(self, i-1, i, false, { buffer.name })
+
+        if add_prefix then
+            api.nvim_buf_set_extmark(self, ns, i-1, 0, {virt_text_win_col=0, virt_text={{parts[#parts-1].."/", "Directory"}}})
+        end
+        api.nvim_buf_set_extmark(self, ns, i-1, 1,
+            {virt_text_win_col=add_prefix and #parts[#parts-1]+1 or 0, virt_text={{filename, "Identifier"}}})
     end
 
     api.nvim_buf_set_option(self, 'modified', false)
