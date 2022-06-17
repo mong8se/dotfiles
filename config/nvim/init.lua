@@ -1,7 +1,7 @@
 require("plugs.base")
 require("base")
-require("colors")
 require("auto")
+require("colors")
 require("extended")
 require("keys")
 

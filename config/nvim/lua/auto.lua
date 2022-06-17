@@ -2,6 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local CursorLine = vim.api.nvim_create_augroup('CursorLine', {clear = true})
 local FocusIssues = vim.api.nvim_create_augroup('FocusIssues', {clear = true})
 local YankSync = vim.api.nvim_create_augroup('YankSync', {clear = true})
+local QuickScope = vim.api.nvim_create_augroup('QuickScope', {clear = true})
 
 -- cursorline only for active window
 autocmd({"VimEnter", "WinEnter", "BufWinEnter"}, {
@@ -52,4 +53,13 @@ autocmd("TextYankPost", {
         end
     end,
     group = YankSync
+})
+
+autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_set_hl(0, "QuickScopePrimary", { fg = 'yellow', underline = true } )
+        vim.api.nvim_set_hl(0, "QuickScopeSecondary", { fg = 'orange',  underline = true } )
+    end,
+    group = QuickScope
 })

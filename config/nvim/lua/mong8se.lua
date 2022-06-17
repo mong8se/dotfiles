@@ -2,9 +2,7 @@ local opt = vim.o
 local win = vim.wo
 local cmd = vim.cmd
 local fn = vim.fn
-local api = vim.api
 local b = vim.b
-local pretty_print = vim.pretty_print
 
 local mong8se = {}
 -- attempt to load rc files if they exists
