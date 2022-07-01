@@ -4,6 +4,8 @@
 
 set -e
 
+VI_BIN=$(command -v nvim || command -v vim || command -v vi | tr -d "\n")
+
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $REPO_LOCATION
 
@@ -11,7 +13,14 @@ function com_ex {
   command -v $1 > /dev/null
 }
 
-VI_BIN=$(command -v nvim || command -v vim || command -v vi | tr -d "\n")
+function nope {
+  echo Error: $@ >&2
+  exit 1
+}
+
+com_ex bc || nope "bc must be installed!"
+
+com_ex cargo || com_ex deno || nope "Either rust or deno must be installed!"
 
 function hostname {
   echo $HOST42
