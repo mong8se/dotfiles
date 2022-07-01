@@ -11,7 +11,7 @@ function com_ex {
   command -v $1 > /dev/null
 }
 
-VI_BIN=$(com_ex nvim || com_ex vim || com_ex vi | tr -d "\n")
+VI_BIN=$(command -v nvim || command -v vim || command -v vi | tr -d "\n")
 
 function hostname {
   echo $HOST42
