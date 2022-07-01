@@ -23,15 +23,21 @@ function submodule:update {
 }
 
 function vi:install {
+  echo -n "Installing vi plugs ..."
   ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PlugInstall
+  echo " done."
 }
 
 function vi:update {
+  echo -n "Updating vi plugs ..."
   ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PlugUpdate +TSUpdate
+  echo " done."
 }
 
 function vi:cleanup {
+  echo -n "Cleaning up vi plugs ..."
   ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PlugClean
+  echo " done."
 }
 
 function deno:install {
