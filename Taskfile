@@ -121,6 +121,7 @@ function init {
   submodule:init
   submodule:update
   command -v cargo >/dev/null 2>&1 && lom:install || deno:install
+  export PATH="$PATH:~/.cargo/bin"
   vi:install
   install
 }
