@@ -4,10 +4,14 @@
 
 set -e
 
-VI_BIN=$(which nvim || which vim || which vi | tr -d "\n")
-
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $REPO_LOCATION
+
+function com_ex {
+  command -v $1 > /dev/null
+}
+
+VI_BIN=$(com_ex nvim || com_ex vim || com_ex vi | tr -d "\n")
 
 function hostname {
   echo $HOST42
@@ -100,7 +104,7 @@ function lom:install {
   cargo install --git https://github.com/mong8se/link_o_matic.git
 }
 
-command -v link_o_matic >/dev/null 2>&1 && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
+com_ex link_o_matic && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function cleanup {
   $LINKO cleanup
@@ -126,16 +130,16 @@ function update {
 function init {
   submodule:init
   submodule:update
-  command -v cargo >/dev/null 2>&1 && lom:install || deno:install
+  com_ex cargo && lom:install || deno:install
   export PATH="$PATH:~/.cargo/bin"
-  vi:install
   install
+  vi:install
 }
 
 function upgrade {
   os:upgrade
   submodule:update
-  command -v cargo >/dev/null 2>&1 && lom:install || deno:install
+  com_ex cargo && lom:install || deno:install
   vi:update
 }
 
