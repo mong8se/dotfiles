@@ -30,11 +30,7 @@ function fish_greeting
   end
 end
 
-if type -q nvim
-  set -x EDITOR (which nvim)
-else
-  set -x EDITOR (which vim)
-end
+set -x EDITOR (command -v nvim || command -v vim || command -v vi)
 
 function xsource -d "Source list of files if they exist."
   for file in $argv
