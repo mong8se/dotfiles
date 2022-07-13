@@ -6,6 +6,8 @@ set -e
 
 VI_BIN=$(command -v nvim || command -v vim || command -v vi | tr -d "\n")
 
+ELEVATOR=$(command -v doas || command -v sudo | tr -d "\n" )
+
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $REPO_LOCATION
 
@@ -83,10 +85,10 @@ function os:upgrade {
       source /etc/os-release
       case $ID in
         arch)
-          sudo bash -c 'pacman -Sy archlinux-keyring && pacman -Su'
+          $ELEVATOR bash -c 'pacman -Sy archlinux-keyring && pacman -Su'
           ;;
         fedora)
-          sudo dnf upgrade --refresh
+          $ELEVATOR dnf upgrade --refresh
           ;;
         *)
           echo "Linux distro is unrecognized."
