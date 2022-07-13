@@ -30,11 +30,12 @@ Plug 'folke/trouble.nvim'
 Plug 'roman/golden-ratio' -- C-W \
 
 Plug 'unblevable/quick-scope' -- f F t T
-Plug 'ggandor/lightspeed.nvim'
+Plug 'ggandor/leap.nvim'
 
 Plug 'danilamihailov/beacon.nvim'
 
-Plug 'machakann/vim-sandwich' -- sa sd sr
+Plug 'echasnovski/mini.nvim'
+-- Plug 'machakann/vim-sandwich' -- sa sd sr
 Plug 'tmsvg/pear-tree'
 
 Plug 'EinfachToll/DidYouMean'

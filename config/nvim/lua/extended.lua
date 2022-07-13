@@ -5,6 +5,9 @@ require('Comment').setup()
 
 vim.notify = require("notify")
 
+require('leap').set_default_keymaps()
+require('mini.surround').setup()
+
 require('telescope').setup {
     defaults = {path_display = {"smart"}},
     extensions = {
