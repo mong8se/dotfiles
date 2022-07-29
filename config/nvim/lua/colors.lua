@@ -9,18 +9,36 @@ if env.BASE16_THEME then
    global.base16colorspace = 256
    cmd("colorscheme base16-" .. env.BASE16_THEME)
 else
-   if env.TERM_PROGRAM == "iTerm" and env.ITERM_PROFILE == "light" then
-      settings.background = "light"
+   if env.TERM_PROGRAM == "iTerm" then
+      if env.ITERM_PROFILE == "light" then
+         settings.background = "light"
+      else
+         settings.background = "dark"
+      end
    else
-      settings.background = "dark"
+      vim.fn.system("isDarkMode");
+      if vim.v.shell_error == 0 then
+         settings.background = "dark"
+      else
+         settings.background = "light"
+      end
    end
-  global.gruvbox_italic=1
-  global.gruvbox_contrast_dark="soft"
-  global.gruvbox_contrast_light="hard"
-  global.gruvbox_invert_selection=0
-  global.gruvbox_hls_cursor="fg0"
 
-  cmd("colorscheme gruvbox-flat")
+   require("gruvbox").setup({
+      undercurl = true,
+      underline = true,
+      bold = true,
+      italic = true,
+      strikethrough = true,
+      invert_selection = false,
+      invert_signs = false,
+      invert_tabline = false,
+      invert_intend_guides = false,
+      inverse = true, -- invert background for search, diffs, statuslines and errors
+      contrast = "soft", -- can be "hard", "soft" or empty string
+      overrides = {},
+   })
+   cmd("colorscheme gruvbox")
 end
 
 cmd("highlight Comment cterm=italic")

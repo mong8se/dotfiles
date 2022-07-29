@@ -16,7 +16,8 @@ Plug 'rcarriga/nvim-notify'
 
 Plug 'RRethy/nvim-base16'
 Plug 'caglartoklu/borlandp.vim'
-Plug 'eddyekofo94/gruvbox-flat.nvim'
+-- Plug 'eddyekofo94/gruvbox-flat.nvim'
+Plug 'ellisonleao/gruvbox.nvim'
 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
