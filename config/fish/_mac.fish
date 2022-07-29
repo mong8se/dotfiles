@@ -23,12 +23,3 @@ if set -q ITERM_PROFILE
   test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish ; or echo "iTerm2 shell extensions not installed."
 end
 
-function autoGruv -d "Auto Gruv" -e fish_prompt
-  if status --is-interactive && not set -q BASE16_THEME
-    if isDarkMode
-      base16 gruvbox-dark-soft false
-    else
-      base16 gruvbox-light-medium false
-    end
-  end
-end

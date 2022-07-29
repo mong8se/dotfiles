@@ -9,19 +9,11 @@ if env.BASE16_THEME then
    global.base16colorspace = 256
    cmd("colorscheme base16-" .. env.BASE16_THEME)
 else
-   if env.TERM_PROGRAM == "iTerm" then
-      if env.ITERM_PROFILE == "light" then
-         settings.background = "light"
-      else
-         settings.background = "dark"
-      end
+   vim.fn.system("isDarkMode");
+   if vim.v.shell_error == 0 then
+      settings.background = "dark"
    else
-      vim.fn.system("isDarkMode");
-      if vim.v.shell_error == 0 then
-         settings.background = "dark"
-      else
-         settings.background = "light"
-      end
+      settings.background = "light"
    end
 
    require("gruvbox").setup({

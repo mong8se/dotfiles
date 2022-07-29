@@ -27,3 +27,13 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
     echo "base16 doing nothing: Non interactive shell"
   end
 end
+
+function autoGruv -d "Auto Gruv" -e fish_prompt
+  if status --is-interactive && not set -q BASE16_THEME
+    if isDarkMode
+      base16 gruvbox-dark-soft false
+    else
+      base16 gruvbox-light-medium false
+    end
+  end
+end

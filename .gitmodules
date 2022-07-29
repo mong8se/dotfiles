@@ -18,3 +18,6 @@
 	path = Resources/asdf
 	url = https://github.com/asdf-vm/asdf.git
 	branch = master
+[submodule "Resources/paq-nvim"]
+	path = Resources/paq-nvim
+	url = https://github.com/savq/paq-nvim.git
