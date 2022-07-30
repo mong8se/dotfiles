@@ -1,11 +1,3 @@
-function make_light -d "Switch iTerm profile to 'light'"
-  set_iterm_profile 'light'
-end
-
-function make_dark -d "Switch iTerm profile to 'dark'"
-  set_iterm_profile 'dark'
-end
-
 function isDarkMode -d "Is Mac currently in Dark mode"
   defaults read -g AppleInterfaceStyle > /dev/null 2>&1
 end

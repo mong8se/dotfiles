@@ -74,5 +74,6 @@ require('packer').startup(function(use)
   use { 'itchyny/calendar.vim', cmd='Calendar' }
   use { 'mtth/scratch.vim', cmd='Scratch' } -- gs
 
-  require('mong8se').loadRCFiles('plugs')
 end)
+
+require('mong8se').loadRCFiles('plugs')

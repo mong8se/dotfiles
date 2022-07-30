@@ -45,13 +45,13 @@ function vi:install {
 
 function vi:update {
   echo -n "Updating vi plugs ..."
-  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PackerUpdate +TSUpdate --headless
+  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PackerSync +TSUpdate --headless
   echo " done."
 }
 
 function vi:cleanup {
   echo -n "Cleaning up vi plugs ..."
-  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PlugClean
+  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PackerClean
   echo " done."
 }
 
