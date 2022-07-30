@@ -133,9 +133,9 @@ function install {
   $LINKO install
 }
 
-function update {
-  install
+function sync {
   autocleanup
+  install
 }
 
 function init {
@@ -155,7 +155,7 @@ function upgrade {
 }
 
 function default {
-  update
+  sync
 }
 
 function help {
