@@ -39,13 +39,13 @@ function submodule:update {
 
 function vi:install {
   echo -n "Installing vi plugs ..."
-  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PlugInstall
+  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PackerInstall --headless
   echo " done."
 }
 
 function vi:update {
   echo -n "Updating vi plugs ..."
-  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PlugUpdate +TSUpdate
+  ${VI_BIN} -u config/nvim/lua/plugs/base.lua -es +PackerUpdate +TSUpdate --headless
   echo " done."
 }
 

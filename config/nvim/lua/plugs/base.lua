@@ -1,80 +1,78 @@
-local Plug = vim.fn['plug#']
+require('packer').startup(function(use)
+  use(vim.env.DOTFILES_RESOURCES.."/packer.nvim")
 
-vim.call('plug#begin', "~/.config/nvim/plugged")
+  use 'mong8se/buffish.nvim'
+  -- use '~/Projects/buffish.nvim'
 
-Plug 'mong8se/buffish.nvim'
--- Plug '~/Projects/buffish.nvim'
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-telescope/telescope.nvim'
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run='make' }
 
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'make' })
+  use 'tamago324/lir.nvim'
 
-Plug 'tamago324/lir.nvim'
+  use 'rcarriga/nvim-notify'
 
-Plug 'rcarriga/nvim-notify'
+  use 'RRethy/nvim-base16'
+  use 'caglartoklu/borlandp.vim'
+--   use 'eddyekofo94/gruvbox-flat.nvim'
+  use 'ellisonleao/gruvbox.nvim'
 
-Plug 'RRethy/nvim-base16'
-Plug 'caglartoklu/borlandp.vim'
--- Plug 'eddyekofo94/gruvbox-flat.nvim'
-Plug 'ellisonleao/gruvbox.nvim'
+  use 'tpope/vim-rsi'
+  use 'tpope/vim-repeat'
 
-Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-repeat'
+  use 'folke/which-key.nvim'
+  use 'hoob3rt/lualine.nvim'
+  use 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
+  use 'lukas-reineke/indent-blankline.nvim'
+  use 'folke/trouble.nvim'
 
-Plug 'folke/which-key.nvim'
-Plug 'hoob3rt/lualine.nvim'
-Plug 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'folke/trouble.nvim'
+  use 'roman/golden-ratio' -- C-W \
 
-Plug 'roman/golden-ratio' -- C-W \
+  use 'unblevable/quick-scope' -- f F t T
+  use 'ggandor/leap.nvim'
 
-Plug 'unblevable/quick-scope' -- f F t T
-Plug 'ggandor/leap.nvim'
+  use 'danilamihailov/beacon.nvim'
 
-Plug 'danilamihailov/beacon.nvim'
+  use 'echasnovski/mini.nvim'
+--   use 'machakann/vim-sandwich' -- sa sd sr
+  use 'tmsvg/pear-tree'
 
-Plug 'echasnovski/mini.nvim'
--- Plug 'machakann/vim-sandwich' -- sa sd sr
-Plug 'tmsvg/pear-tree'
+  use 'EinfachToll/DidYouMean'
+  use 'airblade/vim-rooter'
+  use 'tpope/vim-apathy' -- ]f
 
-Plug 'EinfachToll/DidYouMean'
-Plug 'airblade/vim-rooter'
-Plug 'tpope/vim-apathy' -- ]f
+  use 'lewis6991/gitsigns.nvim'
 
-Plug 'lewis6991/gitsigns.nvim'
+  use 'sheerun/vim-polyglot'
 
-Plug 'sheerun/vim-polyglot'
+  use {'nvim-treesitter/nvim-treesitter', run=':TSUpdate' }
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'p00f/nvim-ts-rainbow'
 
-Plug('nvim-treesitter/nvim-treesitter', { ["do"] = ':TSUpdate' })
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'p00f/nvim-ts-rainbow'
+  use 'tpope/vim-abolish'
+  use 'numToStr/Comment.nvim' -- gc
 
-Plug 'tpope/vim-abolish'
-Plug 'numToStr/Comment.nvim' -- gc
+  use 'dyng/ctrlsf.vim' -- leader /
+  use 'RRethy/vim-illuminate'
 
-Plug 'dyng/ctrlsf.vim' -- leader /
-Plug 'RRethy/vim-illuminate'
-
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
+  use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
 
 -- For vsnip users.
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/vim-vsnip-integ'
 
-Plug 'vimwiki/vimwiki'
+  use 'vimwiki/vimwiki'
 
-Plug('wfxr/minimap.vim', {["do"] = ':!cargo install --locked code-minimap'})
-Plug('itchyny/calendar.vim', { on = 'Calendar' })
-Plug('mtth/scratch.vim', { on = 'Scratch' }) -- gs
+  use { 'wfxr/minimap.vim', cmd='Minimap', run='cargo install --locked code-minimap' }
+  use { 'itchyny/calendar.vim', cmd='Calendar' }
+  use { 'mtth/scratch.vim', cmd='Scratch' } -- gs
 
-require('mong8se').loadRCFiles('plugs')
-
-vim.call('plug#end')
+  require('mong8se').loadRCFiles('plugs')
+end)
