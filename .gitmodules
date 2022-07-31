@@ -21,3 +21,4 @@
 [submodule "Resources/packer.nvim"]
 	path = Resources/packer.nvim
 	url = https://github.com/wbthomason/packer.nvim
+	branch = master
