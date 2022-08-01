@@ -1,3 +1,4 @@
 *local*
+!/local/
 Resources/linkOmatic/__tests__/testDeps.ts
 *spacemacs.env
