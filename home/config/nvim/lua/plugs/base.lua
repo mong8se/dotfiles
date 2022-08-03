@@ -44,6 +44,10 @@ require('packer').startup(function(use)
 
   use 'lewis6991/gitsigns.nvim'
 
+
+  vim.g.polyglot_disabled = {
+      "rust", "css", "json", "go", "javascript", "typescript", "lua", "html"
+  }
   use 'sheerun/vim-polyglot'
 
   use {'nvim-treesitter/nvim-treesitter', run=':TSUpdate' }
