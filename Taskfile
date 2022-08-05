@@ -134,8 +134,8 @@ function install {
 }
 
 function sync {
-  autocleanup
   install
+  autocleanup
 }
 
 function init {
