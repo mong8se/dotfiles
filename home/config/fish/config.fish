@@ -96,23 +96,24 @@ if status --is-interactive
 
   if type -q fre
     if type -q disown
-      function __fasd_run --on-variable PWD
+      function __fre_run --on-variable PWD
         command fre --add (pwd) > "/dev/null" 2>&1 &; disown
       end
     else
-      function __fasd_run --on-variable PWD
+      function __fre_run --on-variable PWD
         command fre --add (pwd) > "/dev/null" 2>&1 &
       end
     end
 
     function z
+      set -l result
       if count $argv > "/dev/null"
-        set -l result command fre --sorted | rg -v '^'(pwd)'$' | fzf -f "$argv" | head -1
+        set result (command fre --sorted | rg -v "^$(pwd)\$" | fzf -f "$argv" | head -1)
+        set -xg __fre_last_argv "$argv"
       else
-        set -l result command fre --sorted | fzf
+        set result (command fre --sorted | fzf)
       end
 
-      set -xg __fre_last_argv "$argv"
       test -z "$result"; and return
       test -d "$result"; and cd "$result"
     end
