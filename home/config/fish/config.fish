@@ -94,10 +94,36 @@ if status --is-interactive
     end
   end
 
-  if type -q zoxide
+  if type -q fre
+    if type -q disown
+      function __fasd_run --on-variable PWD
+        command fre --add (pwd) > "/dev/null" 2>&1 &; disown
+      end
+    else
+      function __fasd_run --on-variable PWD
+        command fre --add (pwd) > "/dev/null" 2>&1 &
+      end
+    end
+
+    function z
+      if count $argv > "/dev/null"
+        set -l result command fre --sorted | rg -v '^'(pwd)'$' | fzf -f "$argv" | head -1
+      else
+        set -l result command fre --sorted | fzf
+      end
+
+      set -xg __fre_last_argv "$argv"
+      test -z "$result"; and return
+      test -d "$result"; and cd "$result"
+    end
+
+    function zz
+      z "$__fre_last_argv"
+    end
+  else if type -q zoxide
     zoxide init fish --no-aliases | source
     function z
-      if count $argv >/dev/null
+      if count $argv > /dev/null
         set -xg __zoxide_last_argv $argv
         __zoxide_z $argv
       else
@@ -120,7 +146,7 @@ if status --is-interactive
     end
 
     function __fasd_query
-      if count $argv >/dev/null
+      if count $argv > /dev/null
         command fasd -dl1 "$argv"
       else
         command fasd -dlR | fzf
