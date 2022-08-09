@@ -1,11 +1,11 @@
 if type -q fre
-  if type -q disown
-    function __fre_run --on-variable PWD
-      command fre --add (pwd) > "/dev/null" 2>&1 &; disown
-    end
-  else
-    function __fre_run --on-variable PWD
-      command fre --add (pwd) > "/dev/null" 2>&1 &
+  function __fre_run -e fish_postexec
+    set -l last_status $status
+    if test $last_status -eq 0
+      set -l last_cmd (string split " " $argv[1])[1]
+      if test "cd" = "$last_cmd"
+        command fre --add "$PWD" &; disown
+      end
     end
   end
 
