@@ -1,3 +1,7 @@
+if not set -q __z_fzf_args
+  set -g __z_fzf_args --nth -3.. -d / --tiebreak end --no-sort
+end
+
 if type -q fre
   function __fre_run -e fish_postexec
     set -l last_status $status
@@ -10,16 +14,25 @@ if type -q fre
   end
 
   function z
-    set -l result
-    if count $argv > "/dev/null"
-      set result (command fre --sorted | rg -v "^$(pwd)\$" | fzf -f "$argv" | head -1)
-      set -xg __fre_last_argv "$argv"
-    else
-      set result (command fre --sorted | fzf)
-    end
+    set -xg __fre_last_argv "$argv"
+    set -l result (
+      command fre --sorted \
+        | rg -v "^$(pwd)\$" \
+        | if count $argv > "/dev/null" \
+          ;   fzf $__z_fzf_args -f "$argv" \
+            | head -1 \
+          ;else \
+          ; fzf $__z_fzf_args \
+          ;end
+    )
 
     test -z "$result"; and return
-    test -d "$result"; and cd "$result"
+    if test -d "$result"
+        command fre --add "$PWD" &; disown
+        cd "$result"
+     else
+       command fre -D "$result" &; disown
+     end
   end
 
   function zz
