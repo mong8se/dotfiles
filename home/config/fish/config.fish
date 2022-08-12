@@ -71,6 +71,10 @@ if status --is-interactive
     alias icat="kitty +kitten icat"
     alias kg="kitty +kitten hyperlinked_grep"
     alias ssh="kitty +kitten ssh"
+    if type -q lsd
+      alias tree="lsd --tree"
+      alias ls="lsd"
+    end
   end
 
   # Set Base16 Shell Colors
