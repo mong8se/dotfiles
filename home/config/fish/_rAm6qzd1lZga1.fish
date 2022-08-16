@@ -13,3 +13,5 @@ set -gx TTC_CELSIUS 0
 fish_add_path --append "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" "$HOME/Projects/Chrome/depot_tools" {$ANDROID_HOME}/platform-tools {$ANDROID_HOME}/tools {$HOME}/Library/Python/3.6/bin
 
 set -gx NACL_SDK_ROOT "$HOME/Projects/Chrome/nacl_sdk/pepper_49"
+
+set -a Z_FALLBACKS ~/Projects/unvagrant/workspace

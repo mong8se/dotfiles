@@ -1,12 +1,12 @@
 if not set -q __z_fzf_args
-  set -g __z_fzf_args --nth -3.. -d / --tiebreak end --no-sort
+  set -g __z_fzf_args --nth -2.. -d / --tiebreak end --no-sort
 end
 
 if type -q fre
   function __fre_run -e fish_postexec
-    set -l last_status $status
+    set -f last_status $status
     if test $last_status -eq 0
-      set -l last_cmd (string split " " $argv[1])[1]
+      set -f last_cmd (string split " " $argv[1])[1]
       if test "cd" = "$last_cmd"
         command fre --add "$PWD" &; disown
       end
@@ -15,15 +15,17 @@ if type -q fre
 
   function z
     set -xg __fre_last_argv "$argv"
-    set -l result (
-      command fre --sorted \
-        | rg -v "^$(pwd)\$" \
-        | if count $argv > "/dev/null" \
-          ;   fzf $__z_fzf_args -f "$argv" \
-            | head -1 \
-          ;else \
-          ; fzf $__z_fzf_args \
-          ;end
+    set -f result (
+      begin
+        command fre --sorted
+        command find $Z_FALLBACKS -type d -maxdepth 1 -mindepth 1 -print
+      end \
+      | rg -v "^$(pwd)\$" \
+      | if count $argv > "/dev/null"
+          fzf $__z_fzf_args -f "$argv" | head -1
+        else
+          fzf $__z_fzf_args
+        end
     )
 
     test -z "$result"; and return
@@ -71,7 +73,7 @@ else if type -q fasd
     end
   end
   function z
-    set -l result (__fasd_query $argv)
+    set -f result (__fasd_query $argv)
     test -z "$result"; and return
     test -d "$result"; and cd "$result"
   end

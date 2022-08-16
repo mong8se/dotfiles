@@ -4,8 +4,26 @@ if not set -q hostname
   set -g hostname (hostname -s)
 end
 
-if not set -q DOTFILES_RESOURCES
-  set -x DOTFILES_RESOURCES ~/.dotfiles/Resources
+set -x DOTFILES_RESOURCES ~/.dotfiles/Resources
+set -x EDITOR (command -v nvim || command -v vim || command -v vi)
+
+function fish_greeting
+  if type -q figlet
+    set_color red
+    figlet -c -w $COLUMNS -f smslant $hostname
+    set_color normal
+  end
+end
+
+function xsource -d "Source list of files if they exist."
+  for file in $argv
+    if test ! (string match '/*' "$file")
+      set file "$__fish_config_dir/$file"
+    end
+    if test -f "$file"
+      source "$file"
+    end
+  end
 end
 
 if not set -q HOMEBREW_PREFIX
@@ -22,27 +40,6 @@ if not set -q HOMEBREW_PREFIX
   end
 end
 
-function fish_greeting
-  if type -q figlet
-    set_color red
-    figlet -c -w $COLUMNS -f smslant $hostname
-    set_color normal
-  end
-end
-
-set -x EDITOR (command -v nvim || command -v vim || command -v vi)
-
-function xsource -d "Source list of files if they exist."
-  for file in $argv
-    if test ! (string match '/*' "$file")
-      set file "$__fish_config_dir/$file"
-    end
-    if test -f "$file"
-      source "$file"
-    end
-  end
-end
-
 if status --is-interactive
   if set -q VIM_TERMINAL
     fish_default_key_bindings
@@ -56,7 +53,8 @@ if status --is-interactive
   --height 40% --reverse --extended --cycle
   "
 
-  abbr -a gls git ls-files
+  abbr -a lsg git ls-files
+
   if string match --quiet '*nvim' "$EDITOR"
     abbr -a vi nvim
     if type -q abduco
@@ -105,6 +103,8 @@ if status --is-interactive
   if type -q starship
     starship init fish | source
   end
+
+  set -x Z_FALLBACKS ~/Projects ~/Work
 end
 
 fish_add_path ~/.cargo/bin
