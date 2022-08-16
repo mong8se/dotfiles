@@ -18,7 +18,7 @@ if type -q fre
     set -f result (
       begin
         command fre --sorted
-        command find $Z_FALLBACKS -type d -maxdepth 1 -mindepth 1 -print
+        command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
       end \
       | rg -v "^$(pwd)\$" \
       | if count $argv > "/dev/null"
