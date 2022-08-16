@@ -33,7 +33,7 @@ if type -q fre
         command fre --add "$PWD" &; disown
         cd "$result"
      else
-       command fre -D "$result" &; disown
+       command fre --delete "$result" &; disown
      end
   end
 
