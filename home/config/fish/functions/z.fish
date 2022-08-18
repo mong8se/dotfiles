@@ -1,7 +1,3 @@
-if not set -q __z_fzf_args
-  set -g __z_fzf_args --nth -2.. -d / --tiebreak end --no-sort
-end
-
 if type -q fre
   function __fre_run -e fish_postexec
     set -f last_status $status
@@ -13,6 +9,10 @@ if type -q fre
     end
   end
 
+  if not set -q __z_fzf_args
+    set -g __z_fzf_args --nth -2.. -d / --tiebreak end --no-sort
+  end
+
   function z
     set -xg __fre_last_argv "$argv"
     set -f result (
@@ -20,7 +20,7 @@ if type -q fre
         command fre --sorted
         command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
       end \
-      | rg -v "^$(pwd)\$" \
+      | string match -v (pwd) \
       | if count $argv > "/dev/null"
           fzf $__z_fzf_args -f "$argv" | head -1
         else
@@ -30,11 +30,11 @@ if type -q fre
 
     test -z "$result"; and return
     if test -d "$result"
-        command fre --add "$PWD" &; disown
-        cd "$result"
-     else
-       command fre --delete "$result" &; disown
-     end
+      command fre --add "$PWD" &; disown
+      cd "$result"
+    else
+      command fre --delete "$result" &; disown
+    end
   end
 
   function zz

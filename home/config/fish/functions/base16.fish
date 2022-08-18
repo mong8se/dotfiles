@@ -3,7 +3,7 @@ if not set -q __base16_path
 end
 
 function __base16_schemes
-  ls $__base16_path/*.sh | string replace -f -r '^.*/base16-(.+)\.sh$' '$1'
+  command ls $__base16_path/*.sh | string match -g -r 'base16-([^/\.]+)\.sh$'
 end
 
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"

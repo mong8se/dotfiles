@@ -17,7 +17,7 @@ end
 
 function xsource -d "Source list of files if they exist."
   for file in $argv
-    if test ! (string match '/*' "$file")
+    if test "/" != (string sub -e 1 "$file")
       set file "$__fish_config_dir/$file"
     end
     if test -f "$file"
@@ -54,25 +54,25 @@ if status --is-interactive
   "
 
   abbr -a lsg git ls-files
+  abbr -a cat cat -v
+  abbr -a cd.. cd ..
 
-  if string match --quiet '*nvim' "$EDITOR"
+  if test "nvim" = (path basename "$EDITOR")
     abbr -a vi nvim
     if type -q abduco
       abbr -a av abduco -A nvim nvim
     end
   end
 
-  abbr -a em emacsclient
-  abbr -a cd.. cd ..
+  if type -q lsd
+    abbr tree lsd --tree
+    abbr ls lsd
+  end
 
   if set -q KITTY_WINDOW_ID
     alias icat="kitty +kitten icat"
     alias kg="kitty +kitten hyperlinked_grep"
     alias ssh="kitty +kitten ssh"
-    if type -q lsd
-      alias tree="lsd --tree"
-      alias ls="lsd"
-    end
   end
 
   # Set Base16 Shell Colors

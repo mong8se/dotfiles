@@ -2,10 +2,12 @@
 function pumlw -d "Watch plantuml and icat output"
   argparse 't/type=?' -- $argv
 
-  set -l base (string replace .plantuml "" $argv[1])
   if [ "" = "$_flag_type" ]
     set _flag_type png
   end
+
+  set -l puml $argv[1]
+  set -l img (path change-extension "$_flag_type" $argv[1])
 
   set -l icat
 
@@ -19,5 +21,5 @@ function pumlw -d "Watch plantuml and icat output"
     return 1
   end
 
-  echo $base.plantuml | entr -c -s "plantuml -t$_flag_type $base.plantuml ; $icat $base.$_flag_type"
+  echo $puml | entr -c -s "plantuml -t$_flag_type $puml ; $icat $img"
 end
