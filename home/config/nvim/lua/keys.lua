@@ -143,8 +143,8 @@ register({
         "Select just pasted text",
         expr = true
     },
-    p = {'"*]p', "Paste from system clipboard after"},
-    P = {'"*]P', "Paste from system clipboard before"},
+    p = {'"+]p', "Paste from system clipboard after"},
+    P = {'"+]P', "Paste from system clipboard before"},
     R = {"<cmd>TroubleToggle lsp_references<cr>", "LSP References"},
     ["/"] = {
         mong8se.visualToSearch(),
