@@ -16,7 +16,9 @@ require('packer').startup(function(use)
   use 'RRethy/nvim-base16'
   use 'caglartoklu/borlandp.vim'
 --   use 'eddyekofo94/gruvbox-flat.nvim'
-  use 'ellisonleao/gruvbox.nvim'
+  -- use 'ellisonleao/gruvbox.nvim'
+  -- use { 'luisiacc/gruvbox-baby', branch='main'}
+  use 'sainnhe/gruvbox-material'
 
   use 'tpope/vim-rsi'
   use 'tpope/vim-repeat'
@@ -58,7 +60,6 @@ require('packer').startup(function(use)
   use 'numToStr/Comment.nvim' -- gc
 
   use 'dyng/ctrlsf.vim' -- leader /
-  use 'RRethy/vim-illuminate'
 
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/cmp-nvim-lsp'

@@ -195,7 +195,7 @@ require("trouble").setup {
 require'lualine'.setup {
     options = {
         theme = vim.startswith(g.colors_name, "base16") and "base16" or
-            "gruvbox",
+            "gruvbox-material",
 
         section_separators = {left = '', right = ''},
         component_separators = {left = '', right = ''}
