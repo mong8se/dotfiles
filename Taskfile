@@ -39,19 +39,19 @@ function submodule:update {
 
 function vi:install {
   echo -n "Installing vi plugs ..."
-  ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua M.packer_do('PackerInstall')"
+  ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua require('plugs.packer_update').packer_do('PackerInstall')"
   echo " done."
 }
 
 function vi:update {
   echo -n "Updating vi plugs ..."
-  ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua M.packer_do('PackerSync')"
+  ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua require('plugs.packer_update').packer_do('PackerSync')"
   echo " done."
 }
 
 function vi:cleanup {
   echo -n "Cleaning up vi plugs ..."
-  ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua M.packer_do('PackerClean')"
+  ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua require('plugs.packer_update').packer_do('PackerClean')"
   echo " done."
 }
 
