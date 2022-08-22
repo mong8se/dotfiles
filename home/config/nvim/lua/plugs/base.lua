@@ -82,19 +82,3 @@ require('packer').startup(function(use)
 end)
 
 require('mong8se').loadRCFiles('plugs')
-
-function packer_do(packer_cmd)
-  packer_cmd = packer_cmd or "PackerSync"
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern='PackerComplete',
-    callback=function()
-      vim.g.packcomp=1
-    end})
-  vim.g.packcomp=0
-  vim.cmd(packer_cmd)
-  vim.wait(5000, function()
-    return vim.g.packcomp==1
-  end)
-  vim.cmd('qa')
-end
