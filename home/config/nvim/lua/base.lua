@@ -73,7 +73,12 @@ settings.listchars = {
     precedes = "◁",
     extends = "▷"
 }
-settings.fillchars = { vert = "│", fold = "╍", foldopen = "▽", foldclose = "△" }
+settings.fillchars = {
+    vert = "│",
+    fold = "╍",
+    foldopen = "▽",
+    foldclose = "△"
+}
 
 settings.lazyredraw = true
 settings.ttyfast = true
@@ -87,16 +92,14 @@ settings.foldlevelstart = 5
 settings.foldmethod = "expr"
 settings.foldexpr = require("nvim-treesitter").foldexpr
 
-if has("spell") then
-    vim.o.spelllang = "en_us"
-end
+if has("spell") then vim.o.spelllang = "en_us" end
 
 if has("user_commands") then
-    command("Q", "q<bang>", { bang = true })
-    command("QA", "qa<bang>", { bang = true })
-    command("Qa", "qa<bang>", { bang = true })
-    command("Split", splitCommand, { nargs = "*" })
-    command("SPlit", splitCommand, { nargs = "*" })
+    command("Q", "q<bang>", {bang = true})
+    command("QA", "qa<bang>", {bang = true})
+    command("Qa", "qa<bang>", {bang = true})
+    command("Split", splitCommand, {nargs = "*"})
+    command("SPlit", splitCommand, {nargs = "*"})
 end
 
 settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'

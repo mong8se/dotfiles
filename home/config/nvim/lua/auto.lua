@@ -49,10 +49,14 @@ autocmd("TextYankPost", {
     pattern = "*",
     callback = function()
         if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-            vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"), vim.v.event.regtype)
+            vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"),
+                          vim.v.event.regtype)
             -- No idea why I have to it like this
             -- If I don't schedule the second one somehow the first doesn't happen
-            vim.schedule(function() vim.fn.setreg("*", vim.fn.getreg("+"), vim.fn.getreginfo("+").regtype) end)
+            vim.schedule(function()
+                vim.fn.setreg("*", vim.fn.getreg("+"),
+                              vim.fn.getreginfo("+").regtype)
+            end)
         end
     end,
     group = YankSync
@@ -61,8 +65,10 @@ autocmd("TextYankPost", {
 autocmd("ColorScheme", {
     pattern = "*",
     callback = function()
-        vim.api.nvim_set_hl(0, "QuickScopePrimary", { fg = 'yellow', underline = true } )
-        vim.api.nvim_set_hl(0, "QuickScopeSecondary", { fg = 'orange',  underline = true } )
+        vim.api.nvim_set_hl(0, "QuickScopePrimary",
+                            {fg = 'yellow', underline = true})
+        vim.api.nvim_set_hl(0, "QuickScopeSecondary",
+                            {fg = 'orange', underline = true})
     end,
     group = QuickScope
 })

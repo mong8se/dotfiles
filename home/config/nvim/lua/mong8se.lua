@@ -11,9 +11,9 @@ local mong8se = {}
 -- relative to lua folder
 mong8se.loadRCFiles = function(which)
     local module = which and
-    function(name)
-        return table.concat({which, name}, ".")
-    end or function(name) return name end
+                       function(name)
+            return table.concat({which, name}, ".")
+        end or function(name) return name end
 
     for _, name in pairs({'_platform', '_machine', 'local'}) do
         pcall(require, module(name))
@@ -102,7 +102,7 @@ mong8se.visualToSearch = function(mode)
     local originalValue = fn.getreginfo("s")
     cmd('silent noautocmd keepjumps normal! ' .. motionCommands[mode] .. '"sy')
     fn.setreg("/",
-        [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
+              [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
     fn.setreg("s", originalValue)
 end
 
