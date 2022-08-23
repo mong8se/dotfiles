@@ -150,6 +150,7 @@ function init {
 function upgrade {
   os:upgrade
   submodule:update
+  sync
   com_ex cargo && lom:install || deno:install
   vi:update
 }
