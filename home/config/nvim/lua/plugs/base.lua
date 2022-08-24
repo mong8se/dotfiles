@@ -47,7 +47,7 @@ require('packer').startup(function(use)
     use 'lewis6991/gitsigns.nvim'
 
     vim.g.polyglot_disabled = {
-        "rust", "css", "json", "go", "javascript", "typescript", "lua", "html"
+        "rust", "css", "json", "go", "javascript", "typescript", "lua", "html", "sensible"
     }
     use 'sheerun/vim-polyglot'
 
@@ -59,6 +59,7 @@ require('packer').startup(function(use)
     use 'numToStr/Comment.nvim' -- gc
 
     use 'dyng/ctrlsf.vim' -- leader /
+    use 'RRethy/vim-illuminate'
 
     use 'neovim/nvim-lspconfig'
     use 'hrsh7th/cmp-nvim-lsp'
