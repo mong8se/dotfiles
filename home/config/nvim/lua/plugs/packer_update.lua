@@ -1,7 +1,7 @@
 require("plugs.base")
 packer = require('packer')
 
-function wait_for_packer()
+function wait_for_packer(packer_command)
   _packcomp = 0
 
   vim.api.nvim_create_autocmd('User', {
@@ -9,21 +9,20 @@ function wait_for_packer()
     callback = function() _packcomp = 1 end
   })
 
+  packer_command()
+
   vim.wait(5000, function() return _packcomp == 1 end)
 end
 
 M = {
   install = function()
-    packer.install()
-    wait_for_packer()
+    wait_for_packer(packer.install)
   end,
   sync = function()
-    packer.sync()
-    wait_for_packer()
+    wait_for_packer(packer.sync)
   end,
   clean = function()
-    packer.clean()
-    wait_for_packer()
+    wait_for_packer(packer.clean)
   end
 }
 
