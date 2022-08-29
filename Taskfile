@@ -43,7 +43,7 @@ function vi:install {
   echo " done."
 }
 
-function vi:update {
+function vi:sync {
   echo -n "Updating vi plugs ..."
   ${VI_BIN} -u home/config/nvim/lua/plugs/packer_update.lua -V1 --headless -es +"lua require('plugs.packer_update').sync()"
   echo " done."
@@ -152,7 +152,7 @@ function upgrade {
   submodule:update
   sync
   com_ex cargo && lom:install || deno:install
-  vi:update
+  vi:sync
 }
 
 function default {
