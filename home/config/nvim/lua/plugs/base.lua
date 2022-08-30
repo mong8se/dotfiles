@@ -1,8 +1,10 @@
 require('packer').startup(function(use)
     use(vim.env.DOTFILES_RESOURCES .. "/packer.nvim")
 
+    use 'mong8se/actually.nvim'
+    --use '~/Projects/actually.nvim'
     use 'mong8se/buffish.nvim'
-    -- use '~/Projects/buffish.nvim'
+    --use '~/Projects/buffish.nvim'
 
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
@@ -11,6 +13,7 @@ require('packer').startup(function(use)
 
     use 'tamago324/lir.nvim'
 
+    use 'stevearc/dressing.nvim'
     use 'rcarriga/nvim-notify'
 
     use 'RRethy/nvim-base16'
@@ -40,7 +43,6 @@ require('packer').startup(function(use)
     --   use 'machakann/vim-sandwich' -- sa sd sr
     use 'tmsvg/pear-tree'
 
-    use 'EinfachToll/DidYouMean'
     use 'airblade/vim-rooter'
     use 'tpope/vim-apathy' -- ]f
 
