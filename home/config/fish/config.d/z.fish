@@ -19,6 +19,7 @@ if type -q fre
       begin
         command fre --sorted
         command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
+        # command find $HOME -maxdepth 2 -mindepth 2 ! -path "$HOME/.*" -type d  -print
       end \
       | string match -v (pwd) \
       | if count $argv > "/dev/null"
