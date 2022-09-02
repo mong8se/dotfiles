@@ -15,17 +15,6 @@ function fish_greeting
   end
 end
 
-function xsource -d "Source list of files if they exist."
-  for file in $argv
-    if test "/" != (string sub -e 1 "$file")
-      set file "$__fish_config_dir/$file"
-    end
-    if test -f "$file"
-      source "$file"
-    end
-  end
-end
-
 if not set -q HOMEBREW_PREFIX
   set -l brew_path
   for test_path in /home/linuxbrew/.linuxbrew/bin/brew ~/.linuxbrew/bin/brew /usr/local/bin/brew
@@ -109,12 +98,6 @@ end
 
 fish_add_path ~/.cargo/bin
 
-xsource ~/.config/fish/config.d/*.fish
-
 set -x ASDF_DIR "$DOTFILES_RESOURCES/asdf"
 set -x ASDF_DATA_DIR "$ASDF_DIR"
 source $ASDF_DIR/asdf.fish
-
-xsource _platform.fish
-
-xsource _machine.fish local.fish

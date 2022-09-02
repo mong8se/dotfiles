@@ -1,5 +1,9 @@
 if not type -q fzf_key_bindings
-  xsource /usr/share/fzf/shell/key-bindings.fish /usr/local/opt/fzf/shell/key-bindings.fish
+  if test -r /usr/share/fzf/shell/key-bindings.fish
+    source  /usr/share/fzf/shell/key-bindings.fish
+  else if test -r /usr/local/opt/fzf/shell/key-bindings.fish
+    source /usr/local/opt/fzf/shell/key-bindings.fish
+  end
 end
 
 fzf_key_bindings || echo "Warning: No FZF keybindings found"
@@ -7,20 +11,20 @@ fzf_key_bindings || echo "Warning: No FZF keybindings found"
 function bind_bang
   switch (commandline -t)
     case "!"
-    commandline -t $history[1]
-    commandline -f repaint
+      commandline -t $history[1]
+      commandline -f repaint
     case "*"
-    commandline -i !
+      commandline -i !
   end
 end
 
 function bind_dollar
   switch (commandline -t)
     case "!"
-    commandline -t ""
-    commandline -f history-token-search-backward
+      commandline -t ""
+      commandline -f history-token-search-backward
     case "*"
-    commandline -i '$'
+      commandline -i '$'
   end
 end
 
