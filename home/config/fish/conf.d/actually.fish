@@ -25,14 +25,20 @@ function actually -e fish_postexec
 
   set -f destination
   if type -q fzf
-    set destination (string join0 $list | fzf --read0 --no-info --no-sort)
+    set -l preview
+    if type -q lsd
+      set preview 'lsd --color always --icon always {}'
+    else
+      set preview 'ls -F --color {}'
+    end
+    set destination (string join0 $list | fzf --read0 --no-info --no-sort --preview="$preview")
   else
     set -l i 1
     for dir in $list
       echo $i $dir
       set i (math $i + 1)
     end
-    set -f answer (read -n 1 -p 'set_color green; echo -n "> " ; set_color normal')
+    set -l answer (read -n 1 -p 'set_color green; echo -n "> " ; set_color normal')
 
     if string match -r '^\d+$' "$answer"
       and test $answer -gt 0
