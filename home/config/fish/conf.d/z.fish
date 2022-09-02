@@ -1,3 +1,5 @@
+status is-interactive || exit
+
 if type -q fre
   function __fre_run -e fish_postexec
     set -f last_status $status
