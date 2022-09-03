@@ -93,6 +93,14 @@ if status --is-interactive
     starship init fish | source
   end
 
+  if ! type -q fisher
+    read -n 1 -p 'set_color green; echo -n "Install fisher? (y/N) " ; set_color normal' answer
+    if test "$answer" = "y" -o "$answer" = "Y"
+      echo Installing...
+      curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+    end
+  end
+
   set -x Z_FALLBACKS ~/Projects ~/Work
 end
 
