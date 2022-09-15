@@ -123,7 +123,8 @@ register({
     [" "] = {":Buffish<CR>", "WIP", silent = true},
     ["/"] = {'<Plug>CtrlSFPrompt', "CtrlSF", noremap = false, silent = false},
     ["*"] = {'<Plug>CtrlSFCwordExec', "CtrlSF Search word"},
-    [":"] = {':Telescope commands<CR>', "Telescope a command"}
+    [":"] = {':Telescope commands<CR>', "Telescope a command"},
+    ["'"] = {':Telescope marks<CR>', "Telescope marks"}
 }, {prefix = "<leader>"})
 
 register({
