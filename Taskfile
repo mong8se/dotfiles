@@ -88,7 +88,7 @@ function os:upgrade {
           $ELEVATOR bash -c 'pacman -Sy; pacman -Qu archlinux-keyring && pacman -S archlinux-keyring; pacman -Su'
           ;;
         fedora)
-          dnf upgrade --refresh
+          $ELEVATOR dnf upgrade --refresh
           ;;
         *)
           echo "Linux distro is unrecognized."
