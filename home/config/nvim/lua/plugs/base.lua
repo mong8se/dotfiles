@@ -77,11 +77,6 @@ require('packer').startup(function(use)
 
     use 'vimwiki/vimwiki'
 
-    use {
-        'wfxr/minimap.vim',
-        cmd = 'Minimap',
-        run = 'cargo install --locked code-minimap'
-    }
     use {'itchyny/calendar.vim', cmd = 'Calendar'}
     use {'mtth/scratch.vim', cmd = 'Scratch'} -- gs
 

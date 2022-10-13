@@ -1,5 +1,4 @@
 local g = vim.g
-local settings = vim.o
 
 require('Comment').setup()
 
@@ -7,6 +6,17 @@ vim.notify = require("notify")
 
 require('leap').set_default_keymaps()
 require('mini.surround').setup()
+
+MiniMap = require('mini.map')
+MiniMap.setup({
+    integrations = {MiniMap.gen_integration.gitsigns()},
+    symbols = {
+        encode = MiniMap.gen_encode_symbols.dot("4x2"),
+        scroll_line = '╞',
+        scroll_view = '│'
+    },
+    window = {width = 16, winblend = 40}
+})
 
 require('telescope').setup {
     defaults = {path_display = {"smart"}},

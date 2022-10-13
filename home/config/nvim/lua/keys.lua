@@ -32,7 +32,8 @@ register({
             "Auto Golden Ratio Active Split",
             noremap = false
         },
-        n = {mong8se.toggleNumberMode, "Toggle numbers", silent = true},
+        m = {require('mini.map').toggle, "Toggle Minimap" },
+        n = { mong8se.toggleNumberMode, "Toggle numbers", silent = true },
         b = {
             mong8se.toggleScrollBindAllWindows,
             "Scroll Bind All Windows",
