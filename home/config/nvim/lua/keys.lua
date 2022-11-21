@@ -147,22 +147,11 @@ register({
     },
     p = {'"+]p', "Paste from system clipboard after"},
     P = {'"+]P', "Paste from system clipboard before"},
-    R = {"<cmd>TroubleToggle lsp_references<cr>", "LSP References"},
-    ["/"] = {
-        mong8se.visualToSearch(),
-        "Search selection via motion",
-        silent = true
-    }
+    R = {"<cmd>TroubleToggle lsp_references<cr>", "LSP References"}
 }, {prefix = "g"})
 
 register({
     U = {"<C-r>", "Redo"},
-    ["/"] = {
-        mong8se.visualToSearch(),
-        "Visual selection to search",
-        mode = "v",
-        silent = true
-    },
     ["<f1>"] = {'<Nop>', "which_key_ignore"},
     Y = {'y$', "which_key_ignore"},
 
@@ -395,5 +384,7 @@ attachableBindings.lsp = function(bufnr)
         }
     })
 end
+
+vim.keymap.set('v', '/', mong8se.visualSearch)
 
 return attachableBindings

@@ -91,19 +91,13 @@ mong8se.splitCommand = function(opts)
     mong8se.smartSplit(unpack(args))
 end
 
-local motionCommands = {line = "'[V']", char = "`[v`]", block = "`[\\<c-v>`]"}
-mong8se.visualToSearch = function(mode)
-    if type(mode) ~= "string" then
-        vim.go.operatorfunc = "v:lua.require'mong8se'.visualToSearch"
-        return 'g@'
-    end
-
-    -- TODO: "block" mode doesn't work right or make sense
-    local originalValue = fn.getreginfo("s")
-    cmd('silent noautocmd keepjumps normal! ' .. motionCommands[mode] .. '"sy')
-    fn.setreg("/",
-              [[\V]] .. fn.getreg("s"):gsub([[\]], [[\\]]):gsub('\n', [[\n]]))
-    fn.setreg("s", originalValue)
+mong8se.visualSearch = function()
+    local originalValue = fn.getreginfo('"')
+    cmd('silent noautocmd keepjumps normal! ""y')
+    fn.setreg("/", [[\V]] ..
+                  fn.escape(fn.getreg('"'), [[\/.*~[]$^]]):gsub('\n', [[\n]]))
+    cmd('normal! n')
+    fn.setreg('"', originalValue)
 end
 
 -- function! morng8se#ActivateFZF()
