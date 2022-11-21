@@ -15,7 +15,7 @@ MiniMap.setup({
         scroll_line = '╞',
         scroll_view = '│'
     },
-    window = {width = 16, winblend = 40}
+    window = {width = 16, winblend = 70}
 })
 
 require('telescope').setup {
