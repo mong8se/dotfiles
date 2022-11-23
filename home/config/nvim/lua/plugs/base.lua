@@ -26,7 +26,6 @@ require('packer').startup(function(use)
     use 'tpope/vim-rsi'
     use 'tpope/vim-repeat'
 
-    use 'folke/which-key.nvim'
     use 'hoob3rt/lualine.nvim'
     use 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
     use 'lukas-reineke/indent-blankline.nvim'

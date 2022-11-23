@@ -1,390 +1,194 @@
 local mong8se = require("mong8se")
-local register = require("which-key").register
 local global = vim.g
 
 global.mapleader = " "
 
 local attachableBindings = {}
 
-register({
-    f = {
-        name = "file",
-        ["-"] = {
-            function()
-                vim.cmd("edit " .. mong8se.directoryFromContext())
-            end,
-            "Browse files from here",
-            silent = true
-        },
-        f = {"Browse files from root of project"}
-    },
-    b = {
-        name = "buffer",
-        b = {":Buffish<CR>", "WIP", silent = true},
-        n = {":bn<CR>", "Next"},
-        p = {":bp<CR>", "Previous"},
-        d = {":bufdo ", "Do", silent = false}
-    },
-    t = {
-        name = "toggle",
-        g = {
-            '<Plug>(golden_ratio_toggle)',
-            "Auto Golden Ratio Active Split",
-            noremap = false
-        },
-        m = {require('mini.map').toggle, "Toggle Minimap" },
-        n = { mong8se.toggleNumberMode, "Toggle numbers", silent = true },
-        b = {
-            mong8se.toggleScrollBindAllWindows,
-            "Scroll Bind All Windows",
-            silent = true
-        },
-        c = {":Telescope colorscheme<cr>", "Pick Color", silent = true},
-        t = {"<cmd>TroubleToggle<cr>", "Toggle Trouble"},
-        w = {
-            "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>",
-            "Workspace Diagnostics"
-        },
-        d = {
-            "<cmd>TroubleToggle lsp_document_diagnostics<cr>",
-            "Document Diagnostics"
-        },
-        q = {"<cmd>TroubleToggle quickfix<cr>", "Trouble Quickfix"},
-        l = {"<cmd>TroubleToggle loclist<cr>", "Trouble Loclist"},
-        s = {"<cmd>setlocal spell!<CR>", "Toggle Spell Checking", silent = true}
-    },
-    c = {
-        name = "code",
-        ["/"] = {
-            ':Telescope lsp_references<CR>',
-            "LSP References",
-            silent = true
-        },
-        j = {
-            ':Telescope lsp_document_symbols<CR>',
-            "LSP Document Symbols",
-            silent = true
-        },
-        J = {
-            ':Telescope lsp_dynamic_workspace_symbols<CR>',
-            "LSP Workspace Symbols",
-            silent = true
-        },
-        t = {':Telescope treesitter<CR>', "Telescope Treesitter", silent = true}
-    },
-    p = {
-        name = "project",
-        p = {mong8se.activateGitOrFiles, "Find files in project", silent = true},
-        f = {':Telescope find_files<CR>', "Find files", silent = true}
-    },
-    s = {
-        name = "search",
-        r = {':CtrlSFOpen<CR>', "Reopen CtrlSF", silent = true},
-        p = {':Telescope live_grep<CR>', "Telescope live grep", silent = true},
-        h = {
-            ':Telescope search_history<CR>',
-            "Telescope search history",
-            silent = true
-        },
-        b = {
-            ':Telescope current_buffer_fuzzy_find<CR>',
-            "Fuzzy search buffer",
-            silent = true
-        }
-    },
-    x = {
-        name = "trouble",
-        x = {"<cmd>Trouble<cr>", "Open Trouble", silent = true},
-        w = {
-            "<cmd>Trouble workspace_diagnostics<cr>",
-            "Trouble Workspace",
-            silent = true
-        },
-        d = {
-            "<cmd>Trouble document_diagnostics<cr>",
-            "Trouble Document",
-            silent = true
-        },
-        l = {"<cmd>Trouble loclist<cr>", "Trouble loclist", silent = true},
-        q = {"<cmd>Trouble quickfix<cr>", "Trouble quickfix", silent = true},
-        f = {
-            function() vim.diagnostic.open_float() end,
-            "Open Diagnostic Float",
-            silent = true
-        },
-        g = {
-            function() vim.diagnostic.setloclist() end,
-            "Diagnostic loclist",
-            silent = true
-        }
-    }
-}, {prefix = "<leader>"})
+vim.keymap.set('n', "<leader>bb", ":Buffish<CR>", {silent = true})
+vim.keymap.set('n', "<leader>bn", ":bn<CR>")
+vim.keymap.set('n', "<leader>bp", ":bp<CR>")
+vim.keymap.set('n', "<leader>bd", ":bufdo ", {silent = false})
 
-register({
-    [" "] = {":Buffish<CR>", "WIP", silent = true},
-    ["/"] = {'<Plug>CtrlSFPrompt', "CtrlSF", noremap = false, silent = false},
-    ["*"] = {'<Plug>CtrlSFCwordExec', "CtrlSF Search word"},
-    [":"] = {':Telescope commands<CR>', "Telescope a command"},
-    ["'"] = {':Telescope marks<CR>', "Telescope marks"}
-}, {prefix = "<leader>"})
+vim.keymap.set('n', "<leader>f-", function()
+    vim.cmd("edit " .. mong8se.directoryFromContext())
+end, {silent = true})
 
-register({
-    ["s"] = {mong8se.splitCommand, "Smart Split", silent = true},
-    ["<C-s>"] = {mong8se.splitCommand, "which_key_ignore", silent = true},
-    ["\\"] = {
-        '<Plug>(golden_ratio_resize)',
-        "Resize to golden ratio",
-        silent = true
-    },
-    ["<C-w>"] = {"<C-\\><C-n>", "Switch Window", mode = "t"}
-}, {prefix = "<c-w>"})
+vim.keymap.set('n', "<leader>tg", '<Plug>(golden_ratio_toggle)',
+               {noremap = false})
+vim.keymap.set('n', "<leader>tm", require('mini.map').toggle)
+vim.keymap.set('n', "<leader>tn", mong8se.toggleNumberMode, {silent = true})
+vim.keymap.set('n', "<leader>tb", mong8se.toggleScrollBindAllWindows,
+               {silent = true})
+vim.keymap.set('n', "<leader>tc", ":Telescope colorscheme<cr>", {silent = true})
+vim.keymap.set('n', "<leader>tt", "<cmd>TroubleToggle<cr>")
+vim.keymap.set('n', "<leader>tw",
+               "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")
+vim.keymap.set('n', "<leader>td",
+               "<cmd>TroubleToggle lsp_document_diagnostics<cr>")
+vim.keymap.set('n', "<leader>tq", "<cmd>TroubleToggle quickfix<cr>")
+vim.keymap.set('n', "<leader>tl", "<cmd>TroubleToggle loclist<cr>")
+vim.keymap.set('n', "<leader>ts", "<cmd>setlocal spell!<CR>", {silent = true})
 
-register({
-    ["\\"] = {
-        [['`[' . strpart(getregtype(), 0, 1) . '`]']],
-        "Select just pasted text",
-        expr = true
-    },
-    p = {'"+]p', "Paste from system clipboard after"},
-    P = {'"+]P', "Paste from system clipboard before"},
-    R = {"<cmd>TroubleToggle lsp_references<cr>", "LSP References"}
-}, {prefix = "g"})
+vim.keymap.set('n', "<leader>c/", ':Telescope lsp_references<CR>',
+               {silent = true})
+vim.keymap.set('n', "<leader>jc", ':Telescope lsp_document_symbols<CR>',
+               {silent = true})
+vim.keymap.set('n', "<leader>Jc",
+               ':Telescope lsp_dynamic_workspace_symbols<CR>', {silent = true})
+vim.keymap.set('n', "<leader>tc", ':Telescope treesitter<CR>', {silent = true})
 
-register({
-    U = {"<C-r>", "Redo"},
-    ["<f1>"] = {'<Nop>', "which_key_ignore"},
-    Y = {'y$', "which_key_ignore"},
+vim.keymap.set('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
+vim.keymap.set('n', "<leader>pf", ':Telescope find_files<CR>', {silent = true})
 
-    -- Instead of look up in man, let"s split, opposite of J for join
-    K = {"i<CR><Esc>", "which_key_ignore"},
-    ["<C-L>"] = {
-        ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
-        "which_key_ignore",
-        silent = true
-    },
-    ["<Down>"] = {"gj", "which_key_ignore"},
-    ["<Up>"] = {"gk", "which_key_ignore"},
-    ["<C-k>"] = {"<C-e>gk", "which_key_ignore"},
-    ["<C-j>"] = {"<C-y>gj", "which_key_ignore"},
-    ["<S-Up>"] = {"v<Up>", "which_key_ignore"},
-    ["<S-Down>"] = {"v<Down>", "which_key_ignore"},
-    ["<S-Left>"] = {"v<Left>", "which_key_ignore"},
-    ["<S-Right>"] = {"v<Right>", "which_key_ignore"},
-    ["+"] = {"$e^", "which_key_ignore"},
-    ["-"] = {
-        [[:keeppatterns call search("^\\s*\\S", "be")<cr>]], "which_key_ignore"
-    }
-})
+vim.keymap.set('n', "<leader>sr", ':CtrlSFOpen<CR>', {silent = true})
+vim.keymap.set('n', "<leader>sp", ':Telescope live_grep<CR>', {silent = true})
+vim.keymap.set('n', "<leader>sh", ':Telescope search_history<CR>',
+               {silent = true})
+vim.keymap.set('n', "<leader>sb", ':Telescope current_buffer_fuzzy_find<CR>',
+               {silent = true})
 
-register({
-    ["]"] = {
-        name = "next",
-        t = {':tabnext<CR>', "Next tab", silent = true},
-        b = {':bn<CR>', "Next buffer", silent = true},
-        d = {
-            function() vim.diagnostic.goto_next() end,
-            "Next diagnostic",
-            silent = true
-        },
-        ["<cr>"] = {
-            ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
-            "Make space below",
-            silent = true
-        }
+vim.keymap.set('n', "<leader>xx", "<cmd>Trouble<cr>", {silent = true})
+vim.keymap.set('n', "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
+               {silent = true})
+vim.keymap.set('n', "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
+               {silent = true})
+vim.keymap.set('n', "<leader>xl", "<cmd>Trouble loclist<cr>", {silent = true})
+vim.keymap.set('n', "<leader>xq", "<cmd>Trouble quickfix<cr>", {silent = true})
+vim.keymap.set('n', "<leader>xf", function() vim.diagnostic.open_float() end,
+               {silent = true})
+vim.keymap.set('n', "<leader>xg", function() vim.diagnostic.setloclist() end,
+               {silent = true})
+vim.keymap.set('n', "<leader> ", ":Buffish<CR>", {silent = true})
+vim.keymap.set('n', "<leader>/", '<Plug>CtrlSFPrompt',
+               {noremap = false, silent = false})
+vim.keymap.set('n', "<leader>*", '<Plug>CtrlSFCwordExec')
+vim.keymap.set('n', "<leader>:", ':Telescope commands<CR>')
+vim.keymap.set('n', "<leader>'", ':Telescope marks<CR>')
 
-    },
-    ["["] = {
-        name = "previous",
-        t = {':tabprevious<CR>', "Previous tab", silent = true},
-        b = {':bp<CR>', "Previous buffer", silent = true},
-        d = {
-            function() vim.diagnostic.goto_prev() end,
-            "Previous diagnostic",
-            silent = true
-        },
-        ["<cr>"] = {
-            ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
-            "Make space above",
-            silent = true
-        }
+vim.keymap.set('n', "<c-w>s", mong8se.splitCommand, {silent = true})
+vim.keymap.set('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
+vim.keymap.set('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
+vim.keymap.set('t', "<c-w><C-w>", "<C-\\><C-n>")
 
-    }
-})
+vim.keymap.set('n', "\\", [['`[' . strpart(getregtype(), 0, 1) . '`]']],
+               {expr = true})
+vim.keymap.set('n', "gp", '"+]p')
+vim.keymap.set('n', "gP", '"+]P')
+vim.keymap.set('n', "gR", "<cmd>TroubleToggle lsp_references<cr>")
 
-register({
-    ["<C-j>"] = {"<ESC>:m .+1<CR>==gi", "Move line down", mode = "i"},
-    ["<C-k>"] = {"<ESC>:m .-2<CR>==gi", "Move line up", mode = "i"},
-    ["<S-Up>"] = {"<Esc>v<Up>", "which_key_ignore", mode = "i"},
-    ["<S-Down>"] = {"<Esc>v<Down>", "which_key_ignore", mode = "i"},
-    ["<S-Left>"] = {"<Esc>v<Left>", "which_key_ignore", mode = "i"},
-    ["<S-Right>"] = {"<Esc>v<Right>", "which_key_ignore", mode = "i"}
-})
+vim.keymap.set('n', "U", "<C-r>")
+vim.keymap.set('n', "<f1>", '<Nop>')
+vim.keymap.set('n', "Y", 'y$')
 
-register({
-    ["<S-Up>"] = {"<Up>", "which_key_ignore", mode = "v"},
-    ["<S-Down>"] = {"<Down>", "which_key_ignore", mode = "v"},
-    ["<S-Left>"] = {"<Left>", "which_key_ignore", mode = "v"},
-    ["<S-Right>"] = {"<Right>", "which_key_ignore", mode = "v"},
-    ["<C-j>"] = {":m '>+1<CR>gv=gv", "Move line down", mode = "v"},
-    ["<C-k>"] = {":m '<-2<CR>gv=gv", "Move line up", mode = "v"},
-    ["<"] = {"<gv", "which_key_ignore", mode = "v"},
-    [">"] = {">gv", "which_key_ignore", mode = "v"}
-})
+-- Instead of look up in man, let"s split, opposite of J for join
+vim.keymap.set('n', "K", "i<CR><Esc>")
+vim.keymap.set('n', "<C-L>",
+               ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
+               {silent = true})
+vim.keymap.set('n', "<Down>", "gj")
+vim.keymap.set('n', "<Up>", "gk")
+vim.keymap.set('n', "<C-k>", "<C-e>gk")
+vim.keymap.set('n', "<C-j>", "<C-y>gj")
+vim.keymap.set('n', "<S-Up>", "v<Up>")
+vim.keymap.set('n', "<S-Down>", "v<Down>")
+vim.keymap.set('n', "<S-Left>", "v<Left>")
+vim.keymap.set('n', "<S-Right>", "v<Right>")
+vim.keymap.set('n', "+", "$e^")
+vim.keymap.set('n', "-", [[:keeppatterns call search("^\\s*\\S", "be")<cr>]])
+
+vim.keymap.set('n', "]t", ':tabnext<CR>', {silent = true})
+vim.keymap.set('n', "]b", ':bn<CR>', {silent = true})
+vim.keymap.set('n', "]d", function() vim.diagnostic.goto_next() end,
+               {silent = true})
+vim.keymap.set('n', "]<cr>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
+               {silent = true})
+
+vim.keymap.set('n', "[t", ':tabprevious<CR>', {silent = true})
+vim.keymap.set('n', "[b", ':bp<CR>', {silent = true})
+vim.keymap.set('n', "[d", function() vim.diagnostic.goto_prev() end,
+               {silent = true})
+vim.keymap.set('n', "[<cr>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
+               {silent = true})
+
+vim.keymap.set('v', "<C-j>", "<ESC>:m .+1<CR>==gi")
+vim.keymap.set('v', "<C-k>", "<ESC>:m .-2<CR>==gi")
+vim.keymap.set('v', "<S-Up>", "<Esc>v<Up>")
+vim.keymap.set('v', "<S-Down>", "<Esc>v<Down>")
+vim.keymap.set('v', "<S-Left>", "<Esc>v<Left>")
+vim.keymap.set('v', "<S-Right>", "<Esc>v<Right>")
+vim.keymap.set('v', "<S-Up>", "<Up>")
+vim.keymap.set('v', "<S-Down>", "<Down>")
+vim.keymap.set('v', "<S-Left>", "<Left>")
+vim.keymap.set('v', "<S-Right>", "<Right>")
+vim.keymap.set('v', "<C-j>", ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', "<C-k>", ":m '<-2<CR>gv=gv")
+vim.keymap.set('v', "<", "<gv")
+vim.keymap.set('v', ">", ">gv")
+vim.keymap.set('v', '/', mong8se.visualSearch)
 
 attachableBindings.gitsigns = function(gs, bufnr)
-    register({
-        -- Navigation
-        ["]c"] = {
-            function()
-                if vim.wo.diff then return ']c' end
-                vim.schedule(function() gs.next_hunk() end)
-                return '<Ignore>'
-            end,
-            "Next change",
-            expr = true,
-            buffer = bufnr
-        },
-        ["[c"] = {
-            function()
-                if vim.wo.diff then return '[c' end
-                vim.schedule(function() gs.prev_hunk() end)
-                return '<Ignore>'
-            end,
-            "Previous change",
-            expr = true,
-            buffer = bufnr
-        },
-        -- Actions
-        ["<leader>hs"] = {
-            ':Gitsigns stage_hunk<CR>',
-            "Stage Hunk",
-            buffer = bufnr
-        },
-        ["<leader>hr"] = {
-            ':Gitsigns reset_hunk<CR>',
-            "Reset Hunk",
-            buffer = bufnr
-        },
-        ["<leader>hS"] = {gs.stage_buffer, "Stage Buffer", buffer = bufnr},
-        ["<leader>hu"] = {gs.undo_stage_hunk, "Undo Stage Hunk", buffer = bufnr},
-        ["<leader>hR"] = {gs.reset_buffer, "Reset Buffer", buffer = bufnr},
-        ["<leader>hp"] = {gs.preview_hunk, "Preview Hunk", buffer = bufnr},
-        ["<leader>hb"] = {
-            function() gs.blame_line {full = true} end,
-            "Blame Line",
-            buffer = bufnr
-        },
-        ["<leader>tb"] = {
-            gs.toggle_current_line_blame,
-            "Toggle Blame Current Line",
-            buffer = bufnr
-        },
-        ["<leader>hd"] = {gs.diffthis, "Diff This", buffer = bufnr},
-        ["<leader>hD"] = {
-            function() gs.diffthis('~') end,
-            "Diff This ~",
-            buffer = bufnr
-        },
-        ["<leader>td"] = {
-            gs.toggle_deleted,
-            "Toggle Show Deleted Lines",
-            buffer = bufnr
-        },
-        ["ih"] = {
-            ':<C-U>Gitsigns select_hunk<CR>',
-            "which_key_ignore",
-            buffer = bufnr,
-            mode = 'x'
-        }
-    })
-    register({
-        ["<leader>hs"] = {
-            ':Gitsigns stage_hunk<CR>',
-            "Stage Hunk",
-            mode = "v",
-            buffer = bufnr
-        },
-        ["<leader>hr"] = {
-            ':Gitsigns reset_hunk<CR>',
-            "Reset Hunk",
-            mode = "v",
-            buffer = bufnr
-        },
-        -- Text object
-        ["ih"] = {
-            ':<C-U>Gitsigns select_hunk<CR>',
-            "which_key_ignore",
-            buffer = bufnr,
-            mode = 'o'
-        }
-    })
+    vim.keymap.set('n', "]c", function()
+        if vim.wo.diff then return ']c' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+    end, {expr = true, buffer = bufnr})
+    vim.keymap.set('n', "[c", function()
+        if vim.wo.diff then return '[c' end
+        vim.schedule(function() gs.prev_hunk() end);
+        return '<Ignore>';
+    end, {expr = true, buffer = bufnr})
+    vim.keymap.set('n', "<leader>hs", ':Gitsigns stage_hunk<CR>',
+                   {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hr", ':Gitsigns reset_hunk<CR>',
+                   {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hS", gs.stage_buffer, {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hu", gs.undo_stage_hunk, {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hR", gs.reset_buffer, {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hp", gs.preview_hunk, {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hb",
+                   function() gs.blame_line {full = true} end, {buffer = bufnr})
+    vim.keymap.set('n', "<leader>tb", gs.toggle_current_line_blame,
+                   {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hd", gs.diffthis, {buffer = bufnr})
+    vim.keymap.set('n', "<leader>hD", function() gs.diffthis('~') end,
+                   {buffer = bufnr})
+    vim.keymap.set('n', "<leader>td", gs.toggle_deleted, {buffer = bufnr})
+    vim.keymap
+        .set('x', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
+    vim.keymap.set('v', "<leader>hs", ':Gitsigns stage_hunk<CR>',
+                   {buffer = bufnr})
+    vim.keymap.set('v', "<leader>hr", ':Gitsigns reset_hunk<CR>',
+                   {buffer = bufnr})
+    vim.keymap
+        .set('o', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
 end
 
 attachableBindings.lsp = function(bufnr)
-    register({
-        ["gD"] = {
-            '<cmd>lua vim.lsp.buf.declaration()<CR>',
-            "LSP Declaration",
-            silent = true,
-            buffer = bufnr
-        },
-        ["gd"] = {
-            '<cmd>lua vim.lsp.buf.definition()<CR>',
-            "LSP Definition",
-            silent = true,
-            buffer = bufnr
-        },
-        ["K"] = {
-            '<cmd>lua vim.lsp.buf.hover()<CR>',
-            "LSP Hover",
-            silent = true,
-            buffer = bufnr
-        },
-        ["\\"] = {
-            '<cmd>lua vim.lsp.buf.signature_help()<CR>',
-            "LSP Signature Help",
-            silent = true,
-            buffer = bufnr
-        },
-        ["<leader>wa"] = {
-            '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
-            "LSP Add Workspace",
-            silent = true,
-            buffer = bufnr
-        },
-        ["<leader>wr"] = {
-            '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
-            "LSP Remove Workspace",
-            silent = true,
-            buffer = bufnr
-        },
-        ["<leader>wl"] = {
-            '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-            "LSP List Workspaces",
-            silent = true,
-            buffer = bufnr
-        },
-        ["<leader>cf"] = {
-            '<cmd>lua vim.lsp.buf.formatting()<CR>',
-            "LSP Formatting",
-            silent = true,
-            buffer = bufnr
-        },
-        ["<leader>cr"] = {
-            function() vim.lsp.buf.rename() end,
-            "LSP Rename",
-            silent = true,
-            buffer = bufnr
-        },
-        ["<leader>cd"] = {
-            function() vim.lsp.buf.type_definition() end,
-            "LSP Type Definition",
-            silent = true,
-            buffer = bufnr
-        }
-    })
+    vim.keymap.set('n', "gD", '<cmd>lua vim.lsp.buf.declaration()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "gd", '<cmd>lua vim.lsp.buf.definition()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "K", '<cmd>lua vim.lsp.buf.hover()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "\\", '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "<leader>wa",
+                   '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "<leader>wr",
+                   '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "<leader>wl",
+                   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "<leader>cf", '<cmd>lua vim.lsp.buf.formatting()<CR>',
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "<leader>cr", function() vim.lsp.buf.rename() end,
+                   {silent = true, buffer = bufnr})
+    vim.keymap.set('n', '<leader>cd',
+                   function() vim.lsp.buf.type_definition() end,
+                   {silent = true, buffer = bufnr})
 end
-
-vim.keymap.set('v', '/', mong8se.visualSearch)
 
 return attachableBindings
