@@ -177,11 +177,12 @@ BASE42=($(echo {0..8} {a..z} M O A Z A M I))
 # Repeating A and M will cause collisions but for
 # this use case, odds are slim it will matter
 
+MD5_CMD=$(command -v md5 || command -v md5sum | tr -d "\n" )
 # trim new line and md5 the hostname
-MD5=$(/bin/hostname | tr -d "\n" | openssl dgst -md5 -r)
+MD5=$(/bin/hostname | tr -d "\n" | $MD5_CMD)
 
 # switch to lower case because bc demands it
-# strip trailing *stdin\n from openssl output
+# strip trailing *stdin\n from md5sum output
 HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 
 # it's important obase come before ibase so you can
