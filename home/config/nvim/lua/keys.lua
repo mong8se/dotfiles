@@ -73,8 +73,12 @@ vim.keymap.set('t', "<c-w><C-w>", "<C-\\><C-n>")
 
 vim.keymap.set('n', "\\", [['`[' . strpart(getregtype(), 0, 1) . '`]']],
                {expr = true})
-vim.keymap.set('n', "gp", '"+]p')
-vim.keymap.set('n', "gP", '"+]P')
+
+local clipboard = vim.fn.has('macunix') and "+" or "*"
+
+vim.keymap.set('n', "gp", '"' .. clipboard .. ']p')
+vim.keymap.set('n', "gP", '"' .. clipboard .. ']P')
+
 vim.keymap.set('n', "gR", "<cmd>TroubleToggle lsp_references<cr>")
 
 vim.keymap.set('n', "U", "<C-r>")

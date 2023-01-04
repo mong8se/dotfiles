@@ -33,7 +33,7 @@ function autoGruv -d "Auto Gruv" -e fish_prompt
     if isDarkMode
       base16 gruvbox-dark-soft false
     else
-      base16 gruvbox-light-medium false
+      base16 gruvbox-light-soft false
     end
   end
 end
