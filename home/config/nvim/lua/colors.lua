@@ -5,12 +5,12 @@ local env = vim.env
 
 settings.termguicolors = true
 
+
 if env.BASE16_THEME then
     global.base16colorspace = 256
     cmd("colorscheme base16-" .. env.BASE16_THEME)
 else
-    vim.fn.system("isDarkMode");
-    if vim.v.shell_error == 0 then
+    if env.IS_DARK_MODE == "1" then
         settings.background = "dark"
     else
         settings.background = "light"
