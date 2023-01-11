@@ -11,7 +11,7 @@ require('packer').startup(function(use)
     use 'nvim-telescope/telescope.nvim'
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
-    use 'tamago324/lir.nvim'
+    use 'stevearc/oil.nvim'
 
     use 'stevearc/dressing.nvim'
     use 'rcarriga/nvim-notify'
@@ -57,7 +57,6 @@ require('packer').startup(function(use)
     use 'p00f/nvim-ts-rainbow'
 
     use 'tpope/vim-abolish'
-    use 'numToStr/Comment.nvim' -- gc
 
     use 'dyng/ctrlsf.vim' -- leader /
     use 'RRethy/vim-illuminate'
