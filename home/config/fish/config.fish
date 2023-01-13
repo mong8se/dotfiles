@@ -44,7 +44,33 @@ if status --is-interactive
 
   abbr -a lsg git ls-files
   abbr -a cat cat -v
-  abbr -a cd.. cd ..
+
+  # because half the time I type cd.. instead of cd ..
+  function multicd
+    echo cd (string repeat -n (math (string length -- $argv[1]) - 3) ../)
+  end
+  abbr --add dotdot --regex '^cd\.\.+$' --function multicd
+
+  # Imitate Bash !!
+  function last_history_item; echo $history[1]; end
+  abbr -a !! --position anywhere --function last_history_item
+ 
+  # Imitate Bash !$
+  # function last_history_arg; string split --fields 2 --max 1 --right " " $history[1]; end
+  # abbr -a !\$ --position anywhere --function last_history_arg
+
+  # Imitate Bash !:1
+  function nth_argument; string split --fields (math (string sub -s -1 $argv[1]) + 1) " " $history[1]; end
+  abbr --add bangcolon --regex '!:\d' --position anywhere --function nth_argument
+
+  # Imitate Bash ^abc^def
+  # if ever the abbr regex returns the () matches
+  # function replace_last_history; string replace $argv[2] $argv[3] $history[1]; end
+  function replace_last_history
+    set -l parts (string split "^" $argv)
+    string replace $parts[2] $parts[3] $history[1]
+  end
+  abbr --add lastsub --regex '^\^(\w+)\^(\w+)$' --function replace_last_history
 
   if test "nvim" = (path basename "$EDITOR")
     abbr -a vi nvim

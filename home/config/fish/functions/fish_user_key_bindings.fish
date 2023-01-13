@@ -29,9 +29,9 @@ function bind_dollar
 end
 
 if bind -M insert >/dev/null 2>&1
-  bind -M insert ! bind_bang
+  # bind -M insert ! bind_bang
   bind -M insert '$' bind_dollar
 else
-  bind ! bind_bang
+  # bind ! bind_bang
   bind '$' bind_dollar
 end
