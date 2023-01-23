@@ -16,7 +16,6 @@ if type -q fre
   end
 
   function z
-    set -xg __fre_last_argv "$argv"
     set -f result (
       begin
         command fre --sorted
@@ -39,22 +38,14 @@ if type -q fre
       command fre --delete "$result" &; disown
     end
   end
-
-  function zz
-    z "$__fre_last_argv"
-  end
 else if type -q zoxide
   zoxide init fish --no-aliases | source
   function z
     if count $argv > /dev/null
-      set -xg __zoxide_last_argv $argv
       __zoxide_z $argv
     else
       __zoxide_zi
     end
-  end
-  function zz
-    __zoxide_z $__zoxide_last_argv
   end
 else if type -q fasd
   if type -q disown
