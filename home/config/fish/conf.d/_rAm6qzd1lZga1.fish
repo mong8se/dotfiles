@@ -15,3 +15,5 @@ fish_add_path --append "/Applications/Visual Studio Code.app/Contents/Resources/
 set -gx NACL_SDK_ROOT "$HOME/Projects/Chrome/nacl_sdk/pepper_49"
 
 set -a Z_FALLBACKS ~/Projects/unvagrant/workspace
+
+set -gx NODE_EXTRA_CA_CERTS ~/Projects/unvagrant/certs/dpzca.pem
