@@ -6,10 +6,11 @@ require('packer').startup(function(use)
     use 'mong8se/buffish.nvim'
     --use '~/Projects/buffish.nvim'
 
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    --use 'nvim-lua/popup.nvim'
+    --use 'nvim-lua/plenary.nvim'
+    -- use 'nvim-telescope/telescope.nvim'
+    -- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    use 'ibhagwan/fzf-lua'
 
     use 'stevearc/oil.nvim'
 
@@ -48,7 +49,8 @@ require('packer').startup(function(use)
     use 'lewis6991/gitsigns.nvim'
 
     vim.g.polyglot_disabled = {
-        "rust", "css", "json", "go", "javascript", "typescript", "lua", "html", "sensible"
+        "rust", "css", "json", "go", "javascript", "typescript", "lua", "html",
+        "sensible"
     }
     use 'sheerun/vim-polyglot'
 

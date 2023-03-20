@@ -20,7 +20,7 @@ vim.keymap.set('n', "<leader>tm", require('mini.map').toggle)
 vim.keymap.set('n', "<leader>tn", mong8se.toggleNumberMode, {silent = true})
 vim.keymap.set('n', "<leader>tb", mong8se.toggleScrollBindAllWindows,
                {silent = true})
-vim.keymap.set('n', "<leader>tc", ":Telescope colorscheme<cr>", {silent = true})
+vim.keymap.set('n', "<leader>tc", require("fzf-lua").colorschemes, {silent = true})
 vim.keymap.set('n', "<leader>tt", "<cmd>TroubleToggle<cr>")
 vim.keymap.set('n', "<leader>tw",
                "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")
@@ -30,22 +30,21 @@ vim.keymap.set('n', "<leader>tq", "<cmd>TroubleToggle quickfix<cr>")
 vim.keymap.set('n', "<leader>tl", "<cmd>TroubleToggle loclist<cr>")
 vim.keymap.set('n', "<leader>ts", "<cmd>setlocal spell!<CR>", {silent = true})
 
-vim.keymap.set('n', "<leader>c/", ':Telescope lsp_references<CR>',
+vim.keymap.set('n', "<leader>c/", require("fzf-lua").lsp_references,
                {silent = true})
-vim.keymap.set('n', "<leader>jc", ':Telescope lsp_document_symbols<CR>',
+vim.keymap.set('n', "<leader>jc", require("fzf-lua").lsp_document_symbols,
                {silent = true})
 vim.keymap.set('n', "<leader>Jc",
-               ':Telescope lsp_dynamic_workspace_symbols<CR>', {silent = true})
-vim.keymap.set('n', "<leader>tc", ':Telescope treesitter<CR>', {silent = true})
+               require("fzf-lua").lsp_workspace_symbols, {silent = true})
 
 vim.keymap.set('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
-vim.keymap.set('n', "<leader>pf", ':Telescope find_files<CR>', {silent = true})
+vim.keymap.set('n', "<leader>pf",  require('fzf-lua').files, {silent = true})
 
 vim.keymap.set('n', "<leader>sr", ':CtrlSFOpen<CR>', {silent = true})
-vim.keymap.set('n', "<leader>sp", ':Telescope live_grep<CR>', {silent = true})
-vim.keymap.set('n', "<leader>sh", ':Telescope search_history<CR>',
+vim.keymap.set('n', "<leader>sp", require("fzf-lua").live_grep, {silent = true})
+vim.keymap.set('n', "<leader>sh", require("fzf-lua").search_history,
                {silent = true})
-vim.keymap.set('n', "<leader>sb", ':Telescope current_buffer_fuzzy_find<CR>',
+vim.keymap.set('n', "<leader>sb", require("fzf-lua").lgrep_curbuf,
                {silent = true})
 
 vim.keymap.set('n', "<leader>xx", "<cmd>Trouble<cr>", {silent = true})
@@ -59,12 +58,13 @@ vim.keymap.set('n', "<leader>xf", function() vim.diagnostic.open_float() end,
                {silent = true})
 vim.keymap.set('n', "<leader>xg", function() vim.diagnostic.setloclist() end,
                {silent = true})
-vim.keymap.set('n', "<leader> ", ":Buffish<CR>", {silent = true})
+vim.keymap.set('n', "<leader> ", require('fzf-lua').buffers, {silent = true})
 vim.keymap.set('n', "<leader>/", '<Plug>CtrlSFPrompt',
                {noremap = false, silent = false})
 vim.keymap.set('n', "<leader>*", '<Plug>CtrlSFCwordExec')
-vim.keymap.set('n', "<leader>:", ':Telescope commands<CR>')
-vim.keymap.set('n', "<leader>'", ':Telescope marks<CR>')
+vim.keymap.set('n', "<leader>:", require("fzf-lua").commands)
+vim.keymap.set('n', "<leader>'", require("fzf-lua").marks)
+vim.keymap.set('n', '<leader>"', require("fzf-lua").registers)
 
 vim.keymap.set('n', "<c-w>s", mong8se.splitCommand, {silent = true})
 vim.keymap.set('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})

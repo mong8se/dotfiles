@@ -45,13 +45,11 @@ mong8se.toggleScrollBindAllWindows = function()
     end
 end
 
--- Telescope
 mong8se.activateGitOrFiles = function()
-    local telescope = require("telescope.builtin")
     if b.gitsigns_head then
-        telescope.git_files()
+        require('fzf-lua').git_files()
     else
-        telescope.find_files()
+        require('fzf-lua').files()
     end
 end
 

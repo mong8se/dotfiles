@@ -17,21 +17,6 @@ MiniMap.setup({
     window = {width = 16, winblend = 70}
 })
 
-require('telescope').setup {
-    defaults = {path_display = {"smart"}},
-    extensions = {
-        fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case" -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
-        }
-    }
-}
-
-require('telescope').load_extension('fzf')
-
 -- Setup nvim-cmp.
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -209,9 +194,6 @@ require("indent_blankline").setup {
     buftype_exclude = {"terminal"}
 }
 
--- dashboard-nvim
-g.dashboard_default_executive = 'telescope'
-
 -- Pair expansion is dot-repeatable by default:
 g.pear_tree_repeatable_expand = 0
 
@@ -219,7 +201,7 @@ g.pear_tree_repeatable_expand = 0
 g.pear_tree_smart_openers = 1
 g.pear_tree_smart_closers = 1
 g.pear_tree_smart_backspace = 1
-g.pear_tree_ft_disabled = {'TelescopePrompt'}
+-- g.pear_tree_ft_disabled = {'TelescopePrompt'}
 
 -- CtrlSF
 g.ctrlsf_default_root = 'project' -- search relative to project root
