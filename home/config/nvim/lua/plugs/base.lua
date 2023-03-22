@@ -1,87 +1,64 @@
-require('packer').startup(function(use)
-    use(vim.env.DOTFILES_RESOURCES .. "/packer.nvim")
+return {
+    'mong8se/actually.nvim',
+    -- '~/Projects/actually.nvim',
+    'mong8se/buffish.nvim',
+    -- '~/Projects/buffish.nvim',
+    -- 'nvim-lua/popup.nvim',
+    -- 'nvim-lua/plenary.nvim',
+    -- 'nvim-telescope/telescope.nvim',
+    -- {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+    'ibhagwan/fzf-lua',
+    'stevearc/oil.nvim',
+    'stevearc/dressing.nvim',
+    'rcarriga/nvim-notify',
+    'RRethy/nvim-base16',
+    'caglartoklu/borlandp.vim',
+    --   'eddyekofo94/gruvbox-flat.nvim',
+    -- 'ellisonleao/gruvbox.nvim',
+    -- { 'luisiacc/gruvbox-baby', branch='main'},
+    'sainnhe/gruvbox-material',
+    'tpope/vim-rsi',
+    'tpope/vim-repeat',
 
-    use 'mong8se/actually.nvim'
-    --use '~/Projects/actually.nvim'
-    use 'mong8se/buffish.nvim'
-    --use '~/Projects/buffish.nvim'
+    'hoob3rt/lualine.nvim',
+    'kyazdani42/nvim-web-devicons',
+    -- Recommended (for coloured icons)
+    'lukas-reineke/indent-blankline.nvim',
+    'folke/trouble.nvim',
 
-    --use 'nvim-lua/popup.nvim'
-    --use 'nvim-lua/plenary.nvim'
-    -- use 'nvim-telescope/telescope.nvim'
-    -- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-    use 'ibhagwan/fzf-lua'
+    'roman/golden-ratio', -- C-W \
+    'unblevable/quick-scope', -- f F t T
+    'ggandor/leap.nvim',
+    'danilamihailov/beacon.nvim',
+    'echasnovski/mini.nvim',
+    --   'machakann/vim-sandwich', -- sa sd sr
+    'tmsvg/pear-tree',
+    'airblade/vim-rooter',
+    'tpope/vim-apathy', -- ]f
+    'lewis6991/gitsigns.nvim',
+    'sheerun/vim-polyglot',
 
-    use 'stevearc/oil.nvim'
+    {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'p00f/nvim-ts-rainbow',
 
-    use 'stevearc/dressing.nvim'
-    use 'rcarriga/nvim-notify'
-
-    use 'RRethy/nvim-base16'
-    use 'caglartoklu/borlandp.vim'
-    --   use 'eddyekofo94/gruvbox-flat.nvim'
-    -- use 'ellisonleao/gruvbox.nvim'
-    -- use { 'luisiacc/gruvbox-baby', branch='main'}
-    use 'sainnhe/gruvbox-material'
-
-    use 'tpope/vim-rsi'
-    use 'tpope/vim-repeat'
-
-    use 'hoob3rt/lualine.nvim'
-    use 'kyazdani42/nvim-web-devicons' -- Recommended (for coloured icons)
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'folke/trouble.nvim'
-
-    use 'roman/golden-ratio' -- C-W \
-
-    use 'unblevable/quick-scope' -- f F t T
-    use 'ggandor/leap.nvim'
-
-    use 'danilamihailov/beacon.nvim'
-
-    use 'echasnovski/mini.nvim'
-    --   use 'machakann/vim-sandwich' -- sa sd sr
-    use 'tmsvg/pear-tree'
-
-    use 'airblade/vim-rooter'
-    use 'tpope/vim-apathy' -- ]f
-
-    use 'lewis6991/gitsigns.nvim'
-
-    vim.g.polyglot_disabled = {
-        "rust", "css", "json", "go", "javascript", "typescript", "lua", "html",
-        "sensible"
-    }
-    use 'sheerun/vim-polyglot'
-
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use 'p00f/nvim-ts-rainbow'
-
-    use 'tpope/vim-abolish'
-
-    use 'dyng/ctrlsf.vim' -- leader /
-    use 'RRethy/vim-illuminate'
-
-    use 'neovim/nvim-lspconfig'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/nvim-cmp'
-
+    'tpope/vim-abolish',
+    'dyng/ctrlsf.vim', -- leader /
+    'RRethy/vim-illuminate',
+    'neovim/nvim-lspconfig',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/nvim-cmp',
     -- For vsnip users.
-    use 'hrsh7th/cmp-vsnip'
-    use 'hrsh7th/vim-vsnip'
-    use 'hrsh7th/vim-vsnip-integ'
+    'hrsh7th/cmp-vsnip',
+    'hrsh7th/vim-vsnip',
+    'hrsh7th/vim-vsnip-integ',
 
-    use 'vimwiki/vimwiki'
+    'vimwiki/vimwiki',
+    {'itchyny/calendar.vim', cmd = 'Calendar'},
+    {'mtth/scratch.vim', cmd = 'Scratch'}, -- gs
+    'tversteeg/registers.nvim'
 
-    use {'itchyny/calendar.vim', cmd = 'Calendar'}
-    use {'mtth/scratch.vim', cmd = 'Scratch'} -- gs
-
-    use 'tversteeg/registers.nvim'
-
-end)
-
-require('mong8se').loadRCFiles('plugs')
+}

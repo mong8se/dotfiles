@@ -1,7 +1,4 @@
 local mong8se = require("mong8se")
-local global = vim.g
-
-global.mapleader = " "
 
 local attachableBindings = {}
 

@@ -1,4 +1,4 @@
-local use = require('packer').use
-
-use {'JamshedVesuna/vim-markdown-preview', ft = 'markdown'}
-use 'editorconfig/editorconfig-vim'
+return {
+    {'JamshedVesuna/vim-markdown-preview', ft = 'markdown'},
+    'editorconfig/editorconfig-vim'
+}
