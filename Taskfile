@@ -24,38 +24,45 @@ com_ex bc || nope "bc must be installed!"
 
 com_ex cargo || com_ex deno || nope "Either rust or deno must be installed!"
 
-function hostname {
+function task:hostname {
+  : "The answer's here"
+
   echo $HOST42
   echo
 }
 
-function submodule:init {
+function task:submodule:init {
+  : "Init git submodules"
+
   git submodule update --init --recursive
 }
 
-function submodule:update {
+function task:submodule:update {
+  : 'Update your submodules'
+
   git submodule update --remote
 }
 
-function vi:install {
+function task:vi:install {
+  : 'Install Lazy Plugins for NEOVIM'
   echo -n "Installing vi plugs ..."
   ${VI_BIN} -u home/config/nvim/lua/lazy-init.lua -V1 --headless -es +"Lazy install"
   echo " done."
 }
 
-function vi:sync {
+function task:vi:sync {
   echo -n "Updating vi plugs ..."
   ${VI_BIN} -u home/config/nvim/lua/lazy-init.lua -V1 --headless -es +"Lazy sync"
   echo " done."
 }
 
-function vi:cleanup {
+function task:vi:cleanup {
   echo -n "Cleaning up vi plugs ..."
   ${VI_BIN} -u home/config/nvim/lua/lazy-init.lua -V1 --headless -es +"Lazy clean"
   echo " done."
 }
 
-function deno:install {
+function task:deno:install {
   export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
   export ASDF_DATA_DIR="$ASDF_DIR"
   . $ASDF_DIR/asdf.sh
@@ -63,7 +70,7 @@ function deno:install {
   deno:upgrade
 }
 
-function deno:upgrade {
+function task:deno:upgrade {
   export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
   export ASDF_DATA_DIR="$ASDF_DIR"
   . $ASDF_DIR/asdf.sh
@@ -71,15 +78,15 @@ function deno:upgrade {
   asdf global deno latest
 }
 
-function homebrew:install {
+function task:homebrew:install {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
-function homebrew:bundle {
+function task:homebrew:bundle {
   brew bundle --no-lock --file $REPO_LOCATION/Resources/Brewfile
 }
 
-function os:upgrade {
+function task:os:upgrade {
   case "$(uname -s)" in
     Linux)
       source /etc/os-release
@@ -105,40 +112,42 @@ function os:upgrade {
 
 }
 
-function test() {
+function task:test() {
   cd Resources/linkOmatic
   deno run --allow-write __tests__/generateDeps.ts
   deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
 }
 
-function lom:install {
+function task:lom:install {
+  : 'Install link_o_matic via cargo'
+
   cargo install --git https://github.com/mong8se/link_o_matic.git
 }
 
 com_ex link_o_matic && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
-function cleanup {
+function task:cleanup {
   $LINKO cleanup
 }
 
-function autocleanup {
+function task:autocleanup {
   $LINKO autocleanup
 }
 
-function implode {
+function task:implode {
   $LINKO implode
 }
 
-function install {
+function task:install {
   $LINKO install
 }
 
-function sync {
+function task:sync {
   install
   autocleanup
 }
 
-function init {
+function task:init {
   submodule:init
   submodule:update
   com_ex cargo && lom:install || deno:install
@@ -147,7 +156,7 @@ function init {
   vi:install
 }
 
-function upgrade {
+function task:upgrade {
   os:upgrade
   submodule:update
   sync
@@ -155,17 +164,41 @@ function upgrade {
   vi:sync
 }
 
-function default {
+function task:default {
   sync
 }
 
-function help {
+function task:help {
   echo "$0 <task> <args>"
   echo "Tasks:"
-  compgen -A function | grep -v 'help\|default' | cat -n
+  for task in $( compgen -A function | grep "task:" | grep -v 'help\|default' )
+  do
+    task:describe $task
+  done
   echo
-  type default | sed -e '1d; 2s/()/task:/; s/^/    /'
+  task:explain task:default
+}
+
+COLON_COMMENT_PATTERN=" *: *\(['"'"'"]\)\(.*\)\1;"
+
+function task:describe {
+  : "Prints description of task"
+
+  printf "    %-16s | " $(strip_task $1)
+  type "$1" | sed -n -e"s/${COLON_COMMENT_PATTERN}/\2/p" | tr -d "\n"
   echo
+}
+
+function task:explain {
+  : "Prints definition of task"
+
+  echo "$(strip_task $1) => "
+  type "$1" | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;"
+  echo
+}
+
+function strip_task {
+  echo $1 | sed -En 's/task:(.*)/\1/p'
 }
 
 # What do you get if you multiply six by nine
@@ -212,4 +245,4 @@ for i in $(BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
 done
 
 TIMEFORMAT="Task completed in %3lR"
-time "${@:-default}"
+time "task:${@:-default}"
