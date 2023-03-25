@@ -67,7 +67,7 @@ function task:deno:install {
   export ASDF_DATA_DIR="$ASDF_DIR"
   . $ASDF_DIR/asdf.sh
   asdf plugin add deno
-  deno:upgrade
+  task:deno:upgrade
 }
 
 function task:deno:upgrade {
@@ -143,29 +143,29 @@ function task:install {
 }
 
 function task:sync {
-  install
-  autocleanup
+  task:install
+  task:autocleanup
 }
 
 function task:init {
-  submodule:init
-  submodule:update
+  task:submodule:init
+  task:submodule:update
   com_ex cargo && lom:install || deno:install
   export PATH="$PATH:~/.cargo/bin"
-  install
-  vi:install
+  task:install
+  task:vi:install
 }
 
 function task:upgrade {
-  os:upgrade
-  submodule:update
-  sync
-  com_ex cargo && lom:install || deno:install
-  vi:sync
+  task:os:upgrade
+  task:submodule:update
+  task:sync
+  com_ex cargo && task:lom:install || task:deno:install
+  task:vi:sync
 }
 
 function task:default {
-  sync
+  task:sync
 }
 
 function task:help {
