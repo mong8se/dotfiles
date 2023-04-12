@@ -37,6 +37,12 @@ vim.keymap.set('n', "<leader>Jc",
 vim.keymap.set('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
 vim.keymap.set('n', "<leader>pf",  require('fzf-lua').files, {silent = true})
 
+vim.keymap.set('n', "<leader>gg", require("fzf-lua").git_status, {silent = true})
+vim.keymap.set('n', "<leader>gl", require("fzf-lua").git_commits, {silent = true})
+vim.keymap.set('n', "<leader>gc", require("fzf-lua").git_bcommits, {silent = true})
+vim.keymap.set('n', "<leader>gb", require("fzf-lua").git_branches, {silent = true})
+vim.keymap.set('n', "<leader>gs", require("fzf-lua").git_stash, {silent = true})
+
 vim.keymap.set('n', "<leader>sr", ':CtrlSFOpen<CR>', {silent = true})
 vim.keymap.set('n', "<leader>sp", require("fzf-lua").live_grep, {silent = true})
 vim.keymap.set('n', "<leader>sh", require("fzf-lua").search_history,

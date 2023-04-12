@@ -98,12 +98,4 @@ mong8se.visualSearch = function()
     fn.setreg('"', originalValue)
 end
 
--- function! morng8se#ActivateFZF()
---   if exists('b:git_dir')
---     GitFiles
---   else
---     Files
---   endif
--- endfunction
-
 return mong8se
