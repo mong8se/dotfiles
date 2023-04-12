@@ -1,198 +1,183 @@
 local mong8se = require("mong8se")
 
+local setKeyMap = vim.keymap.set
+
+local fzf = require("fzf-lua")
+
 local attachableBindings = {}
 
-vim.keymap.set('n', "<leader>bb", ":Buffish<CR>", {silent = true})
-vim.keymap.set('n', "<leader>bn", ":bn<CR>")
-vim.keymap.set('n', "<leader>bp", ":bp<CR>")
-vim.keymap.set('n', "<leader>bd", ":bufdo ", {silent = false})
+setKeyMap('n', "<leader>bb", ":Buffish<CR>", {silent = true})
+setKeyMap('n', "<leader>bn", ":bn<CR>")
+setKeyMap('n', "<leader>bp", ":bp<CR>")
+setKeyMap('n', "<leader>bd", ":bufdo ", {silent = false})
 
-vim.keymap.set('n', "<leader>f-", function()
-    vim.cmd("edit " .. mong8se.directoryFromContext())
-end, {silent = true})
+setKeyMap('n', "<leader>f-",
+          function() vim.cmd("edit " .. mong8se.directoryFromContext()) end,
+          {silent = true})
 
-vim.keymap.set('n', "<leader>tg", '<Plug>(golden_ratio_toggle)',
-               {noremap = false})
-vim.keymap.set('n', "<leader>tm", require('mini.map').toggle)
-vim.keymap.set('n', "<leader>tn", mong8se.toggleNumberMode, {silent = true})
-vim.keymap.set('n', "<leader>tb", mong8se.toggleScrollBindAllWindows,
-               {silent = true})
-vim.keymap.set('n', "<leader>tc", require("fzf-lua").colorschemes,
-               {silent = true})
-vim.keymap.set('n', "<leader>tt", "<cmd>TroubleToggle<cr>")
-vim.keymap.set('n', "<leader>tw",
-               "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")
-vim.keymap.set('n', "<leader>td",
-               "<cmd>TroubleToggle lsp_document_diagnostics<cr>")
-vim.keymap.set('n', "<leader>tq", "<cmd>TroubleToggle quickfix<cr>")
-vim.keymap.set('n', "<leader>tl", "<cmd>TroubleToggle loclist<cr>")
-vim.keymap.set('n', "<leader>ts", "<cmd>setlocal spell!<CR>", {silent = true})
 
-vim.keymap.set('n', "<leader>c/", require("fzf-lua").lsp_references,
-               {silent = true})
-vim.keymap.set('n', "<leader>jc", require("fzf-lua").lsp_document_symbols,
-               {silent = true})
-vim.keymap.set('n', "<leader>Jc", require("fzf-lua").lsp_workspace_symbols,
-               {silent = true})
+setKeyMap('n', "<leader>tg", '<Plug>(golden_ratio_toggle)', {noremap = false})
+setKeyMap('n', "<leader>tm", require('mini.map').toggle)
+setKeyMap('n', "<leader>tn", mong8se.toggleNumberMode, {silent = true})
+setKeyMap('n', "<leader>tb", mong8se.toggleScrollBindAllWindows, {silent = true})
+setKeyMap('n', "<leader>tc", fzf.colorschemes, {silent = true})
+setKeyMap('n', "<leader>tt", "<cmd>TroubleToggle<cr>")
+setKeyMap('n', "<leader>tw", "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")
+setKeyMap('n', "<leader>td", "<cmd>TroubleToggle lsp_document_diagnostics<cr>")
+setKeyMap('n', "<leader>tq", "<cmd>TroubleToggle quickfix<cr>")
+setKeyMap('n', "<leader>tl", "<cmd>TroubleToggle loclist<cr>")
+setKeyMap('n', "<leader>ts", "<cmd>setlocal spell!<CR>", {silent = true})
 
-vim.keymap.set('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
-vim.keymap.set('n', "<leader>pf", require('fzf-lua').files, {silent = true})
+setKeyMap('n', "<leader>c/", fzf.lsp_references, {silent = true})
+setKeyMap('n', "<leader>jc", fzf.lsp_document_symbols,
+          {silent = true})
+setKeyMap('n', "<leader>Jc", fzf.lsp_workspace_symbols,
+          {silent = true})
 
-vim.keymap
-    .set('n', "<leader>gg", require("fzf-lua").git_status, {silent = true})
-vim.keymap.set('n', "<leader>gl", require("fzf-lua").git_commits,
-               {silent = true})
-vim.keymap.set('n', "<leader>gc", require("fzf-lua").git_bcommits,
-               {silent = true})
-vim.keymap.set('n', "<leader>gb", require("fzf-lua").git_branches,
-               {silent = true})
-vim.keymap.set('n', "<leader>gs", require("fzf-lua").git_stash, {silent = true})
+setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
+setKeyMap('n', "<leader>pf", fzf.files, {silent = true})
 
-vim.keymap.set('n', "<leader>sr", ':CtrlSFOpen<CR>', {silent = true})
-vim.keymap.set('n', "<leader>sp", require("fzf-lua").live_grep, {silent = true})
-vim.keymap.set('n', "<leader>sh", require("fzf-lua").search_history,
-               {silent = true})
-vim.keymap.set('n', "<leader>sb", require("fzf-lua").lgrep_curbuf,
-               {silent = true})
+setKeyMap('n', "<leader>gg", fzf.git_status, {silent = true})
+setKeyMap('n', "<leader>gl", fzf.git_commits, {silent = true})
+setKeyMap('n', "<leader>gc", fzf.git_bcommits, {silent = true})
+setKeyMap('n', "<leader>gb", fzf.git_branches, {silent = true})
+setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true})
 
-vim.keymap.set('n', "<leader>xx", "<cmd>Trouble<cr>", {silent = true})
-vim.keymap.set('n', "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
-               {silent = true})
-vim.keymap.set('n', "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
-               {silent = true})
-vim.keymap.set('n', "<leader>xl", "<cmd>Trouble loclist<cr>", {silent = true})
-vim.keymap.set('n', "<leader>xq", "<cmd>Trouble quickfix<cr>", {silent = true})
-vim.keymap.set('n', "<leader>xf", vim.diagnostic.open_float, {silent = true})
-vim.keymap.set('n', "<leader>xg", vim.diagnostic.setloclist, {silent = true})
-vim.keymap.set('n', "<leader> ", require('fzf-lua').buffers, {silent = true})
-vim.keymap.set('n', "<leader>/", '<Plug>CtrlSFPrompt',
-               {noremap = false, silent = false})
-vim.keymap.set('n', "<leader>*", '<Plug>CtrlSFCwordExec')
-vim.keymap.set('n', "<leader>:", require("fzf-lua").commands)
-vim.keymap.set('n', "<leader>'", require("fzf-lua").marks)
-vim.keymap.set('n', '<leader>"', require("fzf-lua").registers)
+setKeyMap('n', "<leader>sr", ':CtrlSFOpen<CR>', {silent = true})
+setKeyMap('n', "<leader>sp", fzf.live_grep, {silent = true})
+setKeyMap('n', "<leader>sh", fzf.search_history, {silent = true})
+setKeyMap('n', "<leader>sb", fzf.lgrep_curbuf, {silent = true})
 
-vim.keymap.set('n', "<c-w>s", mong8se.splitCommand, {silent = true})
-vim.keymap.set('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
-vim.keymap.set('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
-vim.keymap.set('t', "<c-w><C-w>", "<C-\\><C-n>")
+setKeyMap('n', "<leader>xx", "<cmd>Trouble<cr>", {silent = true})
+setKeyMap('n', "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
+          {silent = true})
+setKeyMap('n', "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
+          {silent = true})
+setKeyMap('n', "<leader>xl", "<cmd>Trouble loclist<cr>", {silent = true})
+setKeyMap('n', "<leader>xq", "<cmd>Trouble quickfix<cr>", {silent = true})
+setKeyMap('n', "<leader>xf", vim.diagnostic.open_float, {silent = true})
+setKeyMap('n', "<leader>xg", vim.diagnostic.setloclist, {silent = true})
+setKeyMap('n', "<leader> ", fzf.buffers, {silent = true})
+setKeyMap('n', "<leader>/", '<Plug>CtrlSFPrompt',
+          {noremap = false, silent = false})
+setKeyMap('n', "<leader>*", '<Plug>CtrlSFCwordExec')
+setKeyMap('n', "<leader>:", fzf.commands)
+setKeyMap('n', "<leader>'", fzf.marks)
+setKeyMap('n', '<leader>"', fzf.registers)
 
-vim.keymap.set('n', "\\", [['`[' . strpart(getregtype(), 0, 1) . '`]']],
-               {expr = true})
+setKeyMap('n', "<c-w>s", mong8se.splitCommand, {silent = true})
+setKeyMap('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
+setKeyMap('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
+setKeyMap('t', "<c-w><C-w>", "<C-\\><C-n>")
+
+setKeyMap('n', "\\", [['`[' . strpart(getregtype(), 0, 1) . '`]']],
+          {expr = true})
 
 local clipboard = vim.fn.has('macunix') and "+" or "*"
 
-vim.keymap.set('n', "gp", '"' .. clipboard .. ']p')
-vim.keymap.set('n', "gP", '"' .. clipboard .. ']P')
+setKeyMap('n', "gp", '"' .. clipboard .. ']p')
+setKeyMap('n', "gP", '"' .. clipboard .. ']P')
 
-vim.keymap.set('n', "gR", "<cmd>TroubleToggle lsp_references<cr>")
+setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>")
 
-vim.keymap.set('n', "U", "<C-r>")
-vim.keymap.set('n', "<f1>", '<Nop>')
-vim.keymap.set('n', "Y", 'y$')
+setKeyMap('n', "U", "<C-r>")
+setKeyMap('n', "<f1>", '<Nop>')
+setKeyMap('n', "Y", 'y$')
 
 -- Instead of look up in man, let"s split, opposite of J for join
-vim.keymap.set('n', "K", "i<CR><Esc>")
-vim.keymap.set('n', "<C-L>",
-               ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
-               {silent = true})
-vim.keymap.set('n', "<Down>", "gj")
-vim.keymap.set('n', "<Up>", "gk")
-vim.keymap.set('n', "<C-k>", "<C-e>gk")
-vim.keymap.set('n', "<C-j>", "<C-y>gj")
-vim.keymap.set('n', "<S-Up>", "v<Up>")
-vim.keymap.set('n', "<S-Down>", "v<Down>")
-vim.keymap.set('n', "<S-Left>", "v<Left>")
-vim.keymap.set('n', "<S-Right>", "v<Right>")
-vim.keymap.set('n', "+", "$e^")
-vim.keymap.set('n', "-", [[:keeppatterns call search("^\\s*\\S", "be")<cr>]])
+setKeyMap('n', "K", "i<CR><Esc>")
+setKeyMap('n', "<C-L>",
+          ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
+          {silent = true})
+setKeyMap('n', "<Down>", "gj")
+setKeyMap('n', "<Up>", "gk")
+setKeyMap('n', "<C-k>", "<C-e>gk")
+setKeyMap('n', "<C-j>", "<C-y>gj")
+setKeyMap('n', "<S-Up>", "v<Up>")
+setKeyMap('n', "<S-Down>", "v<Down>")
+setKeyMap('n', "<S-Left>", "v<Left>")
+setKeyMap('n', "<S-Right>", "v<Right>")
+setKeyMap('n', "+", "$e^")
+setKeyMap('n', "-", [[:keeppatterns call search("^\\s*\\S", "be")<cr>]])
 
-vim.keymap.set('n', "]t", ':tabnext<CR>', {silent = true})
-vim.keymap.set('n', "]b", ':bn<CR>', {silent = true})
-vim.keymap.set('n', "]d", vim.diagnostic.goto_next, {silent = true})
-vim.keymap.set('n', "]<cr>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
-               {silent = true})
+setKeyMap('n', "]t", ':tabnext<CR>', {silent = true})
+setKeyMap('n', "]b", ':bn<CR>', {silent = true})
+setKeyMap('n', "]d", vim.diagnostic.goto_next, {silent = true})
+setKeyMap('n', "]<cr>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
+          {silent = true})
 
-vim.keymap.set('n', "[t", ':tabprevious<CR>', {silent = true})
-vim.keymap.set('n', "[b", ':bp<CR>', {silent = true})
-vim.keymap.set('n', "[d", vim.diagnostic.goto_prev, {silent = true})
-vim.keymap.set('n', "[<cr>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
-               {silent = true})
+setKeyMap('n', "[t", ':tabprevious<CR>', {silent = true})
+setKeyMap('n', "[b", ':bp<CR>', {silent = true})
+setKeyMap('n', "[d", vim.diagnostic.goto_prev, {silent = true})
+setKeyMap('n', "[<cr>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
+          {silent = true})
 
-vim.keymap.set('v', "<C-j>", "<ESC>:m .+1<CR>==gi")
-vim.keymap.set('v', "<C-k>", "<ESC>:m .-2<CR>==gi")
-vim.keymap.set('v', "<S-Up>", "<Esc>v<Up>")
-vim.keymap.set('v', "<S-Down>", "<Esc>v<Down>")
-vim.keymap.set('v', "<S-Left>", "<Esc>v<Left>")
-vim.keymap.set('v', "<S-Right>", "<Esc>v<Right>")
-vim.keymap.set('v', "<S-Up>", "<Up>")
-vim.keymap.set('v', "<S-Down>", "<Down>")
-vim.keymap.set('v', "<S-Left>", "<Left>")
-vim.keymap.set('v', "<S-Right>", "<Right>")
-vim.keymap.set('v', "<C-j>", ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', "<C-k>", ":m '<-2<CR>gv=gv")
-vim.keymap.set('v', "<", "<gv")
-vim.keymap.set('v', ">", ">gv")
-vim.keymap.set('v', '/', mong8se.visualSearch)
+setKeyMap('v', "<C-j>", "<ESC>:m .+1<CR>==gi")
+setKeyMap('v', "<C-k>", "<ESC>:m .-2<CR>==gi")
+setKeyMap('v', "<S-Up>", "<Esc>v<Up>")
+setKeyMap('v', "<S-Down>", "<Esc>v<Down>")
+setKeyMap('v', "<S-Left>", "<Esc>v<Left>")
+setKeyMap('v', "<S-Right>", "<Esc>v<Right>")
+setKeyMap('v', "<S-Up>", "<Up>")
+setKeyMap('v', "<S-Down>", "<Down>")
+setKeyMap('v', "<S-Left>", "<Left>")
+setKeyMap('v', "<S-Right>", "<Right>")
+setKeyMap('v', "<C-j>", ":m '>+1<CR>gv=gv")
+setKeyMap('v', "<C-k>", ":m '<-2<CR>gv=gv")
+setKeyMap('v', "<", "<gv")
+setKeyMap('v', ">", ">gv")
+setKeyMap('v', '/', mong8se.visualSearch)
 
 attachableBindings.gitsigns = function(gs, bufnr)
-    vim.keymap.set('n', "]c", function()
+    setKeyMap('n', "]c", function()
         if vim.wo.diff then return ']c' end
         vim.schedule(function() gs.next_hunk() end)
         return '<Ignore>'
     end, {expr = true, buffer = bufnr})
-    vim.keymap.set('n', "[c", function()
+    setKeyMap('n', "[c", function()
         if vim.wo.diff then return '[c' end
         vim.schedule(function() gs.prev_hunk() end);
         return '<Ignore>';
     end, {expr = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>hs", ':Gitsigns stage_hunk<CR>',
-                   {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hr", ':Gitsigns reset_hunk<CR>',
-                   {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hS", gs.stage_buffer, {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hu", gs.undo_stage_hunk, {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hR", gs.reset_buffer, {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hp", gs.preview_hunk, {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hb",
-                   function() gs.blame_line {full = true} end, {buffer = bufnr})
-    vim.keymap.set('n', "<leader>tb", gs.toggle_current_line_blame,
-                   {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hd", gs.diffthis, {buffer = bufnr})
-    vim.keymap.set('n', "<leader>hD", function() gs.diffthis('~') end,
-                   {buffer = bufnr})
-    vim.keymap.set('n', "<leader>td", gs.toggle_deleted, {buffer = bufnr})
-    vim.keymap
-        .set('x', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
-    vim.keymap.set('v', "<leader>hs", ':Gitsigns stage_hunk<CR>',
-                   {buffer = bufnr})
-    vim.keymap.set('v', "<leader>hr", ':Gitsigns reset_hunk<CR>',
-                   {buffer = bufnr})
-    vim.keymap
-        .set('o', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
+    setKeyMap('n', "<leader>hs", ':Gitsigns stage_hunk<CR>', {buffer = bufnr})
+    setKeyMap('n', "<leader>hr", ':Gitsigns reset_hunk<CR>', {buffer = bufnr})
+    setKeyMap('n', "<leader>hS", gs.stage_buffer, {buffer = bufnr})
+    setKeyMap('n', "<leader>hu", gs.undo_stage_hunk, {buffer = bufnr})
+    setKeyMap('n', "<leader>hR", gs.reset_buffer, {buffer = bufnr})
+    setKeyMap('n', "<leader>hp", gs.preview_hunk, {buffer = bufnr})
+    setKeyMap('n', "<leader>hb", function() gs.blame_line {full = true} end,
+              {buffer = bufnr})
+    setKeyMap('n', "<leader>tb", gs.toggle_current_line_blame, {buffer = bufnr})
+    setKeyMap('n', "<leader>hd", gs.diffthis, {buffer = bufnr})
+    setKeyMap('n', "<leader>hD", function() gs.diffthis('~') end,
+              {buffer = bufnr})
+    setKeyMap('n', "<leader>td", gs.toggle_deleted, {buffer = bufnr})
+    setKeyMap('x', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
+    setKeyMap('v', "<leader>hs", ':Gitsigns stage_hunk<CR>', {buffer = bufnr})
+    setKeyMap('v', "<leader>hr", ':Gitsigns reset_hunk<CR>', {buffer = bufnr})
+    setKeyMap('o', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
 end
 
-attachableBindings.lsp = function(bufnr)
-    vim.keymap.set('n', "gD", vim.lsp.buf.declaration,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "gd", vim.lsp.buf.definition,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "K", vim.lsp.buf.hover, {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "\\", vim.lsp.buf.signature_help,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>wa", vim.lsp.buf.add_workspace_folder,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>wr", vim.lsp.buf.remove_workspace_folder,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>wl",
-                   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>cf", vim.lsp.buf.formatting,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>cr", vim.lsp.buf.rename,
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', '<leader>cd', vim.lsp.buf.type_definition,
-                   {silent = true, buffer = bufnr})
+attachableBindings.lsp = function(lsp, bufnr)
+    setKeyMap('n', "gD", lsp.buf.declaration,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "gd", lsp.buf.definition, {silent = true, buffer = bufnr})
+    setKeyMap('n', "K", lsp.buf.hover, {silent = true, buffer = bufnr})
+    setKeyMap('n', "\\", lsp.buf.signature_help,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wa", lsp.buf.add_workspace_folder,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wr", lsp.buf.remove_workspace_folder,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wl",
+              '<cmd>lua print(vim.inspect(lsp.buf.list_workspace_folders()))<CR>',
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>cf", lsp.buf.formatting,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>cr", lsp.buf.rename,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', '<leader>cd', lsp.buf.type_definition,
+              {silent = true, buffer = bufnr})
 end
 
 return attachableBindings

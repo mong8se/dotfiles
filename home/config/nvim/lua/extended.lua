@@ -105,7 +105,7 @@ local lsp_on_attach = function(client, bufnr)
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    require("keys").lsp(bufnr)
+    require("keys").lsp(vim.lsp, bufnr)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -157,10 +157,7 @@ require'nvim-treesitter.configs'.setup {
             swap_previous = {["[a"] = "@parameter.inner"}
         }
     },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
+    highlight = {enable = true, additional_vim_regex_highlighting = false},
     rainbow = {
         enable = true,
         -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
