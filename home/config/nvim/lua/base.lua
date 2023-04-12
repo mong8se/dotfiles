@@ -21,7 +21,7 @@ settings.wildmode = "longest:full,full"
 settings.wildignore:append("*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*")
 
 settings.showcmd = true
-settings.cmdheight = 0
+settings.cmdheight = 1
 settings.laststatus = 2
 
 settings.mouse = "nvi"

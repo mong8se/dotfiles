@@ -17,7 +17,8 @@ vim.keymap.set('n', "<leader>tm", require('mini.map').toggle)
 vim.keymap.set('n', "<leader>tn", mong8se.toggleNumberMode, {silent = true})
 vim.keymap.set('n', "<leader>tb", mong8se.toggleScrollBindAllWindows,
                {silent = true})
-vim.keymap.set('n', "<leader>tc", require("fzf-lua").colorschemes, {silent = true})
+vim.keymap.set('n', "<leader>tc", require("fzf-lua").colorschemes,
+               {silent = true})
 vim.keymap.set('n', "<leader>tt", "<cmd>TroubleToggle<cr>")
 vim.keymap.set('n', "<leader>tw",
                "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")
@@ -31,16 +32,20 @@ vim.keymap.set('n', "<leader>c/", require("fzf-lua").lsp_references,
                {silent = true})
 vim.keymap.set('n', "<leader>jc", require("fzf-lua").lsp_document_symbols,
                {silent = true})
-vim.keymap.set('n', "<leader>Jc",
-               require("fzf-lua").lsp_workspace_symbols, {silent = true})
+vim.keymap.set('n', "<leader>Jc", require("fzf-lua").lsp_workspace_symbols,
+               {silent = true})
 
 vim.keymap.set('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
-vim.keymap.set('n', "<leader>pf",  require('fzf-lua').files, {silent = true})
+vim.keymap.set('n', "<leader>pf", require('fzf-lua').files, {silent = true})
 
-vim.keymap.set('n', "<leader>gg", require("fzf-lua").git_status, {silent = true})
-vim.keymap.set('n', "<leader>gl", require("fzf-lua").git_commits, {silent = true})
-vim.keymap.set('n', "<leader>gc", require("fzf-lua").git_bcommits, {silent = true})
-vim.keymap.set('n', "<leader>gb", require("fzf-lua").git_branches, {silent = true})
+vim.keymap
+    .set('n', "<leader>gg", require("fzf-lua").git_status, {silent = true})
+vim.keymap.set('n', "<leader>gl", require("fzf-lua").git_commits,
+               {silent = true})
+vim.keymap.set('n', "<leader>gc", require("fzf-lua").git_bcommits,
+               {silent = true})
+vim.keymap.set('n', "<leader>gb", require("fzf-lua").git_branches,
+               {silent = true})
 vim.keymap.set('n', "<leader>gs", require("fzf-lua").git_stash, {silent = true})
 
 vim.keymap.set('n', "<leader>sr", ':CtrlSFOpen<CR>', {silent = true})
@@ -57,10 +62,8 @@ vim.keymap.set('n', "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
                {silent = true})
 vim.keymap.set('n', "<leader>xl", "<cmd>Trouble loclist<cr>", {silent = true})
 vim.keymap.set('n', "<leader>xq", "<cmd>Trouble quickfix<cr>", {silent = true})
-vim.keymap.set('n', "<leader>xf", function() vim.diagnostic.open_float() end,
-               {silent = true})
-vim.keymap.set('n', "<leader>xg", function() vim.diagnostic.setloclist() end,
-               {silent = true})
+vim.keymap.set('n', "<leader>xf", vim.diagnostic.open_float, {silent = true})
+vim.keymap.set('n', "<leader>xg", vim.diagnostic.setloclist, {silent = true})
 vim.keymap.set('n', "<leader> ", require('fzf-lua').buffers, {silent = true})
 vim.keymap.set('n', "<leader>/", '<Plug>CtrlSFPrompt',
                {noremap = false, silent = false})
@@ -106,15 +109,13 @@ vim.keymap.set('n', "-", [[:keeppatterns call search("^\\s*\\S", "be")<cr>]])
 
 vim.keymap.set('n', "]t", ':tabnext<CR>', {silent = true})
 vim.keymap.set('n', "]b", ':bn<CR>', {silent = true})
-vim.keymap.set('n', "]d", function() vim.diagnostic.goto_next() end,
-               {silent = true})
+vim.keymap.set('n', "]d", vim.diagnostic.goto_next, {silent = true})
 vim.keymap.set('n', "]<cr>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
                {silent = true})
 
 vim.keymap.set('n', "[t", ':tabprevious<CR>', {silent = true})
 vim.keymap.set('n', "[b", ':bp<CR>', {silent = true})
-vim.keymap.set('n', "[d", function() vim.diagnostic.goto_prev() end,
-               {silent = true})
+vim.keymap.set('n', "[d", vim.diagnostic.goto_prev, {silent = true})
 vim.keymap.set('n', "[<cr>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
                {silent = true})
 
@@ -172,29 +173,25 @@ attachableBindings.gitsigns = function(gs, bufnr)
 end
 
 attachableBindings.lsp = function(bufnr)
-    vim.keymap.set('n', "gD", '<cmd>lua vim.lsp.buf.declaration()<CR>',
+    vim.keymap.set('n', "gD", vim.lsp.buf.declaration,
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "gd", '<cmd>lua vim.lsp.buf.definition()<CR>',
+    vim.keymap.set('n', "gd", vim.lsp.buf.definition,
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "K", '<cmd>lua vim.lsp.buf.hover()<CR>',
+    vim.keymap.set('n', "K", vim.lsp.buf.hover, {silent = true, buffer = bufnr})
+    vim.keymap.set('n', "\\", vim.lsp.buf.signature_help,
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "\\", '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+    vim.keymap.set('n', "<leader>wa", vim.lsp.buf.add_workspace_folder,
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>wa",
-                   '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
-                   {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>wr",
-                   '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
+    vim.keymap.set('n', "<leader>wr", vim.lsp.buf.remove_workspace_folder,
                    {silent = true, buffer = bufnr})
     vim.keymap.set('n', "<leader>wl",
                    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>cf", '<cmd>lua vim.lsp.buf.formatting()<CR>',
+    vim.keymap.set('n', "<leader>cf", vim.lsp.buf.formatting,
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', "<leader>cr", function() vim.lsp.buf.rename() end,
+    vim.keymap.set('n', "<leader>cr", vim.lsp.buf.rename,
                    {silent = true, buffer = bufnr})
-    vim.keymap.set('n', '<leader>cd',
-                   function() vim.lsp.buf.type_definition() end,
+    vim.keymap.set('n', '<leader>cd', vim.lsp.buf.type_definition,
                    {silent = true, buffer = bufnr})
 end
 
