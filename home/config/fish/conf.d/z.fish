@@ -15,7 +15,7 @@ if type -q fre
     set -g __z_fzf_args --nth=-2.. -d / --tiebreak end,length,index --no-sort -i --exact --scheme=path
   end
 
-  function z
+  function __z_query
     set -f result (
       begin
         command fre --sorted
@@ -40,7 +40,7 @@ if type -q fre
   end
 else if type -q zoxide
   zoxide init fish --no-aliases | source
-  function z
+  function __z_query
     if count $argv > /dev/null
       __zoxide_z $argv
     else
@@ -66,9 +66,18 @@ else if type -q fasd
       command fasd -dlR | fzf
     end
   end
-  function z
+  function __z_query
     set -f result (__fasd_query $argv)
     test -z "$result"; and return
     test -d "$result"; and cd "$result"
   end
+end
+
+function z
+  set -g __z_last_arg $argv
+  __z_query $argv
+end
+
+function zz
+  __z_query $__z_last_arg
 end
