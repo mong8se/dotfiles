@@ -18,7 +18,7 @@ settings.ttimeoutlen = 10
 settings.wildmenu = true
 settings.wildmode = "longest:full,full"
 
-settings.wildignore:append("*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*")
+settings.wildignore:append("*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,node_modules/*")
 
 settings.showcmd = true
 settings.cmdheight = 1
