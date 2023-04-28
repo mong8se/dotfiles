@@ -15,6 +15,10 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
       set new_theme (__base16_schemes | string split " " | fzf)
     end
 
+    if test "$new_theme" = "random"
+      set new_theme (random choice (__base16_schemes))
+    end
+
     if test -n "$skip_env"
       set -e BASE16_THEME
     else
@@ -32,10 +36,13 @@ function autoGruv -d "Auto Gruv" -e fish_prompt
   if status --is-interactive && not set -q BASE16_THEME
     if isDarkMode
       set -g IS_DARK_MODE 1
-      base16 gruvbox-dark-soft false
+      # base16 gruvbox-dark-soft false
     else
       set -g IS_DARK_MODE 0
-      base16 gruvbox-light-soft false
+      # base16 gruvbox-light-soft false
     end
+
+    # for now always dark
+    base16 gruvbox-dark-soft false
   end
 end
