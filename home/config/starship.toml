@@ -23,3 +23,6 @@ show_notifications = true
 
 [fill]
 symbol = " "
+
+[env_var.BASE16_THEME]
+format="[16](inverted bold)[ $env_value ](inverted bright-black) "
