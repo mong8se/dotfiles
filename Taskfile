@@ -157,10 +157,10 @@ function task:init {
 }
 
 function task:upgrade {
+  com_ex cargo && task:lom:install || task:deno:install
+  task:sync
   task:os:upgrade
   task:submodule:update
-  task:sync
-  com_ex cargo && task:lom:install || task:deno:install
   task:vi:sync
 }
 
