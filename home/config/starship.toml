@@ -25,4 +25,4 @@ show_notifications = true
 symbol = " "
 
 [env_var.BASE16_THEME]
-format="[16](inverted bold)[ $env_value ](inverted bright-black) "
+format="\u246F$env_value "
