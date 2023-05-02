@@ -139,10 +139,12 @@ function task:implode {
 }
 
 function task:install {
+  : "Install symlinks to dotfiles/home"
   $LINKO install
 }
 
 function task:sync {
+  : "Install and cleanup symlinks to dotfiles/home"
   task:install
   task:autocleanup
 }
