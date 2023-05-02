@@ -171,14 +171,17 @@ function task:default {
 }
 
 function task:help {
+  : "Prints this help"
+
   echo "$0 <task> <args>"
+  echo
   echo "Tasks:"
-  for task in $( compgen -A function | grep "task:" | grep -v 'help\|default' )
+  for task in $( compgen -A function | grep "task:" | grep -v 'default' )
   do
-    task:describe $task
+    task:describe $(strip_task $task)
   done
   echo
-  task:explain task:default
+  task:explain default
 }
 
 COLON_COMMENT_PATTERN=" *: *\(['"'"'"]\)\(.*\)\1;"
@@ -186,16 +189,16 @@ COLON_COMMENT_PATTERN=" *: *\(['"'"'"]\)\(.*\)\1;"
 function task:describe {
   : "Prints description of task"
 
-  printf "    %-16s | " $(strip_task $1)
-  type "$1" | sed -n -e"s/${COLON_COMMENT_PATTERN}/\2/p" | tr -d "\n"
+  printf "    %-16s | " $1
+  type "task:$1" | sed -n -e"s/${COLON_COMMENT_PATTERN}/\2/p" | tr -d "\n"
   echo
 }
 
 function task:explain {
   : "Prints definition of task"
 
-  echo "$(strip_task $1) => "
-  type "$1" | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;"
+  echo "$1 => "
+  type "task:$1" | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;"
   echo
 }
 
