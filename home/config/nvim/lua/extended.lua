@@ -2,11 +2,39 @@ local g = vim.g
 
 vim.notify = require("notify")
 
-require('leap').add_default_mappings()
-require('mini.surround').setup()
+require('mini.cursorword').setup()
 require('mini.comment').setup()
+require('mini.pairs').setup()
+require('mini.surround').setup()
+require('mini.starter').setup()
+require('mini.bracketed').setup()
 
-MiniMap = require('mini.map')
+local MiniJump2d = require('mini.jump2d')
+MiniJump2d.setup({
+    -- spotter = MiniJump2d.builtin_opts.line_start.spotter,
+    -- hooks = {
+    --     after_jump = function()
+    --         vim.schedule(function()
+    --             MiniJump2d.start({
+    --                 spotter = MiniJump2d.builtin_opts.default.spotter,
+    --                 allowed_lines = {
+    --                     blank = false,
+    --                     cursor_at = true,
+    --                     cursor_before = false,
+    --                     cursor_after = false
+    --                 },
+    --                 allowed_windows = {not_current = false},
+    --                 hooks = {after_jump = nil}
+    --             })
+    --         end)
+    --     end
+    -- },
+    view = {
+        n_steps_ahead = 1
+    }
+})
+
+local MiniMap = require('mini.map')
 MiniMap.setup({
     integrations = {MiniMap.gen_integration.gitsigns()},
     symbols = {
@@ -98,8 +126,6 @@ cmp.setup.cmdline(':', {
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local lsp_on_attach = function(client, bufnr)
-    require'illuminate'.on_attach(client)
-
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -190,15 +216,6 @@ require("indent_blankline").setup {
     show_current_context = true,
     buftype_exclude = {"terminal"}
 }
-
--- Pair expansion is dot-repeatable by default:
-g.pear_tree_repeatable_expand = 0
-
--- Smart pairs are disabled by default:
-g.pear_tree_smart_openers = 1
-g.pear_tree_smart_closers = 1
-g.pear_tree_smart_backspace = 1
--- g.pear_tree_ft_disabled = {'TelescopePrompt'}
 
 -- CtrlSF
 g.ctrlsf_default_root = 'project' -- search relative to project root

@@ -100,16 +100,10 @@ setKeyMap('n', "<S-Right>", "v<Right>")
 setKeyMap('n', "+", "$e^")
 setKeyMap('n', "-", [[:keeppatterns call search("^\\s*\\S", "be")<cr>]])
 
-setKeyMap('n', "]t", ':tabnext<CR>', {silent = true})
-setKeyMap('n', "]b", ':bn<CR>', {silent = true})
-setKeyMap('n', "]d", vim.diagnostic.goto_next, {silent = true})
-setKeyMap('n', "]<cr>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
+setKeyMap('n', "go", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>",
           {silent = true})
 
-setKeyMap('n', "[t", ':tabprevious<CR>', {silent = true})
-setKeyMap('n', "[b", ':bp<CR>', {silent = true})
-setKeyMap('n', "[d", vim.diagnostic.goto_prev, {silent = true})
-setKeyMap('n', "[<cr>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
+setKeyMap('n', "gO", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[",
           {silent = true})
 
 setKeyMap('v', "<C-j>", "<ESC>:m .+1<CR>==gi")
@@ -129,16 +123,10 @@ setKeyMap('v', ">", ">gv")
 setKeyMap('v', '/', mong8se.visualSearch)
 
 attachableBindings.gitsigns = function(gs, bufnr)
-    setKeyMap('n', "]c", function()
-        if vim.wo.diff then return ']c' end
-        vim.schedule(function() gs.next_hunk() end)
-        return '<Ignore>'
-    end, {expr = true, buffer = bufnr})
-    setKeyMap('n', "[c", function()
-        if vim.wo.diff then return '[c' end
-        vim.schedule(function() gs.prev_hunk() end);
-        return '<Ignore>';
-    end, {expr = true, buffer = bufnr})
+    -- h for hunk
+    setKeyMap('n', "]h", gs.next_hunk, {buffer = bufnr})
+    setKeyMap('n', "[h", gs.prev_hunk, {buffer = bufnr})
+
     setKeyMap('n', "<leader>hs", ':Gitsigns stage_hunk<CR>', {buffer = bufnr})
     setKeyMap('n', "<leader>hr", ':Gitsigns reset_hunk<CR>', {buffer = bufnr})
     setKeyMap('n', "<leader>hS", gs.stage_buffer, {buffer = bufnr})

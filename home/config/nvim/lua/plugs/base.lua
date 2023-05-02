@@ -3,36 +3,28 @@ return {
     -- '~/Projects/actually.nvim',
     'mong8se/buffish.nvim',
     -- '~/Projects/buffish.nvim',
-    -- 'nvim-lua/popup.nvim',
-    -- 'nvim-lua/plenary.nvim',
-    -- 'nvim-telescope/telescope.nvim',
-    -- {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+
     'ibhagwan/fzf-lua',
     'stevearc/oil.nvim',
     'stevearc/dressing.nvim',
     'rcarriga/nvim-notify',
     'RRethy/nvim-base16',
     'caglartoklu/borlandp.vim',
-    --   'eddyekofo94/gruvbox-flat.nvim',
-    -- 'ellisonleao/gruvbox.nvim',
-    -- { 'luisiacc/gruvbox-baby', branch='main'},
     'sainnhe/gruvbox-material',
     'tpope/vim-rsi',
     'tpope/vim-repeat',
 
     'hoob3rt/lualine.nvim',
     'kyazdani42/nvim-web-devicons',
-    -- Recommended (for coloured icons)
     'lukas-reineke/indent-blankline.nvim',
     'folke/trouble.nvim',
 
     'roman/golden-ratio', -- C-W \
     'unblevable/quick-scope', -- f F t T
-    'ggandor/leap.nvim',
+
     'danilamihailov/beacon.nvim',
     'echasnovski/mini.nvim',
-    --   'machakann/vim-sandwich', -- sa sd sr
-    'tmsvg/pear-tree',
+
     'airblade/vim-rooter',
     'tpope/vim-apathy', -- ]f
     'lewis6991/gitsigns.nvim',
@@ -44,7 +36,7 @@ return {
 
     'tpope/vim-abolish',
     'dyng/ctrlsf.vim', -- leader /
-    'RRethy/vim-illuminate',
+
     'neovim/nvim-lspconfig',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
