@@ -129,9 +129,9 @@ if status --is-interactive
     end
   end
  
-   set -g fish_cursor_default block
-   set -g fish_cursor_insert underscore
-   set -g fish_cursor_visual line
+   set -g fish_cursor_default block blink
+   set -g fish_cursor_insert underscore blink
+   set -g fish_cursor_visual line blink
 
   set -x Z_FALLBACKS ~/Projects ~/Work
 end
