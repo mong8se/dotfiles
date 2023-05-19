@@ -128,6 +128,10 @@ if status --is-interactive
       curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
     end
   end
+ 
+   set -g fish_cursor_default block
+   set -g fish_cursor_insert underscore
+   set -g fish_cursor_visual line
 
   set -x Z_FALLBACKS ~/Projects ~/Work
 end

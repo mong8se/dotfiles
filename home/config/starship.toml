@@ -26,3 +26,6 @@ symbol = " "
 
 [env_var.BASE16_THEME]
 format="\u246F$env_value "
+
+[vagrant]
+disabled = true

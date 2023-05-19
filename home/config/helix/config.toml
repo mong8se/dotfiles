@@ -1,6 +1,16 @@
 theme = "onedark"
 
+[editor]
+color-modes = true
+cursorline = true
+auto-save = true
+
 [editor.cursor-shape]
-insert = "bar"
+insert = "underline"
 normal = "block"
-select = "underline"
+select = "bar"
+
+[editor.indent-guides]
+render = true
+character = "▏" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
