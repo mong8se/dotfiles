@@ -197,7 +197,7 @@ function task:describe {
 function task:explain {
   : "Prints definition of task"
 
-  echo "$1 => "
+  echo -n "$1 => "
   type "task:$1" | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;"
   echo
 }
