@@ -12,13 +12,14 @@ if env.BASE16_THEME then
 else
     if env.IS_DARK_MODE == "1" then
         settings.background = "dark"
+        global.gruvbox_material_background = 'soft'
+        -- global.gruvbox_material_foreground = 'mix'
+        cmd("colorscheme gruvbox-material")
     else
         settings.background = "light"
+        cmd("colorscheme base16-solarized-light")
     end
 
-    global.gruvbox_material_background = 'soft'
-    -- global.gruvbox_material_foreground = 'mix'
-    cmd("colorscheme gruvbox-material")
 end
 
 cmd("highlight Comment cterm=italic")
