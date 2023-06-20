@@ -1,4 +1,4 @@
-format = "$fill $all| [ $directory](inverted)$line_break$character"
+format = "$fill $all$directory$line_break$character"
 
 [character]
 success_symbol = "[○](bold blue)"
@@ -13,6 +13,7 @@ display_private = true
 
 [directory]
 style = "inverted"
+format = "\ue0b6[$path ]($style)[$read_only]($read_only_style)"
 
 [git_branch]
 format = "[$symbol$branch]($style) "
