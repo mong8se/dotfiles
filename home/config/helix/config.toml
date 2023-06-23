@@ -6,9 +6,9 @@ cursorline = true
 auto-save = true
 
 [editor.cursor-shape]
-insert = "underline"
+insert = "bar"
 normal = "block"
-select = "bar"
+select = "underline"
 
 [editor.indent-guides]
 render = true
