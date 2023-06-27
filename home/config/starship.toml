@@ -1,9 +1,10 @@
-format = "$fill $all$directory$line_break$character"
+format = "$fill$all$line_break$character"
+right_format = "$directory"
 
 [character]
-success_symbol = "[○](bold blue)"
-error_symbol = "[◉](bold red)"
-vicmd_symbol = "[◌](blue)"
+success_symbol = "[\uf054](bold blue)"
+error_symbol = "[\uf054](bold red)"
+vicmd_symbol = "[\uea65](green)"
 
 [git_status]
 disabled = true
@@ -13,14 +14,14 @@ display_private = true
 
 [directory]
 style = "inverted"
+read_only_style = "inverted"
 format = "\ue0b6[$path ]($style)[$read_only]($read_only_style)"
 
 [git_branch]
 format = "[$symbol$branch]($style) "
 
 [cmd_duration]
-format = "⏱️[$duration]($style) "
-show_notifications = true
+format = "[\uf520 $duration]($style) "
 
 [fill]
 symbol = " "
