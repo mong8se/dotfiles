@@ -118,8 +118,12 @@ if status --is-interactive
   end
 
   if type -q starship
+    function starship_transient_prompt_func
+      starship module character
+    end
     starship init fish | source
   end
+  enable_transience
 
   if ! type -q fisher
     read -n 1 -p 'set_color green; echo -n "Install fisher? (y/N) " ; set_color normal' answer
