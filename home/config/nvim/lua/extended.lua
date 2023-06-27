@@ -243,5 +243,3 @@ require('gitsigns').setup {
         require("keys").gitsigns(gs, bufnr)
     end
 }
-
-require'registers'.setup({window = {border = "rounded"}})

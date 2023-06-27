@@ -6,36 +6,34 @@ local fzf = require("fzf-lua")
 
 local attachableBindings = {}
 
-setKeyMap('n', "<leader>bb", ":Buffish<CR>", {silent = true})
-setKeyMap('n', "<leader>bn", ":bn<CR>")
-setKeyMap('n', "<leader>bp", ":bp<CR>")
+setKeyMap('n', "<leader>bb", ":Buffish<CR>",
+          {silent = true, desc = "Buffer switch"})
 setKeyMap('n', "<leader>bd", ":bufdo ", {silent = false})
 
 setKeyMap('n', "<leader>f-",
           function() vim.cmd("edit " .. mong8se.directoryFromContext()) end,
           {silent = true})
 
-
-setKeyMap('n', "<leader>tg", '<Plug>(golden_ratio_toggle)', {noremap = false})
-setKeyMap('n', "<leader>tm", require('mini.map').toggle)
-setKeyMap('n', "<leader>tn", mong8se.toggleNumberMode, {silent = true})
-setKeyMap('n', "<leader>tb", mong8se.toggleScrollBindAllWindows, {silent = true})
-setKeyMap('n', "<leader>tc", fzf.colorschemes, {silent = true})
-setKeyMap('n', "<leader>tt", "<cmd>TroubleToggle<cr>")
-setKeyMap('n', "<leader>tw", "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>")
-setKeyMap('n', "<leader>td", "<cmd>TroubleToggle lsp_document_diagnostics<cr>")
-setKeyMap('n', "<leader>tq", "<cmd>TroubleToggle quickfix<cr>")
-setKeyMap('n', "<leader>tl", "<cmd>TroubleToggle loclist<cr>")
-setKeyMap('n', "<leader>ts", "<cmd>setlocal spell!<CR>", {silent = true})
+setKeyMap('n', "<leader>tg", '<Plug>(golden_ratio_toggle)',
+          {noremap = false, desc = "Toggle Golden Ratio"})
+setKeyMap('n', "<leader>tm", require('mini.map').toggle,
+          {desc = "Toggle Mini Map"})
+setKeyMap('n', "<leader>tn", mong8se.toggleNumberMode,
+          {silent = true, desc = "Toggle numbers"})
+setKeyMap('n', "<leader>tb", mong8se.toggleScrollBindAllWindows,
+          {silent = true, desc = "Toggle Scroll Bind"})
+setKeyMap('n', "<leader>tc", fzf.colorschemes,
+          {silent = true, desc = "Toggle colorscheme"})
+setKeyMap('n', "<leader>ts", "<cmd>setlocal spell!<CR>",
+          {silent = true, desc = "Toggle spell check"})
 
 setKeyMap('n', "<leader>c/", fzf.lsp_references, {silent = true})
-setKeyMap('n', "<leader>jc", fzf.lsp_document_symbols,
-          {silent = true})
-setKeyMap('n', "<leader>Jc", fzf.lsp_workspace_symbols,
-          {silent = true})
+setKeyMap('n', "<leader>jc", fzf.lsp_document_symbols, {silent = true})
+setKeyMap('n', "<leader>Jc", fzf.lsp_workspace_symbols, {silent = true})
 
-setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles, {silent = true})
-setKeyMap('n', "<leader>pf", fzf.files, {silent = true})
+setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
+          {silent = true, desc = "Find project files"})
+setKeyMap('n', "<leader>pf", fzf.files, {silent = true, desc = "Find files"})
 
 setKeyMap('n', "<leader>gg", fzf.git_status, {silent = true})
 setKeyMap('n', "<leader>gl", fzf.git_commits, {silent = true})
@@ -84,7 +82,7 @@ setKeyMap('n', "U", "<C-r>")
 setKeyMap('n', "<f1>", '<Nop>')
 setKeyMap('n', "Y", 'y$')
 
--- Instead of look up in man, let"s split, opposite of J for join
+-- Instead of look up in man, let's split, opposite of J for join
 setKeyMap('n', "K", "i<CR><Esc>")
 setKeyMap('n', "<C-L>",
           ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
@@ -124,35 +122,35 @@ setKeyMap('v', '/', mong8se.visualSearch)
 
 attachableBindings.gitsigns = function(gs, bufnr)
     -- h for hunk
-    setKeyMap('n', "]h", gs.next_hunk, {buffer = bufnr})
-    setKeyMap('n', "[h", gs.prev_hunk, {buffer = bufnr})
+    setKeyMap('n', ']h', gs.next_hunk, {desc = "Hunk forward", buffer = bufnr })
+    setKeyMap('n', '[h', gs.prev_hunk, {desc = "Hunk last", buffer = bufnr })
 
-    setKeyMap('n', "<leader>hs", ':Gitsigns stage_hunk<CR>', {buffer = bufnr})
-    setKeyMap('n', "<leader>hr", ':Gitsigns reset_hunk<CR>', {buffer = bufnr})
-    setKeyMap('n', "<leader>hS", gs.stage_buffer, {buffer = bufnr})
-    setKeyMap('n', "<leader>hu", gs.undo_stage_hunk, {buffer = bufnr})
-    setKeyMap('n', "<leader>hR", gs.reset_buffer, {buffer = bufnr})
-    setKeyMap('n', "<leader>hp", gs.preview_hunk, {buffer = bufnr})
-    setKeyMap('n', "<leader>hb", function() gs.blame_line {full = true} end,
-              {buffer = bufnr})
-    setKeyMap('n', "<leader>tb", gs.toggle_current_line_blame, {buffer = bufnr})
-    setKeyMap('n', "<leader>hd", gs.diffthis, {buffer = bufnr})
-    setKeyMap('n', "<leader>hD", function() gs.diffthis('~') end,
-              {buffer = bufnr})
-    setKeyMap('n', "<leader>td", gs.toggle_deleted, {buffer = bufnr})
-    setKeyMap('x', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
-    setKeyMap('v', "<leader>hs", ':Gitsigns stage_hunk<CR>', {buffer = bufnr})
-    setKeyMap('v', "<leader>hr", ':Gitsigns reset_hunk<CR>', {buffer = bufnr})
-    setKeyMap('o', "ih", ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
+    -- Actions
+    setKeyMap('n', '<leader>hs', gs.stage_hunk, { buffer = bufnr })
+    setKeyMap('n', '<leader>hr', gs.reset_hunk, { buffer = bufnr })
+    setKeyMap('v', '<leader>hs',
+              function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, { buffer = bufnr })
+    setKeyMap('v', '<leader>hr',
+              function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, { buffer = bufnr })
+    setKeyMap('n', '<leader>hS', gs.stage_buffer, { buffer = bufnr })
+    setKeyMap('n', '<leader>hu', gs.undo_stage_hunk, { buffer = bufnr })
+    setKeyMap('n', '<leader>hR', gs.reset_buffer, { buffer = bufnr })
+    setKeyMap('n', '<leader>hp', gs.preview_hunk, { buffer = bufnr })
+    setKeyMap('n', '<leader>hb', function() gs.blame_line {full = true} end, { buffer = bufnr })
+    setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame, { buffer = bufnr })
+    setKeyMap('n', '<leader>hd', gs.diffthis, { buffer = bufnr })
+    setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end, { buffer = bufnr })
+    setKeyMap('n', '<leader>tgd', gs.toggle_deleted, { buffer = bufnr })
+
+    -- Text object
+    setKeyMap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { buffer = bufnr })
 end
 
 attachableBindings.lsp = function(lsp, bufnr)
-    setKeyMap('n', "gD", lsp.buf.declaration,
-              {silent = true, buffer = bufnr})
+    setKeyMap('n', "gD", lsp.buf.declaration, {silent = true, buffer = bufnr})
     setKeyMap('n', "gd", lsp.buf.definition, {silent = true, buffer = bufnr})
     setKeyMap('n', "K", lsp.buf.hover, {silent = true, buffer = bufnr})
-    setKeyMap('n', "\\", lsp.buf.signature_help,
-              {silent = true, buffer = bufnr})
+    setKeyMap('n', "\\", lsp.buf.signature_help, {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wa", lsp.buf.add_workspace_folder,
               {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wr", lsp.buf.remove_workspace_folder,
@@ -162,8 +160,7 @@ attachableBindings.lsp = function(lsp, bufnr)
               {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>cf", lsp.buf.formatting,
               {silent = true, buffer = bufnr})
-    setKeyMap('n', "<leader>cr", lsp.buf.rename,
-              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>cr", lsp.buf.rename, {silent = true, buffer = bufnr})
     setKeyMap('n', '<leader>cd', lsp.buf.type_definition,
               {silent = true, buffer = bufnr})
 end
