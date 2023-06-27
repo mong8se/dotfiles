@@ -8,31 +8,7 @@ require('mini.pairs').setup()
 require('mini.surround').setup()
 require('mini.starter').setup()
 require('mini.bracketed').setup()
-
-local MiniJump2d = require('mini.jump2d')
-MiniJump2d.setup({
-    -- spotter = MiniJump2d.builtin_opts.line_start.spotter,
-    -- hooks = {
-    --     after_jump = function()
-    --         vim.schedule(function()
-    --             MiniJump2d.start({
-    --                 spotter = MiniJump2d.builtin_opts.default.spotter,
-    --                 allowed_lines = {
-    --                     blank = false,
-    --                     cursor_at = true,
-    --                     cursor_before = false,
-    --                     cursor_after = false
-    --                 },
-    --                 allowed_windows = {not_current = false},
-    --                 hooks = {after_jump = nil}
-    --             })
-    --         end)
-    --     end
-    -- },
-    view = {
-        n_steps_ahead = 1
-    }
-})
+require('mini.jump2d').setup()
 
 local MiniMap = require('mini.map')
 MiniMap.setup({
