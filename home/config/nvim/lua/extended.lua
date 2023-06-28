@@ -198,17 +198,8 @@ g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') == 1 and
                       '/usr/local/bin/rg' or '/usr/bin/rg'
 
--- search
-
 -- Golden Ratio
 g.golden_ratio_autocommand = 0
-
--- compare to <C-W>=
-
--- vim-sneak
-g['sneak#streak'] = 1
-
-g.indentLine_char = "⡇"
 
 require("oil").setup()
 
