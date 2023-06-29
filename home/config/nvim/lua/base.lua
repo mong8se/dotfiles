@@ -68,7 +68,7 @@ settings.virtualedit = "block,insert"
 
 settings.list = true
 settings.listchars = {
-    tab = "▭▱",
+    tab = "┏╍",
     trail = "▢",
     precedes = "◁",
     extends = "▷"
