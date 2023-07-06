@@ -201,8 +201,6 @@ g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') == 1 and
 -- Golden Ratio
 g.golden_ratio_autocommand = 0
 
-require("oil").setup()
-
 require('gitsigns').setup {
     on_attach = function(bufnr)
         local gs = package.loaded.gitsigns

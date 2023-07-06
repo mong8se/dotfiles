@@ -1,11 +1,10 @@
 return {
     'mong8se/actually.nvim',
-    -- '~/Projects/actually.nvim',
+    -- { dir = '~/Projects/actually.nvim'},
     'mong8se/buffish.nvim',
-    -- '~/Projects/buffish.nvim',
+    -- { dir = '~/Projects/buffish.nvim' },
 
     'ibhagwan/fzf-lua',
-    'stevearc/oil.nvim',
     'stevearc/dressing.nvim',
     'rcarriga/nvim-notify',
     'RRethy/nvim-base16',
