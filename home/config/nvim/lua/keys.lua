@@ -6,7 +6,7 @@ local fzf = require("fzf-lua")
 
 local attachableBindings = {}
 
-setKeyMap('n', "<leader> ", fzf.buffers, {silent = true, desc = "Switch buffer"})
+setKeyMap('n', "<leader> ", require("buffish").open, {silent = true, desc = "Switch buffer"})
 
 setKeyMap('n', "<leader>/", '<Plug>CtrlSFPrompt',
           {noremap = false, silent = false, desc = "Search"})
@@ -63,7 +63,7 @@ setKeyMap('v', ">", ">gv")
 setKeyMap('v', '/', mong8se.visualSearch)
 
 -- buffer
-setKeyMap('n', "<leader>bb", ":Buffish<CR>",
+setKeyMap('n', "<leader>bb", fzf.buffers,
           {silent = true, desc = "Buffer switch"})
 setKeyMap('n', "<leader>bd", ":bufdo ", {silent = false})
 
