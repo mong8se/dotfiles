@@ -85,8 +85,12 @@ setKeyMap('n', "<leader>tb", mong8se.toggleScrollBindAllWindows,
           {silent = true, desc = "Toggle scroll bind"})
 setKeyMap('n', "<leader>tc", fzf.colorschemes,
           {silent = true, desc = "Toggle colorscheme"})
-setKeyMap('n', "<leader>ts", "<cmd>setlocal spell!<CR>",
+setKeyMap('n', "<leader>ts", "<cmd>setlocal spell!<CR><cmd>set spell?<CR>",
           {silent = true, desc = "Toggle spell check"})
+setKeyMap('n', "<leader>tw", "<cmd>setlocal wrap!<CR><cmd>set wrap?<CR>",
+          {silent = true, desc = "Toggle line wrap"})
+setKeyMap('n', "<leader>tp", "<cmd>setlocal paste!<CR><cmd>set paste?<CR>",
+          {silent = true, desc = "Toggle paste"})
 
 -- code
 setKeyMap('n', "<leader>c*", fzf.lsp_references, {silent = true})
