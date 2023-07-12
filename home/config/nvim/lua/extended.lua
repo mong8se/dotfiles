@@ -10,6 +10,8 @@ require('mini.starter').setup()
 require('mini.bracketed').setup()
 require('mini.jump2d').setup()
 
+local attachableBindings = require("keys")
+
 local MiniMap = require('mini.map')
 MiniMap.setup({
     integrations = {MiniMap.gen_integration.gitsigns()},
@@ -107,7 +109,7 @@ local lsp_on_attach = function(client, bufnr)
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    require("keys").lsp(vim.lsp, bufnr)
+    attachableBindings.lsp(vim.lsp, bufnr)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -213,10 +215,7 @@ local clipboard_actions = require 'lir.clipboard.actions'
 
 require'lir'.setup {
     show_hidden_files = false,
-    devicons = {
-        enable = true,
-        highlight_dirname = true
-    },
+    devicons = {enable = true, highlight_dirname = true},
     mappings = {
         ['<CR>'] = actions.edit,
         ['<C-s>'] = actions.split,
@@ -257,6 +256,6 @@ require('gitsigns').setup {
     on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
-        require("keys").gitsigns(gs, bufnr)
+        attachableBindings.gitsigns(gs, bufnr)
     end
 }

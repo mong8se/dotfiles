@@ -6,10 +6,11 @@ local fzf = require("fzf-lua")
 
 local attachableBindings = {}
 
-setKeyMap('n', "<leader> ", require("buffish").open, {silent = true, desc = "Switch buffer"})
+setKeyMap('n', "<leader> ", require("buffish").open,
+          {silent = true, desc = "Switch buffer"})
 
 setKeyMap('n', "<leader>/", '<Plug>CtrlSFPrompt',
-    {noremap = false, silent = false, desc = "Search"})
+          {noremap = false, silent = false, desc = "Search"})
 setKeyMap('n', "<leader>*", '<Plug>CtrlSFCwordExec', {desc = "Search word"})
 setKeyMap('n', "<leader>:", fzf.commands, {desc = "Fuzzy command"})
 setKeyMap('n', "<leader>'", fzf.marks, {desc = "Fuzzy marks"})
@@ -110,11 +111,14 @@ setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
 setKeyMap('n', "<leader>pf", fzf.files, {silent = true, desc = "Find files"})
 
 -- git
-setKeyMap('n', "<leader>gg", fzf.git_status, {silent = true, desc="Git status"})
-setKeyMap('n', "<leader>gl", fzf.git_commits, {silent = true, desc="Git log"})
-setKeyMap('n', "<leader>gc", fzf.git_bcommits, {silent = true, desc="Git log for buffer"})
-setKeyMap('n', "<leader>gb", fzf.git_branches, {silent = true, desc="Git branches"})
-setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc="Git stash"})
+setKeyMap('n', "<leader>gg", fzf.git_status,
+          {silent = true, desc = "Git status"})
+setKeyMap('n', "<leader>gl", fzf.git_commits, {silent = true, desc = "Git log"})
+setKeyMap('n', "<leader>gc", fzf.git_bcommits,
+          {silent = true, desc = "Git log for buffer"})
+setKeyMap('n', "<leader>gb", fzf.git_branches,
+          {silent = true, desc = "Git branches"})
+setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc = "Git stash"})
 
 -- search
 setKeyMap('n', "<leader>sr", ':CtrlSFOpen<CR>',
