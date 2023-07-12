@@ -9,14 +9,14 @@ local attachableBindings = {}
 setKeyMap('n', "<leader> ", require("buffish").open, {silent = true, desc = "Switch buffer"})
 
 setKeyMap('n', "<leader>/", '<Plug>CtrlSFPrompt',
-          {noremap = false, silent = false, desc = "Search"})
+    {noremap = false, silent = false, desc = "Search"})
 setKeyMap('n', "<leader>*", '<Plug>CtrlSFCwordExec', {desc = "Search word"})
 setKeyMap('n', "<leader>:", fzf.commands, {desc = "Fuzzy command"})
 setKeyMap('n', "<leader>'", fzf.marks, {desc = "Fuzzy marks"})
 setKeyMap('n', '<leader>"', fzf.registers, {desc = "Fuzzy registers"})
 
-setKeyMap('n', "g\\", [['`[' . strpart(getregtype(), 0, 1) . '`]']],
-          {expr = true, desc = "Select last pasted"})
+setKeyMap('n', "gV", [['`[' . strpart(getregtype(), 0, 1) . '`]']],
+          {expr = true, desc = "Switch to VISUAL selecting last pasted text"})
 
 local clipboard = vim.fn.has('macunix') and "+" or "*"
 setKeyMap('n', "gp", '"' .. clipboard .. ']p', {desc = "Paste from system"})
@@ -65,7 +65,12 @@ setKeyMap('v', '/', mong8se.visualSearch)
 -- buffer
 setKeyMap('n', "<leader>bb", fzf.buffers,
           {silent = true, desc = "Buffer switch"})
-setKeyMap('n', "<leader>bd", ":bufdo ", {silent = false})
+-- setKeyMap('n', "<leader>bd", ":bufdo ", {silent = false})
+setKeyMap('n', "<leader>bd", function()
+    local lastBuf = vim.api.nvim_win_get_buf(0)
+    vim.cmd("edit " .. mong8se.directoryFromContext())
+    vim.schedule(function() vim.api.nvim_buf_delete(lastBuf, {}) end)
+end, {silent = true, desc = "Delete current buffer"})
 
 -- file
 setKeyMap('n', "<leader>f-",
@@ -105,11 +110,11 @@ setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
 setKeyMap('n', "<leader>pf", fzf.files, {silent = true, desc = "Find files"})
 
 -- git
-setKeyMap('n', "<leader>gg", fzf.git_status, {silent = true})
-setKeyMap('n', "<leader>gl", fzf.git_commits, {silent = true})
-setKeyMap('n', "<leader>gc", fzf.git_bcommits, {silent = true})
-setKeyMap('n', "<leader>gb", fzf.git_branches, {silent = true})
-setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true})
+setKeyMap('n', "<leader>gg", fzf.git_status, {silent = true, desc="Git status"})
+setKeyMap('n', "<leader>gl", fzf.git_commits, {silent = true, desc="Git log"})
+setKeyMap('n', "<leader>gc", fzf.git_bcommits, {silent = true, desc="Git log for buffer"})
+setKeyMap('n', "<leader>gb", fzf.git_branches, {silent = true, desc="Git branches"})
+setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc="Git stash"})
 
 -- search
 setKeyMap('n', "<leader>sr", ':CtrlSFOpen<CR>',
