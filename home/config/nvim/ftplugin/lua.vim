@@ -1,2 +1,2 @@
-setlocal shiftwidth=4
-setlocal formatprg=lua-format
+setlocal shiftwidth=2
+setlocal formatprg=lua-format\ --indent-width=2
