@@ -4,7 +4,6 @@
 
 set -e
 
-VI_BIN=$(command -v nvim || command -v vim || command -v vi | tr -d "\n")
 
 ELEVATOR=$(command -v doas || command -v sudo | tr -d "\n" )
 
@@ -43,22 +42,23 @@ function task:submodule:update {
   git submodule update --remote
 }
 
+VI_BIN="$(command -v nvim || command -v vim || command -v vi | tr -d "\n") -u home/config/nvim/lua/lazy-init.lua --headless -es"
 function task:vi:install {
   : 'Install Lazy Plugins for NEOVIM'
   echo -n "Installing vi plugs ..."
-  ${VI_BIN} -u home/config/nvim/lua/lazy-init.lua -V1 --headless -es +"Lazy install"
+  ${VI_BIN} +"Lazy install"
   echo " done."
 }
 
 function task:vi:sync {
   echo -n "Updating vi plugs ..."
-  ${VI_BIN} -u home/config/nvim/lua/lazy-init.lua -V1 --headless -es +"Lazy sync"
+  ${VI_BIN} +"Lazy sync"
   echo " done."
 }
 
 function task:vi:cleanup {
   echo -n "Cleaning up vi plugs ..."
-  ${VI_BIN} -u home/config/nvim/lua/lazy-init.lua -V1 --headless -es +"Lazy clean"
+  ${VI_BIN} +"Lazy clean"
   echo " done."
 }
 
