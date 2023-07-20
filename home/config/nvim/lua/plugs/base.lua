@@ -17,8 +17,6 @@ return {
     'kyazdani42/nvim-web-devicons',
     'lukas-reineke/indent-blankline.nvim',
     'folke/trouble.nvim',
-    { 'tamago324/lir.nvim', dependencies = {
-     'nvim-lua/plenary.nvim' } },
 
     'roman/golden-ratio', -- C-W \
     'unblevable/quick-scope', -- f F t T
