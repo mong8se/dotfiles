@@ -24,7 +24,7 @@ com_ex bc || nope "bc must be installed!"
 com_ex cargo || com_ex deno || nope "Either rust or deno must be installed!"
 
 function task:hostname {
-  : "The answer's here"
+  : "Print hash of hostname"
 
   echo $HOST42
   echo
@@ -44,25 +44,32 @@ function task:submodule:update {
 
 VI_BIN="$(command -v nvim || command -v vim || command -v vi | tr -d "\n") -u home/config/nvim/lua/lazy-init.lua --headless -es"
 function task:vi:install {
-  : 'Install Lazy Plugins for NEOVIM'
+  : 'Install Lazy plugins for neovim'
+
   echo -n "Installing vi plugs ..."
   ${VI_BIN} +"Lazy install"
   echo " done."
 }
 
 function task:vi:sync {
+  : 'Sync Lazy plugins for neovim'
+
   echo -n "Updating vi plugs ..."
   ${VI_BIN} +"Lazy sync"
   echo " done."
 }
 
 function task:vi:cleanup {
+  : 'Clean up Lazy plugins for neovim'
+
   echo -n "Cleaning up vi plugs ..."
   ${VI_BIN} +"Lazy clean"
   echo " done."
 }
 
 function task:deno:install {
+  : "Install Deno"
+
   export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
   export ASDF_DATA_DIR="$ASDF_DIR"
   . $ASDF_DIR/asdf.sh
@@ -71,6 +78,8 @@ function task:deno:install {
 }
 
 function task:deno:upgrade {
+  : "Upgrade Deno"
+
   export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
   export ASDF_DATA_DIR="$ASDF_DIR"
   . $ASDF_DIR/asdf.sh
@@ -79,14 +88,20 @@ function task:deno:upgrade {
 }
 
 function task:homebrew:install {
+  : "Install homebrew"
+
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
 function task:homebrew:bundle {
+  : "Install homebrew bundle"
+
   brew bundle --no-lock --file $REPO_LOCATION/Resources/Brewfile
 }
 
 function task:os:upgrade {
+  : "Upgrade OS"
+
   case "$(uname -s)" in
     Linux)
       source /etc/os-release
@@ -127,24 +142,31 @@ function task:lom:install {
 com_ex link_o_matic && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
 
 function task:cleanup {
+  : "Clean up stale symlinks that point to .dotfiles/"
+
   $LINKO cleanup
 }
 
 function task:autocleanup {
+  : "Clean up stale symlinks that point to .dotfiles/ without prompting"
+
   $LINKO autocleanup
 }
 
 function task:implode {
+  : "Remove all symlinks that point to .dotfiles/ without asking"
   $LINKO implode
 }
 
 function task:install {
-  : "Install symlinks to dotfiles/home"
+  : "Install symlinks to .dotfiles/home"
+
   $LINKO install
 }
 
 function task:sync {
-  : "Install and cleanup symlinks to dotfiles/home"
+  : "Install and cleanup symlinks to .dotfiles/home"
+
   task:install
   task:autocleanup
 }
@@ -161,6 +183,8 @@ function task:init {
 }
 
 function task:upgrade {
+  : "Upgrade links, os, submodules, and vi"
+
   com_ex cargo && task:lom:install || task:deno:install
   task:sync
   task:os:upgrade

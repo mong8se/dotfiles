@@ -1,4 +1,4 @@
-# What? More Dotfiles?! -- NOW CONFIG FREE!
+# What? More Dotfiles?! -- NOW CONFIG FREE!    
 
 No configuration necessary dotfile management, just files and folder and
 (new!) symlinks in the appropriate tree shape.
@@ -8,26 +8,34 @@ No configuration necessary dotfile management, just files and folder and
 Uses [Taskfile](https://github.com/adriancooney/Taskfile) for running tasks, once the fish config is in place there is an alias for `run` to `./Taskfile`
 
     ./Taskfile <task> <args>
-    Tasks:
-         1	autocleanup         # clean up stale symlinks that point to .dotfiles/ without prompting
-         2	cleanup             # clean up stale symlinks that point to .dotfiles/
-         3	homebrew:bundle     # install all brews in Brewfile
-         4	homebrew:install    # install homebrew itself
-         5	hostname            # print hash of hostname
-         6	implode             # remove all symlinks that point to .dotfiles/ without asking
-         7	init                # do initial tasks for new install
-         8	install             # create symlinks for .dotfiles/home and ./dotfiles/config
-         9	submodule:init      # initialize all git submodules
-        10	submodule:update    # update all git submodules to their latest of the branch they're tracking
-        11	update              # create all symlinks and clean up stale ones
-        12	upgrade             # update submodules and vi
-        13	vi:cleanup          # Ask `vim-plug` to clean plugins
-        14	vi:install          # Ask `vim-plug` to install plugins
-        15	vi:update           # Ask `vim-plug` to update plugins
 
-    default task:
-    {
-        update
+    Tasks:
+        autocleanup      | Clean up stale symlinks that point to .dotfiles/ without prompting
+        cleanup          | Clean up stale symlinks that point to .dotfiles/
+        deno:install     | Install Deno
+        deno:upgrade     | Upgrade Deno
+        describe         | Prints description of task
+        explain          | Prints definition of task
+        help             | Prints this help
+        homebrew:bundle  | Install homebrew bundle
+        homebrew:install | Install homebrew
+        hostname         | Print hash of hostname
+        implode          | Remove all symlinks that point to .dotfiles/ without asking
+        init             | Bootstrap a new install
+        install          | Install symlinks to .dotfiles/home
+        lom:install      | Install link_o_matic via cargo
+        os:upgrade       | Upgrade OS
+        submodule:init   | Init git submodules
+        submodule:update | Update your submodules
+        sync             | Install and cleanup symlinks to .dotfiles/home
+        test             | 
+        upgrade          | Upgrade links, os, submodules, and vi
+        vi:cleanup       | Clean up Lazy plugins for neovim
+        vi:install       | Install Lazy plugins for neovim
+        vi:sync          | Sync Lazy plugins for neovim
+
+    default => {
+        task:sync
     }
 
 ## Config Order
