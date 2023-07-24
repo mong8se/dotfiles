@@ -6,69 +6,64 @@ local QuickScope = vim.api.nvim_create_augroup('QuickScope', {clear = true})
 
 -- cursorline only for active window
 autocmd({"VimEnter", "WinEnter", "BufWinEnter"}, {
-    pattern = "*",
-    callback = function() vim.wo.cursorline = true end,
-    group = CursorLine
+  pattern = "*",
+  callback = function() vim.wo.cursorline = true end,
+  group = CursorLine
 })
 
 autocmd("WinLeave", {
-    pattern = "*",
-    callback = function() vim.wo.cursorline = false end,
-    group = CursorLine
+  pattern = "*",
+  callback = function() vim.wo.cursorline = false end,
+  group = CursorLine
 })
 
 --  leave insert or replace mode
 autocmd({"BufEnter", "WinLeave", "FocusLost", "VimSuspend"}, {
-    pattern = "*",
-    callback = function()
-        if vim.bo.buftype == "" then vim.cmd("stopinsert") end
-    end,
-    group = FocusIssues
+  pattern = "*",
+  callback = function() if vim.bo.buftype == "" then vim.cmd("stopinsert") end end,
+  group = FocusIssues
 })
 
 --  Save the buffer if it is modified and has a filename
 autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
-    pattern = "*",
-    callback = function()
-        if vim.fn.getreg("%") ~= "" then vim.cmd("update") end
-    end,
-    group = FocusIssues
+  pattern = "*",
+  callback = function() if vim.fn.getreg("%") ~= "" then vim.cmd("update") end end,
+  group = FocusIssues
 })
 
 -- gq in normal mode in a help file closes the help
 -- similar to what happens in fugitive
 autocmd("FileType", {
-    pattern = "help",
-    callback = function()
-        vim.keymap.set('n', 'gq', ':helpclose<CR>',
-                       {remap = true, silent = true, buffer = true})
-    end
+  pattern = "help",
+  callback = function()
+    vim.keymap.set('n', 'gq', ':helpclose<CR>',
+                   {remap = true, silent = true, buffer = true})
+  end
 })
 
 autocmd("TextYankPost", {
-    pattern = "*",
-    callback = function()
-        if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-            vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"),
-                          vim.v.event.regtype)
-            -- No idea why I have to it like this
-            -- If I don't schedule the second one somehow the first doesn't happen
-            vim.schedule(function()
-                vim.fn.setreg("*", vim.fn.getreg("+"),
-                              vim.fn.getreginfo("+").regtype)
-            end)
-        end
-    end,
-    group = YankSync
+  pattern = "*",
+  callback = function()
+    if vim.v.event.operator == "y" and vim.v.event.regname == "" then
+      vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"),
+                    vim.v.event.regtype)
+      -- No idea why I have to it like this
+      -- If I don't schedule the second one somehow the first doesn't happen
+      vim.schedule(function()
+        vim.fn.setreg("*", vim.fn.getreg("+"), vim.fn.getreginfo("+").regtype)
+      end)
+    end
+  end,
+  group = YankSync
 })
 
 autocmd("ColorScheme", {
-    pattern = "*",
-    callback = function()
-        vim.api.nvim_set_hl(0, "QuickScopePrimary",
-                            {fg = 'yellow', underline = true})
-        vim.api.nvim_set_hl(0, "QuickScopeSecondary",
-                            {fg = 'orange', underline = true})
-    end,
-    group = QuickScope
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "QuickScopePrimary",
+                        {fg = 'yellow', underline = true})
+    vim.api.nvim_set_hl(0, "QuickScopeSecondary",
+                        {fg = 'orange', underline = true})
+  end,
+  group = QuickScope
 })

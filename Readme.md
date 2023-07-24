@@ -28,7 +28,6 @@ Uses [Taskfile](https://github.com/adriancooney/Taskfile) for running tasks, onc
         submodule:init   | Init git submodules
         submodule:update | Update your submodules
         sync             | Install and cleanup symlinks to .dotfiles/home
-        test             | 
         upgrade          | Upgrade links, os, submodules, and vi
         vi:cleanup       | Clean up Lazy plugins for neovim
         vi:install       | Install Lazy plugins for neovim

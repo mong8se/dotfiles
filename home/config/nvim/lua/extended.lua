@@ -14,83 +14,79 @@ local attachableBindings = require("keys")
 
 local MiniMap = require('mini.map')
 MiniMap.setup({
-    integrations = {MiniMap.gen_integration.gitsigns()},
-    symbols = {
-        encode = MiniMap.gen_encode_symbols.dot("4x2"),
-        scroll_line = '╞',
-        scroll_view = '│'
-    },
-    window = {width = 16, winblend = 70}
+  integrations = {MiniMap.gen_integration.gitsigns()},
+  symbols = {
+    encode = MiniMap.gen_encode_symbols.dot("4x2"),
+    scroll_line = '╞',
+    scroll_view = '│'
+  },
+  window = {width = 16, winblend = 70}
 })
 
 -- Setup nvim-cmp.
 local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and
-               vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col,
-                                                                          col)
-                   :match("%s") == nil
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and
+             vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col)
+                 :match("%s") == nil
 end
 
 local feedkey = function(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true),
-                          mode, true)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true),
+                        mode, true)
 end
 
 local cmp = require 'cmp'
 
 cmp.setup({
-    snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        end
-    },
-    mapping = {
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-        ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-        ['<C-e>'] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close()
-        }),
-        ['<CR>'] = cmp.mapping.confirm({select = true}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-                feedkey("<Plug>(vsnip-expand-or-jump)", "")
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-            end
-        end, {"i", "s"}),
-        ["<S-Tab>"] = cmp.mapping(function()
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-                feedkey("<Plug>(vsnip-jump-prev)", "")
-            end
-        end, {"i", "s"})
-    },
-    sources = cmp.config.sources({
-        {name = 'nvim_lsp'}, {name = 'vsnip'} -- For vsnip users.
-        -- { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
-    }, {{name = 'buffer'}})
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end
+  },
+  mapping = {
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({i = cmp.mapping.abort(), c = cmp.mapping.close()}),
+    ['<CR>'] = cmp.mapping.confirm({select = true}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, {"i", "s"}),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, {"i", "s"})
+  },
+  sources = cmp.config.sources({
+    {name = 'nvim_lsp'}, {name = 'vsnip'} -- For vsnip users.
+    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'ultisnips' }, -- For ultisnips users.
+    -- { name = 'snippy' }, -- For snippy users.
+  }, {{name = 'buffer'}})
 })
 
 -- opt.configuration='for specific filetype.'
 cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-        {name = 'cmp_git'} -- You can specify the `cmp_git` source if you were installed it.
-    }, {{name = 'buffer'}})
+  sources = cmp.config.sources({
+    {name = 'cmp_git'} -- You can specify the `cmp_git` source if you were installed it.
+  }, {{name = 'buffer'}})
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -98,101 +94,123 @@ cmp.setup.cmdline('/', {sources = {{name = 'buffer'}}})
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
+  sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
 })
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local lsp_on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    attachableBindings.lsp(vim.lsp, bufnr)
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  attachableBindings.lsp(vim.lsp, bufnr)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-    {'tsserver', 'package.json'}, {'denols', 'deps.ts', 'deps.js'}, 'html',
-    "cssls", "jsonls", "gopls", "rust_analyzer", "lua_ls"
+  {'denols', 'deps.ts', 'deps.js'}, 'html', "cssls", "jsonls", "gopls",
+  "rust_analyzer", "lua_ls"
 }
 for _, cnf in pairs(servers) do
-    local server_config = {
-        on_attach = lsp_on_attach,
-        flags = {
-            -- This will be the default in neovim 0.7+
-            debounce_text_changes = 150
-        }
+  local server_config = {
+    on_attach = lsp_on_attach,
+    flags = {
+      -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150
     }
+  }
 
-    local lsp
-    if type(cnf) == "table" then
-        lsp = table.remove(cnf, 1)
-        server_config["root_dir"] = require('lspconfig.util').root_pattern(
-                                        unpack(cnf))
-    else
-        lsp = cnf
-    end
+  local lsp
+  if type(cnf) == "table" then
+    lsp = table.remove(cnf, 1)
+    server_config["root_dir"] = require('lspconfig.util').root_pattern(unpack(
+                                                                           cnf))
+  else
+    lsp = cnf
+  end
 
-    require('lspconfig')[lsp].setup(server_config)
+  require('lspconfig')[lsp].setup(server_config)
 end
 
 require'nvim-treesitter.configs'.setup {
-    textobjects = {
-        select = {
-            enable = true,
+  textobjects = {
+    select = {
+      enable = true,
 
-            -- Automatically jump forward to textobj, similar to targets.vim
-            lookahead = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
 
-            keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner"
-            }
-        },
-        swap = {
-            enable = true,
-            swap_next = {["]a"] = "@parameter.inner"},
-            swap_previous = {["[a"] = "@parameter.inner"}
-        }
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner"
+      }
     },
-    highlight = {enable = true, additional_vim_regex_highlighting = false},
-    rainbow = {
-        enable = true,
-        -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-        max_file_lines = nil -- Do not enable for files with more than n lines, int
-        -- colors = {}, -- table of hex strings
-        -- termcolors = {} -- table of colour name strings
-    },
-    indent = {enable = true}
+    swap = {
+      enable = true,
+      swap_next = {["]a"] = "@parameter.inner"},
+      swap_previous = {["[a"] = "@parameter.inner"}
+    }
+  },
+  highlight = {enable = true, additional_vim_regex_highlighting = false},
+  rainbow = {
+    enable = true,
+    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil -- Do not enable for files with more than n lines, int
+    -- colors = {}, -- table of hex strings
+    -- termcolors = {} -- table of colour name strings
+  },
+  indent = {enable = true}
 }
 
 require("trouble").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+  -- your configuration comes here
+  -- or leave it empty to use the default settings
+  -- refer to the configuration section below
 }
 
-require'lualine'.setup {
-    options = {
-        theme = vim.startswith(g.colors_name, "base16") and "base16" or
-            "gruvbox-material",
+-- require'lualine'.setup {
+--     options = {
+--         theme = vim.startswith(g.colors_name, "base16") and "base16" or
+--             "gruvbox-material",
+--
+--         section_separators = {left = '', right = ''},
+--         component_separators = {left = '', right = ''}
+--
+--     }
+-- }
 
-        section_separators = {left = '', right = ''},
-        component_separators = {left = '', right = ''}
+MiniStatusline = require('mini.statusline')
+MiniStatusline.setup({
+  content = {
+    active = function()
+      local mode, mode_hl = MiniStatusline.section_mode({trunc_width = 80})
+      local git = MiniStatusline.section_git({trunc_width = 75})
+      local diagnostics = MiniStatusline.section_diagnostics({trunc_width = 75})
+      local filename = MiniStatusline.section_filename({trunc_width = 140})
+      local fileinfo = MiniStatusline.section_fileinfo({trunc_width = 120})
+      local location = MiniStatusline.section_location({trunc_width = 75})
 
-    }
-}
+      return MiniStatusline.combine_groups({
+        {hl = mode_hl, strings = {mode}}, '%<', -- Mark general truncate point
+        {hl = 'MiniStatuslineFilename', strings = {filename}}, '%=', -- End left alignment
+        {hl = 'MiniStatuslineDevinfo', strings = {git, diagnostics}},
+        {hl = 'MiniStatuslineFileinfo', strings = {fileinfo}},
+        {hl = mode_hl, strings = {location}}
+      })
+    end
+  }
+})
 
 require("indent_blankline").setup {
-    show_current_context = true,
-    buftype_exclude = {"terminal"}
+  show_current_context = true,
+  buftype_exclude = {"terminal"}
 }
 
 -- CtrlSF
@@ -204,9 +222,9 @@ g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') == 1 and
 g.golden_ratio_autocommand = 0
 
 require('gitsigns').setup {
-    on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
 
-        attachableBindings.gitsigns(gs, bufnr)
-    end
+    attachableBindings.gitsigns(gs, bufnr)
+  end
 }
