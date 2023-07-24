@@ -99,8 +99,12 @@ if has("user_commands") then
   command("Q", "q<bang>", {bang = true})
   command("QA", "qa<bang>", {bang = true})
   command("Qa", "qa<bang>", {bang = true})
-  command("Split", splitCommand, {nargs = "*"})
-  command("SPlit", splitCommand, {nargs = "*"})
+
+  command("Split", splitCommand, {nargs = "?", complete = "file"})
+  -- This is to override split to be our new Split.
+  -- Since command abbr also effects search,
+  -- we want to make sure we are in ex mode (:)
+  cmd("cnoreabbrev <expr> split getcmdtype() == ':' && getcmdline() ==# 'split' ? 'Split' : 'split'")
 end
 
 settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'
