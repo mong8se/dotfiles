@@ -81,7 +81,7 @@ setKeyMap('n', "<leader>ff", function() vim.cmd("edit .") end,
           {silent = true, desc = "Browse files from root"})
 
 -- toggle
-setKeyMap('n', "<leader>tg", '<Plug>(golden_ratio_toggle)',
+setKeyMap('n', "<leader>tr", '<Plug>(golden_ratio_toggle)',
           {noremap = false, desc = "Toggle golden ratio"})
 setKeyMap('n', "<leader>tm", require('mini.map').toggle,
           {desc = "Toggle mini map"})
@@ -167,10 +167,10 @@ attachableBindings.gitsigns = function(gs, bufnr)
   setKeyMap('n', '<leader>hp', gs.preview_hunk, {buffer = bufnr})
   setKeyMap('n', '<leader>hb', function() gs.blame_line {full = true} end,
             {buffer = bufnr})
-  setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame, {buffer = bufnr})
+  setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame, {buffer = bufnr, desc="Toggle git blame line"})
   setKeyMap('n', '<leader>hd', gs.diffthis, {buffer = bufnr})
   setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end, {buffer = bufnr})
-  setKeyMap('n', '<leader>tgd', gs.toggle_deleted, {buffer = bufnr})
+  setKeyMap('n', '<leader>tgd', gs.toggle_deleted, {buffer = bufnr, desc = "Toggle git deleted lines"})
 
   -- Text object
   setKeyMap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})

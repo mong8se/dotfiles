@@ -218,9 +218,6 @@ g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') == 1 and
                       '/usr/local/bin/rg' or '/usr/bin/rg'
 
--- Golden Ratio
-g.golden_ratio_autocommand = 0
-
 require('gitsigns').setup {
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns

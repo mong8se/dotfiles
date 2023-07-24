@@ -27,7 +27,7 @@ format = "[\uf520 $duration]($style) "
 symbol = " "
 
 [env_var.BASE16_THEME]
-format="\u246F$env_value "
+format="\u2483$env_value "
 
 [vagrant]
 disabled = true

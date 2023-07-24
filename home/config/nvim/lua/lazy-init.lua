@@ -8,9 +8,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Use lsp for these
 vim.g.polyglot_disabled = {
   "rust", "css", "json", "go", "javascript", "typescript", "lua", "html",
   "sensible"
 }
+
+-- Golden Ratio
+vim.g.golden_ratio_autocommand = 0
 
 require("lazy").setup("plugs")
