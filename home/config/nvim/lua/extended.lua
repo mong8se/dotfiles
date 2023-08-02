@@ -186,6 +186,14 @@ for _, cnf in pairs(servers) do
 end
 
 require'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    "bash", "dockerfile", "go", "lua", "rust", "css", "diff", "elvish", "fish",
+    "git_config", "git_rebase", "gitcommit", "gitignore", "graphql", "groovy",
+    "html", "http", "java", "javascript", "jq", "jsdoc", "json", "kotlin",
+    "make", "markdown", "markdown_inline", "mermaid", "python", "regex", "ruby",
+    "scss", "sql", "svelte", "todotxt", "toml", "tsx", "typescript", "yaml"
+  },
+  auto_install = true,
   textobjects = {
     select = {
       enable = true,
