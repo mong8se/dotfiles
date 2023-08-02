@@ -7,9 +7,11 @@ return {
   'ibhagwan/fzf-lua',
   'stevearc/dressing.nvim',
   'rcarriga/nvim-notify',
+
   'RRethy/nvim-base16',
   'caglartoklu/borlandp.vim',
   'sainnhe/gruvbox-material',
+
   'tpope/vim-rsi',
   'tpope/vim-repeat',
 

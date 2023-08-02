@@ -48,7 +48,9 @@ miniclue.setup({
     miniclue.gen_clues.builtin_completion(),
     miniclue.gen_clues.g(),
     miniclue.gen_clues.marks(),
-    miniclue.gen_clues.registers(),
+    miniclue.gen_clues.registers({
+      show_contents = true
+    }),
     miniclue.gen_clues.windows(),
     miniclue.gen_clues.z(),
   },
@@ -75,13 +77,13 @@ MiniMap.setup({
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and
-             vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col)
-                 :match("%s") == nil
+    vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col)
+      :match("%s") == nil
 end
 
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true),
-                        mode, true)
+    mode, true)
 end
 
 local cmp = require 'cmp'
@@ -175,7 +177,7 @@ for _, cnf in pairs(servers) do
   if type(cnf) == "table" then
     lsp = table.remove(cnf, 1)
     server_config["root_dir"] = require('lspconfig.util').root_pattern(unpack(
-                                                                           cnf))
+      cnf))
   else
     lsp = cnf
   end
@@ -223,42 +225,20 @@ require("trouble").setup {
   -- refer to the configuration section below
 }
 
--- require'lualine'.setup {
---     options = {
---         theme = vim.startswith(g.colors_name, "base16") and "base16" or
---             "gruvbox-material",
---
---         section_separators = {left = '', right = ''},
---         component_separators = {left = '', right = ''}
---
---     }
--- }
+require'lualine'.setup {
+  options = {
+    theme = vim.startswith(g.colors_name, "base16") and "base16" or
+      "gruvbox-material",
 
-MiniStatusline = require('mini.statusline')
-MiniStatusline.setup({
-  content = {
-    active = function()
-      local mode, mode_hl = MiniStatusline.section_mode({trunc_width = 80})
-      local git = MiniStatusline.section_git({trunc_width = 75})
-      local diagnostics = MiniStatusline.section_diagnostics({trunc_width = 75})
-      local filename = MiniStatusline.section_filename({trunc_width = 140})
-      local fileinfo = MiniStatusline.section_fileinfo({trunc_width = 120})
-      local location = MiniStatusline.section_location({trunc_width = 75})
-
-      return MiniStatusline.combine_groups({
-        {hl = mode_hl, strings = {mode}}, '%<', -- Mark general truncate point
-        {hl = 'MiniStatuslineFilename', strings = {filename}}, '%=', -- End left alignment
-        {hl = 'MiniStatuslineDevinfo', strings = {git, diagnostics}},
-        {hl = 'MiniStatuslineFileinfo', strings = {fileinfo}},
-        {hl = mode_hl, strings = {location}}
-      })
-    end
+    section_separators = {left = '', right = ''},
+    component_separators = {left = '', right = ''}
   }
-})
+}
 
 require("indent_blankline").setup {
+  show_trailing_blankline_indent = false,
   show_current_context = true,
-  buftype_exclude = {"terminal"}
+  buftype_exclude = {"terminal"},
 }
 
 -- CtrlSF

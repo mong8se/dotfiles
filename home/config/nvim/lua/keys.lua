@@ -142,7 +142,7 @@ setKeyMap('n', "<leader>xf", vim.diagnostic.open_float, {silent = true})
 setKeyMap('n', "<leader>xg", vim.diagnostic.setloclist, {silent = true})
 
 -- window
-setKeyMap('n', "<c-w>s", mong8se.splitCommand, {silent = true})
+setKeyMap('n', "<c-w>s", mong8se.splitCommand, {silent = true, desc = "Split and browse"})
 setKeyMap('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
 setKeyMap('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
 setKeyMap('t', "<c-w><C-w>", "<C-\\><C-n>")
