@@ -14,6 +14,8 @@ return {
 
   'tpope/vim-rsi',
   'tpope/vim-repeat',
+  'tpope/vim-abolish',
+  'tpope/vim-apathy', -- ]f
 
   'hoob3rt/lualine.nvim',
   'kyazdani42/nvim-web-devicons',
@@ -27,7 +29,6 @@ return {
   'echasnovski/mini.nvim',
 
   'airblade/vim-rooter',
-  'tpope/vim-apathy', -- ]f
   'lewis6991/gitsigns.nvim',
   'sheerun/vim-polyglot',
 
@@ -35,7 +36,6 @@ return {
   'nvim-treesitter/nvim-treesitter-textobjects',
   'p00f/nvim-ts-rainbow',
 
-  'tpope/vim-abolish',
   'dyng/ctrlsf.vim', -- leader /
 
   'neovim/nvim-lspconfig',
@@ -48,12 +48,6 @@ return {
   'hrsh7th/cmp-vsnip',
   'hrsh7th/vim-vsnip',
   'hrsh7th/vim-vsnip-integ',
-
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
-  },
 
   'vimwiki/vimwiki',
   {'itchyny/calendar.vim', cmd = 'Calendar'},

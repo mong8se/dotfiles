@@ -10,8 +10,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Use lsp for these
 vim.g.polyglot_disabled = {
-  "rust", "css", "json", "go", "javascript", "typescript", "lua", "html",
-  "sensible"
+  "css", "go", "html", "javascript", "json", "lua", "rust", "sensible",
+  "typescript"
 }
 
 -- Golden Ratio

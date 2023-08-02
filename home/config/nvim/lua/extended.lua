@@ -1,4 +1,5 @@
 local g = vim.g
+local attachableBindings = require("keys")
 
 vim.notify = require("notify")
 
@@ -9,8 +10,9 @@ require('mini.surround').setup()
 require('mini.starter').setup()
 require('mini.bracketed').setup()
 require('mini.jump2d').setup()
-local miniclue = require('mini.clue')
-miniclue.setup({
+
+local MiniClue = require('mini.clue')
+MiniClue.setup({
   triggers = {
     -- Leader triggers
     { mode = 'n', keys = '<Leader>' },
@@ -45,22 +47,20 @@ miniclue.setup({
 
   clues = {
     -- Enhance this by adding descriptions for <Leader> mapping groups
-    miniclue.gen_clues.builtin_completion(),
-    miniclue.gen_clues.g(),
-    miniclue.gen_clues.marks(),
-    miniclue.gen_clues.registers({
+    MiniClue.gen_clues.builtin_completion(),
+    MiniClue.gen_clues.g(),
+    MiniClue.gen_clues.marks(),
+    MiniClue.gen_clues.registers({
       show_contents = true
     }),
-    miniclue.gen_clues.windows(),
-    miniclue.gen_clues.z(),
+    MiniClue.gen_clues.windows(),
+    MiniClue.gen_clues.z(),
   },
 
   window = {
     delay = 333,
   }
 })
-
-local attachableBindings = require("keys")
 
 local MiniMap = require('mini.map')
 MiniMap.setup({
@@ -77,13 +77,13 @@ MiniMap.setup({
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and
-    vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col)
-      :match("%s") == nil
+             vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col)
+                 :match("%s") == nil
 end
 
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true),
-    mode, true)
+                        mode, true)
 end
 
 local cmp = require 'cmp'
@@ -161,8 +161,8 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-  {'denols', 'deps.ts', 'deps.js'}, 'html', "cssls", "jsonls", "gopls",
-  "rust_analyzer", "lua_ls"
+  {'tsserver', 'package.json'}, {'denols', 'deps.ts', 'deps.js'}, 'html',
+  "cssls", "jsonls", "gopls", "rust_analyzer", "lua_ls"
 }
 for _, cnf in pairs(servers) do
   local server_config = {
@@ -176,8 +176,8 @@ for _, cnf in pairs(servers) do
   local lsp
   if type(cnf) == "table" then
     lsp = table.remove(cnf, 1)
-    server_config["root_dir"] = require('lspconfig.util').root_pattern(unpack(
-      cnf))
+    server_config["root_dir"] = require('lspconfig.util')
+      .root_pattern(unpack(cnf))
   else
     lsp = cnf
   end
@@ -205,8 +205,15 @@ require'nvim-treesitter.configs'.setup {
         -- You can use the capture groups defined in textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
+
         ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner"
+        ["ic"] = "@class.inner",
+        -- a for argument
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+
+        ["ar"] = "@regex.outer",
+        ["ir"] = "@regex.inner"
       }
     },
     swap = {
@@ -236,7 +243,7 @@ require("trouble").setup {
 require'lualine'.setup {
   options = {
     theme = vim.startswith(g.colors_name, "base16") and "base16" or
-      "gruvbox-material",
+        "gruvbox-material",
 
     section_separators = {left = '', right = ''},
     component_separators = {left = '', right = ''}
@@ -246,7 +253,7 @@ require'lualine'.setup {
 require("indent_blankline").setup {
   show_trailing_blankline_indent = false,
   show_current_context = true,
-  buftype_exclude = {"terminal"},
+  buftype_exclude = {"terminal"}
 }
 
 -- CtrlSF
