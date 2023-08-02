@@ -89,9 +89,9 @@ settings.splitbelow = true
 
 settings.undofile = true
 
-settings.foldlevelstart = 5
 settings.foldmethod = "expr"
-settings.foldexpr = require("nvim-treesitter").foldexpr
+settings.foldexpr = "nvim_treesitter#foldexpr()"
+settings.foldlevelstart = 4
 
 if has("spell") then vim.o.spelllang = "en_us" end
 
