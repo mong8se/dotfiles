@@ -25,6 +25,14 @@ MiniClue.setup({
     { mode = 'n', keys = 'g' },
     { mode = 'x', keys = 'g' },
 
+    -- `[` key
+    { mode = 'n', keys = '[' },
+    { mode = 'x', keys = '[' },
+
+    -- `]` key
+    { mode = 'n', keys = ']' },
+    { mode = 'x', keys = ']' },
+
     -- Marks
     { mode = 'n', keys = "'" },
     { mode = 'n', keys = '`' },
