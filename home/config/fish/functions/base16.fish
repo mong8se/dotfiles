@@ -35,10 +35,10 @@ end
 function autoGruv -d "Auto Gruv" -e fish_prompt
   if status --is-interactive && not set -q BASE16_THEME
     if isDarkMode
-      set -g IS_DARK_MODE 1
+      set -x IS_DARK_MODE 1
       base16 gruvbox-dark-soft false
     else
-      set -g IS_DARK_MODE 0
+      set -x IS_DARK_MODE 0
       base16 solarized-light fale
     end
   end
