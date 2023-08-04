@@ -147,6 +147,17 @@ setKeyMap('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
 setKeyMap('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
 setKeyMap('t', "<c-w><C-w>", "<C-\\><C-n>")
 
+local readline = require 'readline'
+setKeyMap('!', '<M-f>', readline.forward_word)
+setKeyMap('!', '<M-b>', readline.backward_word)
+setKeyMap('!', '<C-a>', readline.beginning_of_line)
+setKeyMap('!', '<C-e>', readline.end_of_line)
+setKeyMap('!', '<M-d>', readline.kill_word)
+setKeyMap('!', '<M-BS>', readline.backward_kill_word)
+setKeyMap('!', '<C-w>', readline.unix_word_rubout)
+setKeyMap('!', '<C-k>', readline.kill_line)
+setKeyMap('!', '<C-u>', readline.backward_kill_line)
+
 attachableBindings.gitsigns = function(gs, bufnr)
   -- h for hunk
   setKeyMap('n', ']h', gs.next_hunk, {desc = "Hunk forward", buffer = bufnr})

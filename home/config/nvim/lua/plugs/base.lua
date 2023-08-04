@@ -12,10 +12,7 @@ return {
   'caglartoklu/borlandp.vim',
   'sainnhe/gruvbox-material',
 
-  'tpope/vim-rsi',
-  'tpope/vim-repeat',
-  'tpope/vim-abolish',
-  'tpope/vim-apathy', -- ]f
+  'linty-org/readline.nvim',
 
   'hoob3rt/lualine.nvim',
   'kyazdani42/nvim-web-devicons',

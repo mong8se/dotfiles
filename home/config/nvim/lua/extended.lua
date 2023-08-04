@@ -9,7 +9,12 @@ require('mini.pairs').setup()
 require('mini.surround').setup()
 require('mini.starter').setup()
 require('mini.bracketed').setup()
-require('mini.jump2d').setup()
+
+local jump2d = require('mini.jump2d')
+local jump_line_start = jump2d.builtin_opts.word_start
+jump2d.setup({
+  spotter = jump_line_start.spotter,
+})
 
 local MiniClue = require('mini.clue')
 MiniClue.setup({
