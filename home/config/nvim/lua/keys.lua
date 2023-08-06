@@ -4,8 +4,6 @@ local setKeyMap = vim.keymap.set
 
 local fzf = require("fzf-lua")
 
-local attachableBindings = {}
-
 setKeyMap('n', "<leader> ", require("buffish").open,
           {silent = true, desc = "Switch buffer"})
 
@@ -158,54 +156,54 @@ setKeyMap('!', '<C-w>', readline.unix_word_rubout)
 setKeyMap('!', '<C-k>', readline.kill_line)
 setKeyMap('!', '<C-u>', readline.backward_kill_line)
 
-attachableBindings.gitsigns = function(gs, bufnr)
-  -- h for hunk
-  setKeyMap('n', ']h', gs.next_hunk, {desc = "Hunk forward", buffer = bufnr})
-  setKeyMap('n', '[h', gs.prev_hunk, {desc = "Hunk last", buffer = bufnr})
+return {
+  gitsigns = function(gs, bufnr)
+    -- h for hunk
+    setKeyMap('n', ']h', gs.next_hunk, {desc = "Hunk forward", buffer = bufnr})
+    setKeyMap('n', '[h', gs.prev_hunk, {desc = "Hunk last", buffer = bufnr})
 
-  -- Actions
-  setKeyMap('n', '<leader>hs', gs.stage_hunk, {buffer = bufnr})
-  setKeyMap('n', '<leader>hr', gs.reset_hunk, {buffer = bufnr})
-  setKeyMap('v', '<leader>hs',
-            function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end,
-            {buffer = bufnr})
-  setKeyMap('v', '<leader>hr',
-            function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end,
-            {buffer = bufnr})
-  setKeyMap('n', '<leader>hS', gs.stage_buffer, {buffer = bufnr})
-  setKeyMap('n', '<leader>hu', gs.undo_stage_hunk, {buffer = bufnr})
-  setKeyMap('n', '<leader>hR', gs.reset_buffer, {buffer = bufnr})
-  setKeyMap('n', '<leader>hp', gs.preview_hunk, {buffer = bufnr})
-  setKeyMap('n', '<leader>hb', function() gs.blame_line {full = true} end,
-            {buffer = bufnr})
-  setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame, {buffer = bufnr, desc="Toggle git blame line"})
-  setKeyMap('n', '<leader>hd', gs.diffthis, {buffer = bufnr})
-  setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end, {buffer = bufnr})
-  setKeyMap('n', '<leader>tgd', gs.toggle_deleted, {buffer = bufnr, desc = "Toggle git deleted lines"})
+    -- Actions
+    setKeyMap('n', '<leader>hs', gs.stage_hunk, {buffer = bufnr})
+    setKeyMap('n', '<leader>hr', gs.reset_hunk, {buffer = bufnr})
+    setKeyMap('v', '<leader>hs',
+      function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end,
+      {buffer = bufnr})
+    setKeyMap('v', '<leader>hr',
+      function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end,
+      {buffer = bufnr})
+    setKeyMap('n', '<leader>hS', gs.stage_buffer, {buffer = bufnr})
+    setKeyMap('n', '<leader>hu', gs.undo_stage_hunk, {buffer = bufnr})
+    setKeyMap('n', '<leader>hR', gs.reset_buffer, {buffer = bufnr})
+    setKeyMap('n', '<leader>hp', gs.preview_hunk, {buffer = bufnr})
+    setKeyMap('n', '<leader>hb', function() gs.blame_line {full = true} end,
+      {buffer = bufnr})
+    setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame, {buffer = bufnr, desc="Toggle git blame line"})
+    setKeyMap('n', '<leader>hd', gs.diffthis, {buffer = bufnr})
+    setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end, {buffer = bufnr})
+    setKeyMap('n', '<leader>tgd', gs.toggle_deleted, {buffer = bufnr, desc = "Toggle git deleted lines"})
 
-  -- Text object
-  setKeyMap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
-end
+    -- Text object
+    setKeyMap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
+  end,
 
-attachableBindings.lsp = function(lsp, bufnr)
-  setKeyMap('n', "gD", lsp.buf.declaration,
-            {silent = true, buffer = bufnr, desc = "Go to declaration"})
-  setKeyMap('n', "gd", lsp.buf.definition,
-            {silent = true, buffer = bufnr, desc = "Go to definition"})
-  setKeyMap('n', "K", lsp.buf.hover, {silent = true, buffer = bufnr})
-  setKeyMap('n', "\\", lsp.buf.signature_help, {silent = true, buffer = bufnr})
-  setKeyMap('n', "<leader>wa", lsp.buf.add_workspace_folder,
-            {silent = true, buffer = bufnr})
-  setKeyMap('n', "<leader>wr", lsp.buf.remove_workspace_folder,
-            {silent = true, buffer = bufnr})
-  setKeyMap('n', "<leader>wl",
-            '<cmd>lua print(vim.inspect(lsp.buf.list_workspace_folders()))<CR>',
-            {silent = true, buffer = bufnr})
-  setKeyMap('n', "<leader>cf", lsp.buf.formatting,
-            {silent = true, buffer = bufnr})
-  setKeyMap('n', "<leader>cr", lsp.buf.rename, {silent = true, buffer = bufnr})
-  setKeyMap('n', '<leader>cd', lsp.buf.type_definition,
-            {silent = true, buffer = bufnr})
-end
-
-return attachableBindings
+  lsp = function(lsp, bufnr)
+    setKeyMap('n', "gD", lsp.buf.declaration,
+      {silent = true, buffer = bufnr, desc = "Go to declaration"})
+    setKeyMap('n', "gd", lsp.buf.definition,
+      {silent = true, buffer = bufnr, desc = "Go to definition"})
+    setKeyMap('n', "K", lsp.buf.hover, {silent = true, buffer = bufnr})
+    setKeyMap('n', "\\", lsp.buf.signature_help, {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wa", lsp.buf.add_workspace_folder,
+      {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wr", lsp.buf.remove_workspace_folder,
+      {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wl",
+      '<cmd>lua print(vim.inspect(lsp.buf.list_workspace_folders()))<CR>',
+      {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>cf", lsp.buf.formatting,
+      {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>cr", lsp.buf.rename, {silent = true, buffer = bufnr})
+    setKeyMap('n', '<leader>cd', lsp.buf.type_definition,
+      {silent = true, buffer = bufnr})
+  end
+}
