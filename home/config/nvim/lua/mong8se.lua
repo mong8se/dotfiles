@@ -22,11 +22,11 @@ end
 
 -- require a module or complain it didn't load
 mong8se.requireOrComplain = function(name)
-  local loaded, module = pcall(require, name)
+  local status, result = pcall(require, name)
 
-  if loaded then return module end
+  if status then return result end
 
-  vim.notify_once("Failed to load " .. name)
+  vim.notify_once(string.format("Failed to load %s: %s", name, result))
 end
 
 -- toggle line numbers
