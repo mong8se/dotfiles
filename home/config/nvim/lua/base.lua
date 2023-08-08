@@ -92,6 +92,12 @@ settings.undofile = true
 settings.foldmethod = "expr"
 settings.foldexpr = "nvim_treesitter#foldexpr()"
 settings.foldlevelstart = 4
+settings.foldtext = "v:lua.Mong8seFoldIt()"
+function Mong8seFoldIt()
+  return string.format("%s …%i… %s", vim.fn.getline(vim.v.foldstart),
+                       (vim.v.foldend - vim.v.foldstart - 1),
+                       vim.fn.getline(vim.v.foldend):gsub("^%s*", ""))
+end
 
 if has("spell") then vim.o.spelllang = "en_us" end
 
