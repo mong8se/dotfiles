@@ -3,12 +3,12 @@ local attachableBindings = require("keys")
 
 vim.notify = require("notify")
 
-require('mini.cursorword').setup()
-require('mini.comment').setup()
-require('mini.pairs').setup()
-require('mini.surround').setup()
-require('mini.starter').setup()
 require('mini.bracketed').setup()
+require('mini.comment').setup()
+require('mini.cursorword').setup()
+require('mini.pairs').setup()
+require('mini.starter').setup()
+require('mini.surround').setup()
 
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
