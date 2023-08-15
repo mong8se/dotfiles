@@ -4,7 +4,6 @@
 
 set -e
 
-
 ELEVATOR=$(command -v doas || command -v sudo | tr -d "\n" )
 
 export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
