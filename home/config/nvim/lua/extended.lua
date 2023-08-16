@@ -174,8 +174,11 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-  {'tsserver', 'package.json'}, {'denols', 'deps.ts', 'deps.js'}, 'html',
-  "cssls", "jsonls", "gopls", "rust_analyzer", "lua_ls"
+  {'tsserver', root_pattern = {'package.json'}},
+  {'denols', root_pattern = {'deps.ts', 'deps.js'}},
+  'html', "cssls", "jsonls",
+  "gopls", "rust_analyzer",
+  "lua_ls"
 }
 for _, cnf in pairs(servers) do
   local server_config = {
@@ -189,8 +192,15 @@ for _, cnf in pairs(servers) do
   local lsp
   if type(cnf) == "table" then
     lsp = table.remove(cnf, 1)
-    server_config["root_dir"] = require('lspconfig.util')
-      .root_pattern(unpack(cnf))
+
+    if cnf.root_pattern then
+      server_config.root_dir = require('lspconfig.util')
+        .root_pattern(unpack(cnf.root_pattern))
+    end
+
+    if cnf.settings then
+      server_config.settings = cnf.settings
+    end
   else
     lsp = cnf
   end
