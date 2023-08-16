@@ -72,6 +72,7 @@ MiniClue.setup({
 
   window = {
     delay = 333,
+    config = { width = 'auto' },
   }
 })
 

@@ -22,7 +22,7 @@ setKeyMap('n', "gp", '"' .. clipboard .. ']p', {desc = "Paste from system"})
 setKeyMap('n', "gP", '"' .. clipboard .. ']P',
           {desc = "Paste from system before"})
 
-setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>")
+setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>", { desc="LSP References"})
 
 setKeyMap('n', "U", "<C-r>")
 setKeyMap('n', "<f1>", '<Nop>')
@@ -97,11 +97,11 @@ setKeyMap('n', "<leader>tp", "<cmd>setlocal paste!<CR><cmd>set paste?<CR>",
           {silent = true, desc = "Toggle paste"})
 
 -- code
-setKeyMap('n', "<leader>c*", fzf.lsp_references, {silent = true})
+setKeyMap('n', "<leader>c*", fzf.lsp_references, {silent = true, desc="Code references"})
 
 -- jump
-setKeyMap('n', "<leader>jc", fzf.lsp_document_symbols, {silent = true})
-setKeyMap('n', "<leader>Jc", fzf.lsp_workspace_symbols, {silent = true})
+setKeyMap('n', "<leader>jc", fzf.lsp_document_symbols, {silent = true, desc="Document symbols"})
+setKeyMap('n', "<leader>Jc", fzf.lsp_workspace_symbols, {silent = true, desc="Workspace symbols"})
 
 -- project
 setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
