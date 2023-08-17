@@ -217,7 +217,7 @@ require'lualine'.setup {
 require("indent_blankline").setup {
   show_trailing_blankline_indent = false,
   show_current_context = true,
-  buftype_exclude = {"terminal"}
+  char = "⡇"
 }
 
 -- CtrlSF
