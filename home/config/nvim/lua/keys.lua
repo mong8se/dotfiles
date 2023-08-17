@@ -4,6 +4,46 @@ local setKeyMap = vim.keymap.set
 
 local fzf = require("fzf-lua")
 
+local MiniClue = require('mini.clue')
+MiniClue.setup({
+  triggers = {
+    -- Leader triggers
+    {mode = 'n', keys = '<Leader>'}, {mode = 'x', keys = '<Leader>'},
+
+    -- Built-in completion
+    {mode = 'i', keys = '<C-x>'}, -- `g` key
+    {mode = 'n', keys = 'g'}, {mode = 'x', keys = 'g'}, -- `[` key
+    {mode = 'n', keys = '['}, {mode = 'x', keys = '['}, -- `]` key
+    {mode = 'n', keys = ']'}, {mode = 'x', keys = ']'}, -- Marks
+    {mode = 'n', keys = "'"}, {mode = 'n', keys = '`'},
+    {mode = 'x', keys = "'"}, {mode = 'x', keys = '`'}, -- Registers
+    {mode = 'n', keys = '"'}, {mode = 'x', keys = '"'},
+    {mode = 'i', keys = '<C-r>'}, {mode = 'c', keys = '<C-r>'},
+
+    -- Window commands
+    {mode = 'n', keys = '<C-w>'}, -- `z` key
+    {mode = 'n', keys = 'z'}, {mode = 'x', keys = 'z'}
+  },
+
+  clues = {
+    -- Enhance this by adding descriptions for <Leader> mapping groups
+    MiniClue.gen_clues.builtin_completion(), MiniClue.gen_clues.g(),
+    MiniClue.gen_clues.marks(),
+    MiniClue.gen_clues.registers({show_contents = true}),
+    MiniClue.gen_clues.windows(), MiniClue.gen_clues.z(),
+    {mode = 'n', keys = '<Leader>b', desc = '+Buffer'},
+    {mode = 'n', keys = '<Leader>f', desc = '+File'},
+    {mode = 'n', keys = '<Leader>g', desc = '+Git'},
+    {mode = 'n', keys = '<Leader>h', desc = '+Hunk'},
+    {mode = 'n', keys = '<Leader>p', desc = '+Project'},
+    {mode = 'n', keys = '<Leader>s', desc = '+Search'},
+    {mode = 'n', keys = '<Leader>t', desc = '+Toggle'},
+    {mode = 'n', keys = '<Leader>x', desc = '+Trouble'}
+  },
+
+  window = {delay = 333, config = {width = 'auto'}}
+})
+
 setKeyMap('n', "<leader> ", require("buffish").open,
           {silent = true, desc = "Switch buffer"})
 
@@ -22,7 +62,8 @@ setKeyMap('n', "gp", '"' .. clipboard .. ']p', {desc = "Paste from system"})
 setKeyMap('n', "gP", '"' .. clipboard .. ']P',
           {desc = "Paste from system before"})
 
-setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>", { desc="LSP References"})
+setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>",
+          {desc = "LSP References"})
 
 setKeyMap('n', "U", "<C-r>")
 setKeyMap('n', "<f1>", '<Nop>')
@@ -64,12 +105,15 @@ setKeyMap('v', '/', mong8se.visualSearch)
 -- buffer
 setKeyMap('n', "<leader>bb", fzf.buffers,
           {silent = true, desc = "Buffer switch"})
--- setKeyMap('n', "<leader>bd", ":bufdo ", {silent = false})
 setKeyMap('n', "<leader>bd", function()
   local lastBuf = vim.api.nvim_win_get_buf(0)
   vim.cmd("edit " .. mong8se.directoryFromContext())
   vim.schedule(function() vim.api.nvim_buf_delete(lastBuf, {}) end)
 end, {silent = true, desc = "Delete current buffer"})
+setKeyMap('n', "<leader>bs", fzf.lsp_document_symbols,
+          {silent = true, desc = "Buffer symbols"})
+setKeyMap('n', "<leader>bx", "<cmd>Trouble document_diagnostics<cr>",
+          {silent = true, desc = "Buffer Diagnostics"})
 
 -- file
 setKeyMap('n', "<leader>f-",
@@ -96,17 +140,14 @@ setKeyMap('n', "<leader>tw", "<cmd>setlocal wrap!<CR><cmd>set wrap?<CR>",
 setKeyMap('n', "<leader>tp", "<cmd>setlocal paste!<CR><cmd>set paste?<CR>",
           {silent = true, desc = "Toggle paste"})
 
--- code
-setKeyMap('n', "<leader>c*", fzf.lsp_references, {silent = true, desc="Code references"})
-
--- jump
-setKeyMap('n', "<leader>jc", fzf.lsp_document_symbols, {silent = true, desc="Document symbols"})
-setKeyMap('n', "<leader>Jc", fzf.lsp_workspace_symbols, {silent = true, desc="Workspace symbols"})
-
 -- project
 setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
           {silent = true, desc = "Find project files"})
 setKeyMap('n', "<leader>pf", fzf.files, {silent = true, desc = "Find files"})
+setKeyMap('n', "<leader>ps", fzf.lsp_workspace_symbols,
+          {silent = true, desc = "Symbols"})
+setKeyMap('n', "<leader>px", "<cmd>Trouble workspace_diagnostics<cr>",
+          {silent = true, desc = "Trouble"})
 
 -- git
 setKeyMap('n', "<leader>gg", fzf.git_status,
@@ -127,20 +168,20 @@ setKeyMap('n', "<leader>sh", fzf.search_history,
           {silent = true, desc = "Search history"})
 setKeyMap('n', "<leader>sb", fzf.lgrep_curbuf,
           {silent = true, desc = "Search buffer"})
+setKeyMap('n', "<leader>s*", fzf.lsp_references,
+          {silent = true, desc = "Code references"})
 
 -- trouble
-setKeyMap('n', "<leader>xx", "<cmd>Trouble<cr>", {silent = true})
-setKeyMap('n', "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
-          {silent = true})
-setKeyMap('n', "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
-          {silent = true})
+setKeyMap('n', "<leader>xx", "<cmd>Trouble<cr>",
+          {silent = true, desc = "Trouble"})
 setKeyMap('n', "<leader>xl", "<cmd>Trouble loclist<cr>", {silent = true})
 setKeyMap('n', "<leader>xq", "<cmd>Trouble quickfix<cr>", {silent = true})
 setKeyMap('n', "<leader>xf", vim.diagnostic.open_float, {silent = true})
 setKeyMap('n', "<leader>xg", vim.diagnostic.setloclist, {silent = true})
 
 -- window
-setKeyMap('n', "<c-w>s", mong8se.splitCommand, {silent = true, desc = "Split and browse"})
+setKeyMap('n', "<c-w>s", mong8se.splitCommand,
+          {silent = true, desc = "Split and browse"})
 setKeyMap('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
 setKeyMap('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
 setKeyMap('t', "<c-w><C-w>", "<C-\\><C-n>")
@@ -165,45 +206,49 @@ return {
     -- Actions
     setKeyMap('n', '<leader>hs', gs.stage_hunk, {buffer = bufnr})
     setKeyMap('n', '<leader>hr', gs.reset_hunk, {buffer = bufnr})
-    setKeyMap('v', '<leader>hs',
-      function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end,
-      {buffer = bufnr})
-    setKeyMap('v', '<leader>hr',
-      function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end,
-      {buffer = bufnr})
+    setKeyMap('v', '<leader>hs', function()
+      gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')}
+    end, {buffer = bufnr})
+    setKeyMap('v', '<leader>hr', function()
+      gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')}
+    end, {buffer = bufnr})
     setKeyMap('n', '<leader>hS', gs.stage_buffer, {buffer = bufnr})
     setKeyMap('n', '<leader>hu', gs.undo_stage_hunk, {buffer = bufnr})
     setKeyMap('n', '<leader>hR', gs.reset_buffer, {buffer = bufnr})
     setKeyMap('n', '<leader>hp', gs.preview_hunk, {buffer = bufnr})
     setKeyMap('n', '<leader>hb', function() gs.blame_line {full = true} end,
-      {buffer = bufnr})
-    setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame, {buffer = bufnr, desc="Toggle git blame line"})
+              {buffer = bufnr})
+    setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame,
+              {buffer = bufnr, desc = "Toggle git blame line"})
     setKeyMap('n', '<leader>hd', gs.diffthis, {buffer = bufnr})
-    setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end, {buffer = bufnr})
-    setKeyMap('n', '<leader>tgd', gs.toggle_deleted, {buffer = bufnr, desc = "Toggle git deleted lines"})
+    setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end,
+              {buffer = bufnr})
+    setKeyMap('n', '<leader>tgd', gs.toggle_deleted,
+              {buffer = bufnr, desc = "Toggle git deleted lines"})
 
     -- Text object
-    setKeyMap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {buffer = bufnr})
+    setKeyMap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>',
+              {buffer = bufnr})
   end,
 
   lsp = function(lsp, bufnr)
     setKeyMap('n', "gD", lsp.buf.declaration,
-      {silent = true, buffer = bufnr, desc = "Go to declaration"})
+              {silent = true, buffer = bufnr, desc = "Go to declaration"})
     setKeyMap('n', "gd", lsp.buf.definition,
-      {silent = true, buffer = bufnr, desc = "Go to definition"})
+              {silent = true, buffer = bufnr, desc = "Go to definition"})
     setKeyMap('n', "K", lsp.buf.hover, {silent = true, buffer = bufnr})
     setKeyMap('n', "\\", lsp.buf.signature_help, {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wa", lsp.buf.add_workspace_folder,
-      {silent = true, buffer = bufnr})
+              {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wr", lsp.buf.remove_workspace_folder,
-      {silent = true, buffer = bufnr})
+              {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wl",
-      '<cmd>lua print(vim.inspect(lsp.buf.list_workspace_folders()))<CR>',
-      {silent = true, buffer = bufnr})
+              '<cmd>lua print(vim.inspect(lsp.buf.list_workspace_folders()))<CR>',
+              {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>cf", lsp.buf.formatting,
-      {silent = true, buffer = bufnr})
+              {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>cr", lsp.buf.rename, {silent = true, buffer = bufnr})
     setKeyMap('n', '<leader>cd', lsp.buf.type_definition,
-      {silent = true, buffer = bufnr})
+              {silent = true, buffer = bufnr})
   end
 }
