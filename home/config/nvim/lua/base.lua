@@ -69,7 +69,7 @@ settings.virtualedit = "block,insert"
 
 settings.list = true
 settings.listchars = {
-  tab = "⠢⠠",
+  tab = "- ⇥",
   trail = "ˍ",
   precedes = "\\uf053",
   extends = "\\uf054"
