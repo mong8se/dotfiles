@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=babel
+setlocal formatprg=npx\ prettier\ --parser=babel

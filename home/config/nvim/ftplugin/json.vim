@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=json-stringify
+setlocal formatprg=npx\ prettier\ --parser=json-stringify

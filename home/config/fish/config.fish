@@ -30,13 +30,7 @@ if not set -q HOMEBREW_PREFIX
 end
 
 if status --is-interactive
-  if set -q VIM_TERMINAL
-    fish_default_key_bindings
-  else if type -q fish_hybrid_key_bindings
-    fish_hybrid_key_bindings
-  else
-    fish_vi_key_bindings
-  end
+  fish_default_key_bindings
 
   set -x FZF_DEFAULT_OPTS "
   --height 40% --reverse --extended --cycle

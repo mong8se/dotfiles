@@ -35,3 +35,5 @@ else
   # bind ! bind_bang
   bind '$' bind_dollar
 end
+
+bind \cz 'jobs -q; and fg'

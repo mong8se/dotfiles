@@ -1,4 +1,4 @@
 setlocal expandtab
 setlocal smarttab
 setlocal autoindent
-setlocal formatprg=prettier\ --parser=ruby
+setlocal formatprg=npx\ prettier\ --parser=ruby

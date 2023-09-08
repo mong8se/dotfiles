@@ -243,12 +243,10 @@ MD5=$(/bin/hostname | tr -d "\n" | $MD5_CMD)
 # strip trailing *stdin\n from md5sum output
 HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 
-BC_ENV_ARGS=""
-
 # it's important obase come before ibase so you can
 # specify the obase in base 10. Otherwise you have
 # to specify the obase in the base of the ibase
-for i in $(BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
+for i in $(BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
 
   # We're using bc's built in line break
   # to truncate at 13 characters

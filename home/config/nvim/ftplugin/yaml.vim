@@ -1,1 +1,1 @@
-setlocal formatprg=prettier\ --parser=yaml
+setlocal formatprg=npx\ prettier\ --parser=yaml

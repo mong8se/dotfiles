@@ -1,2 +1,2 @@
 setlocal iskeyword+=-
-setlocal formatprg=prettier\ --parser=css
+setlocal formatprg=npx\ prettier\ --parser=css
