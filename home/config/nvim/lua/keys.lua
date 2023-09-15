@@ -115,6 +115,10 @@ setKeyMap('n', "<leader>bs", fzf.lsp_document_symbols,
 setKeyMap('n', "<leader>bx", "<cmd>Trouble document_diagnostics<cr>",
           {silent = true, desc = "Buffer Diagnostics"})
 
+setKeyMap('n', "<leader>;",
+          require("buffish").follow_shortcut,
+          { desc = "Go to Buffish shortcut" })
+
 -- file
 setKeyMap('n', "<leader>f-",
           function() vim.cmd("edit " .. mong8se.directoryFromContext()) end,
@@ -204,25 +208,25 @@ return {
     setKeyMap('n', '[h', gs.prev_hunk, {desc = "Hunk last", buffer = bufnr})
 
     -- Actions
-    setKeyMap('n', '<leader>hs', gs.stage_hunk, {buffer = bufnr})
-    setKeyMap('n', '<leader>hr', gs.reset_hunk, {buffer = bufnr})
+    setKeyMap('n', '<leader>hs', gs.stage_hunk, {buffer = bufnr, desc = "Stage hunk"})
+    setKeyMap('n', '<leader>hr', gs.reset_hunk, {buffer = bufnr, desc = "Reset hunk"})
     setKeyMap('v', '<leader>hs', function()
       gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')}
-    end, {buffer = bufnr})
+    end, {buffer = bufnr, desc = "Stage Hunk"})
     setKeyMap('v', '<leader>hr', function()
       gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')}
-    end, {buffer = bufnr})
-    setKeyMap('n', '<leader>hS', gs.stage_buffer, {buffer = bufnr})
-    setKeyMap('n', '<leader>hu', gs.undo_stage_hunk, {buffer = bufnr})
-    setKeyMap('n', '<leader>hR', gs.reset_buffer, {buffer = bufnr})
-    setKeyMap('n', '<leader>hp', gs.preview_hunk, {buffer = bufnr})
+    end, {buffer = bufnr, desc = "Reset hunk"})
+    setKeyMap('n', '<leader>hS', gs.stage_buffer, {buffer = bufnr, desc = "Stage buffer"})
+    setKeyMap('n', '<leader>hR', gs.reset_buffer, {buffer = bufnr, desc = "Reset buffer"})
+    setKeyMap('n', '<leader>hu', gs.undo_stage_hunk, {buffer = bufnr, desc = 'Undo stage hunk'})
+    setKeyMap('n', '<leader>hp', gs.preview_hunk, {buffer = bufnr, desc = "Preview hunk"})
     setKeyMap('n', '<leader>hb', function() gs.blame_line {full = true} end,
-              {buffer = bufnr})
+              {buffer = bufnr, desc = "Blame hunk"})
     setKeyMap('n', '<leader>tgb', gs.toggle_current_line_blame,
               {buffer = bufnr, desc = "Toggle git blame line"})
-    setKeyMap('n', '<leader>hd', gs.diffthis, {buffer = bufnr})
+    setKeyMap('n', '<leader>hd', gs.diffthis, {buffer = bufnr, desc="Hunk diff"})
     setKeyMap('n', '<leader>hD', function() gs.diffthis('~') end,
-              {buffer = bufnr})
+              {buffer = bufnr, desc = "Diff what"})
     setKeyMap('n', '<leader>tgd', gs.toggle_deleted,
               {buffer = bufnr, desc = "Toggle git deleted lines"})
 
