@@ -116,7 +116,7 @@ setKeyMap('n', "<leader>bx", "<cmd>Trouble document_diagnostics<cr>",
           {silent = true, desc = "Buffer Diagnostics"})
 
 setKeyMap('n', "<leader>;",
-          require("buffish").follow_shortcut,
+          require("buffish.shortcuts").follow,
           { desc = "Go to Buffish shortcut" })
 
 -- file
