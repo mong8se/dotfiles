@@ -45,6 +45,8 @@ return {
   'hrsh7th/vim-vsnip',
   'hrsh7th/vim-vsnip-integ',
 
+  'tpope/vim-abolish', -- cr
+
   'vimwiki/vimwiki',
   {'itchyny/calendar.vim', cmd = 'Calendar'},
   {'mtth/scratch.vim', cmd = 'Scratch'}, -- gs
