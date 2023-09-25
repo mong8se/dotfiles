@@ -75,7 +75,9 @@ settings.listchars = {
   extends = "\\uf054"
 }
 settings.fillchars = {
-  vert = "│",
+  eob = "⢎", -- "⡪", -- "⢸",
+  horiz = "═",
+  vert = "┆",
   fold = "╍",
   foldopen = "\\uf078",
   foldclose = "\\uf077"
@@ -110,7 +112,8 @@ if has("user_commands") then
   -- This is to override split to be our new Split.
   -- Since command abbr also effects search,
   -- we want to make sure we are in ex mode (:)
-  cmd("cnoreabbrev <expr> split getcmdtype() == ':' && getcmdline() ==# 'split' ? 'Split' : 'split'")
+  cmd(
+      "cnoreabbrev <expr> split getcmdtype() == ':' && getcmdline() ==# 'split' ? 'Split' : 'split'")
 end
 
 settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'

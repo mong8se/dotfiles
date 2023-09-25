@@ -12,9 +12,7 @@ require('mini.surround').setup()
 
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
-jump2d.setup({
-  spotter = jump_line_start.spotter,
-})
+jump2d.setup({spotter = jump_line_start.spotter})
 
 local MiniMap = require('mini.map')
 MiniMap.setup({
@@ -83,7 +81,11 @@ cmp.setup({
     -- { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
-  }, {{name = 'buffer'}})
+  }, {{name = 'buffer'}}),
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered()
+  }
 })
 
 -- opt.configuration='for specific filetype.'
@@ -116,10 +118,8 @@ end
 -- map buffer local keybindings when the language server attaches
 local servers = {
   {'tsserver', root_pattern = {'package.json'}},
-  {'denols', root_pattern = {'deps.ts', 'deps.js'}},
-  'html', "cssls", "jsonls",
-  "gopls", "rust_analyzer",
-  "lua_ls"
+  {'denols', root_pattern = {'deps.ts', 'deps.js'}}, 'html', "cssls", "jsonls",
+  "gopls", "rust_analyzer", "lua_ls"
 }
 for _, cnf in pairs(servers) do
   local server_config = {
@@ -135,13 +135,11 @@ for _, cnf in pairs(servers) do
     lsp = table.remove(cnf, 1)
 
     if cnf.root_pattern then
-      server_config.root_dir = require('lspconfig.util')
-        .root_pattern(unpack(cnf.root_pattern))
+      server_config.root_dir = require('lspconfig.util').root_pattern(unpack(
+                                                                          cnf.root_pattern))
     end
 
-    if cnf.settings then
-      server_config.settings = cnf.settings
-    end
+    if cnf.settings then server_config.settings = cnf.settings end
   else
     lsp = cnf
   end
@@ -216,7 +214,7 @@ require'lualine'.setup {
 
 require("indent_blankline").setup {
   show_trailing_blankline_indent = false,
-  show_current_context = true,
+  show_current_context = true
 }
 
 -- CtrlSF
