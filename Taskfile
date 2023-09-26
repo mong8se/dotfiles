@@ -246,28 +246,32 @@ HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 # it's important obase come before ibase so you can
 # specify the obase in base 10. Otherwise you have
 # to specify the obase in the base of the ibase
-for i in $(BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
+HOST42=$(
+  for i in $(
+    BC_ENV_ARGS="-e obase=42 -e ibase=16" BC_LINE_LENGTH=42 bc <<< $HEXVALUE
+  )
+  do
+    # We're using bc's built in line break
+    # to truncate at 13 characters
 
-  # We're using bc's built in line break
-  # to truncate at 13 characters
+    # bc is going to output each digit as a zero led
+    # two digit string followed by a space (3 chars):
+    #
+    #   01 35 12
 
-  # bc is going to output each digit as a zero led
-  # two digit string followed by a space (3 chars):
-  #
-  #   01 35 12
+    # so we're setting its line length to
+    #    3 chars x (13 + 1) = 42
 
-  # so we're setting its line length to
-  #    3 chars x (13 + 1) = 42
+    # after that bc puts a \ and a new line
+    # so we detect the \ and break the loop
+    if [ $i = '\' ] ; then break ; fi
 
-  # after that bc puts a \ and a new line
-  # so we detect the \ and break the loop
-  if [ $i = '\' ] ; then break ; fi
-
-  # we need to cast to base 10 in the array
-  # look up because bash will barf on the
-  # leading zeros
-  HOST42=$HOST42${BASE42[$(( 10#$i ))]}
-done
+    # we need to cast to base 10 in the array
+    # look up because bash will barf on the
+    # leading zeros
+    echo -n ${BASE42[$(( 10#$i ))]}
+  done
+)
 
 TIMEFORMAT="Task completed in %3lR"
 time "task:${@:-default}"
