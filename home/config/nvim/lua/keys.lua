@@ -142,6 +142,7 @@ setKeyMap('n', "<leader>tw", "<cmd>setlocal wrap!<CR><cmd>set wrap?<CR>",
           {silent = true, desc = "Toggle line wrap"})
 setKeyMap('n', "<leader>tp", "<cmd>setlocal paste!<CR><cmd>set paste?<CR>",
           {silent = true, desc = "Toggle paste"})
+setKeyMap('n', "<leader>ti", "<cmd>IBLToggle<CR>", { desc = "Toggle indent blanklines"})
 
 -- project
 setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,

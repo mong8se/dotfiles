@@ -69,15 +69,16 @@ settings.virtualedit = "block,insert"
 
 settings.list = true
 settings.listchars = {
-  tab = "- ⇥",
+  tab = "╍╍⇥",
   trail = "ˍ",
   precedes = "\\uf053",
   extends = "\\uf054"
 }
+
 settings.fillchars = {
-  eob = "⢎", -- "⡪", -- "⢸",
+  eob = "⢎",
   horiz = "═",
-  vert = "┆",
+  vert = "┇",
   fold = "╍",
   foldopen = "\\uf078",
   foldclose = "\\uf077"

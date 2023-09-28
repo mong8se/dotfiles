@@ -9,7 +9,7 @@ require('mini.cursorword').setup()
 require('mini.pairs').setup()
 require('mini.starter').setup()
 require('mini.surround').setup()
-
+require('mini.jump').setup({})
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
 jump2d.setup({spotter = jump_line_start.spotter})
@@ -196,11 +196,7 @@ require'nvim-treesitter.configs'.setup {
   indent = {enable = true}
 }
 
-require("trouble").setup {
-  -- your configuration comes here
-  -- or leave it empty to use the default settings
-  -- refer to the configuration section below
-}
+require("trouble").setup()
 
 require'lualine'.setup {
   options = {
@@ -212,10 +208,9 @@ require'lualine'.setup {
   }
 }
 
-require("indent_blankline").setup {
-  show_trailing_blankline_indent = false,
-  show_current_context = true
-}
+require("ibl").setup({
+       indent = { char = "▏" },
+})
 
 -- CtrlSF
 g.ctrlsf_default_root = 'project' -- search relative to project root

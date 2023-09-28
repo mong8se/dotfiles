@@ -20,7 +20,7 @@ return {
   'folke/trouble.nvim',
 
   'roman/golden-ratio', -- C-W \
-  'unblevable/quick-scope', -- f F t T
+  -- 'unblevable/quick-scope', -- f F t T
   'danilamihailov/beacon.nvim',
 
   'echasnovski/mini.nvim',
