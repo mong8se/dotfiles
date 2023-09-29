@@ -136,7 +136,7 @@ end
 
 fish_add_path ~/.cargo/bin
 
-set -x BC_ENV_ARGS "-e scale=2"
+set -x BC_ENV_ARGS ~/.config/bcrc
 set -x ASDF_DIR "$DOTFILES_RESOURCES/asdf"
 set -x ASDF_DATA_DIR "$ASDF_DIR"
 set -x ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY latest_installed
