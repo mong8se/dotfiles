@@ -227,7 +227,6 @@ function task:explain {
 }
 
 # What do you get if you multiply six by nine
-export HOST42
 
 # set up an array of our base 42 characters
 # to look up each digit against
@@ -246,7 +245,7 @@ HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 # it's important obase come before ibase so you can
 # specify the obase in base 10. Otherwise you have
 # to specify the obase in the base of the ibase
-for i in $(BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
+export HOST42=$(for i in $(BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"); do
 
   # We're using bc's built in line break
   # to truncate at 13 characters
@@ -266,8 +265,8 @@ for i in $(BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALU
   # we need to cast to base 10 in the array
   # look up because bash will barf on the
   # leading zeros
-  HOST42=$HOST42${BASE42[$(( 10#$i ))]}
-done
+  echo -n ${BASE42[$(( 10#$i ))]}
+done)
 
 TIMEFORMAT="Task completed in %3lR"
 time "task:${@:-default}"
