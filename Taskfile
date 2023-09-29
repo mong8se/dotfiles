@@ -41,7 +41,7 @@ function task:submodule:update {
   git submodule update --remote
 }
 
-VI_BIN="$(command -v nvim || command -v vim || command -v vi | tr -d "\n") -u home/config/nvim/lua/lazy-init.lua --headless"
+VI_BIN="$(command -v nvim || command -v vim || command -v vi | tr -d "\n") -u home/config/nvim/lua/bootstrap.lua --headless"
 function task:vi:install {
   : 'Install Lazy plugins for neovim'
 

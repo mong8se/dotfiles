@@ -18,3 +18,4 @@ vim.g.polyglot_disabled = {
 vim.g.golden_ratio_autocommand = 0
 
 require("lazy").setup("plugs")
+vim.print("DONE")

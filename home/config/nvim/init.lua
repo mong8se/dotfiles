@@ -2,7 +2,7 @@ vim.g.mapleader = " "
 
 local mong8se = require("mong8se")
 
-mong8se.requireOrComplain("lazy-init")
+mong8se.requireOrComplain("bootstrap")
 mong8se.requireOrComplain("base")
 mong8se.requireOrComplain("auto")
 mong8se.requireOrComplain("colors")
