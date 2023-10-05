@@ -119,7 +119,7 @@ end
 local servers = {
   {'tsserver', root_pattern = {'package.json'}},
   {'denols', root_pattern = {'deps.ts', 'deps.js'}}, 'html', "cssls", "jsonls",
-  "gopls", "rust_analyzer", "lua_ls"
+  "pylsp", "gopls", "rust_analyzer", "lua_ls"
 }
 for _, cnf in pairs(servers) do
   local server_config = {
