@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local CursorLine = vim.api.nvim_create_augroup('CursorLine', {clear = true})
 local FocusIssues = vim.api.nvim_create_augroup('FocusIssues', {clear = true})
 local YankSync = vim.api.nvim_create_augroup('YankSync', {clear = true})
-local QuickScope = vim.api.nvim_create_augroup('QuickScope', {clear = true})
+local TermBuf = vim.api.nvim_create_augroup('TermBuf', {clear = true})
 
 -- cursorline only for active window
 autocmd({"VimEnter", "WinEnter", "BufWinEnter"}, {
@@ -20,18 +20,18 @@ autocmd("WinLeave", {
 --  leave insert or replace mode
 autocmd({"BufEnter", "WinLeave", "FocusLost", "VimSuspend"}, {
   pattern = "*",
-  callback = function() if vim.bo.buftype == "" then vim.cmd("stopinsert") end end,
+  callback = function() if vim.bo.buftype == "" then vim.cmd.stopinsert() end end,
   group = FocusIssues
 })
 
 --  Save the buffer if it is modified and has a filename
 autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
   pattern = "*",
-  callback = function() if vim.fn.getreg("%") ~= "" then vim.cmd("update") end end,
+  callback = function() if vim.fn.getreg("%") ~= "" then vim.cmd.update() end end,
   group = FocusIssues
 })
 
--- gq in normal mode in a help file closes the help
+-- make gq in normal mode in a help file close the help
 -- similar to what happens in fugitive
 autocmd("FileType", {
   pattern = "help",
@@ -41,29 +41,23 @@ autocmd("FileType", {
   end
 })
 
+-- whenever we yank to the unamed register also copy to the + and * registers
+-- instead of using the clipboard=unamed setting which does so even on deletes
 autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
     if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-      vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"),
-                    vim.v.event.regtype)
-      -- No idea why I have to it like this
-      -- If I don't schedule the second one somehow the first doesn't happen
-      vim.schedule(function()
-        vim.fn.setreg("*", vim.fn.getreg("+"), vim.fn.getreginfo("+").regtype)
-      end)
+      for _, reg in ipairs({"+", "*"}) do
+        vim.fn.setreg(reg, vim.v.event.regcontents, vim.v.event.regtype)
+      end
     end
   end,
   group = YankSync
 })
 
-autocmd("ColorScheme", {
+-- automatically enter insert mode when you open a terminal
+autocmd("TermOpen", {
   pattern = "*",
-  callback = function()
-    vim.api.nvim_set_hl(0, "QuickScopePrimary",
-                        {fg = 'yellow', underline = true})
-    vim.api.nvim_set_hl(0, "QuickScopeSecondary",
-                        {fg = 'orange', underline = true})
-  end,
-  group = QuickScope
+  callback = function() vim.cmd.startinsert() end,
+  group = TermBuf
 })
