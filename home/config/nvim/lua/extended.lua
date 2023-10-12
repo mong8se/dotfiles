@@ -9,7 +9,9 @@ require('mini.cursorword').setup()
 require('mini.pairs').setup()
 require('mini.starter').setup()
 require('mini.surround').setup()
-require('mini.jump').setup({})
+require('mini.jump').setup()
+require("mini.statusline").setup()
+
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
 jump2d.setup({spotter = jump_line_start.spotter})
@@ -197,16 +199,6 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require("trouble").setup()
-
-require'lualine'.setup {
-  options = {
-    theme = vim.startswith(g.colors_name, "base16") and "base16" or
-        "gruvbox-material",
-
-    section_separators = {left = '', right = ''},
-    component_separators = {left = '', right = ''}
-  }
-}
 
 require("ibl").setup({
        indent = { char = "▏" },

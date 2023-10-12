@@ -7,18 +7,18 @@ settings.termguicolors = true
 
 if env.BASE16_THEME then
   global.base16colorspace = 256
-  cmd("colorscheme base16-" .. env.BASE16_THEME)
+  cmd.colorscheme("base16-" .. env.BASE16_THEME)
 else
   if env.IS_DARK_MODE == "1" then
     settings.background = "dark"
     global.gruvbox_material_background = 'soft'
     -- global.gruvbox_material_foreground = 'mix'
-    cmd("colorscheme gruvbox-material")
+    cmd.colorscheme("gruvbox-material")
   else
     settings.background = "light"
-    cmd("colorscheme base16-solarized-light")
+    cmd.colorscheme("base16-solarized-light")
   end
 
 end
 
-cmd("highlight Comment cterm=italic")
+cmd.highlight(" Comment cterm=italic")
