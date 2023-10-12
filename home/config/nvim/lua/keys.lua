@@ -114,6 +114,8 @@ setKeyMap('n', "<leader>bs", fzf.lsp_document_symbols,
           {silent = true, desc = "Buffer symbols"})
 setKeyMap('n', "<leader>bx", "<cmd>Trouble document_diagnostics<cr>",
           {silent = true, desc = "Buffer Diagnostics"})
+setKeyMap('n', "<leader>b/", fzf.lgrep_curbuf,
+          {silent = true, desc = "Search in buffer"})
 
 setKeyMap('n', "<leader>;", require("buffish.shortcuts").follow,
           {desc = "Go to Buffish shortcut"})
@@ -142,7 +144,8 @@ setKeyMap('n', "<leader>tw", "<cmd>setlocal wrap!<CR><cmd>set wrap?<CR>",
           {silent = true, desc = "Toggle line wrap"})
 setKeyMap('n', "<leader>tp", "<cmd>setlocal paste!<CR><cmd>set paste?<CR>",
           {silent = true, desc = "Toggle paste"})
-setKeyMap('n', "<leader>ti", "<cmd>IBLToggle<CR>", { desc = "Toggle indent blanklines"})
+setKeyMap('n', "<leader>ti", "<cmd>IBLToggle<CR>",
+          {desc = "Toggle indent blanklines"})
 
 -- project
 setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
@@ -152,6 +155,8 @@ setKeyMap('n', "<leader>ps", fzf.lsp_workspace_symbols,
           {silent = true, desc = "Symbols"})
 setKeyMap('n', "<leader>px", "<cmd>Trouble workspace_diagnostics<cr>",
           {silent = true, desc = "Trouble"})
+setKeyMap('n', "<leader>p/", fzf.live_grep,
+          {silent = true, desc = "Search in project"})
 
 -- git
 setKeyMap('n', "<leader>gg", fzf.git_status,
@@ -166,12 +171,8 @@ setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc = "Git stash"})
 -- search
 setKeyMap('n', "<leader>sr", ':CtrlSFOpen<CR>',
           {silent = true, desc = "Resume search"})
-setKeyMap('n', "<leader>sp", fzf.live_grep,
-          {silent = true, desc = "Search project"})
 setKeyMap('n', "<leader>sh", fzf.search_history,
           {silent = true, desc = "Search history"})
-setKeyMap('n', "<leader>sb", fzf.lgrep_curbuf,
-          {silent = true, desc = "Search buffer"})
 setKeyMap('n', "<leader>s*", fzf.lsp_references,
           {silent = true, desc = "Code references"})
 
