@@ -10,16 +10,16 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Use lsp for these
 vim.g.polyglot_disabled = {
-  "css", "go", "html", "javascript", "json", "lua", "rust", "sensible",
-  "typescript"
+  "css", "sensible", "go", "html", "javascript", "json", "lua", "python",
+  "rust", "typescript"
 }
 
 -- Golden Ratio
 vim.g.golden_ratio_autocommand = 0
 
 local disabled_built_ins = {
-  "getscript", "getscriptPlugin", "vimball", "vimballPlugin", "2html_plugin",
-  "logipat", "rrhelper", "spellfile_plugin", "matchit"
+  "getscript", "logipat", "2html_plugin", "getscriptPlugin", "matchit", "netrw",
+  "netrwPlugin", "rrhelper", "spellfile_plugin", "vimball", "vimballPlugin"
 }
 
 for _, plugin in pairs(disabled_built_ins) do vim.g["loaded_" .. plugin] = 1 end

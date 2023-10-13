@@ -78,7 +78,7 @@ settings.listchars = {
 settings.fillchars = {
   eob = "⢎",
   horiz = "═",
-  vert = "┇",
+  vert = "▕",
   fold = "╍",
   foldopen = "\\uf078",
   foldclose = "\\uf077"
@@ -118,6 +118,3 @@ if has("user_commands") then
 end
 
 settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'
-
-vim.g.netrw_banner = false
-vim.g.netrw_list_hide = "^\\.\\.\\?/$"
