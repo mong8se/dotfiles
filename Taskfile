@@ -14,13 +14,13 @@ function com_ex {
 }
 
 function nope {
-  echo Error: $@ >&2
+  echo Error: ${@}! >&2
   exit 1
 }
 
-com_ex bc || nope "bc must be installed!"
+com_ex bc || nope "bc must be installed"
 
-com_ex cargo || com_ex deno || nope "Either rust or deno must be installed!"
+com_ex cargo || nope "rust must be installed"
 
 function task:hostname {
   : "Print hash of hostname"
@@ -66,26 +66,6 @@ function task:vi:cleanup {
   echo " done."
 }
 
-function task:deno:install {
-  : "Install Deno"
-
-  export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
-  export ASDF_DATA_DIR="$ASDF_DIR"
-  . $ASDF_DIR/asdf.sh
-  asdf plugin add deno
-  task:deno:upgrade
-}
-
-function task:deno:upgrade {
-  : "Upgrade Deno"
-
-  export ASDF_DIR="$REPO_LOCATION/Resources/asdf"
-  export ASDF_DATA_DIR="$ASDF_DIR"
-  . $ASDF_DIR/asdf.sh
-  asdf install deno latest
-  asdf global deno latest
-}
-
 function task:homebrew:install {
   : "Install homebrew"
 
@@ -126,41 +106,37 @@ function task:os:upgrade {
 
 }
 
-function task:test() {
-  cd Resources/linkOmatic
-  deno run --allow-write __tests__/generateDeps.ts
-  deno test --allow-read --allow-env --allow-net --import-map=__tests__/importMap.json
-}
-
 function task:lom:install {
   : 'Install link_o_matic via cargo'
 
   cargo install --git https://github.com/mong8se/link_o_matic.git
 }
 
-com_ex link_o_matic && LINKO="link_o_matic" || LINKO="deno -q run --allow-read --allow-write --allow-env ""$REPO_LOCATION/Resources/linkOmatic/cli.ts"
+function link_it {
+  com_ex link_o_matic && link_o_matic $1 || nope "link_o_matic must be installed with task lom:install"
+}
 
 function task:cleanup {
   : "Clean up stale symlinks that point to .dotfiles/"
 
-  $LINKO cleanup
+  link_it cleanup
 }
 
 function task:autocleanup {
   : "Clean up stale symlinks that point to .dotfiles/ without prompting"
 
-  $LINKO autocleanup
+  link_it autocleanup
 }
 
 function task:implode {
   : "Remove all symlinks that point to .dotfiles/ without asking"
-  $LINKO implode
+  link_it implode
 }
 
 function task:install {
   : "Install symlinks to .dotfiles/home"
 
-  $LINKO install
+  link_it install
 }
 
 function task:sync {
@@ -175,7 +151,7 @@ function task:init {
 
   task:submodule:init
   task:submodule:update
-  com_ex cargo && lom:install || deno:install
+  com_ex cargo && task:lom:install
   export PATH="$PATH:~/.cargo/bin"
   task:install
   task:vi:install
@@ -184,7 +160,7 @@ function task:init {
 function task:upgrade {
   : "Upgrade links, os, submodules, and vi"
 
-  com_ex cargo && task:lom:install || task:deno:install
+  com_ex cargo && task:lom:install
   task:sync
   task:os:upgrade
   task:submodule:update
