@@ -66,6 +66,20 @@ function task:vi:cleanup {
   echo " done."
 }
 
+EMACS_BIN="$HOME/.emacs.d/bin/doom"
+function task:emacs:sync {
+  $EMACS_BIN sync
+}
+
+function task:emacs:clean {
+  $EMACS_BIN clean
+}
+
+function task:emacs:upgrade {
+  task:submodule:update
+  $EMACS_BIN upgrade
+}
+
 function task:homebrew:install {
   : "Install homebrew"
 
