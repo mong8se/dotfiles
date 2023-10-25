@@ -16,10 +16,12 @@ settings.ttimeout = true
 settings.ttimeoutlen = 10
 
 settings.wildmenu = true
-settings.wildmode = "longest:full,full"
+settings.wildmode = {"longest:full", "full"}
 
-settings.wildignore:append(
-    "*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,node_modules/*")
+settings.wildignore:append({
+  "*.o", "*.obj", ".git", "*.rbc", "*.class", ".svn", "vendor/gems/*",
+  "node_modules/*"
+})
 
 settings.showcmd = true
 settings.cmdheight = 1
@@ -38,7 +40,7 @@ settings.inccommand = "nosplit"
 settings.ignorecase = true
 settings.smartcase = true
 
-settings.backspace = "indent,eol,start"
+settings.backspace = {"indent", "eol", "start"}
 
 settings.startofline = false
 
@@ -65,7 +67,7 @@ settings.wrap = false
 settings.whichwrap = "<,>,b"
 settings.sidescroll = 1
 settings.sidescrolloff = 5
-settings.virtualedit = "block,insert"
+settings.virtualedit = {"block", "insert"}
 
 settings.list = true
 settings.listchars = {
@@ -108,6 +110,7 @@ if has("user_commands") then
   command("Q", "q<bang>", {bang = true})
   command("QA", "qa<bang>", {bang = true})
   command("Qa", "qa<bang>", {bang = true})
+  command("Messages", "messages", {})
 
   command("Split", splitCommand, {nargs = "?", complete = "file"})
   -- This is to override split to be our new Split.
@@ -117,4 +120,5 @@ if has("user_commands") then
       "cnoreabbrev <expr> split getcmdtype() == ':' && getcmdline() ==# 'split' ? 'Split' : 'split'")
 end
 
-settings.grepprg = 'rg\\ --vimgrep\\ --no-heading\\ --smart-case'
+settings.grepprg = 'rg --vimgrep --no-heading --smart-case'
+settings.grepformat = '%f:%l:%c:%m'

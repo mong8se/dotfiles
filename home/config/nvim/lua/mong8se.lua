@@ -1,4 +1,4 @@
-local opt = vim.o
+local opt = vim.opt
 local win = vim.wo
 local cmd = vim.cmd
 local fn = vim.fn
@@ -21,21 +21,23 @@ mong8se.loadRCFiles = function(which)
 end
 
 -- require a module or complain it didn't load
-mong8se.requireOrComplain = function(name)
-  local status, result = pcall(require, name)
+mong8se.requireOrComplain = function(...)
+  for _, name in ipairs({...}) do
+    local status, result = pcall(require, name)
 
-  if status then return result end
-
-  vim.notify_once(string.format("Failed to load %s: %s", name, result))
+    if not status then
+      vim.notify_once(string.format("Failed to load %s: %s", name, result))
+    end
+  end
 end
 
 -- toggle line numbers
 mong8se.toggleNumberMode = function()
-  if opt.relativenumber then
+  if opt.relativenumber:get() then
     win.number = false
     win.relativenumber = false
     win.colorcolumn = "0"
-  elseif opt.number then
+  elseif opt.number:get() then
     win.relativenumber = true
     win.colorcolumn = "80"
   else
