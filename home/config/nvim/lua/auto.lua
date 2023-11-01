@@ -47,7 +47,7 @@ autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
     if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-      for _, reg in ipairs({"+", "*"}) do
+      for _, reg in ipairs({"*", "+"}) do
         vim.fn.setreg(reg, vim.v.event.regcontents, vim.v.event.regtype)
       end
     end
