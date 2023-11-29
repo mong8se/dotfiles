@@ -4,9 +4,9 @@
 
 set -e
 
-ELEVATOR=$(command -v doas || command -v sudo | tr -d "\n" )
+ELEVATOR=$(command -v doas || command -v sudo | tr -d "\n")
 
-export REPO_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+export REPO_LOCATION="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 cd $REPO_LOCATION
 
 function com_ex {
@@ -112,10 +112,10 @@ function task:os:upgrade {
       ;;
     Darwin)
       brew update && brew upgrade
-    ;;
+      ;;
     *)
       echo "OS is unrecognized."
-    ;;
+      ;;
   esac
 
 }
@@ -191,8 +191,7 @@ function task:help {
   echo "$0 <task> <args>"
   echo
   echo "Tasks:"
-  for task in $(compgen -A function | sed -nE '/default/d; s/task:(.*)/\1/p')
-  do
+  for task in $(compgen -A function | sed -nE '/default/d; s/task:(.*)/\1/p'); do
     task:describe $task
   done
   echo
@@ -224,13 +223,13 @@ BASE42=($(echo {0..8} {a..z} M O A Z A M I))
 # Repeating A and M will cause collisions but for
 # this use case, odds are slim it will matter
 
-MD5_CMD=$(command -v md5 || command -v md5sum | tr -d "\n" )
+MD5_CMD=$(command -v md5 || command -v md5sum | tr -d "\n")
 # trim new line and md5 the hostname
 MD5=$(/bin/hostname | tr -d "\n" | $MD5_CMD)
 
 # switch to lower case because bc demands it
 # strip trailing *stdin\n from md5sum output
-HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
+HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ */})
 
 # it's important obase come before ibase so you can
 # specify the obase in base 10. Otherwise you have
@@ -238,8 +237,7 @@ HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ *})
 export HOST42=$(
   for i in $(
     BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"
-  )
-  do
+  ); do
     # We're using bc's built in line break
     # to truncate at 13 characters
 
@@ -253,12 +251,12 @@ export HOST42=$(
 
     # after that bc puts a \ and a new line
     # so we detect the \ and break the loop
-    if [ $i = '\' ] ; then break ; fi
+    if [ $i = '\' ]; then break; fi
 
     # we need to cast to base 10 in the array
     # look up because bash will barf on the
     # leading zeros
-    echo -n ${BASE42[$(( 10#$i ))]}
+    echo -n ${BASE42[$((10#$i))]}
   done
 )
 
