@@ -149,6 +149,22 @@ for _, cnf in pairs(servers) do
   require('lspconfig')[lsp].setup(server_config)
 end
 
+local combinedTargets = {
+  "@assignment.inner", "@assignment.lhs", "@assignment.outer",
+  "@assignment.rhs", "@attribute.inner", "@attribute.outer",
+  -- "@block.inner",
+  "@block.outer", "@call.inner", "@call.outer", "@class.inner", "@class.outer",
+  -- "@comment.inner",
+  -- "@comment.outer",
+  "@conditional.inner", "@conditional.outer", "@frame.inner", "@frame.outer",
+  "@function.inner", "@function.outer", "@loop.inner", "@loop.outer",
+  "@number.inner", "@parameter.inner",
+  -- "@parameter.outer",
+  -- "@regex.inner",
+  "@regex.outer",
+  "@return.inner", "@return.outer",
+  "@scopename.inner", "@statement.outer"
+}
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "bash", "dockerfile", "go", "lua", "rust", "css", "diff", "elvish", "fish",
@@ -184,6 +200,28 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       swap_next = {["]a"] = "@parameter.inner"},
       swap_previous = {["[a"] = "@parameter.inner"}
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = {query = combinedTargets},
+        ["]z"] = {query = "@fold", query_group = "folds", desc = "Fold next"}
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = {query = combinedTargets}
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = {query = combinedTargets},
+        ["[z"] = {query = "@fold", query_group = "folds", desc = "Fold last"}
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = {query = combinedTargets}
+      }
     }
   },
   highlight = {enable = true, additional_vim_regex_highlighting = false},
