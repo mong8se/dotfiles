@@ -4,23 +4,28 @@
 
 set -e
 
-ELEVATOR=$(command -v doas || command -v sudo | tr -d "\n")
-
-export REPO_LOCATION="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
-cd $REPO_LOCATION
-
-function com_ex {
-  command -v $1 > /dev/null
-}
-
 function nope {
-  echo Error: ${@}! >&2
+  echo Error: ${@} must be installed! >&2
   exit 1
 }
 
-com_ex bc || nope "bc must be installed"
+function choose {
+  which $@ | head -1 | tr -d "\n" | grep . || nope "one of [ $@ ]"
+}
 
-com_ex cargo || nope "rust must be installed"
+function have {
+  command -v $1 > /dev/null
+}
+
+have bc || nope bc
+
+have cargo || nope rust
+
+ELEVATOR="$(choose doas sudo)"
+VI_CMD="$(choose nvim vim vi)"
+
+export REPO_LOCATION="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+cd $REPO_LOCATION
 
 function task:hostname {
   : "Print hash of hostname"
@@ -41,12 +46,13 @@ function task:submodule:update {
   git submodule update --remote
 }
 
-VI_BIN="$(command -v nvim || command -v vim || command -v vi | tr -d "\n") -u home/config/nvim/lua/bootstrap.lua --headless"
+LAZY="-u home/config/nvim/lua/bootstrap.lua --headless"
+
 function task:vi:install {
   : 'Install Lazy plugins for neovim'
 
   echo -n "Installing vi plugs ..."
-  ${VI_BIN} "+Lazy! install" +qa
+  ${VI_CMD} ${LAZY} ${FUNCNAME##*:} +qa
   echo " done."
 }
 
@@ -54,30 +60,29 @@ function task:vi:sync {
   : 'Sync Lazy plugins for neovim'
 
   echo -n "Updating vi plugs ..."
-  ${VI_BIN} "+Lazy! sync" +qa
+  ${VI_CMD} ${LAZY} ${FUNCNAME##*:} +qa
   echo " done."
 }
 
-function task:vi:cleanup {
+function task:vi:clean {
   : 'Clean up Lazy plugins for neovim'
 
   echo -n "Cleaning up vi plugs ..."
-  ${VI_BIN} "+Lazy! clean" +qa
-  echo " done."
+  ${VI_CMD} ${LAZY} ${FUNCNAME##*:} +qa
 }
 
 EMACS_BIN="$HOME/.emacs.d/bin/doom"
 function task:emacs:sync {
-  $EMACS_BIN sync
+  $EMACS_BIN ${FUNCNAME##*:}
 }
 
 function task:emacs:clean {
-  $EMACS_BIN clean
+  $EMACS_BIN ${FUNCNAME##*:}
 }
 
 function task:emacs:upgrade {
   task:submodule:update
-  $EMACS_BIN upgrade
+  $EMACS_BIN ${FUNCNAME##*:}
 }
 
 function task:homebrew:install {
@@ -127,30 +132,31 @@ function task:lom:install {
 }
 
 function link_it {
-  com_ex link_o_matic && link_o_matic $1 || nope "link_o_matic must be installed with task lom:install"
+  have link_o_matic && link_o_matic $1 || nope "run task lom:install because link_o_matic"
 }
 
 function task:cleanup {
   : "Clean up stale symlinks that point to .dotfiles/"
 
-  link_it cleanup
+  link_it ${FUNCNAME##*:}
 }
 
 function task:autocleanup {
   : "Clean up stale symlinks that point to .dotfiles/ without prompting"
 
-  link_it autocleanup
+  link_it ${FUNCNAME##*:}
 }
 
 function task:implode {
   : "Remove all symlinks that point to .dotfiles/ without asking"
-  link_it implode
+
+  link_it ${FUNCNAME##*:}
 }
 
 function task:install {
   : "Install symlinks to .dotfiles/home"
 
-  link_it install
+  link_it ${FUNCNAME##*:}
 }
 
 function task:sync {
@@ -165,7 +171,7 @@ function task:init {
 
   task:submodule:init
   task:submodule:update
-  com_ex cargo && task:lom:install
+  have cargo && task:lom:install
   export PATH="$PATH:~/.cargo/bin"
   task:install
   task:vi:install
@@ -174,7 +180,7 @@ function task:init {
 function task:upgrade {
   : "Upgrade links, os, submodules, and vi"
 
-  com_ex cargo && task:lom:install
+  have cargo && task:lom:install
   task:sync
   task:os:upgrade
   task:submodule:update
@@ -223,7 +229,7 @@ BASE42=($(echo {0..8} {a..z} M O A Z A M I))
 # Repeating A and M will cause collisions but for
 # this use case, odds are slim it will matter
 
-MD5_CMD=$(command -v md5 || command -v md5sum | tr -d "\n")
+MD5_CMD=$(choose md5 md5sum)
 # trim new line and md5 the hostname
 MD5=$(/bin/hostname | tr -d "\n" | $MD5_CMD)
 
