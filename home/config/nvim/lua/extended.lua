@@ -21,7 +21,7 @@ MiniMap.setup({
   integrations = {MiniMap.gen_integration.gitsigns()},
   symbols = {
     encode = MiniMap.gen_encode_symbols.dot("4x2"),
-    scroll_line = '╞',
+    scroll_line = '▐',
     scroll_view = '│'
   },
   window = {width = 16, winblend = 70}
