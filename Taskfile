@@ -10,7 +10,7 @@ function nope {
 }
 
 function choose {
-  which $@ | head -1 | tr -d "\n" | grep . || nope "one of [ $@ ]"
+  which $@ 2> /dev/null | head -1 | tr -d "\n" | grep . || nope "one of [ $@ ]"
 }
 
 function have {
@@ -108,7 +108,7 @@ function task:os:upgrade {
           $ELEVATOR bash -c 'pacman -Sy; pacman -Qu archlinux-keyring && pacman -S archlinux-keyring; pacman -Su'
           ;;
         fedora)
-          $ELEVATOR dnf upgrade --refresh
+          $ELEVATOR dnf upgrade -y --refresh
           ;;
         *)
           echo "Linux distro is unrecognized."
