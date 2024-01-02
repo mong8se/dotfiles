@@ -52,8 +52,8 @@ if status --is-interactive
   abbr -a !! --position anywhere --function last_history_item
  
   # Imitate Bash !$
-  # function last_history_arg; string split --fields 2 --max 1 --right " " $history[1]; end
-  # abbr -a !\$ --position anywhere --function last_history_arg
+  function last_history_arg; commandline -f history-token-search-backward; end
+  abbr -a !\$ --position anywhere --function last_history_arg
 
   # Imitate Bash !:1
   function nth_argument; string split --fields (math (string sub -s -1 $argv[1]) + 1) " " $history[1]; end
