@@ -68,6 +68,16 @@ if status --is-interactive
   end
   abbr --add lastsub --regex '^\^(\w+)\^(\w+)$' --function replace_last_history
 
+  # Interactive change
+  function change_last_history
+    string replace (string sub -s 2 $argv) % $history[1]
+  end
+  abbr --add lastchange --regex '^\^(\w+)$' --set-cursor --function change_last_history
+
+  # Imitate Zsh =somecommand
+  function which_commander; string sub -s 2 $argv | xargs command -v;  end
+  abbr --add equalcommand --regex "=\w+" --position anywhere --function which_commander
+
   if test "nvim" = (path basename "$EDITOR")
     abbr -a vi nvim
     if type -q abduco
