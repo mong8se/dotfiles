@@ -31,6 +31,24 @@ autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
   group = FocusIssues
 })
 
+autocmd({"WinResized", "VimEnter"}, {
+  pattern = "*",
+  callback = function(details)
+    if (details.event == "WinResized") then
+      if vim.fn.win_gettype(details.match) == "" then
+        for _, win in ipairs(vim.v.event.windows) do
+          vim.wo[win].scrolloff = math.floor(vim.fn.winheight(win)/10)
+        end
+      end
+    else
+      if vim.fn.win_gettype() == "" then
+        vim.wo.scrolloff = math.floor(vim.fn.winheight(0)/10)
+      end
+    end
+  end,
+  group = ScrollOff
+})
+
 -- make gq in normal mode in a help file close the help
 -- similar to what happens in fugitive
 autocmd("FileType", {
