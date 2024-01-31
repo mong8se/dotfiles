@@ -221,8 +221,6 @@ function task:explain {
   printf '%s => %s\n' $1 "$(getTask $1 | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;")"
 }
 
-# What do you get if you multiply six by nine
-
 # set up an array of our base 42 characters
 # to look up each digit against
 BASE42=($(echo {0..8} {a..z} M O A Z A M I))
@@ -233,22 +231,24 @@ MD5_CMD=$(choose md5 md5sum)
 # trim new line and md5 the hostname
 MD5=$(/bin/hostname | tr -d "\n" | $MD5_CMD)
 
-# switch to lower case because bc demands it
+# switch to upper case because bc demands it
 # strip trailing *stdin\n from md5sum output
 HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ */})
 
-# it's important obase come before ibase so you can
-# specify the obase in base 10. Otherwise you have
-# to specify the obase in the base of the ibase
+# What do you get if you multiply six by nine
 export HOST42=$(
   for i in $(
+    # it's important obase come before ibase so you can
+    # specify the obase in base 10. Otherwise you have
+    # to specify the obase in the base of the ibase
     BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"
   ); do
-    # We're using bc's built in line break
+    # We're using bc's built-in line break
     # to truncate at 13 characters
 
-    # bc is going to output each digit as a zero led
-    # two digit string followed by a space (3 chars):
+    # bc is going to output each element as a space
+    # followed by a zero padded two digit base 10
+    # string (3 chars):
     #
     #   01 35 12
 
