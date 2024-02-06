@@ -22,7 +22,6 @@ have bc || nope bc
 have cargo || nope rust
 
 ELEVATOR="$(choose doas sudo)"
-VI_CMD="$(choose nvim vim vi)"
 
 export REPO_LOCATION="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 cd $REPO_LOCATION
@@ -46,13 +45,16 @@ function task:submodule:update {
   git submodule update --remote
 }
 
-LAZY="-u home/config/nvim/lua/bootstrap.lua --headless"
+function lazy {
+  VI_CMD="$(choose nvim vim vi)"
+  ${VI_CMD} -u home/config/nvim/lua/bootstrap.lua --headless "+Lazy! $1" +qa
+}
 
 function task:vi:install {
   : 'Install Lazy plugins for neovim'
 
   echo -n "Installing vi plugs ..."
-  ${VI_CMD} ${LAZY} ${FUNCNAME##*:} +qa
+  lazy ${FUNCNAME##*:}
   echo " done."
 }
 
@@ -60,7 +62,7 @@ function task:vi:sync {
   : 'Sync Lazy plugins for neovim'
 
   echo -n "Updating vi plugs ..."
-  ${VI_CMD} ${LAZY} ${FUNCNAME##*:} +qa
+  lazy ${FUNCNAME##*:}
   echo " done."
 }
 
@@ -68,7 +70,8 @@ function task:vi:clean {
   : 'Clean up Lazy plugins for neovim'
 
   echo -n "Cleaning up vi plugs ..."
-  ${VI_CMD} ${LAZY} ${FUNCNAME##*:} +qa
+  lazy ${FUNCNAME##*:}
+  echo " done."
 }
 
 EMACS_BIN="$HOME/.emacs.d/bin/doom"
