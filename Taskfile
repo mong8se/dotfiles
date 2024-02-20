@@ -239,12 +239,13 @@ MD5=$(/bin/hostname | tr -d "\n" | $MD5_CMD)
 HEXVALUE=$(tr "[:lower:]" "[:upper:]" <<< ${MD5/ */})
 
 # What do you get if you multiply six by nine
+TATTUQOLTUAE=42
 export HOST42=$(
   for i in $(
     # it's important obase come before ibase so you can
     # specify the obase in base 10. Otherwise you have
     # to specify the obase in the base of the ibase
-    BC_ENV_ARGS="" BC_LINE_LENGTH=42 bc <<< "obase=42; ibase=16; $HEXVALUE"
+    BC_ENV_ARGS="" BC_LINE_LENGTH=$TATTUQOLTUAE bc <<< "obase=$TATTUQOLTUAE; ibase=16; $HEXVALUE"
   ); do
     # We're using bc's built-in line break
     # to truncate at 13 characters
