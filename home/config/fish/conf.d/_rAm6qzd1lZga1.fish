@@ -17,3 +17,5 @@ set -gx NACL_SDK_ROOT "$HOME/Projects/Chrome/nacl_sdk/pepper_49"
 set -a Z_FALLBACKS ~/Projects/unvagrant/workspace
 
 set -gx NODE_EXTRA_CA_CERTS ~/Projects/unvagrant/certs/dpzca.pem
+
+launchctl setenv NODE_EXTRA_CA_CERTS $NODE_EXTRA_CA_CERTS
