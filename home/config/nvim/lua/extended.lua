@@ -76,7 +76,13 @@ cmp.setup({
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
         feedkey("<Plug>(vsnip-jump-prev)", "")
       end
-    end, {"i", "s"})
+    end, {"i", "s"}),
+    ['<C-\\>'] = cmp.mapping(function(fallback)
+      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+    end)
+  },
+  experimental = {
+    ghost_text = false -- this feature conflict with copilot.vim's preview.
   },
   sources = cmp.config.sources({
     {name = 'nvim_lsp'}, {name = 'vsnip'} -- For vsnip users.
@@ -105,17 +111,6 @@ cmp.setup.cmdline(':', {
   sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})
 })
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local lsp_on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  attachableBindings.lsp(vim.lsp, bufnr)
-end
-
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
@@ -124,13 +119,7 @@ local servers = {
   "pylsp", "gopls", "rust_analyzer", "lua_ls"
 }
 for _, cnf in pairs(servers) do
-  local server_config = {
-    on_attach = lsp_on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150
-    }
-  }
+  local server_config = {}
 
   local lsp
   if type(cnf) == "table" then
@@ -148,6 +137,14 @@ for _, cnf in pairs(servers) do
 
   require('lspconfig')[lsp].setup(server_config)
 end
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    attachableBindings.lsp(vim.lsp, ev.buf)
+  end,
+})
 
 local combinedTargets = {
   "@assignment.inner", "@assignment.lhs", "@assignment.outer",

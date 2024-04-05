@@ -32,6 +32,7 @@ MiniClue.setup({
     MiniClue.gen_clues.registers({show_contents = true}),
     MiniClue.gen_clues.windows(), MiniClue.gen_clues.z(),
     {mode = 'n', keys = '<Leader>b', desc = '+Buffer'},
+    {mode = 'n', keys = '<Leader>c', desc = '+Code'},
     {mode = 'n', keys = '<Leader>f', desc = '+File'},
     {mode = 'n', keys = '<Leader>g', desc = '+Git'},
     {mode = 'n', keys = '<Leader>h', desc = '+Hunk'},
@@ -70,7 +71,7 @@ setKeyMap('n', "<f1>", '<Nop>')
 setKeyMap('n', "Y", 'y$')
 
 -- Instead of look up in man, let's split, opposite of J for join
-setKeyMap('n', "K", "i<CR><Esc>")
+-- setKeyMap('n', "K", "i<CR><Esc>")
 setKeyMap('n', "<C-L>",
           ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
           {silent = true})
@@ -243,24 +244,30 @@ return {
               {buffer = bufnr})
   end,
 
-  lsp = function(lsp, bufnr)
-    setKeyMap('n', "gD", lsp.buf.declaration,
+  lsp = function(vim_lsp, bufnr)
+    setKeyMap('n', "gD", vim_lsp.buf.declaration,
               {silent = true, buffer = bufnr, desc = "Go to declaration"})
-    setKeyMap('n', "gd", lsp.buf.definition,
+    setKeyMap('n', "gd", vim_lsp.buf.definition,
               {silent = true, buffer = bufnr, desc = "Go to definition"})
-    setKeyMap('n', "K", lsp.buf.hover, {silent = true, buffer = bufnr})
-    setKeyMap('n', "\\", lsp.buf.signature_help, {silent = true, buffer = bufnr})
-    setKeyMap('n', "<leader>wa", lsp.buf.add_workspace_folder,
+    setKeyMap('n', "K", vim_lsp.buf.hover, {silent = true, buffer = bufnr})
+    setKeyMap('n', "\\", vim_lsp.buf.signature_help,
               {silent = true, buffer = bufnr})
-    setKeyMap('n', "<leader>wr", lsp.buf.remove_workspace_folder,
+    setKeyMap('n', "<leader>wa", vim_lsp.buf.add_workspace_folder,
+              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>wr", vim_lsp.buf.remove_workspace_folder,
               {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wl",
-              '<cmd>lua print(vim.inspect(lsp.buf.list_workspace_folders()))<CR>',
+              '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
               {silent = true, buffer = bufnr})
-    setKeyMap('n', "<leader>cf", lsp.buf.formatting,
-              {silent = true, buffer = bufnr})
-    setKeyMap('n', "<leader>cr", lsp.buf.rename, {silent = true, buffer = bufnr})
-    setKeyMap('n', '<leader>cd', lsp.buf.type_definition,
-              {silent = true, buffer = bufnr})
+    setKeyMap('n', "<leader>cf", vim_lsp.buf.format,
+              {silent = true, buffer = bufnr, desc = "Format"})
+    setKeyMap('n', "<leader>cr", vim_lsp.buf.rename,
+              {silent = true, buffer = bufnr, desc = "Rename"})
+    setKeyMap('n', '<leader>cd', vim_lsp.buf.type_definition,
+              {silent = true, buffer = bufnr, desc = "Type definition"})
+
+    vim.keymap.set("n", "<leader>th", function(event)
+      vim.lsp.inlay_hint.enable(event.buf, not vim.lsp.inlay_hint.is_enabled())
+    end, {desc = "Toggle inlay Hints"})
   end
 }
