@@ -257,7 +257,7 @@ return {
     setKeyMap('n', "<leader>wr", vim_lsp.buf.remove_workspace_folder,
               {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>wl",
-              '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
+              function() vim.print(vim.lsp.buf.list_workspace_folders()) end,
               {silent = true, buffer = bufnr})
     setKeyMap('n', "<leader>cf", vim_lsp.buf.format,
               {silent = true, buffer = bufnr, desc = "Format"})
