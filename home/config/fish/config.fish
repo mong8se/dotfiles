@@ -121,6 +121,10 @@ if status --is-interactive
     fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o $EDITOR
   end
 
+  if type -q fzf
+    fzf --fish | source
+  end
+
   if type -q starship
     function starship_transient_prompt_func
       starship module character
