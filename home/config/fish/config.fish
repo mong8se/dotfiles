@@ -78,13 +78,6 @@ if status --is-interactive
   function which_commander; string sub -s 2 $argv | xargs command -v;  end
   abbr --add equalcommand --regex "=\w+" --position anywhere --function which_commander
 
-  if test "nvim" = (path basename "$EDITOR")
-    abbr -a vi nvim
-    if type -q abduco
-      abbr -a av abduco -A nvim nvim
-    end
-  end
-
   if type -q lsd
     abbr tree lsd --tree
     abbr ls lsd
