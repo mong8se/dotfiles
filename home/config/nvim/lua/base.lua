@@ -48,8 +48,6 @@ settings.ruler = true
 settings.confirm = true
 settings.visualbell = true
 
-settings.pastetoggle = "<F11>"
-
 settings.shiftwidth = 2
 settings.softtabstop = 2
 settings.expandtab = true
@@ -95,14 +93,9 @@ settings.splitbelow = true
 settings.undofile = true
 
 settings.foldmethod = "expr"
-settings.foldexpr = "nvim_treesitter#foldexpr()"
+settings.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 settings.foldlevelstart = 4
-settings.foldtext = "v:lua.Mong8seFoldIt()"
-function Mong8seFoldIt()
-  return string.format("%s …%i… %s", vim.fn.getline(vim.v.foldstart),
-                       (vim.v.foldend - vim.v.foldstart - 1),
-                       vim.fn.getline(vim.v.foldend):gsub("^%s*", ""))
-end
+settings.foldtext = "v:lua.require('mong8se').foldIt()"
 
 if has("spell") then vim.o.spelllang = "en_us" end
 
