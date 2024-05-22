@@ -23,10 +23,9 @@ return {
   'echasnovski/mini.nvim',
 
   'airblade/vim-rooter',
-  'lewis6991/gitsigns.nvim',
   'sheerun/vim-polyglot',
 
-  {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+  {'nvim-treesitter/nvim-treesitter', build = ':TSUpdateSync'},
   'nvim-treesitter/nvim-treesitter-textobjects',
 
   'dyng/ctrlsf.vim', -- leader /

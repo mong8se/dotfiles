@@ -11,6 +11,9 @@ require('mini.starter').setup()
 require('mini.surround').setup()
 require('mini.jump').setup()
 require("mini.statusline").setup()
+require("mini.diff").setup({
+  view = {signs = {add = '🮌', change = '🮌', delete = '🮌'}}
+})
 
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
@@ -18,7 +21,7 @@ jump2d.setup({spotter = jump_line_start.spotter})
 
 local MiniMap = require('mini.map')
 MiniMap.setup({
-  integrations = {MiniMap.gen_integration.gitsigns()},
+  integrations = {MiniMap.gen_integration.diff()},
   symbols = {
     encode = MiniMap.gen_encode_symbols.dot("4x2"),
     scroll_line = '▐',
@@ -78,7 +81,10 @@ cmp.setup({
       end
     end, {"i", "s"}),
     ['<C-\\>'] = cmp.mapping(function(fallback)
-      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api
+                                                         .nvim_replace_termcodes(
+                                                         '<Tab>', true, true,
+                                                         true)), 'n', true)
     end)
   },
   experimental = {
@@ -235,50 +241,37 @@ require'nvim-treesitter.configs'.setup {
 
 require("trouble").setup()
 
-require("ibl").setup({
-       indent = { char = "▏" },
-})
+require("ibl").setup({indent = {char = "▏"}})
 
 -- CtrlSF
 g.ctrlsf_default_root = 'project' -- search relative to project root
 g.ctrlsf_ackprg = vim.fn.executable('/usr/local/bin/rg') == 1 and
                       '/usr/local/bin/rg' or '/usr/bin/rg'
 
-require('gitsigns').setup {
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
-
-    attachableBindings.gitsigns(gs, bufnr)
-  end
-}
-
-local actions = require'lir.actions'
+local actions = require 'lir.actions'
 local mark_actions = require 'lir.mark.actions'
-local clipboard_actions = require'lir.clipboard.actions'
+local clipboard_actions = require 'lir.clipboard.actions'
 
 require'lir'.setup {
   show_hidden_files = false,
   ignore = {}, -- { ".DS_Store", "node_modules" } etc.
-  devicons = {
-    enable = true,
-    highlight_dirname = true
-  },
+  devicons = {enable = true, highlight_dirname = true},
   mappings = {
-    ['<CR>']  = actions.edit,
+    ['<CR>'] = actions.edit,
     ['<C-s>'] = actions.split,
     ['<C-v>'] = actions.vsplit,
     ['<C-t>'] = actions.tabedit,
 
-    ['-']     = actions.up,
-    ['q']     = actions.quit,
+    ['-'] = actions.up,
+    ['q'] = actions.quit,
 
-    ['K']     = actions.mkdir,
-    ['N']     = actions.newfile,
-    ['R']     = actions.rename,
-    ['@']     = actions.cd,
-    ['Y']     = actions.yank_path,
-    ['.']     = actions.toggle_show_hidden,
-    ['D']     = actions.delete,
+    ['K'] = actions.mkdir,
+    ['N'] = actions.newfile,
+    ['R'] = actions.rename,
+    ['@'] = actions.cd,
+    ['Y'] = actions.yank_path,
+    ['.'] = actions.toggle_show_hidden,
+    ['D'] = actions.delete,
 
     ['J'] = function()
       mark_actions.toggle_mark()
@@ -286,14 +279,11 @@ require'lir'.setup {
     end,
     ['C'] = clipboard_actions.copy,
     ['X'] = clipboard_actions.cut,
-    ['P'] = clipboard_actions.paste,
+    ['P'] = clipboard_actions.paste
   },
   float = {
     winblend = 0,
-    curdir_window = {
-      enable = false,
-      highlight_dirname = false
-    },
+    curdir_window = {enable = false, highlight_dirname = false}
 
     -- -- You can define a function that returns a table to be passed as the third
     -- -- argument of nvim_open_win().
