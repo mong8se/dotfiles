@@ -6,14 +6,19 @@ vim.notify = require("notify")
 require('mini.bracketed').setup()
 require('mini.comment').setup()
 require('mini.cursorword').setup()
+require('mini.jump').setup()
 require('mini.pairs').setup()
 require('mini.starter').setup()
+require('mini.statusline').setup()
 require('mini.surround').setup()
-require('mini.jump').setup()
-require("mini.statusline").setup()
+
 require("mini.diff").setup({
   view = {signs = {add = '🮌', change = '🮌', delete = '🮌'}}
 })
+
+vim.cmd.highlight("MiniDiffSignAdd", 'guifg=#00ddff')
+vim.cmd.highlight("MiniDiffSignChange", 'guifg=#ff9900')
+vim.cmd.highlight("MiniDiffSignDelete", 'guifg=#dd00dd')
 
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
