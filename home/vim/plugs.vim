@@ -2,7 +2,7 @@
 set nocompatible
 filetype off
 
-call plug#begin("~/.config/nvim/plugged")
+call plug#begin("~/.vim/plugged")
 
 set rtp+=$DOTFILES_RESOURCES/fzf
 Plug 'junegunn/fzf.vim'
@@ -51,7 +51,7 @@ Plug 'RRethy/vim-illuminate'
 
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'ryanolsonx/vim-lsp-javascript'
+" Plug 'ryanolsonx/vim-lsp-javascript'
 
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-file.vim'
