@@ -1,4 +1,4 @@
-theme = "onedark"
+theme = "base16-gruvbox-dark-soft"
 
 [editor]
 color-modes = true

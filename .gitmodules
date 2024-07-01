@@ -18,3 +18,7 @@
 	path = Resources/doomemacs
 	url = https://github.com/doomemacs/doomemacs
 	branch = master
+[submodule "Resources/base16-helix"]
+	path = Resources/base16-helix
+	url = https://github.com/tinted-theming/base16-helix
+	branch = main
