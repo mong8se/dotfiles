@@ -30,7 +30,9 @@ autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
   pattern = "*",
   callback = function()
     vim.schedule(function() vim.cmd.nohlsearch() end)
-    if vim.fn.getreg("%") ~= "" then vim.cmd.update() end
+    if vim.bo.buftype == "" and vim.fn.getreg("%") ~= "" then
+      vim.cmd.update()
+    end
   end,
   group = FocusIssues
 })
