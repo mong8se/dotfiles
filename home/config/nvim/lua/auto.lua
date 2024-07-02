@@ -1,5 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local CursorLine = vim.api.nvim_create_augroup('CursorLine', {clear = true})
+local ScrollOff = vim.api.nvim_create_augroup('CursorLine', {clear = true})
 local FocusIssues = vim.api.nvim_create_augroup('FocusIssues', {clear = true})
 local YankSync = vim.api.nvim_create_augroup('YankSync', {clear = true})
 local TermBuf = vim.api.nvim_create_augroup('TermBuf', {clear = true})
@@ -27,7 +28,10 @@ autocmd({"BufEnter", "WinLeave", "FocusLost", "VimSuspend"}, {
 --  Save the buffer if it is modified and has a filename
 autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
   pattern = "*",
-  callback = function() if vim.fn.getreg("%") ~= "" then vim.cmd.update() end end,
+  callback = function()
+    vim.schedule(function() vim.cmd.nohlsearch() end)
+    if vim.fn.getreg("%") ~= "" then vim.cmd.update() end
+  end,
   group = FocusIssues
 })
 
@@ -37,12 +41,12 @@ autocmd({"WinResized", "VimEnter"}, {
     if (details.event == "WinResized") then
       if vim.fn.win_gettype(details.match) == "" then
         for _, win in ipairs(vim.v.event.windows) do
-          vim.wo[win].scrolloff = math.floor(vim.fn.winheight(win)/10)
+          vim.wo[win].scrolloff = math.floor(vim.fn.winheight(win) / 10)
         end
       end
     else
       if vim.fn.win_gettype() == "" then
-        vim.wo.scrolloff = math.floor(vim.fn.winheight(0)/10)
+        vim.wo.scrolloff = math.floor(vim.fn.winheight(0) / 10)
       end
     end
   end,
