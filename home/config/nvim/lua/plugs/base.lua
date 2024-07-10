@@ -51,7 +51,7 @@ return {
   'tpope/vim-abolish', -- cr
 
   { 'tamago324/lir.nvim', dependencies = {
-    'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons'}
+    'nvim-lua/plenary.nvim'}
   },
 
   'vimwiki/vimwiki',

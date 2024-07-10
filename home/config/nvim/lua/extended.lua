@@ -12,6 +12,10 @@ require('mini.starter').setup()
 require('mini.statusline').setup()
 require('mini.surround').setup()
 
+local MiniIcons = require('mini.icons')
+MiniIcons.setup()
+MiniIcons.mock_nvim_web_devicons()
+
 require("mini.diff").setup({
   view = {signs = {add = '🮌', change = '🮌', delete = '🮌'}}
 })
