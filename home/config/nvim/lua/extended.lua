@@ -2,6 +2,16 @@ local g = vim.g
 local attachableBindings = require("keys")
 
 vim.notify = require("notify")
+-- local notify = require('mini.notify')
+-- notify.setup({
+--   window = {
+--     config = {
+--       width = 80,
+--       anchor = "NW"
+--     }
+--   }
+-- })
+-- vim.notify = notify.make_notify()
 
 require('mini.bracketed').setup()
 require('mini.comment').setup()
@@ -9,7 +19,8 @@ require('mini.cursorword').setup()
 require('mini.jump').setup()
 require('mini.pairs').setup()
 require('mini.starter').setup()
-require('mini.statusline').setup()
+-- require('mini.statusline').setup()
+require('lualine').setup()
 require('mini.surround').setup()
 
 local MiniIcons = require('mini.icons')

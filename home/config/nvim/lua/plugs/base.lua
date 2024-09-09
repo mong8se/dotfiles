@@ -22,6 +22,8 @@ return {
 
   'echasnovski/mini.nvim',
 
+  'nvim-lualine/lualine.nvim',
+
   'airblade/vim-rooter',
   'sheerun/vim-polyglot',
 

@@ -5,12 +5,15 @@ local env = vim.env
 
 settings.termguicolors = true
 
+local MiniMisc = require('mini.misc')
+
 local ColorSchemeGroup = vim.api.nvim_create_augroup('TermBuf', {clear = true})
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
     cmd.highlight("Beacon cterm=reverse gui=reverse")
     cmd.highlight("Comment cterm=italic")
+    MiniMisc.setup_termbg_sync()
   end,
   group = ColorSchemeGroup
 })
