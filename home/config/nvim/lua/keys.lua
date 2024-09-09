@@ -4,6 +4,8 @@ local setKeyMap = vim.keymap.set
 
 local fzf = require("fzf-lua")
 
+local MiniMisc = require("mini.misc")
+
 local MiniClue = require('mini.clue')
 MiniClue.setup({
   triggers = {
@@ -48,9 +50,6 @@ MiniClue.setup({
 setKeyMap('n', "<leader> ", require("buffish").open,
           {silent = true, desc = "Switch buffer"})
 
-setKeyMap('n', "<leader>/", '<Plug>CtrlSFPrompt',
-          {noremap = false, silent = false, desc = "Search"})
-setKeyMap('n', "<leader>*", '<Plug>CtrlSFCwordExec', {desc = "Search word"})
 setKeyMap('n', "<leader>:", fzf.commands, {desc = "Fuzzy command"})
 setKeyMap('n', "<leader>'", fzf.marks, {desc = "Fuzzy marks"})
 setKeyMap('n', '<leader>"', fzf.registers, {desc = "Fuzzy registers"})
@@ -115,9 +114,15 @@ setKeyMap('n', "<leader>bs", fzf.lsp_document_symbols,
           {silent = true, desc = "Buffer symbols"})
 setKeyMap('n', "<leader>bx", "<cmd>Trouble document_diagnostics<cr>",
           {silent = true, desc = "Buffer Diagnostics"})
+setKeyMap('n', "<leader>bz", function()
+  MiniMisc.zoom(0, {
+    border = "double",
+    height = vim.go.lines - vim.go.cmdheight - 3,
+    width = vim.go.columns - 2
+  })
+end, {silent = true, desc = "Zoom a buffer"})
 setKeyMap('n', "<leader>b/", fzf.lgrep_curbuf,
           {silent = true, desc = "Search in buffer"})
-
 setKeyMap('n', "<leader>;", require("buffish.shortcuts").follow,
           {desc = "Go to Buffish shortcut"})
 
@@ -127,6 +132,8 @@ setKeyMap('n', "<leader>f-",
           {silent = true, desc = "Browse files from here"})
 setKeyMap('n', "<leader>ff", function() vim.cmd("edit .") end,
           {silent = true, desc = "Browse files from root"})
+setKeyMap('n', '<leader>f/', fzf.lgrep_curbuf,
+          {desc = "Search on current file"})
 
 -- toggle
 setKeyMap('n', "<leader>tr", '<Plug>(golden_ratio_toggle)',
@@ -170,12 +177,21 @@ setKeyMap('n', "<leader>gb", fzf.git_branches,
 setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc = "Git stash"})
 
 -- search
-setKeyMap('n', "<leader>sr", ':CtrlSFOpen<CR>',
-          {silent = true, desc = "Resume search"})
-setKeyMap('n', "<leader>sh", fzf.search_history,
-          {silent = true, desc = "Search history"})
-setKeyMap('n', "<leader>s*", fzf.lsp_references,
-          {silent = true, desc = "Code references"})
+setKeyMap('n', '<leader>/',
+          fzf.live_grep,
+          {desc = "Live Grep"})
+setKeyMap('n', '<leader>*',
+          fzf.grep_cword,
+          {desc = "Search current word"})
+setKeyMap('v', '<leader>*',
+          fzf.grep_visual,
+          {desc = "Search current word"})
+setKeyMap('n', '<leader>sf', fzf.lgrep_curbuf,
+          {desc = "Search on current file"})
+setKeyMap('n', '<leader>sp', fzf.grep_project,
+          {desc = "Search all lines in project"})
+setKeyMap('n', '<leader>sr', fzf.resume,
+          {desc = "Resume last search"})
 
 -- trouble
 setKeyMap('n', "<leader>xx", "<cmd>Trouble<cr>",
