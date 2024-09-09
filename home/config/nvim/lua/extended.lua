@@ -140,7 +140,7 @@ cmp.setup.cmdline(':', {
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-  {'tsserver', root_pattern = {'package.json'}},
+  {'ts_ls', root_pattern = {'package.json'}},
   {'denols', root_pattern = {'deps.ts', 'deps.js'}}, 'html', "cssls", "jsonls",
   "pylsp", "gopls", "rust_analyzer", "lua_ls"
 }
