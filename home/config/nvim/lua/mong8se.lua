@@ -110,8 +110,9 @@ mong8se.visualSearch = function()
 end
 
 mong8se.foldIt = function()
-  return string.format("%s …%i… %s", fn.getline(vim.v.foldstart),
-                       (vim.v.foldend - vim.v.foldstart - 1),
+  local folded_count = (vim.v.foldend - vim.v.foldstart - 1)
+  return string.format("%s ║%s %s", fn.getline(vim.v.foldstart),
+                       folded_count > 0 and (folded_count .. "║") or "",
                        fn.getline(vim.v.foldend):gsub("^%s*", ""))
 end
 

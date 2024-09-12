@@ -77,9 +77,9 @@ settings.listchars = {
 
 settings.fillchars = {
   eob = "⢎",
-  horiz = "═",
+  horiz = "╍",
   vert = "▕",
-  fold = "╍",
+  fold = "═",
   foldopen = "\\uf078",
   foldclose = "\\uf077"
 }
