@@ -5,16 +5,28 @@ local FocusIssues = vim.api.nvim_create_augroup('FocusIssues', {clear = true})
 local YankSync = vim.api.nvim_create_augroup('YankSync', {clear = true})
 local TermBuf = vim.api.nvim_create_augroup('TermBuf', {clear = true})
 
--- cursorline only in insert mode
-autocmd("InsertEnter", {
+-- cursorline only for active window
+autocmd({"VimEnter", "WinEnter", "BufWinEnter"}, {
   pattern = "*",
   callback = function() vim.wo.cursorline = true end,
   group = CursorLine
 })
 
-autocmd("InsertLeave", {
+autocmd("WinLeave", {
   pattern = "*",
   callback = function() vim.wo.cursorline = false end,
+  group = CursorLine
+})
+
+autocmd("InsertEnter", {
+  pattern = "*",
+  callback = function() vim.cmd.highlight("CursorLine", "gui=underline") end,
+  group = CursorLine
+})
+
+autocmd("InsertLeave", {
+  pattern = "*",
+  callback = function() vim.cmd.highlight("CursorLine", "gui=none") end,
   group = CursorLine
 })
 
