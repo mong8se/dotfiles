@@ -52,9 +52,7 @@ return {
 
   'tpope/vim-abolish', -- cr
 
-  { 'tamago324/lir.nvim', dependencies = {
-    'nvim-lua/plenary.nvim'}
-  },
+  'stevearc/oil.nvim',
 
   'vimwiki/vimwiki',
   {'itchyny/calendar.vim', cmd = 'Calendar'},
