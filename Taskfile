@@ -215,7 +215,7 @@ function getTask {
 function task:describe {
   : "Prints description of task"
 
-  printf '    %-16s | %s\n' $1 "$(getTask $1 | sed -ne "s/${COLON_COMMENT_PATTERN}/\2/p")"
+  printf '  %-16s \u258F%s\n' $1 "$(getTask $1 | sed -ne "s/${COLON_COMMENT_PATTERN}/\2/p")"
 }
 
 function task:explain {
