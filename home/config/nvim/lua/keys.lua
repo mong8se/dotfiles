@@ -100,7 +100,6 @@ setKeyMap('v', "<C-j>", ":m '>+1<CR>gv=gv", {desc = "Move selection down"})
 setKeyMap('v', "<C-k>", ":m '<-2<CR>gv=gv", {desc = "Move selection up"})
 setKeyMap('v', "<", "<gv")
 setKeyMap('v', ">", ">gv")
-setKeyMap('v', '/', mong8se.visualSearch)
 
 -- buffer
 setKeyMap('n', "<leader>bb", fzf.buffers,

@@ -100,19 +100,10 @@ mong8se.splitCommand = function(opts)
   mong8se.smartSplit(unpack(args))
 end
 
-mong8se.visualSearch = function()
-  local originalValue = fn.getreginfo('"')
-  cmd('silent noautocmd keepjumps normal! ""y')
-  fn.setreg("/", [[\V]] ..
-                fn.escape(fn.getreg('"'), [[\/.*~[]$^]]):gsub('\n', [[\n]]))
-  cmd('normal! n')
-  fn.setreg('"', originalValue)
-end
-
 mong8se.foldIt = function()
   local folded_count = (vim.v.foldend - vim.v.foldstart - 1)
-  return string.format("%s ║%s %s", fn.getline(vim.v.foldstart),
-                       folded_count > 0 and (folded_count .. "║") or "",
+  return string.format("%s %s %s", fn.getline(vim.v.foldstart), folded_count ==
+                           0 and "║" or ("🭰" .. folded_count .. "🭵"),
                        fn.getline(vim.v.foldend):gsub("^%s*", ""))
 end
 
