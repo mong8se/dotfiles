@@ -91,9 +91,15 @@ autocmd("TextYankPost", {
   group = YankSync
 })
 
--- automatically enter insert mode when you open a terminal
-autocmd("TermOpen", {
+-- automatically enter insert mode when you open or enter a terminal
+autocmd({"BufEnter", "TermOpen"}, {
   pattern = "*",
-  callback = function() vim.cmd.startinsert() end,
+  callback = function(details)
+    if details.event == "BufEnter" and vim.bo.buftype ~= "terminal" then
+      return
+    end
+
+    vim.cmd.startinsert()
+  end,
   group = TermBuf
 })
