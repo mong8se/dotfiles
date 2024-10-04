@@ -1,4 +1,3 @@
-local g = vim.g
 local attachableBindings = require("keys")
 
 vim.notify = require("notify")
