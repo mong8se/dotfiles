@@ -27,6 +27,10 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
 
     sh {$__base16_path}/base16-{$new_theme}.sh
     source {$DOTFILES_RESOURCES}/base16-fzf/fish/base16-{$new_theme}.fish
+
+    if type -q vivid
+      set -gx LS_COLORS (vivid generate base16-{$new_theme})
+    end
   else
     echo "base16 doing nothing: Non interactive shell"
   end

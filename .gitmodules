@@ -22,3 +22,7 @@
 	path = Resources/base16-helix
 	url = https://github.com/tinted-theming/base16-helix
 	branch = main
+[submodule "Resources/base16-vivid"]
+	path = Resources/base16-vivid
+	url = https://github.com/tinted-theming/base16-vivid
+	branch = main
