@@ -12,8 +12,6 @@ return {
   'caglartoklu/borlandp.vim',
   'sainnhe/gruvbox-material',
 
-  'linty-org/readline.nvim',
-
   'lukas-reineke/indent-blankline.nvim',
   'folke/trouble.nvim',
 

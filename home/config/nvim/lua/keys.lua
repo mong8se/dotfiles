@@ -207,16 +207,14 @@ setKeyMap('n', "<c-w><C-s>", mong8se.splitCommand, {silent = true})
 setKeyMap('n', "<c-w>\\", '<Plug>(golden_ratio_resize)', {silent = true})
 setKeyMap('t', "<c-w><C-w>", "<C-\\><C-n>")
 
-local readline = require 'readline'
-setKeyMap('!', '<M-f>', readline.forward_word)
-setKeyMap('!', '<M-b>', readline.backward_word)
-setKeyMap('!', '<C-a>', readline.beginning_of_line)
-setKeyMap('!', '<C-e>', readline.end_of_line)
-setKeyMap('!', '<M-d>', readline.kill_word)
-setKeyMap('!', '<M-BS>', readline.backward_kill_word)
-setKeyMap('!', '<C-w>', readline.unix_word_rubout)
-setKeyMap('!', '<C-k>', readline.kill_line)
-setKeyMap('!', '<C-u>', readline.backward_kill_line)
+-- Insert mode
+setKeyMap('i', '<C-a>', '<C-o>^')
+setKeyMap('i', '<C-e>', '<C-o>$')
+setKeyMap('i', '<C-k>', '<C-o>C')
+
+-- Command mode
+setKeyMap('c', '<C-a>', '<Home>')
+setKeyMap('c', '<C-e>', '<End>')
 
 return {
   gitsigns = function(gs, bufnr)
@@ -281,7 +279,7 @@ return {
     setKeyMap('n', '<leader>cd', vim_lsp.buf.type_definition,
               {silent = true, buffer = bufnr, desc = "Type definition"})
 
-    vim.keymap.set("n", "<leader>th", function(event)
+    setKeyMap("n", "<leader>th", function(event)
       vim.lsp.inlay_hint.enable(event.buf, not vim.lsp.inlay_hint.is_enabled())
     end, {desc = "Toggle inlay Hints"})
   end
