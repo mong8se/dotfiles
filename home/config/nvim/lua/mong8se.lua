@@ -57,11 +57,7 @@ mong8se.toggleScrollBindAllWindows = function()
 end
 
 mong8se.activateGitOrFiles = function()
-  if b.gitsigns_head then
-    require('fzf-lua').git_files()
-  else
-    require('fzf-lua').files()
-  end
+  require('fzf-lua')[b.minigit_summary_string and "git_files" or "files"]()
 end
 
 mong8se.directoryFromContext = function()

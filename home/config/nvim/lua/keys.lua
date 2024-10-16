@@ -174,6 +174,8 @@ setKeyMap('n', "<leader>gc", fzf.git_bcommits,
 setKeyMap('n', "<leader>gb", fzf.git_branches,
           {silent = true, desc = "Git branches"})
 setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc = "Git stash"})
+setKeyMap({'n', 'x'}, ']g', '<Cmd>lua MiniGit.show_at_cursor()<CR>',
+          {desc = 'Git show at cursor'})
 
 -- search
 setKeyMap('n', '<leader>/',
