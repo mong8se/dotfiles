@@ -23,12 +23,13 @@ if env.BASE16_THEME then
   global.base16colorspace = 256
   cmd.colorscheme("base16-" .. env.BASE16_THEME)
 else
-  cmd.colorscheme("gruvbox-material")
   global.gruvbox_material_background = 'soft'
   -- global.gruvbox_material_foreground = 'mix'
   if env.IS_DARK_MODE == "1" then
     settings.background = "dark"
+    cmd.colorscheme("gruvbox-material")
   else
     settings.background = "light"
+    cmd.colorscheme("base16-equilibrium-light")
   end
 end
