@@ -15,24 +15,31 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
       set new_theme (__base16_schemes | string split " " | fzf)
     end
 
-    if test "$new_theme" = "random"
+    if test "$new_theme" = random
       set new_theme (random choice (__base16_schemes))
     end
 
-    if test -n "$skip_env"
-      set -e BASE16_THEME
+    set -l theme_script "$__base16_path/base16-$new_theme.sh"
+
+    if test -e "$theme_script"
+      sh $theme_script
+      source {$DOTFILES_RESOURCES}/base16-fzf/fish/base16-{$new_theme}.fish
+
+      if test -n "$skip_env"
+        set -e BASE16_THEME
+      else
+        set -xg BASE16_THEME {$new_theme}
+      end
+
+      if type -q vivid
+        set -gx LS_COLORS (vivid generate base16-{$new_theme})
+      end
     else
-      set -xg BASE16_THEME {$new_theme}
-    end
-
-    sh {$__base16_path}/base16-{$new_theme}.sh
-    source {$DOTFILES_RESOURCES}/base16-fzf/fish/base16-{$new_theme}.fish
-
-    if type -q vivid
-      set -gx LS_COLORS (vivid generate base16-{$new_theme})
+      echo "base16 error: $new_theme not found"
+      return 1
     end
   else
-    echo "base16 doing nothing: Non interactive shell"
+    echo "base16 doing nothing: non interactive shell"
   end
 end
 
