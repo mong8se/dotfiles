@@ -6,14 +6,7 @@ end
 
 set -x DOTFILES_RESOURCES ~/.dotfiles/Resources
 set -x EDITOR (command -v nvim || command -v vim || command -v vi)
-
-function fish_greeting
-  if type -q figlet
-    set_color red
-    figlet -c -w $COLUMNS -f smslant $hostname
-    set_color normal
-  end
-end
+set -x BC_ENV_ARGS ~/.config/bcrc
 
 if not set -q HOMEBREW_PREFIX
   set -l brew_path
