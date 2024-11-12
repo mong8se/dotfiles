@@ -5,8 +5,9 @@ if type -q fre
     set -f last_status $status
     if test $last_status -eq 0
       set -f last_cmd (string split " " $argv[1])[1]
-      if test "cd" = "$last_cmd"
-        command fre --add "$PWD" &; disown
+      if test cd = "$last_cmd"
+        command fre --add "$PWD" &
+        disown
       end
     end
   end
@@ -17,31 +18,33 @@ if type -q fre
 
   function __z_query
     set -f result (
-      begin
-        command fre --sorted
-        command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
-        # command find $HOME -maxdepth 2 -mindepth 2 ! -path "$HOME/.*" -type d  -print
-      end \
-      | string match -v (pwd) \
-      | if count $argv > "/dev/null"
-          fzf $__z_fzf_args -f "$argv" | head -1
-        else
-          fzf $__z_fzf_args
-        end
+    begin
+      command fre --sorted
+      command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
+      # command find $HOME -maxdepth 2 -mindepth 2 ! -path "$HOME/.*" -type d  -print
+    end \
+    | string match -v (pwd) \
+    | if count $argv > "/dev/null"
+      fzf $__z_fzf_args -f "$argv" | head -1
+    else
+      fzf $__z_fzf_args
+    end
     )
 
     test -z "$result"; and return
     if test -d "$result"
-      command fre --add "$PWD" &; disown
+      command fre --add "$PWD" &
+      disown
       cd "$result"
     else
-      command fre --delete "$result" &; disown
+      command fre --delete "$result" &
+      disown
     end
   end
 else if type -q zoxide
   zoxide init fish --no-aliases | source
   function __z_query
-    if count $argv > /dev/null
+    if count $argv >/dev/null
       __zoxide_z $argv
     else
       __zoxide_zi
@@ -60,7 +63,7 @@ else if type -q fasd
   end
 
   function __fasd_query
-    if count $argv > /dev/null
+    if count $argv >/dev/null
       command fasd -dl1 "$argv"
     else
       command fasd -dlR | fzf

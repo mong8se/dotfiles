@@ -69,15 +69,15 @@ if status --is-interactive
 
   if ! type -q fisher
     read -n 1 -p 'set_color green; echo -n "Install fisher? (y/N) " ; set_color normal' answer
-    if test "$answer" = "y" -o "$answer" = "Y"
+    if test "$answer" = y -o "$answer" = Y
       echo Installing...
       curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
     end
   end
- 
-   set -g fish_cursor_default block blink
-   set -g fish_cursor_insert underscore blink
-   set -g fish_cursor_visual line blink
+
+  set -g fish_cursor_default block blink
+  set -g fish_cursor_insert underscore blink
+  set -g fish_cursor_visual line blink
 
   set -x Z_FALLBACKS ~/Projects ~/Work
 end

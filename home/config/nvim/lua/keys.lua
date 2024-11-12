@@ -5,6 +5,7 @@ local setKeyMap = vim.keymap.set
 local fzf = require("fzf-lua")
 
 local MiniMisc = require("mini.misc")
+local MiniDiff = require("mini.diff")
 
 local MiniClue = require('mini.clue')
 MiniClue.setup({
@@ -153,6 +154,8 @@ setKeyMap('n', "<leader>tp", "<cmd>setlocal paste!<CR><cmd>set paste?<CR>",
           {silent = true, desc = "Toggle paste"})
 setKeyMap('n', "<leader>ti", "<cmd>IBLToggle<CR>",
           {desc = "Toggle indent blanklines"})
+setKeyMap('n', "<leader>tg", MiniDiff.toggle_overlay,
+  { silent = true, desc = "Toggle git diff" })
 
 -- project
 setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
