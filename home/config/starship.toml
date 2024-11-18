@@ -2,8 +2,8 @@ format = "$fill$all$line_break$character"
 right_format = "$directory"
 
 [character]
-success_symbol = "[\uf054](bold blue)"
-error_symbol = "[\uf054](bold red)"
+success_symbol = "[\ue691](blue)"
+error_symbol = "[\uf00d](red)[\ue691](bold blue)"
 vicmd_symbol = "[\uea65](green)"
 
 [git_status]
