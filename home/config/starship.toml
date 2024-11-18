@@ -21,7 +21,7 @@ format = "\ue0b6[$path ]($style)[$read_only]($read_only_style)"
 format = "[$symbol$branch]($style) "
 
 [cmd_duration]
-format = "[\uf520 $duration]($style) "
+disabled = true
 
 [fill]
 symbol = " "

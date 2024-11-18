@@ -44,10 +44,12 @@ if status --is-interactive
   set -x fish_color_autosuggestion brblack --italics
 
 
-  function autoGrowl -d "Auto Growl" -e fish_postexec
-    if test $CMD_DURATION -gt 5000
-      printf "\a"
-      growl finished: $argv
+  if not set -q KITTY_WINDOW_ID
+    function autoGrowl -d "Auto Growl" -e fish_postexec
+      if test $CMD_DURATION -gt 5000
+        printf "\a"
+        growl finished: $argv
+      end
     end
   end
 
@@ -67,7 +69,7 @@ if status --is-interactive
   end
   enable_transience
 
-  if ! type -q fisher
+  if not type -q fisher
     read -n 1 -p 'set_color green; echo -n "Install fisher? (y/N) " ; set_color normal' answer
     if test "$answer" = y -o "$answer" = Y
       echo Installing...
