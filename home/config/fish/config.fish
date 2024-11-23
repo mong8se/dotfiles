@@ -66,8 +66,8 @@ if status --is-interactive
       starship module character
     end
     starship init fish | source
+    enable_transience
   end
-  enable_transience
 
   if not type -q fisher
     read -n 1 -p 'set_color green; echo -n "Install fisher? (y/N) " ; set_color normal' answer
