@@ -16,22 +16,13 @@ local MiniIcons = require('mini.icons')
 MiniIcons.setup()
 MiniIcons.mock_nvim_web_devicons()
 
-require('mini.git').setup()
-require("mini.diff").setup({
-  view = {signs = {add = '🮌', change = '🮌', delete = '🮌'}}
-})
-
-vim.cmd.highlight("MiniDiffSignAdd", 'guifg=#00ddff')
-vim.cmd.highlight("MiniDiffSignChange", 'guifg=#ff9900')
-vim.cmd.highlight("MiniDiffSignDelete", 'guifg=#dd00dd')
-
 local jump2d = require('mini.jump2d')
 local jump_line_start = jump2d.builtin_opts.word_start
 jump2d.setup({spotter = jump_line_start.spotter})
 
 local MiniMap = require('mini.map')
 MiniMap.setup({
-  integrations = {MiniMap.gen_integration.diff()},
+  integrations = {MiniMap.gen_integration.gitsigns()},
   symbols = {
     encode = MiniMap.gen_encode_symbols.dot("4x2"),
     scroll_line = '▐',
@@ -252,5 +243,25 @@ require'nvim-treesitter.configs'.setup {
 require("trouble").setup()
 
 require("ibl").setup({indent = {char = "▏"}})
+
+require('gitsigns').setup {
+  signs = {
+    add = {text = '🮌'},
+    change = {text = '🮌'},
+    changedelete = {text = '🮌'},
+    untracked = {text = '🮌'}
+  },
+  signs_staged = {
+    add = {text = '🮌'},
+    change = {text = '🮌'},
+    changedelete = {text = '🮌'},
+    untracked = {text = '🮌'}
+  },
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    attachableBindings.gitsigns(gs, bufnr)
+  end
+}
 
 require("oil").setup()

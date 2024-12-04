@@ -23,6 +23,7 @@ return {
   'nvim-lualine/lualine.nvim',
 
   'airblade/vim-rooter',
+  'lewis6991/gitsigns.nvim',
   'sheerun/vim-polyglot',
 
   {'nvim-treesitter/nvim-treesitter', build = ':TSUpdateSync'},
