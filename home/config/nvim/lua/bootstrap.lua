@@ -7,9 +7,6 @@ vim.g.polyglot_disabled = {
 -- Golden Ratio
 vim.g.golden_ratio_autocommand = 0
 
--- Copilot
-vim.g.copilot_no_tab_map = true
-
 local disabled_built_ins = {
   "getscript", "logipat", "2html_plugin", "getscriptPlugin", "matchit", "netrw",
   "netrwPlugin", "rrhelper", "spellfile_plugin", "vimball", "vimballPlugin"
