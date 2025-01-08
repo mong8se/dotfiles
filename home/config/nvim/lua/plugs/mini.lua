@@ -16,9 +16,22 @@ return {
       MiniIcons.setup()
       MiniIcons.mock_nvim_web_devicons()
 
-      local jump2d = require('mini.jump2d')
-      local jump_line_start = jump2d.builtin_opts.word_start
-      jump2d.setup({spotter = jump_line_start.spotter})
+      local MiniJump2d = require('mini.jump2d')
+      MiniJump2d.setup({
+        spotter = MiniJump2d.builtin_opts.line_start.spotter,
+        labels = "1234qwerasdfzxcv5678tyuighjkbnm,90-=op[]l;'./",
+        hooks = {
+          after_jump = function()
+            MiniJump2d.start({
+              spotter = MiniJump2d.builtin_opts.default.spotter,
+              allowed_lines = {cursor_before = false, cursor_after = false},
+              allowed_windows = {not_current = false},
+              -- hl_group = 'Search',
+              hooks = {after_jump = function() end}
+            })
+          end
+        }
+      })
 
       local MiniMap = require('mini.map')
       MiniMap.setup({
