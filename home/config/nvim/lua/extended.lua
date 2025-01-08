@@ -1,49 +1,5 @@
 local attachableBindings = require("keys")
 
-vim.notify = require("notify")
-
-require('mini.bracketed').setup()
-require('mini.comment').setup()
-require('mini.cursorword').setup()
-require('mini.jump').setup()
-require('mini.pairs').setup()
-require('mini.starter').setup()
-
-require('lualine').setup()
-require('mini.surround').setup()
-
-local MiniIcons = require('mini.icons')
-MiniIcons.setup()
-MiniIcons.mock_nvim_web_devicons()
-
-local jump2d = require('mini.jump2d')
-local jump_line_start = jump2d.builtin_opts.word_start
-jump2d.setup({spotter = jump_line_start.spotter})
-
-local MiniMap = require('mini.map')
-MiniMap.setup({
-  integrations = {MiniMap.gen_integration.gitsigns()},
-  symbols = {
-    encode = MiniMap.gen_encode_symbols.dot("4x2"),
-    scroll_line = '▐',
-    scroll_view = '│'
-  },
-  window = {width = 16, winblend = 70}
-})
-
--- Setup nvim-cmp.
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and
-             vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col)
-                 :match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true),
-                        mode, true)
-end
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -138,29 +94,3 @@ require'nvim-treesitter.configs'.setup {
   },
   indent = {enable = true}
 }
-
-require("trouble").setup()
-
-require("ibl").setup({indent = {char = "▏"}})
-
-require('gitsigns').setup {
-  signs = {
-    add = {text = '🮌'},
-    change = {text = '🮌'},
-    changedelete = {text = '🮌'},
-    untracked = {text = '🮌'}
-  },
-  signs_staged = {
-    add = {text = '🮌'},
-    change = {text = '🮌'},
-    changedelete = {text = '🮌'},
-    untracked = {text = '🮌'}
-  },
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
-
-    attachableBindings.gitsigns(gs, bufnr)
-  end
-}
-
-require("oil").setup()
