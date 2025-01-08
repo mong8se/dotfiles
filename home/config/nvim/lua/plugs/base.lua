@@ -8,6 +8,12 @@ return {
   {'stevearc/oil.nvim', opts = {}},
   'ibhagwan/fzf-lua',
 
+  {'andymass/vim-matchup',
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+    end,
+  },
+
   'stevearc/dressing.nvim', {
     'rcarriga/nvim-notify',
     config = function() vim.notify = require("notify") end

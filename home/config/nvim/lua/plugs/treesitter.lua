@@ -94,9 +94,11 @@ return {
           -- colors = {}, -- table of hex strings
           -- termcolors = {} -- table of colour name strings
         },
-        indent = {enable = true}
+        indent = {enable = true},
+        matchup = {
+          enable = true,
+        },
       }
-
     end
   }, 'nvim-treesitter/nvim-treesitter-textobjects'
 }
