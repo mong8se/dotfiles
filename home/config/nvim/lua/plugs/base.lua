@@ -14,28 +14,28 @@ return {
     end,
   },
 
-  'stevearc/dressing.nvim', {
-    'rcarriga/nvim-notify',
+  'stevearc/dressing.nvim',
+  {'rcarriga/nvim-notify',
     config = function() vim.notify = require("notify") end
   },
 
   'RRethy/nvim-base16',
   'caglartoklu/borlandp.vim',
   'sainnhe/gruvbox-material',
+  'danilamihailov/beacon.nvim',
 
   {'lukas-reineke/indent-blankline.nvim',
     main = "ibl",
     opts = {indent = {char = "▏"}}
   },
 
-  {'folke/trouble.nvim', opts = {}},
   'roman/golden-ratio', -- C-W \
-  'danilamihailov/beacon.nvim',
 
   {'nvim-lualine/lualine.nvim', opts = {}},
   'airblade/vim-rooter',
   'sheerun/vim-polyglot',
 
+  {'folke/trouble.nvim', opts = {}},
   'dyng/ctrlsf.vim', -- leader /
 
   'tpope/vim-abolish', -- cr
