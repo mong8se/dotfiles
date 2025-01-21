@@ -47,6 +47,11 @@ MiniClue.setup({
   window = {delay = 333, config = {width = 'auto'}}
 })
 
+-- disable these keys
+setKeyMap('n', "<f1>", '<NOP>')
+setKeyMap('n', 's', '<NOP>')
+setKeyMap('n', 'S', '<NOP>')
+
 setKeyMap('n', "<leader> ", require("buffish").open,
           {silent = true, desc = "Switch buffer"})
 
@@ -66,7 +71,6 @@ setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>",
           {desc = "LSP References"})
 
 setKeyMap('n', "U", "<C-r>")
-setKeyMap('n', "<f1>", '<Nop>')
 setKeyMap('n', "Y", 'y$')
 
 -- Instead of look up in man, let's split, opposite of J for join
@@ -215,3 +219,4 @@ setKeyMap('i', '<C-k>', '<C-o>C')
 -- Command mode
 setKeyMap('c', '<C-a>', '<Home>')
 setKeyMap('c', '<C-e>', '<End>')
+

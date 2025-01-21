@@ -6,10 +6,8 @@ local b = vim.b
 
 local mong8se = {}
 
--- attempt to load rc files if they exists
--- silently fail if they don't
--- supports a prefix for a directory name
--- relative to lua folder
+-- attempts to load rc files if they exists, silently fails if they don't
+-- supports a prefix for a directory name relative to lua folder
 mong8se.loadRCFiles = function(which)
   local module = which and
                      function(name) return table.concat({which, name}, ".") end or

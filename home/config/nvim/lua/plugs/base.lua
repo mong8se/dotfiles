@@ -5,7 +5,11 @@ return {
   'mong8se/buffish.nvim',
   -- { dir = '~/Projects/buffish.nvim' },
 
-  {'stevearc/oil.nvim', opts = {}},
+  {'stevearc/oil.nvim', opts = {
+    win_options = {
+      winbar = "%!v:lua.get_oil_winbar()",
+    },
+  }},
   'ibhagwan/fzf-lua',
 
   {'andymass/vim-matchup',
@@ -41,8 +45,8 @@ return {
   'tpope/vim-abolish', -- cr
 
   {'vimwiki/vimwiki',
+    ft = 'vimwiki',
     keys = {{'<leader>ww', '<Plug>VimwikiIndex', desc = 'Vimwiki Index'}},
-    ft = 'vimwiki'
   },
 
   {'itchyny/calendar.vim', cmd = 'Calendar'},
