@@ -40,7 +40,10 @@ return {
   'sheerun/vim-polyglot',
 
   {'folke/trouble.nvim', opts = {}},
-  'dyng/ctrlsf.vim', -- leader /
+
+  { 'MagicDuck/grug-far.nvim',
+    opts = {engines = {ripgrep = {extraArgs = "--context 2"}}}
+  },
 
   'tpope/vim-abolish', -- cr
 
