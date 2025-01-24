@@ -5,11 +5,6 @@ return {
   'mong8se/buffish.nvim',
   -- { dir = '~/Projects/buffish.nvim' },
 
-  {'stevearc/oil.nvim', opts = {
-    win_options = {
-      winbar = "%!v:lua.get_oil_winbar()",
-    },
-  }},
   'ibhagwan/fzf-lua',
 
   {'andymass/vim-matchup',
