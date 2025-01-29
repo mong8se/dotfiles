@@ -180,9 +180,9 @@ setKeyMap('n', "<leader>gb", fzf.git_branches,
 setKeyMap('n', "<leader>gs", fzf.git_stash, {silent = true, desc = "Git stash"})
 
 -- search
-setKeyMap('n', '<leader>/',
+setKeyMap('n', '<leader>sl',
           fzf.live_grep,
-          {desc = "Search in project"})
+          {desc = "Search live"})
 setKeyMap('n', '<leader>*',
           fzf.grep_cword,
           {desc = "Search current word"})
