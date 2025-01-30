@@ -1,9 +1,9 @@
 return {
-  -- 'mong8se/actually.nvim',
-  {dir = '~/Work/actually.nvim'},
+  'mong8se/actually.nvim',
+  -- {dir = '~/Work/actually.nvim'},
 
-  -- 'mong8se/buffish.nvim',
-  {dir = '~/Work/buffish.nvim'},
+  'mong8se/buffish.nvim',
+  -- {dir = '~/Work/buffish.nvim'},
 
   'ibhagwan/fzf-lua',
 
