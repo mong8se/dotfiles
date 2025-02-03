@@ -35,7 +35,6 @@ return {
   {'nvim-lualine/lualine.nvim', opts = {}},
   'airblade/vim-rooter',
   'sheerun/vim-polyglot',
-  {'folke/trouble.nvim', opts = {}},
 
   {
     'MagicDuck/grug-far.nvim',

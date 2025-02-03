@@ -41,7 +41,7 @@ MiniClue.setup({
     {mode = 'n', keys = '<Leader>p', desc = '+Project'},
     {mode = 'n', keys = '<Leader>s', desc = '+Search'},
     {mode = 'n', keys = '<Leader>t', desc = '+Toggle'},
-    {mode = 'n', keys = '<Leader>x', desc = '+Trouble'}
+    {mode = 'n', keys = '<Leader>x', desc = '+Diagnostics'},
   },
 
   window = {delay = 333, config = {width = 'auto'}}
@@ -66,9 +66,6 @@ local clipboard = vim.fn.has('macunix') and "+" or "*"
 setKeyMap('n', "gp", '"' .. clipboard .. ']p', {desc = "Paste from system"})
 setKeyMap('n', "gP", '"' .. clipboard .. ']P',
           {desc = "Paste from system before"})
-
-setKeyMap('n', "gR", "<cmd>TroubleToggle lsp_references<cr>",
-          {desc = "LSP References"})
 
 setKeyMap('n', "U", "<C-r>")
 setKeyMap('n', "Y", 'y$')
@@ -107,16 +104,16 @@ setKeyMap('v', ">", ">gv")
 
 -- buffer
 setKeyMap('n', "<leader>bb", fzf.buffers,
-          {silent = true, desc = "Buffer switch"})
+          {silent = true, desc = "List"})
 setKeyMap('n', "<leader>bd", function()
   local lastBuf = vim.api.nvim_win_get_buf(0)
   vim.cmd("edit " .. mong8se.directoryFromContext())
   vim.schedule(function() vim.api.nvim_buf_delete(lastBuf, {}) end)
 end, {silent = true, desc = "Delete current buffer"})
 setKeyMap('n', "<leader>bs", fzf.lsp_document_symbols,
-          {silent = true, desc = "Buffer symbols"})
-setKeyMap('n', "<leader>bx", "<cmd>Trouble document_diagnostics<cr>",
-          {silent = true, desc = "Buffer Diagnostics"})
+          {silent = true, desc = "Symbols"})
+setKeyMap('n', "<leader>bx", fzf.diagnostics_document,
+          {silent = true, desc = "Diagnostics"})
 setKeyMap('n', "<leader>bz", function()
   MiniMisc.zoom(0, {
     border = "double",
@@ -161,11 +158,10 @@ setKeyMap('n', "<leader>ti", "<cmd>IBLToggle<CR>",
 -- project
 setKeyMap('n', "<leader>pp", mong8se.activateGitOrFiles,
           {silent = true, desc = "Find project files"})
-setKeyMap('n', "<leader>pf", fzf.files, {silent = true, desc = "Find files"})
 setKeyMap('n', "<leader>ps", fzf.lsp_workspace_symbols,
           {silent = true, desc = "Symbols"})
-setKeyMap('n', "<leader>px", "<cmd>Trouble workspace_diagnostics<cr>",
-          {silent = true, desc = "Trouble"})
+setKeyMap('n', "<leader>px", fzf.diagnostics_workspace,
+          {silent = true, desc = "Diagnostics"})
 setKeyMap('n', "<leader>p/", fzf.live_grep,
           {silent = true, desc = "Search in project"})
 
@@ -196,13 +192,11 @@ setKeyMap('n', '<leader>sp', fzf.grep_project,
 setKeyMap('n', '<leader>sr', fzf.resume,
           {desc = "Resume last search"})
 
--- trouble
-setKeyMap('n', "<leader>xx", "<cmd>Trouble<cr>",
-          {silent = true, desc = "Trouble"})
-setKeyMap('n', "<leader>xl", "<cmd>Trouble loclist<cr>", {silent = true})
-setKeyMap('n', "<leader>xq", "<cmd>Trouble quickfix<cr>", {silent = true})
-setKeyMap('n', "<leader>xf", vim.diagnostic.open_float, {silent = true})
-setKeyMap('n', "<leader>xg", vim.diagnostic.setloclist, {silent = true})
+-- diagnostics
+setKeyMap('n', "<leader>xx", fzf.diagnostics_workspace,
+          {silent = true, desc = "Diagnostics"})
+setKeyMap('n', "<leader>xb", fzf.diagnostics_document,
+          {silent = true, desc = "Current Buffer"})
 
 -- window
 setKeyMap('n', "<c-w>s", mong8se.splitCommand,
