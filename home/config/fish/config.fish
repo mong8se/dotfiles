@@ -73,7 +73,7 @@ if status --is-interactive
     read -n 1 -p 'set_color green; echo -n "Install fisher? (y/N) " ; set_color normal' answer
     if test "$answer" = y -o "$answer" = Y
       echo Installing...
-      curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+      curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
     end
   end
 
