@@ -10,10 +10,6 @@
 	path = Resources/base16-fzf
 	url = https://github.com/tinted-theming/base16-fzf.git
 	branch = main
-[submodule "Resources/asdf"]
-	path = Resources/asdf
-	url = https://github.com/asdf-vm/asdf.git
-	branch = master
 [submodule "Resources/doomemacs"]
 	path = Resources/doomemacs
 	url = https://github.com/doomemacs/doomemacs

@@ -1,3 +1,5 @@
+fish_add_path /usr/local/bin
+
 function isDarkMode -d "Is Mac currently in Dark mode"
   defaults read -g AppleInterfaceStyle >/dev/null 2>&1
 end
