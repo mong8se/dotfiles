@@ -5,7 +5,12 @@ return {
   'mong8se/buffish.nvim',
   -- {dir = '~/Work/buffish.nvim'},
 
-  'ibhagwan/fzf-lua',
+  {
+    'ibhagwan/fzf-lua',
+    config = function()
+      require('fzf-lua').register_ui_select()
+    end
+  },
 
   {
     'andymass/vim-matchup',
@@ -14,7 +19,6 @@ return {
     end
   },
 
-  'stevearc/dressing.nvim',
   {
     'rcarriga/nvim-notify',
     config = function() vim.notify = require("notify") end
