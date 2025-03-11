@@ -70,6 +70,11 @@ return {
       local lspconfig = require('lspconfig')
 
       for server, config in pairs(opts.servers) do
+        if config.root_pattern then
+          config.root_dir = lspconfig.util.root_pattern(unpack(
+                                                            config.root_pattern))
+        end
+
         -- passing config.capabilities to blink.cmp merges with the capabilities in your
         -- `opts[server].capabilities, if you've defined it
         config.capabilities = require('blink.cmp').get_lsp_capabilities(
@@ -96,7 +101,8 @@ return {
                     {silent = true, buffer = bufnr})
           setKeyMap('n', "<leader>wr", lsp_buf.remove_workspace_folder,
                     {silent = true, buffer = bufnr})
-          setKeyMap('n', "<leader>wl", function()
+          setKeyMap('n', "<leader>wl",
+                    function()
             vim.print(lsp_buf.list_workspace_folders())
           end, {silent = true, buffer = bufnr})
           setKeyMap('n', "<leader>cf", lsp_buf.format,
