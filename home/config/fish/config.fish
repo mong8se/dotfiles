@@ -10,7 +10,7 @@ set -x BC_ENV_ARGS ~/.config/bcrc
 
 if not set -q HOMEBREW_PREFIX
   set -l brew_path
-  for test_path in /home/linuxbrew/.linuxbrew/bin/brew ~/.linuxbrew/bin/brew /usr/local/bin/brew
+  for test_path in /home/linuxbrew/.linuxbrew/bin/brew ~/.linuxbrew/bin/brew /usr/local/bin/brew /opt/homebrew/bin/brew
     if test -x $test_path
       set brew_path "$test_path"
       break
