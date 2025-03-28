@@ -1,7 +1,10 @@
 #!/usr/bin/env fish
 #domprox on
 
-thefuck --alias | source
+if status --is-interactive
+  and type -q thefuck
+  thefuck --alias | source
+end
 
 set -gx JAVA_HOME (/usr/libexec/java_home)
 set -gx ANDROID_HOME {$HOME}/Library/Android/sdk

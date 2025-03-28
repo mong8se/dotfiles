@@ -81,7 +81,7 @@ if status --is-interactive
   set -g fish_cursor_insert underscore blink
   set -g fish_cursor_visual line blink
 
-  set -x Z_FALLBACKS ~/Projects ~/Work
+  set -a Z_FALLBACKS ~/Projects ~/Work
 end
 
 fish_add_path ~/.cargo/bin
