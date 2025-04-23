@@ -9,18 +9,18 @@ local mong8se = {}
 -- attempts to load rc files if they exists, silently fails if they don't
 -- supports a prefix for a directory name relative to lua folder
 mong8se.loadRCFiles = function(which)
-  local module = which and
-                     function(name) return table.concat({which, name}, ".") end or
-                     function(name) return name end
+  local module = which
+      and function(name) return table.concat({ which, name }, ".") end
+    or function(name) return name end
 
-  for _, name in pairs({'_platform', '_machine', 'local'}) do
+  for _, name in pairs({ "_platform", "_machine", "local" }) do
     pcall(require, module(name))
   end
 end
 
 -- require a module or complain it didn't load
 mong8se.requireOrComplain = function(...)
-  for _, name in ipairs({...}) do
+  for _, name in ipairs({ ... }) do
     local status, result = pcall(require, name)
 
     if not status then
@@ -56,9 +56,9 @@ end
 
 mong8se.activateGitOrFiles = function()
   if b.gitsigns_head then
-    require('fzf-lua').git_files()
+    require("fzf-lua").git_files()
   else
-    require('fzf-lua').files()
+    require("fzf-lua").files()
   end
 end
 
@@ -81,7 +81,7 @@ mong8se.smartSplit = function(...)
 
   if fn.winwidth(0) > fn.winheight(0) * 2 then split = "vsplit" end
 
-  cmd(table.concat({split, ...}, " "))
+  cmd(table.concat({ split, ... }, " "))
 end
 
 -- Command that uses smart split and by default opens the current directory
@@ -100,9 +100,12 @@ end
 
 mong8se.foldIt = function()
   local folded_count = (vim.v.foldend - vim.v.foldstart - 1)
-  return string.format("%s %s %s", fn.getline(vim.v.foldstart), folded_count ==
-                           0 and "║" or ("🭰" .. folded_count .. "🭵"),
-                       fn.getline(vim.v.foldend):gsub("^%s*", ""))
+  return string.format(
+    "%s %s %s",
+    fn.getline(vim.v.foldstart),
+    folded_count == 0 and "║" or ("🭰" .. folded_count .. "🭵"),
+    fn.getline(vim.v.foldend):gsub("^%s*", "")
+  )
 end
 
 return mong8se

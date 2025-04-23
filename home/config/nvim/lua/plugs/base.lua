@@ -1,67 +1,83 @@
 return {
-  'mong8se/actually.nvim',
+  "mong8se/actually.nvim",
   -- {dir = '~/Work/actually.nvim'},
 
-  'mong8se/buffish.nvim',
+  "mong8se/buffish.nvim",
   -- {dir = '~/Work/buffish.nvim'},
 
   {
-    'ibhagwan/fzf-lua',
+    "ibhagwan/fzf-lua",
+    config = function() require("fzf-lua").register_ui_select() end,
+  },
+
+  -- {
+  --   "folke/trouble.nvim",
+  --   opts = {}, -- for default options, refer to the configuration section for custom setup.
+  -- },
+  --
+  {
+    "andymass/vim-matchup",
     config = function()
-      require('fzf-lua').register_ui_select()
-    end
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
   },
 
   {
-    'andymass/vim-matchup',
-    config = function()
-      vim.g.matchup_matchparen_offscreen = {method = 'popup'}
-    end
+    "rcarriga/nvim-notify",
+    config = function() vim.notify = require("notify") end,
   },
 
-  {
-    'rcarriga/nvim-notify',
-    config = function() vim.notify = require("notify") end
-  },
-
-  'RRethy/nvim-base16',
-  'caglartoklu/borlandp.vim',
-  'sainnhe/gruvbox-material',
-  'danilamihailov/beacon.nvim',
+  "RRethy/nvim-base16",
+  "caglartoklu/borlandp.vim",
+  "sainnhe/gruvbox-material",
+  "danilamihailov/beacon.nvim",
 
   {
-    'lukas-reineke/indent-blankline.nvim',
+    "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
-    opts = {indent = {char = "▏"}}
+    opts = {
+      indent = {
+        char = {
+          "▏",
+          "▎",
+          "▍",
+          "▌",
+          "▋",
+          "▊",
+          "▉",
+          "█",
+        },
+      },
+    },
   },
 
-  'roman/golden-ratio', -- C-W \
-  {'nvim-lualine/lualine.nvim', opts = {}},
-  'airblade/vim-rooter',
-  'sheerun/vim-polyglot',
+  "roman/golden-ratio", -- C-W \
+  { "nvim-lualine/lualine.nvim", opts = {} },
+  "airblade/vim-rooter",
+  "sheerun/vim-polyglot",
 
   {
-    'MagicDuck/grug-far.nvim',
-    opts = {engines = {ripgrep = {extraArgs = "--context 2"}}},
+    "MagicDuck/grug-far.nvim",
+    opts = { engines = { ripgrep = { extraArgs = "--context 2" } } },
 
     keys = {
       {
-        '<leader>/',
-        function() require('grug-far').open() end,
-        desc = 'Search and replace'
-      }
-    }
+        "<leader>/",
+        function() require("grug-far").open() end,
+        desc = "Search and replace",
+      },
+    },
   },
 
   {
-    'vimwiki/vimwiki',
-    ft = 'vimwiki',
-    keys = {{'<leader>ww', '<Plug>VimwikiIndex', desc = 'Vimwiki Index'}}
+    "vimwiki/vimwiki",
+    ft = "vimwiki",
+    keys = { { "<leader>ww", "<Plug>VimwikiIndex", desc = "Vimwiki Index" } },
   },
 
-  'tpope/vim-abolish', -- cr
+  "tpope/vim-abolish", -- cr
 
-  {'itchyny/calendar.vim', cmd = 'Calendar'},
+  { "itchyny/calendar.vim", cmd = "Calendar" },
 
-  {'mtth/scratch.vim', cmd = 'Scratch'} -- gs
+  { "mtth/scratch.vim", cmd = "Scratch" }, -- gs
 }

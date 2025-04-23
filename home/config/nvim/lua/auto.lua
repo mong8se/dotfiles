@@ -1,44 +1,46 @@
 local autocmd = vim.api.nvim_create_autocmd
-local CursorLine = vim.api.nvim_create_augroup('CursorLine', {clear = true})
-local ScrollOff = vim.api.nvim_create_augroup('CursorLine', {clear = true})
-local FocusIssues = vim.api.nvim_create_augroup('FocusIssues', {clear = true})
-local YankSync = vim.api.nvim_create_augroup('YankSync', {clear = true})
-local TermBuf = vim.api.nvim_create_augroup('TermBuf', {clear = true})
+local CursorLine = vim.api.nvim_create_augroup("CursorLine", { clear = true })
+local ScrollOff = vim.api.nvim_create_augroup("CursorLine", { clear = true })
+local FocusIssues = vim.api.nvim_create_augroup("FocusIssues", { clear = true })
+local YankSync = vim.api.nvim_create_augroup("YankSync", { clear = true })
+local TermBuf = vim.api.nvim_create_augroup("TermBuf", { clear = true })
 
 -- cursorline only for active window
-autocmd({"VimEnter", "WinEnter", "BufWinEnter"}, {
+autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
   pattern = "*",
   callback = function() vim.wo.cursorline = true end,
-  group = CursorLine
+  group = CursorLine,
 })
 
 autocmd("WinLeave", {
   pattern = "*",
   callback = function() vim.wo.cursorline = false end,
-  group = CursorLine
+  group = CursorLine,
 })
 
 autocmd("InsertEnter", {
   pattern = "*",
   callback = function() vim.cmd.highlight("CursorLine", "gui=underline") end,
-  group = CursorLine
+  group = CursorLine,
 })
 
 autocmd("InsertLeave", {
   pattern = "*",
   callback = function() vim.cmd.highlight("CursorLine", "gui=none") end,
-  group = CursorLine
+  group = CursorLine,
 })
 
 --  leave insert or replace mode
-autocmd({"BufEnter", "WinLeave", "FocusLost", "VimSuspend"}, {
+autocmd({ "BufEnter", "WinLeave", "FocusLost", "VimSuspend" }, {
   pattern = "*",
-  callback = function() if vim.bo.buftype == "" then vim.cmd.stopinsert() end end,
-  group = FocusIssues
+  callback = function()
+    if vim.bo.buftype == "" then vim.cmd.stopinsert() end
+  end,
+  group = FocusIssues,
 })
 
 --  Save the buffer if it is modified and has a filename
-autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
+autocmd({ "BufLeave", "FocusLost", "VimSuspend" }, {
   pattern = "*",
   callback = function()
     vim.schedule(function() vim.cmd.nohlsearch() end)
@@ -46,13 +48,13 @@ autocmd({"BufLeave", "FocusLost", "VimSuspend"}, {
       vim.cmd.update()
     end
   end,
-  group = FocusIssues
+  group = FocusIssues,
 })
 
-autocmd({"WinResized", "VimEnter"}, {
+autocmd({ "WinResized", "VimEnter" }, {
   pattern = "*",
   callback = function(details)
-    if (details.event == "WinResized") then
+    if details.event == "WinResized" then
       if vim.fn.win_gettype(details.match) == "" then
         for _, win in ipairs(vim.v.event.windows) do
           vim.wo[win].scrolloff = math.floor(vim.fn.winheight(win) / 10)
@@ -64,7 +66,7 @@ autocmd({"WinResized", "VimEnter"}, {
       end
     end
   end,
-  group = ScrollOff
+  group = ScrollOff,
 })
 
 -- make gq in normal mode in a help file close the help
@@ -72,9 +74,13 @@ autocmd({"WinResized", "VimEnter"}, {
 autocmd("FileType", {
   pattern = "help",
   callback = function()
-    vim.keymap.set('n', 'gq', ':helpclose<CR>',
-                   {remap = true, silent = true, buffer = true})
-  end
+    vim.keymap.set(
+      "n",
+      "gq",
+      ":helpclose<CR>",
+      { remap = true, silent = true, buffer = true }
+    )
+  end,
 })
 
 -- whenever we yank to the unamed register also copy to the + and * registers
@@ -83,16 +89,16 @@ autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
     if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-      for _, reg in ipairs({"*", "+"}) do
+      for _, reg in ipairs({ "*", "+" }) do
         vim.fn.setreg(reg, vim.v.event.regcontents, vim.v.event.regtype)
       end
     end
   end,
-  group = YankSync
+  group = YankSync,
 })
 
 -- automatically enter insert mode when you open or enter a terminal
-autocmd({"BufEnter", "TermOpen"}, {
+autocmd({ "BufEnter", "TermOpen" }, {
   pattern = "*",
   callback = function(details)
     if details.event == "BufEnter" and vim.bo.buftype ~= "terminal" then
@@ -101,5 +107,5 @@ autocmd({"BufEnter", "TermOpen"}, {
 
     vim.cmd.startinsert()
   end,
-  group = TermBuf
+  group = TermBuf,
 })

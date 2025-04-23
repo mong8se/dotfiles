@@ -16,11 +16,17 @@ settings.ttimeout = true
 settings.ttimeoutlen = 10
 
 settings.wildmenu = true
-settings.wildmode = {"longest:full", "full"}
+settings.wildmode = { "longest:full", "full" }
 
 settings.wildignore:append({
-  "*.o", "*.obj", ".git", "*.rbc", "*.class", ".svn", "vendor/gems/*",
-  "node_modules/*"
+  "*.o",
+  "*.obj",
+  ".git",
+  "*.rbc",
+  "*.class",
+  ".svn",
+  "vendor/gems/*",
+  "node_modules/*",
 })
 
 settings.showcmd = true
@@ -40,7 +46,7 @@ settings.inccommand = "nosplit"
 settings.ignorecase = true
 settings.smartcase = true
 
-settings.backspace = {"indent", "eol", "start"}
+settings.backspace = { "indent", "eol", "start" }
 
 settings.startofline = false
 
@@ -55,7 +61,7 @@ settings.autoindent = true
 settings.smarttab = true
 
 -- So signs and number share a column when numbers are on
-settings.signcolumn = 'number'
+settings.signcolumn = "number"
 
 settings.showtabline = 0
 
@@ -65,14 +71,14 @@ settings.wrap = false
 settings.whichwrap = "<,>,b"
 settings.sidescroll = 1
 settings.sidescrolloff = 5
-settings.virtualedit = {"block", "insert"}
+settings.virtualedit = { "block", "insert" }
 
 settings.list = true
 settings.listchars = {
   tab = "╍╍⇥",
   trail = "ˍ",
   precedes = "\\uf053",
-  extends = "\\uf054"
+  extends = "\\uf054",
 }
 
 settings.fillchars = {
@@ -81,7 +87,7 @@ settings.fillchars = {
   vert = "▕",
   fold = "═",
   foldopen = "\\uf078",
-  foldclose = "\\uf077"
+  foldclose = "\\uf077",
 }
 
 settings.lazyredraw = true
@@ -100,18 +106,19 @@ settings.foldtext = "v:lua.require('mong8se').foldIt()"
 if has("spell") then vim.o.spelllang = "en_us" end
 
 if has("user_commands") then
-  command("Q", "q<bang>", {bang = true})
-  command("QA", "qa<bang>", {bang = true})
-  command("Qa", "qa<bang>", {bang = true})
+  command("Q", "q<bang>", { bang = true })
+  command("QA", "qa<bang>", { bang = true })
+  command("Qa", "qa<bang>", { bang = true })
   command("Messages", "messages", {})
 
-  command("Split", splitCommand, {nargs = "?", complete = "file"})
+  command("Split", splitCommand, { nargs = "?", complete = "file" })
   -- This is to override split to be our new Split.
   -- Since command abbr also effects search,
   -- we want to make sure we are in ex mode (:)
   cmd(
-      "cnoreabbrev <expr> split getcmdtype() == ':' && getcmdline() ==# 'split' ? 'Split' : 'split'")
+    "cnoreabbrev <expr> split getcmdtype() == ':' && getcmdline() ==# 'split' ? 'Split' : 'split'"
+  )
 end
 
-settings.grepprg = 'rg --vimgrep --no-heading --smart-case'
-settings.grepformat = '%f:%l:%c:%m'
+settings.grepprg = "rg --vimgrep --no-heading --smart-case"
+settings.grepformat = "%f:%l:%c:%m"
