@@ -24,10 +24,17 @@ return {
           after_jump = function()
             MiniJump2d.start({
               spotter = MiniJump2d.builtin_opts.default.spotter,
-              allowed_lines = { cursor_before = false, cursor_after = false },
-              allowed_windows = { not_current = false },
+              allowed_lines = {
+                cursor_before = false,
+                cursor_after = false,
+              },
+              allowed_windows = {
+                not_current = false,
+              },
               -- hl_group = 'Search',
-              hooks = { after_jump = function() end },
+              hooks = {
+                after_jump = function() end,
+              },
             })
           end,
         },
@@ -35,13 +42,18 @@ return {
 
       local MiniMap = require("mini.map")
       MiniMap.setup({
-        integrations = { MiniMap.gen_integration.gitsigns() },
+        integrations = {
+          MiniMap.gen_integration.gitsigns(),
+        },
         symbols = {
           encode = MiniMap.gen_encode_symbols.dot("4x2"),
           scroll_line = "▐",
           scroll_view = "│",
         },
-        window = { width = 16, winblend = 70 },
+        window = {
+          width = 16,
+          winblend = 70,
+        },
       })
     end,
   },

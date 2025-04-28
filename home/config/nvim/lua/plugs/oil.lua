@@ -12,6 +12,10 @@ end
 return {
   {
     "stevearc/oil.nvim",
-    opts = { win_options = { winbar = "%!v:lua.get_oil_winbar()" } },
+    opts = {
+      win_options = {
+        winbar = "%!v:lua.get_oil_winbar()",
+      },
+    },
   },
 }

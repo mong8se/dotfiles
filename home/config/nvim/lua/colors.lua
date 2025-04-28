@@ -7,8 +7,9 @@ settings.termguicolors = true
 
 local MiniMisc = require("mini.misc")
 
-local ColorSchemeGroup =
-  vim.api.nvim_create_augroup("ColorSchemeGroup", { clear = true })
+local ColorSchemeGroup = vim.api.nvim_create_augroup("ColorSchemeGroup", {
+  clear = true,
+})
 
 local highviz = {
   underdouble = true,

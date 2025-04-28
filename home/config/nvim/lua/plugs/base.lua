@@ -10,15 +10,12 @@ return {
     config = function() require("fzf-lua").register_ui_select() end,
   },
 
-  -- {
-  --   "folke/trouble.nvim",
-  --   opts = {}, -- for default options, refer to the configuration section for custom setup.
-  -- },
-  --
   {
     "andymass/vim-matchup",
     config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+      vim.g.matchup_matchparen_offscreen = {
+        method = "popup",
+      }
     end,
   },
 
@@ -52,13 +49,22 @@ return {
   },
 
   "roman/golden-ratio", -- C-W \
-  { "nvim-lualine/lualine.nvim", opts = {} },
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = {},
+  },
   "airblade/vim-rooter",
   "sheerun/vim-polyglot",
 
   {
     "MagicDuck/grug-far.nvim",
-    opts = { engines = { ripgrep = { extraArgs = "--context 2" } } },
+    opts = {
+      engines = {
+        ripgrep = {
+          extraArgs = "--context 2",
+        },
+      },
+    },
 
     keys = {
       {
@@ -72,12 +78,24 @@ return {
   {
     "vimwiki/vimwiki",
     ft = "vimwiki",
-    keys = { { "<leader>ww", "<Plug>VimwikiIndex", desc = "Vimwiki Index" } },
+    keys = {
+      {
+        "<leader>ww",
+        "<Plug>VimwikiIndex",
+        desc = "Vimwiki Index",
+      },
+    },
   },
 
   "tpope/vim-abolish", -- cr
 
-  { "itchyny/calendar.vim", cmd = "Calendar" },
+  {
+    "itchyny/calendar.vim",
+    cmd = "Calendar",
+  },
 
-  { "mtth/scratch.vim", cmd = "Scratch" }, -- gs
+  {
+    "mtth/scratch.vim",
+    cmd = "Scratch",
+  }, -- gs
 }

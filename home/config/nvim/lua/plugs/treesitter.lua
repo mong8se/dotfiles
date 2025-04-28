@@ -101,15 +101,21 @@ return {
           },
           swap = {
             enable = true,
-            swap_next = { ["]a"] = "@parameter.inner" },
-            swap_previous = { ["[a"] = "@parameter.inner" },
+            swap_next = {
+              ["]a"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["[a"] = "@parameter.inner",
+            },
           },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
               ["]m"] = "@function.outer",
-              ["]]"] = { query = combinedTargets },
+              ["]]"] = {
+                query = combinedTargets,
+              },
               ["]z"] = {
                 query = "@fold",
                 query_group = "folds",
@@ -118,11 +124,15 @@ return {
             },
             goto_next_end = {
               ["]M"] = "@function.outer",
-              ["]["] = { query = combinedTargets },
+              ["]["] = {
+                query = combinedTargets,
+              },
             },
             goto_previous_start = {
               ["[m"] = "@function.outer",
-              ["[["] = { query = combinedTargets },
+              ["[["] = {
+                query = combinedTargets,
+              },
               ["[z"] = {
                 query = "@fold",
                 query_group = "folds",
@@ -131,11 +141,16 @@ return {
             },
             goto_previous_end = {
               ["[M"] = "@function.outer",
-              ["[]"] = { query = combinedTargets },
+              ["[]"] = {
+                query = combinedTargets,
+              },
             },
           },
         },
-        highlight = { enable = true, additional_vim_regex_highlighting = false },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
         rainbow = {
           enable = true,
           -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
@@ -144,7 +159,9 @@ return {
           -- colors = {}, -- table of hex strings
           -- termcolors = {} -- table of colour name strings
         },
-        indent = { enable = true },
+        indent = {
+          enable = true,
+        },
         matchup = {
           enable = true,
         },

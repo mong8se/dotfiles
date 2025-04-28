@@ -16,7 +16,10 @@ settings.ttimeout = true
 settings.ttimeoutlen = 10
 
 settings.wildmenu = true
-settings.wildmode = { "longest:full", "full" }
+settings.wildmode = {
+  "longest:full",
+  "full",
+}
 
 settings.wildignore:append({
   "*.o",
@@ -46,7 +49,11 @@ settings.inccommand = "nosplit"
 settings.ignorecase = true
 settings.smartcase = true
 
-settings.backspace = { "indent", "eol", "start" }
+settings.backspace = {
+  "indent",
+  "eol",
+  "start",
+}
 
 settings.startofline = false
 
@@ -59,6 +66,7 @@ settings.softtabstop = 2
 settings.expandtab = true
 settings.autoindent = true
 settings.smarttab = true
+settings.textwidth = 80
 
 -- So signs and number share a column when numbers are on
 settings.signcolumn = "number"
@@ -71,7 +79,10 @@ settings.wrap = false
 settings.whichwrap = "<,>,b"
 settings.sidescroll = 1
 settings.sidescrolloff = 5
-settings.virtualedit = { "block", "insert" }
+settings.virtualedit = {
+  "block",
+  "insert",
+}
 
 settings.list = true
 settings.listchars = {
@@ -106,12 +117,21 @@ settings.foldtext = "v:lua.require('mong8se').foldIt()"
 if has("spell") then vim.o.spelllang = "en_us" end
 
 if has("user_commands") then
-  command("Q", "q<bang>", { bang = true })
-  command("QA", "qa<bang>", { bang = true })
-  command("Qa", "qa<bang>", { bang = true })
+  command("Q", "q<bang>", {
+    bang = true,
+  })
+  command("QA", "qa<bang>", {
+    bang = true,
+  })
+  command("Qa", "qa<bang>", {
+    bang = true,
+  })
   command("Messages", "messages", {})
 
-  command("Split", splitCommand, { nargs = "?", complete = "file" })
+  command("Split", splitCommand, {
+    nargs = "?",
+    complete = "file",
+  })
   -- This is to override split to be our new Split.
   -- Since command abbr also effects search,
   -- we want to make sure we are in ex mode (:)
