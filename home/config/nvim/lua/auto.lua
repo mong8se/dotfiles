@@ -88,6 +88,11 @@ autocmd("FileType", {
 autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
+    vim.hl.on_yank({
+      higroup = "Search",
+      timeout = 300,
+    })
+
     if vim.v.event.operator == "y" and vim.v.event.regname == "" then
       for _, reg in ipairs({ "*", "+" }) do
         vim.fn.setreg(reg, vim.v.event.regcontents, vim.v.event.regtype)
