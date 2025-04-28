@@ -96,7 +96,7 @@ settings.fillchars = {
   eob = "⢎",
   horiz = "╍",
   vert = "▕",
-  fold = "░",
+  fold = "┈",
   foldopen = "\\uf078",
   foldclose = "\\uf077",
 }

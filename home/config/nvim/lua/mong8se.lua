@@ -117,7 +117,12 @@ mong8se.foldIt = function()
 
   return string.format(
     "%s %s %s ",
-    fn.getline(vim.v.foldstart):gsub("^%s", opt.fillchars:get().fold),
+    fn.getline(vim.v.foldstart):gsub(
+      "^%s+",
+      function(whitespace)
+        return string.rep(opt.fillchars:get().fold, #whitespace-1) .. " "
+      end
+    ),
     folded_count == 0 and "█ " or ("▌" .. folded_count .. "▐"),
     fn.getline(vim.v.foldend):gsub("^%s*", "")
   )
