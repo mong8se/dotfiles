@@ -7,7 +7,11 @@ return {
 
   {
     "ibhagwan/fzf-lua",
-    config = function() require("fzf-lua").register_ui_select() end,
+    config = function()
+      local FZF = require("fzf-lua")
+      FZF.setup({ "ivy" })
+      FZF.register_ui_select()
+    end,
   },
 
   {
@@ -24,7 +28,7 @@ return {
     config = function() vim.notify = require("notify") end,
   },
 
-  "RRethy/nvim-base16",
+  "tinted-theming/tinted-nvim",
   "caglartoklu/borlandp.vim",
   "sainnhe/gruvbox-material",
   "danilamihailov/beacon.nvim",
