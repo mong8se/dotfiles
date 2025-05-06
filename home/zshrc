@@ -173,9 +173,7 @@ export PASSWORD_STORE_DIR=~/Dropbox/.password-store
 export FZF_DEFAULT_OPTS='--height 40% --reverse'
 
 # ASDF
-export ASDF_DIR="$DOTFILES_RESOURCES/asdf"
-export ASDF_DATA_DIR="$ASDF_DIR"
-xsource $ASDF_DIR/asdf.sh
+export ASDF_DATA_DIR="~/.local/share/asdf"
 
 eval "$(starship init zsh)"
 

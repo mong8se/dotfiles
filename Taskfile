@@ -176,6 +176,11 @@ function task:init {
   task:submodule:init
   task:submodule:update
 
+  mkdir -p ~/Projects
+  mkdir -p ~/Work
+
+  export ASDF_DATA_DIR="~/.local/share/asdf"
+
   asdf plugin add rust
   asdf install rust latest
   asdf set --home rust latest
