@@ -8,20 +8,6 @@ set -x DOTFILES_RESOURCES ~/.dotfiles/Resources
 set -x EDITOR (command -v nvim || command -v vim || command -v vi)
 set -x BC_ENV_ARGS ~/.config/bcrc
 
-if not set -q HOMEBREW_PREFIX
-  set -l brew_path
-  for test_path in /home/linuxbrew/.linuxbrew/bin/brew ~/.linuxbrew/bin/brew /usr/local/bin/brew /opt/homebrew/bin/brew
-    if test -x $test_path
-      set brew_path "$test_path"
-      break
-    end
-  end
-
-  if test -n "$brew_path"
-    eval ($brew_path shellenv)
-  end
-end
-
 if status --is-interactive
   fish_default_key_bindings
 
@@ -87,9 +73,3 @@ end
 fish_add_path ~/.cargo/bin
 
 set -x BC_ENV_ARGS ~/.config/bcrc
-set -x ASDF_DATA_DIR ~/.local/share/asdf
-set -x ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY latest_installed
-set -l asdf_shims "$ASDF_DATA_DIR/shims"
-if not contains "$asdf_shims" $PATH
-  set -gx --prepend PATH "$asdf_shims"
-end

@@ -1,5 +1,4 @@
 #!/usr/bin/env fish
-#domprox on
 
 if status --is-interactive
   and type -q thefuck
