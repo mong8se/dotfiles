@@ -11,9 +11,9 @@ local ColorSchemeGroup = vim.api.nvim_create_augroup("ColorSchemeGroup", {
 })
 
 local highviz = {
-  underdouble = true,
-  bg = "black",
-  fg = "orange",
+  bold = true,
+  bg = "orange",
+  fg = "black",
   sp = "lightblue",
 }
 
