@@ -31,11 +31,11 @@ return {
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
       },
-      completion = {
-        menu = {
-          border = "rounded",
-        },
-      },
+      -- completion = {
+      --   menu = {
+      --     border = "shadow",
+      --   },
+      -- },
 
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
