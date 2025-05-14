@@ -28,16 +28,6 @@ return {
     config = function() vim.notify = require("notify") end,
   },
 
-  {
-    "tinted-theming/tinted-nvim",
-    config = function()
-      require("tinted-colorscheme").with_config({
-        supports = { tinty = false, live_reload = false, tinted_shell = true },
-      })
-    end,
-  },
-  "caglartoklu/borlandp.vim",
-  "sainnhe/gruvbox-material",
   "danilamihailov/beacon.nvim",
 
   {
