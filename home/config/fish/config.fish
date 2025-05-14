@@ -70,6 +70,8 @@ if status --is-interactive
   set -a Z_FALLBACKS ~/Projects ~/Work
 end
 
+fish_add_path ~/.local/bin
 fish_add_path ~/.cargo/bin
+fish_add_path ~/.config/emacs/bin
 
 set -x BC_ENV_ARGS ~/.config/bcrc
