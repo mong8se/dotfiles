@@ -84,6 +84,7 @@ return {
         },
         denols = {
           root_pattern = {
+            "deno.json",
             "deps.ts",
             "deps.js",
           },
