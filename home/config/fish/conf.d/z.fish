@@ -1,15 +1,10 @@
 status is-interactive || exit
 
 if type -q fre
-  function __fre_run -e fish_postexec
-    set -f last_status $status
-    if test $last_status -eq 0
-      set -f last_cmd (string split " " $argv[1])[1]
-      if test cd = "$last_cmd"
-        command fre --add "$PWD" &
-        disown
-      end
-    end
+  function __fre_run --on-variable PWD
+    test -n "$fish_private_mode"; and exit
+    command fre --add "$PWD" &
+    disown
   end
 
   if not set -q __z_fzf_args
@@ -21,10 +16,9 @@ if type -q fre
     begin
       command fre --sorted
       command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
-      # command find $HOME -maxdepth 2 -mindepth 2 ! -path "$HOME/.*" -type d  -print
-    end \
-    | string match -v (pwd) \
-    | if count $argv > "/dev/null"
+    end |
+    string match -v (pwd) |
+    if count $argv > "/dev/null"
       fzf $__z_fzf_args -f "$argv" | head -1
     else
       fzf $__z_fzf_args
@@ -33,8 +27,6 @@ if type -q fre
 
     test -z "$result"; and return
     if test -d "$result"
-      command fre --add "$PWD" &
-      disown
       cd "$result"
     else
       command fre --delete "$result" &
