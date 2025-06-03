@@ -1,21 +1,15 @@
 -- Golden Ratio
 vim.g.golden_ratio_autocommand = 0
 
-local disabled_built_ins = {
-  "getscript",
-  "logipat",
+for _, plugin in pairs({
   "2html_plugin",
+  "getscript",
   "getscriptPlugin",
   "matchit",
   "netrw",
   "netrwPlugin",
-  "rrhelper",
   "spellfile_plugin",
-  "vimball",
-  "vimballPlugin",
-}
-
-for _, plugin in pairs(disabled_built_ins) do
+}) do
   vim.g["loaded_" .. plugin] = 1
 end
 
