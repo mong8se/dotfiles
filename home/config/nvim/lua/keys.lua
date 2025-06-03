@@ -420,9 +420,11 @@ setKeyMap("n", "<c-w>s", mong8se.splitCommand, {
   desc = "Split and browse",
 })
 setKeyMap("n", "<c-w><C-s>", mong8se.splitCommand, {
+  desc = "Split and browse",
   silent = true,
 })
 setKeyMap("n", "<c-w>\\", "<Plug>(golden_ratio_resize)", {
+  desc = "Toggle golden ratio",
   silent = true,
 })
 setKeyMap("t", "<c-w><C-w>", "<C-\\><C-n>")
