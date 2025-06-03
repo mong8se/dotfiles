@@ -1,17 +1,3 @@
--- Use lsp for these
-vim.g.polyglot_disabled = {
-  "css",
-  "sensible",
-  "go",
-  "html",
-  "javascript",
-  "json",
-  "lua",
-  "python",
-  "rust",
-  "typescript",
-}
-
 -- Golden Ratio
 vim.g.golden_ratio_autocommand = 0
 

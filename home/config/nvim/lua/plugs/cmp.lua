@@ -89,6 +89,7 @@ return {
             "deps.js",
           },
         },
+        fish_lsp = {},
         html = {},
         cssls = {},
         jsonls = {},

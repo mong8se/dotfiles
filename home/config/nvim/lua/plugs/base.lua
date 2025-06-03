@@ -55,7 +55,6 @@ return {
     opts = {},
   },
   "airblade/vim-rooter",
-  "sheerun/vim-polyglot",
 
   {
     "MagicDuck/grug-far.nvim",
