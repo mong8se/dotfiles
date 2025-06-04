@@ -2,7 +2,9 @@ status is-interactive || exit
 
 if type -q fre
   function __fre_run --on-variable PWD
-    test -n "$fish_private_mode"; and exit
+    if test -n "$fish_private_mode" -o "$PWD"="$HOME"
+      return
+    end
     command fre --add "$PWD" &
     disown
   end
