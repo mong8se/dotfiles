@@ -40,7 +40,7 @@ Uses [Taskfile](https://github.com/adriancooney/Taskfile) for running tasks, onc
 ## Config Order
 
 Notes:
-*  `hostname` below is the output of the `run hostname` task.
+* `hostname` below is the output of the `run hostname` task.
 * `_platform` files are only loaded if they're `_mac` or `_linux` prefixed files on the correct platform.
 * `*local*` is git ignored so local overrides can be made that won't be git tracked like the above two options.
 
