@@ -1,5 +1,12 @@
 -- Golden Ratio
 vim.g.golden_ratio_autocommand = 0
+-- Vimwiki
+vim.g.vimwiki_list = {
+  {
+    path = "~/OneDrive - dpz/Documents/vimwiki/",
+    auto_diary_index = 1,
+  },
+}
 
 for _, plugin in pairs({
   "2html_plugin",

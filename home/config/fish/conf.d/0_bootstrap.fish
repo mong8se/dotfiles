@@ -3,7 +3,7 @@ if not set -q HOMEBREW_PREFIX
 
   for brew_path in /usr/local/bin/brew /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew ~/.linuxbrew/bin/brew
     if test -x $brew_path
-      eval ($brew_path shellenv)
+      $brew_path shellenv | source
       break
     end
   end
