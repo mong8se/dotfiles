@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.nvim",
+    "nvim-mini/mini.nvim",
     dependencies = "lewis6991/gitsigns.nvim",
     config = function()
       require("mini.bracketed").setup()
