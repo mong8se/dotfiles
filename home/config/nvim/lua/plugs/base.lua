@@ -56,24 +56,6 @@ return {
   },
   "airblade/vim-rooter",
 
-  {
-    "MagicDuck/grug-far.nvim",
-    opts = {
-      engines = {
-        ripgrep = {
-          extraArgs = "--context 2",
-        },
-      },
-    },
-
-    keys = {
-      {
-        "<leader>/",
-        function() require("grug-far").open() end,
-        desc = "Search and replace",
-      },
-    },
-  },
 
   {
     "vimwiki/vimwiki",

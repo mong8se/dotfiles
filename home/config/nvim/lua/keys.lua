@@ -388,12 +388,6 @@ setKeyMap("n", "<leader>gs", fzf.git_stash, {
 setKeyMap("n", "<leader>sl", fzf.live_grep, {
   desc = "Search live",
 })
-setKeyMap("n", "<leader>*", fzf.grep_cword, {
-  desc = "Search current word",
-})
-setKeyMap("v", "<leader>*", fzf.grep_visual, {
-  desc = "Search current word",
-})
 setKeyMap("n", "<leader>sf", fzf.lgrep_curbuf, {
   desc = "Search on current file",
 })
