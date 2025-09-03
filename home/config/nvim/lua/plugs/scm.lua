@@ -17,7 +17,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     opts = {
-
       signs = signs,
       signs_staged = signs,
       on_attach = function(bufnr)

@@ -7,16 +7,13 @@ return {
 
   {
     "ibhagwan/fzf-lua",
-    config = function()
-      local FZF = require("fzf-lua")
-      FZF.setup({ "ivy" })
-      FZF.register_ui_select()
-    end,
+    opts = { "ivy" },
+    init = function(plugin) require(plugin.name).register_ui_select() end,
   },
 
   {
     "andymass/vim-matchup",
-    config = function()
+    init = function()
       vim.g.matchup_matchparen_offscreen = {
         method = "popup",
       }
@@ -25,7 +22,11 @@ return {
 
   {
     "rcarriga/nvim-notify",
-    config = function() vim.notify = require("notify") end,
+    opts = {
+      top_down = false,
+      render = "wrapped-compact",
+    },
+    init = function() vim.notify = require("notify") end,
   },
 
   "danilamihailov/beacon.nvim",
@@ -49,16 +50,40 @@ return {
     },
   },
 
-  "roman/golden-ratio", -- C-W \
+  {
+    "roman/golden-ratio", -- C-W \
+    init = function() vim.g.golden_ratio_autocommand = 0 end,
+    keys = {
+      {
+        "<leader>tr",
+        "<Plug>(golden_ratio_toggle)",
+        desc = "Toggle golden ratio",
+      },
+      {
+        "<c-w>\\",
+        "<Plug>(golden_ratio_resize)",
+        desc = "Toggle golden ratio",
+      }
+    },
+  },
+
   {
     "nvim-lualine/lualine.nvim",
     opts = {},
   },
-  "airblade/vim-rooter",
 
+  "airblade/vim-rooter",
 
   {
     "vimwiki/vimwiki",
+    init = function()
+      vim.g.vimwiki_list = {
+        {
+          path = "~/OneDrive - dpz/Documents/vimwiki/",
+          auto_diary_index = 1,
+        },
+      }
+    end,
     ft = "vimwiki",
     keys = {
       {

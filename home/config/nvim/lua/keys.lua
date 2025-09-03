@@ -308,11 +308,6 @@ setKeyMap("n", "<leader>f/", fzf.lgrep_curbuf, {
 })
 
 -- toggle
-setKeyMap("n", "<leader>tr", "<Plug>(golden_ratio_toggle)", {
-  noremap = false,
-  desc = "Toggle golden ratio",
-  silent = true,
-})
 setKeyMap("n", "<leader>tm", require("mini.map").toggle, {
   desc = "Toggle mini map",
 })
@@ -415,10 +410,6 @@ setKeyMap("n", "<c-w>s", mong8se.splitCommand, {
 })
 setKeyMap("n", "<c-w><C-s>", mong8se.splitCommand, {
   desc = "Split and browse",
-  silent = true,
-})
-setKeyMap("n", "<c-w>\\", "<Plug>(golden_ratio_resize)", {
-  desc = "Toggle golden ratio",
   silent = true,
 })
 setKeyMap("t", "<c-w><C-w>", "<C-\\><C-n>")

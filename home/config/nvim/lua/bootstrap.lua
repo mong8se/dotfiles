@@ -1,13 +1,4 @@
--- Golden Ratio
-vim.g.golden_ratio_autocommand = 0
--- Vimwiki
-vim.g.vimwiki_list = {
-  {
-    path = "~/OneDrive - dpz/Documents/vimwiki/",
-    auto_diary_index = 1,
-  },
-}
-
+-- Disable some built-in plugins
 for _, plugin in pairs({
   "2html_plugin",
   "getscript",
