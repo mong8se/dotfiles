@@ -104,6 +104,7 @@ MiniClue.setup({
     MiniClue.gen_clues.registers({
       show_contents = true,
     }),
+    MiniClue.gen_clues.square_brackets(),
     MiniClue.gen_clues.windows(),
     MiniClue.gen_clues.z(),
     {
@@ -152,11 +153,11 @@ MiniClue.setup({
       desc = "+Diagnostics",
     },
   },
-
   window = {
     delay = 333,
     config = {
       width = "auto",
+      border = "rounded"
     },
   },
 })
@@ -197,8 +198,6 @@ setKeyMap("n", "gP", '"' .. clipboard .. "]P", {
 setKeyMap("n", "U", "<C-r>")
 setKeyMap("n", "Y", "y$")
 
--- Instead of look up in man, let's split, opposite of J for join
--- setKeyMap('n', "K", "i<CR><Esc>")
 setKeyMap(
   "n",
   "<C-L>",
