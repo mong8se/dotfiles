@@ -101,6 +101,7 @@ return {
     },
     config = function(_, opts)
       local lspconfig = require("lspconfig")
+      if vim.lsp.on_type_formatting then vim.lsp.on_type_formatting.enable() end
 
       for server, config in pairs(opts.servers) do
         if config.root_pattern then

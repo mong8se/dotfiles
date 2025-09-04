@@ -63,7 +63,7 @@ return {
         "<c-w>\\",
         "<Plug>(golden_ratio_resize)",
         desc = "Toggle golden ratio",
-      }
+      },
     },
   },
 
