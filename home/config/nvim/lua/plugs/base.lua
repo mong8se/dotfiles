@@ -72,8 +72,6 @@ return {
     opts = {},
   },
 
-  "airblade/vim-rooter",
-
   {
     "vimwiki/vimwiki",
     init = function()

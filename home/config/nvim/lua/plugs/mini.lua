@@ -202,9 +202,19 @@ return {
   },
   {
     "nvim-mini/mini.misc",
+    init = function(plugin)
+      require(plugin.name).setup_auto_root({
+        ".git",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "Makefile",
+        "deno.json",
+        "package.json",
+      })
+    end,
     keys = {
       {
-
         "<leader>bz",
         function()
           require("mini.misc").zoom(0, {
