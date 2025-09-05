@@ -211,6 +211,7 @@ return {
         "Makefile",
         "deno.json",
         "package.json",
+        "Cargo.toml",
       })
     end,
     keys = {
