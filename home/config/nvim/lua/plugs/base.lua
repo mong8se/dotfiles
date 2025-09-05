@@ -58,11 +58,13 @@ return {
         "<leader>tr",
         "<Plug>(golden_ratio_toggle)",
         desc = "Toggle golden ratio",
+        silent = true,
       },
       {
         "<c-w>\\",
         "<Plug>(golden_ratio_resize)",
         desc = "Toggle golden ratio",
+        silent = true,
       },
     },
   },
