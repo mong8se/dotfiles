@@ -78,17 +78,17 @@ return {
     opts = {
       servers = {
         ts_ls = {
-          root_pattern = {
+          root_markers = {
             "package.json",
           },
         },
-        denols = {
-          root_pattern = {
-            "deno.json",
-            "deps.ts",
-            "deps.js",
-          },
-        },
+        -- denols = {
+        --   root_markers = {
+        --     "deno.json",
+        --     "deps.ts",
+        --     "deps.js",
+        --   },
+        -- },
         fish_lsp = {},
         html = {},
         cssls = {},
@@ -100,20 +100,11 @@ return {
       },
     },
     config = function(_, opts)
-      local lspconfig = require("lspconfig")
       if vim.lsp.on_type_formatting then vim.lsp.on_type_formatting.enable() end
 
       for server, config in pairs(opts.servers) do
-        if config.root_pattern then
-          config.root_dir =
-            lspconfig.util.root_pattern(unpack(config.root_pattern))
-        end
-
-        -- passing config.capabilities to blink.cmp merges with the capabilities in your
-        -- `opts[server].capabilities, if you've defined it
-        config.capabilities =
-          require("blink.cmp").get_lsp_capabilities(config.capabilities)
-        lspconfig[server].setup(config)
+        vim.lsp.config[server]=config
+        vim.lsp.enable(server)
       end
 
       -- Use an on_attach function to only map the following keys

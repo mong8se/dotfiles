@@ -1,17 +1,5 @@
 return {
   {
-    "nvim-mini/mini.bracketed",
-    opts = {},
-  },
-  {
-    "nvim-mini/mini.comment",
-    opts = {},
-  },
-  {
-    "nvim-mini/mini.bracketed",
-    opts = {},
-  },
-  {
     "nvim-mini/mini.comment",
     opts = {},
   },
