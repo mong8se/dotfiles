@@ -192,14 +192,16 @@ return {
     "nvim-mini/mini.misc",
     init = function(plugin)
       require(plugin.name).setup_auto_root({
+        ".bzr",
         ".git",
         ".hg",
-        ".bzr",
         ".svn",
-        "Makefile",
-        "deno.json",
-        "package.json",
         "Cargo.toml",
+        "deno.json",
+        "Gemfile",
+        "Makefile",
+        "package.json",
+        "Taskfile",
       })
     end,
     keys = {
