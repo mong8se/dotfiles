@@ -133,6 +133,10 @@ setKeyMap("n", "<leader>f/", fzf.lgrep_curbuf, {
   desc = "Search on current file",
 })
 
+setKeyMap("n", "<leader>fz", fzf.files, {
+  desc = "Search for file",
+})
+
 -- toggle
 setKeyMap("n", "<leader>tn", mong8se.toggleNumberMode, {
   silent = true,

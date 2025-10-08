@@ -7,7 +7,7 @@ return {
 
   {
     "ibhagwan/fzf-lua",
-    opts = { "ivy" },
+    opts = { "default" },
     init = function(plugin) require(plugin.name).register_ui_select() end,
   },
 
