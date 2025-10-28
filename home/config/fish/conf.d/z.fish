@@ -71,6 +71,11 @@ else if type -q fasd
 end
 
 function z
+  if test "$argv" = "-"
+    cd -
+    return
+  end
+
   set -g __z_last_arg $argv
   __z_query $argv
 end
