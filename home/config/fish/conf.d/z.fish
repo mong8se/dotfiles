@@ -10,7 +10,7 @@ if type -q fre
   end
 
   if not set -q __z_fzf_args
-    set -g __z_fzf_args --nth=-2.. -d / --tiebreak end,length,index --no-sort -i --exact --scheme=path
+    set -g __z_fzf_args --nth=-2.. -d / --tiebreak end,length,index --no-sort --smart-case --exact --scheme=path
   end
 
   function __z_query
