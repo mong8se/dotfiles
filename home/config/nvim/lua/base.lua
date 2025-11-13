@@ -32,7 +32,7 @@ settings.wildignore:append({
   "node_modules/*",
 })
 
-settings.winborder = "solid"
+settings.winborder = "rounded"
 
 settings.showcmd = true
 settings.cmdheight = 1
