@@ -65,11 +65,11 @@ mong8se.toggleScrollBindAllWindows = function()
   end
 end
 
-mong8se.activateGitOrFiles = function()
+mong8se.activateGitOrFiles = function(git_picker, files_picker)
   if b.gitsigns_head then
-    require("fzf-lua").git_files()
+    git_picker()
   else
-    require("fzf-lua").files()
+    files_picker()
   end
 end
 
@@ -120,7 +120,7 @@ mong8se.foldIt = function()
     fn.getline(vim.v.foldstart):gsub(
       "^%s+",
       function(whitespace)
-        return string.rep(opt.fillchars:get().fold, #whitespace-1) .. " "
+        return string.rep(opt.fillchars:get().fold, #whitespace - 1) .. " "
       end
     ),
     folded_count == 0 and "█ " or ("▌" .. folded_count .. "▐"),

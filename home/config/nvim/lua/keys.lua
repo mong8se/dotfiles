@@ -2,7 +2,11 @@ local mong8se = require("mong8se")
 
 local setKeyMap = vim.keymap.set
 
-local fzf = require("fzf-lua")
+local picker = setmetatable({}, {
+  __index = function(self, key)
+    return function(opts) require("snacks.picker")[key](opts) end
+  end,
+})
 
 -- disable these keys
 setKeyMap("n", "<f1>", "<NOP>")
@@ -14,13 +18,13 @@ setKeyMap("n", "<leader> ", require("buffish").open, {
   desc = "Switch buffer",
 })
 
-setKeyMap("n", "<leader>:", fzf.commands, {
+setKeyMap("n", "<leader>:", picker.commands, {
   desc = "Fuzzy command",
 })
-setKeyMap("n", "<leader>'", fzf.marks, {
+setKeyMap("n", "<leader>'", picker.marks, {
   desc = "Fuzzy marks",
 })
-setKeyMap("n", '<leader>"', fzf.registers, {
+setKeyMap("n", '<leader>"', picker.registers, {
   desc = "Fuzzy registers",
 })
 
@@ -87,7 +91,7 @@ setKeyMap("v", "<", "<gv")
 setKeyMap("v", ">", ">gv")
 
 -- buffer
-setKeyMap("n", "<leader>bb", fzf.buffers, {
+setKeyMap("n", "<leader>bb", function() picker.buffers({current = false}) end, {
   silent = true,
   desc = "List",
 })
@@ -99,17 +103,13 @@ end, {
   silent = true,
   desc = "Delete current buffer",
 })
-setKeyMap("n", "<leader>bs", fzf.lsp_document_symbols, {
+setKeyMap("n", "<leader>bs", picker.lsp_symbols, {
   silent = true,
   desc = "Symbols",
 })
-setKeyMap("n", "<leader>bx", fzf.diagnostics_document, {
+setKeyMap("n", "<leader>bx", picker.diagnostics_buffer, {
   silent = true,
   desc = "Diagnostics",
-})
-setKeyMap("n", "<leader>b/", fzf.lgrep_curbuf, {
-  silent = true,
-  desc = "Search in buffer",
 })
 setKeyMap("n", "<leader>;", require("buffish.shortcuts").follow, {
   desc = "Go to Buffish shortcut",
@@ -129,11 +129,8 @@ setKeyMap("n", "<leader>ff", function() vim.cmd("edit .") end, {
   silent = true,
   desc = "Browse files from root",
 })
-setKeyMap("n", "<leader>f/", fzf.lgrep_curbuf, {
-  desc = "Search on current file",
-})
 
-setKeyMap("n", "<leader>fz", fzf.files, {
+setKeyMap("n", "<leader>fz", picker.files, {
   desc = "Search for file",
 })
 
@@ -146,7 +143,7 @@ setKeyMap("n", "<leader>tb", mong8se.toggleScrollBindAllWindows, {
   silent = true,
   desc = "Toggle scroll bind",
 })
-setKeyMap("n", "<leader>tc", fzf.colorschemes, {
+setKeyMap("n", "<leader>tc", picker.colorschemes, {
   silent = true,
   desc = "Toggle colorscheme",
 })
@@ -167,65 +164,64 @@ setKeyMap("n", "<leader>ti", "<cmd>IBLToggle<CR>", {
 })
 
 -- project
-setKeyMap("n", "<leader>pp", mong8se.activateGitOrFiles, {
-  silent = true,
-  desc = "Find project files",
-})
-setKeyMap("n", "<leader>ps", fzf.lsp_workspace_symbols, {
+setKeyMap(
+  "n",
+  "<leader>pp",
+  function() mong8se.activateGitOrFiles(picker.git_files, picker.files) end,
+  {
+    silent = true,
+    desc = "Find project files",
+  }
+)
+setKeyMap("n", "<leader>ps", picker.lsp_workspace_symbols, {
   silent = true,
   desc = "Symbols",
 })
-setKeyMap("n", "<leader>px", fzf.diagnostics_workspace, {
+setKeyMap("n", "<leader>px", picker.diagnostics, {
   silent = true,
   desc = "Diagnostics",
 })
-setKeyMap("n", "<leader>p/", fzf.live_grep, {
+setKeyMap("n", "<leader>p/", picker.grep, {
   silent = true,
   desc = "Search in project",
 })
 
 -- git
-setKeyMap("n", "<leader>gg", fzf.git_status, {
+setKeyMap("n", "<leader>gg", picker.git_status, {
   silent = true,
   desc = "Git status",
 })
-setKeyMap("n", "<leader>gl", fzf.git_commits, {
+setKeyMap("n", "<leader>gl", picker.git_log, {
   silent = true,
   desc = "Git log",
 })
-setKeyMap("n", "<leader>gc", fzf.git_bcommits, {
+setKeyMap("n", "<leader>gc", picker.git_log_file, {
   silent = true,
   desc = "Git log for buffer",
 })
-setKeyMap("n", "<leader>gb", fzf.git_branches, {
+setKeyMap("n", "<leader>gb", picker.git_branches, {
   silent = true,
   desc = "Git branches",
 })
-setKeyMap("n", "<leader>gs", fzf.git_stash, {
+setKeyMap("n", "<leader>gs", picker.git_stash, {
   silent = true,
   desc = "Git stash",
 })
 
 -- search
-setKeyMap("n", "<leader>sl", fzf.live_grep, {
-  desc = "Search live",
+setKeyMap("n", "<leader>sh", picker.search_history, {
+  desc = "Search history",
 })
-setKeyMap("n", "<leader>sf", fzf.lgrep_curbuf, {
-  desc = "Search on current file",
-})
-setKeyMap("n", "<leader>sp", fzf.grep_project, {
+setKeyMap("n", "<leader>sp", picker.grep, {
   desc = "Search all lines in project",
-})
-setKeyMap("n", "<leader>sr", fzf.resume, {
-  desc = "Resume last search",
 })
 
 -- diagnostics
-setKeyMap("n", "<leader>xx", fzf.diagnostics_workspace, {
+setKeyMap("n", "<leader>xx", picker.diagnostics, {
   silent = true,
   desc = "Diagnostics",
 })
-setKeyMap("n", "<leader>xb", fzf.diagnostics_document, {
+setKeyMap("n", "<leader>xb", picker.diagnostics_buffer, {
   silent = true,
   desc = "Current Buffer",
 })

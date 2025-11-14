@@ -3,13 +3,7 @@ return {
   -- {dir = '~/Work/actually.nvim'},
 
   "mong8se/buffish.nvim",
-  -- {dir = '~/Work/buffish.nvim'},
-
-  {
-    "ibhagwan/fzf-lua",
-    opts = { "default" },
-    init = function(plugin) require(plugin.name).register_ui_select() end,
-  },
+  -- { dir = "~/Work/buffish.nvim" },
 
   {
     "andymass/vim-matchup",
@@ -28,35 +22,7 @@ return {
     -- this is equivalent to setup({}) function
   },
 
-  {
-    "rcarriga/nvim-notify",
-    opts = {
-      top_down = false,
-      render = "wrapped-compact",
-    },
-    init = function() vim.notify = require("notify") end,
-  },
-
-  "danilamihailov/beacon.nvim",
-
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    opts = {
-      indent = {
-        char = {
-          "▏",
-          "▎",
-          "▍",
-          "▌",
-          "▋",
-          "▊",
-          "▉",
-          "█",
-        },
-      },
-    },
-  },
+  { "danilamihailov/beacon.nvim", opts = {} },
 
   {
     "roman/golden-ratio", -- C-W \
