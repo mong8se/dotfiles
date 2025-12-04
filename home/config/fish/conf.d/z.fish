@@ -27,8 +27,10 @@ if type -q fre
     end
     )
 
-    test -z "$result"; and return
-    if test -d "$result"
+    if test -z "$result"
+      echo z: No match found >&2
+      return 1
+    else if test -d "$result"
       cd "$result"
     else
       command fre --delete "$result" &
