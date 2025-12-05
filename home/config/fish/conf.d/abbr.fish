@@ -2,7 +2,6 @@ status is-interactive || exit
 
 abbr -a lsg git ls-files
 abbr -a cat cat -v
-abbr -a nrs npm run start
 abbr -a --set-cursor gits git s%
 
 # because half the time I type cd.. instead of cd ..
