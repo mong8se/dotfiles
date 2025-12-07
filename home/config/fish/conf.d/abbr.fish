@@ -31,6 +31,12 @@ function which_commander
 end
 abbr --add equalcommand --regex "=\w+" --position anywhere --function which_commander
 
+# because I keep doing `npm runs tart` instead of `npm run start`
+function fixnpm
+  echo run (string sub -s -1 $argv)%
+end
+abbr --add npm_run --command npm --regex 'run\w' --set-cursor --function fixnpm
+
 if type -q lsd
   abbr tree lsd --tree
   abbr ls lsd
