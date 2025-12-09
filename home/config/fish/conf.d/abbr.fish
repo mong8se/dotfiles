@@ -32,10 +32,10 @@ end
 abbr --add equalcommand --regex "=\w+" --position anywhere --function which_commander
 
 # because I keep doing `npm runs tart` instead of `npm run start`
-function fixnpm
-  echo run (string sub -s -1 $argv)%
+function run_plus_space
+  string replace 'run' 'run ' "$argv%"
 end
-abbr --add npm_run --command npm --regex 'run\w' --set-cursor --function fixnpm
+abbr --add npm_run --command npm --regex 'run\w+' --set-cursor --function run_plus_space
 
 if type -q lsd
   abbr tree lsd --tree
