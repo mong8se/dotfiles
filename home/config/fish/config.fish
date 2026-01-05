@@ -29,7 +29,6 @@ if status --is-interactive
   set -x fish_color_error brred --italics
   set -x fish_color_autosuggestion brblack --italics
 
-
   if not set -q KITTY_WINDOW_ID
     function autoGrowl -d "Auto Growl" -e fish_postexec
       if test $CMD_DURATION -gt 5000
