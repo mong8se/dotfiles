@@ -18,8 +18,8 @@ return {
       notifier = {
         style = "fancy",
       },
-      picker = {
-      },
+      -- picker = {
+      -- },
       input = {
       }
     },

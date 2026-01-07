@@ -3,8 +3,8 @@ local mong8se = require("mong8se")
 local setKeyMap = vim.keymap.set
 
 local picker = setmetatable({}, {
-  __index = function(self, key)
-    return function(opts) require("snacks.picker")[key](opts) end
+  __index = function(_self, key)
+    return function(opts) require("fzf-lua")[key](opts) end
   end,
 })
 
@@ -33,11 +33,12 @@ setKeyMap("n", "gV", [['`[' . strpart(getregtype(), 0, 1) . '`]']], {
   desc = "Switch to VISUAL selecting last pasted text",
 })
 
-local clipboard = vim.fn.has("macunix") and "+" or "*"
-setKeyMap("n", "gp", '"' .. clipboard .. "]p", {
+local clipboard_register =
+  string.format('"%s', vim.fn.has("macunix") and "+" or "*")
+setKeyMap("n", "gp", clipboard_register .. "]p", {
   desc = "Paste from system",
 })
-setKeyMap("n", "gP", '"' .. clipboard .. "]P", {
+setKeyMap("n", "gP", clipboard_register .. "]P", {
   desc = "Paste from system before",
 })
 
@@ -91,10 +92,15 @@ setKeyMap("v", "<", "<gv")
 setKeyMap("v", ">", ">gv")
 
 -- buffer
-setKeyMap("n", "<leader>bb", function() picker.buffers({current = false}) end, {
-  silent = true,
-  desc = "List",
-})
+setKeyMap(
+  "n",
+  "<leader>bb",
+  function() picker.buffers({ current = false }) end,
+  {
+    silent = true,
+    desc = "List",
+  }
+)
 setKeyMap("n", "<leader>bd", function()
   local lastBuf = vim.api.nvim_win_get_buf(0)
   vim.cmd("edit " .. mong8se.directoryFromContext())
@@ -103,11 +109,11 @@ end, {
   silent = true,
   desc = "Delete current buffer",
 })
-setKeyMap("n", "<leader>bs", picker.lsp_symbols, {
+setKeyMap("n", "<leader>bs", picker.lsp_document_symbols, {
   silent = true,
   desc = "Symbols",
 })
-setKeyMap("n", "<leader>bx", picker.diagnostics_buffer, {
+setKeyMap("n", "<leader>bx", picker.diagnostics_document, {
   silent = true,
   desc = "Diagnostics",
 })
@@ -177,11 +183,11 @@ setKeyMap("n", "<leader>ps", picker.lsp_workspace_symbols, {
   silent = true,
   desc = "Symbols",
 })
-setKeyMap("n", "<leader>px", picker.diagnostics, {
+setKeyMap("n", "<leader>px", picker.diagnostics_workspace, {
   silent = true,
   desc = "Diagnostics",
 })
-setKeyMap("n", "<leader>p/", picker.grep, {
+setKeyMap("n", "<leader>p/", picker.live_grep, {
   silent = true,
   desc = "Search in project",
 })
@@ -191,11 +197,11 @@ setKeyMap("n", "<leader>gg", picker.git_status, {
   silent = true,
   desc = "Git status",
 })
-setKeyMap("n", "<leader>gl", picker.git_log, {
+setKeyMap("n", "<leader>gl", picker.git_commits, {
   silent = true,
   desc = "Git log",
 })
-setKeyMap("n", "<leader>gc", picker.git_log_file, {
+setKeyMap("n", "<leader>gc", picker.git_bcommits, {
   silent = true,
   desc = "Git log for buffer",
 })
@@ -212,16 +218,16 @@ setKeyMap("n", "<leader>gs", picker.git_stash, {
 setKeyMap("n", "<leader>sh", picker.search_history, {
   desc = "Search history",
 })
-setKeyMap("n", "<leader>sp", picker.grep, {
+setKeyMap("n", "<leader>sp", picker.live_grep, {
   desc = "Search all lines in project",
 })
 
 -- diagnostics
-setKeyMap("n", "<leader>xx", picker.diagnostics, {
+setKeyMap("n", "<leader>xx", picker.diagnostics_workspace, {
   silent = true,
   desc = "Diagnostics",
 })
-setKeyMap("n", "<leader>xb", picker.diagnostics_buffer, {
+setKeyMap("n", "<leader>xb", picker.diagnostics_document, {
   silent = true,
   desc = "Current Buffer",
 })

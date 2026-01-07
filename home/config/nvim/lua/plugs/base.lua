@@ -6,6 +6,12 @@ return {
   -- { dir = "~/Work/buffish.nvim" },
 
   {
+    "ibhagwan/fzf-lua",
+    opts = { "default" },
+    init = function(plugin) require(plugin.name).register_ui_select() end,
+  },
+
+  {
     "andymass/vim-matchup",
     init = function()
       vim.g.matchup_matchparen_offscreen = {
