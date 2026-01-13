@@ -289,8 +289,7 @@ export LINKOMATIC_HOSTNAME=$(
   done
 )
 
-if [ "$1" = "complete" ]
-then
+if [ "$1" = "complete" ]; then
   for task in $(getTaskList); do
     printf '%s\t%s\n' $task "$(getDescription $task)"
   done

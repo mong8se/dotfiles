@@ -92,15 +92,10 @@ setKeyMap("v", "<", "<gv")
 setKeyMap("v", ">", ">gv")
 
 -- buffer
-setKeyMap(
-  "n",
-  "<leader>bb",
-  function() picker.buffers({ current = false }) end,
-  {
-    silent = true,
-    desc = "List",
-  }
-)
+setKeyMap("n", "<leader>bb", picker.buffers, {
+  silent = true,
+  desc = "List",
+})
 setKeyMap("n", "<leader>bd", function()
   local lastBuf = vim.api.nvim_win_get_buf(0)
   vim.cmd("edit " .. mong8se.directoryFromContext())
