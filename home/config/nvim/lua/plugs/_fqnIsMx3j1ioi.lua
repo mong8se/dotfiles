@@ -3,6 +3,7 @@ return {
     "JamshedVesuna/vim-markdown-preview",
     ft = "markdown",
   },
+  { "aklt/plantuml-syntax" },
   {
     "https://github.com/github/copilot.vim",
     init = function()
