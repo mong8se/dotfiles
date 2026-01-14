@@ -11,7 +11,7 @@ complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
 set BASE16_DEFAULT_LIGHT precious-light-warm
 set BASE16_DEFAULT_DARK gruvbox-dark-soft
 
-function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_env
+function base16 -d "Activate base16 terminal color scheme" -a new_theme -a make_default
   if status --is-interactive
 
     switch "$new_theme"
@@ -35,9 +35,11 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a skip_
         set -gx LS_COLORS (vivid generate base16-{$new_theme})
       end
 
-      if test -n "$skip_env"
+      if test -n "$make_default"
+        set -xg BASE16_DEFAULT_SET {$new_theme}
         set -e BASE16_THEME
       else
+        set -e BASE16_DEFAULT_SET
         set -xg BASE16_THEME {$new_theme}
       end
 
@@ -54,11 +56,15 @@ end
 function autoGruv -d "Auto Gruv" -e fish_prompt
   if status --is-interactive && not set -q BASE16_THEME
     if isDarkMode
-      set -gx IS_DARK_MODE 1
-      base16 $BASE16_DEFAULT_DARK false
+      if test "$BASE16_DEFAULT_SET" != "$BASE16_DEFAULT_DARK"
+        set -gx IS_DARK_MODE 1
+        base16 $BASE16_DEFAULT_DARK true
+      end
     else
-      set -gx IS_DARK_MODE 0
-      base16 $BASE16_DEFAULT_LIGHT false
+      if test "$BASE16_DEFAULT_SET" != "$BASE16_DEFAULT_LIGHT"
+        set -gx IS_DARK_MODE 0
+        base16 $BASE16_DEFAULT_LIGHT true
+      end
     end
   end
 end
