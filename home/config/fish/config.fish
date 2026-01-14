@@ -46,6 +46,10 @@ if status --is-interactive
     fzf --fish | source
   end
 
+  if type -q eza
+    set -x EZA_ICONS_AUTO
+  end
+
   if type -q starship
     function starship_transient_prompt_func
       starship module character

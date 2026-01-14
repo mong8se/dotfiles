@@ -37,7 +37,10 @@ function run_plus_space
 end
 abbr --add npm_run --command npm --regex 'run\w+' --set-cursor --function run_plus_space
 
-if type -q lsd
+if type -q eza
+  abbr tree eza --tree
+  abbr ls eza
+else if type -q lsd
   abbr tree lsd --tree
   abbr ls lsd
 end
