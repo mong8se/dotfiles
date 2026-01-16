@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   group = ColorSchemeGroup,
 })
 
-settings.background = env.IS_DARK_MODE == "1" and "dark" or "light"
+settings.background = env.IS_DARK_MODE == "0" and "light" or "dark"
 
 cmd.colorscheme(
   env.BASE16_THEME and ("base16-" .. env.BASE16_THEME) or "gruvbox-material"

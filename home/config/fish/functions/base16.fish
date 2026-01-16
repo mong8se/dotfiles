@@ -2,50 +2,58 @@ if not set -q __base16_path
   set -g __base16_path $DOTFILES_RESOURCES/base16-shell/scripts
 end
 
+if not set -q __base16_default_light
+  set -g __base16_default_light precious-light-warm
+end
+
+if not set -q __base16_default_dark
+  set -g __base16_default_dark gruvbox-dark-soft
+end
+
 function __base16_schemes
   command ls $__base16_path/*.sh | string match -g -r 'base16-([^/\.]+)\.sh$'
 end
 
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
 
-set BASE16_DEFAULT_LIGHT precious-light-warm
-set BASE16_DEFAULT_DARK gruvbox-dark-soft
-
-function base16 -d "Activate base16 terminal color scheme" -a new_theme -a make_default
+function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a make_default
   if status --is-interactive
 
-    switch "$new_theme"
+    switch "$scheme_name"
     case ''
-      set new_theme (__base16_schemes | string split " " | fzf)
+      set scheme_name (__base16_schemes | string split " " | fzf)
     case random
-      set new_theme (random choice (__base16_schemes))
+      set scheme_name (random choice (__base16_schemes))
     case light
-      set new_theme $BASE16_DEFAULT_LIGHT
+      set scheme_name $__base16_default_light
     case dark
-      set new_theme $BASE16_DEFAULT_DARK
+      set scheme_name $__base16_default_dark
     end
 
-    set -l theme_script "$__base16_path/base16-$new_theme.sh"
+    set -l scheme_script "$__base16_path/base16-$scheme_name.sh"
 
-    if test -e "$theme_script"
-      sh $theme_script
-      source {$DOTFILES_RESOURCES}/base16-fzf/fish/base16-{$new_theme}.fish
+    if test -e "$scheme_script"
+      # always activate the theme in case the last command messed with our colors.
+      sh $scheme_script
 
-      if type -q vivid
-        set -gx LS_COLORS (vivid generate base16-{$new_theme})
-      end
+      if test "$__base16_applied_scheme" != "$scheme_name"
+        set -gx __base16_applied_scheme $scheme_name
+        if test -n "$make_default"
+          set -e BASE16_THEME
+        else
+          set -gx BASE16_THEME {$scheme_name}
+        end
 
-      if test -n "$make_default"
-        set -xg BASE16_DEFAULT_SET {$new_theme}
-        set -e BASE16_THEME
-      else
-        set -e BASE16_DEFAULT_SET
-        set -xg BASE16_THEME {$new_theme}
+        source {$DOTFILES_RESOURCES}/base16-fzf/fish/base16-{$scheme_name}.fish
+
+        if type -q vivid
+          set -gx LS_COLORS (vivid generate base16-{$scheme_name})
+        end
       end
 
       return 0
     else
-      echo "base16 error: $new_theme not found"
+      echo "base16 error: $scheme_name not found"
       return 1
     end
   else
@@ -54,17 +62,15 @@ function base16 -d "Activate base16 terminal color scheme" -a new_theme -a make_
 end
 
 function autoGruv -d "Auto Gruv" -e fish_prompt
-  if status --is-interactive && not set -q BASE16_THEME
-    if isDarkMode
-      if test "$BASE16_DEFAULT_SET" != "$BASE16_DEFAULT_DARK"
-        set -gx IS_DARK_MODE 1
-        base16 $BASE16_DEFAULT_DARK true
-      end
+  if status --is-interactive
+    set -gx IS_DARK_MODE (isDarkMode; and echo 1; or echo 0)
+
+    if set -q BASE16_THEME
+      base16 $BASE16_THEME
+    else if test "$IS_DARK_MODE" = 0
+      base16 $__base16_default_light true
     else
-      if test "$BASE16_DEFAULT_SET" != "$BASE16_DEFAULT_LIGHT"
-        set -gx IS_DARK_MODE 0
-        base16 $BASE16_DEFAULT_LIGHT true
-      end
+      base16 $__base16_default_dark true
     end
   end
 end
