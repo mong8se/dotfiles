@@ -23,8 +23,8 @@ if status --is-interactive
     set -x FZF_CTRL_T_COMMAND 'rg --files . "$dir"'
   end
 
-  # Set Base16 Shell Colors
-  base16 gruvbox-dark-soft false
+  # Reset Base16 Shell Colors
+  base16 reset
 
   set -x fish_color_error brred --italics
   set -x fish_color_autosuggestion brblack --italics

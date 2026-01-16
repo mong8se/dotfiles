@@ -28,16 +28,17 @@ function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a mak
       set scheme_name $__base16_default_light
     case dark
       set scheme_name $__base16_default_dark
+    case reset
+      set -e BASE16_THEME
+      return 0
     end
 
     set -l scheme_script "$__base16_path/base16-$scheme_name.sh"
 
     if test -e "$scheme_script"
-      # always activate the theme in case the last command messed with our colors.
-      sh $scheme_script
+      if test "$__base16_scheme_script" != "$scheme_script"
+        set -g __base16_scheme_script $scheme_script
 
-      if test "$__base16_applied_scheme" != "$scheme_name"
-        set -gx __base16_applied_scheme $scheme_name
         if test -n "$make_default"
           set -e BASE16_THEME
         else
@@ -61,16 +62,21 @@ function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a mak
   end
 end
 
-function autoGruv -d "Auto Gruv" -e fish_prompt
+function auto_gruv -d "Auto Gruv" -e fish_prompt
   if status --is-interactive
     set -gx IS_DARK_MODE (isDarkMode; and echo 1; or echo 0)
 
-    if set -q BASE16_THEME
-      base16 $BASE16_THEME
-    else if test "$IS_DARK_MODE" = 0
-      base16 $__base16_default_light true
-    else
-      base16 $__base16_default_dark true
+    if not set -q BASE16_THEME
+      if test "$IS_DARK_MODE" = 0
+        base16 light true
+      else
+        base16 dark true
+      end
+    end
+
+    # always activate the theme in case the last command messed with our colors.
+    if test -e "$__base16_scheme_script"
+      sh $__base16_scheme_script
     end
   end
 end
