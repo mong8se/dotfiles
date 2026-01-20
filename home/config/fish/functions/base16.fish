@@ -16,7 +16,7 @@ end
 
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
 
-function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a make_default
+function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a skip_env
   if status --is-interactive
 
     switch "$scheme_name"
@@ -39,9 +39,7 @@ function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a mak
       if test "$__base16_scheme_script" != "$scheme_script"
         set -g __base16_scheme_script $scheme_script
 
-        if test -n "$make_default"
-          set -e BASE16_THEME
-        else
+        if test -z "$skip_env"
           set -gx BASE16_THEME {$scheme_name}
         end
 
