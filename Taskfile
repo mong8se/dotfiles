@@ -205,44 +205,6 @@ function task:default {
   task:sync
 }
 
-function task:help {
-  : "Prints this help"
-
-  echo "$0 <task> <args>"
-  echo
-  echo "Tasks:"
-  for task in $(getTaskList); do
-    task:describe $task
-  done
-  echo
-  task:explain default
-}
-
-COLON_COMMENT_PATTERN=" *: *\(['"'"'"]\)\(.*\)\1;"
-function nameWithTaskPrefix {
-  type "task:$1"
-}
-
-function getTaskList {
-  compgen -A function | sed -nE '/default/d; s/task:(.*)/\1/p'
-}
-
-function getDescription {
-  nameWithTaskPrefix $1 | sed -ne "s/${COLON_COMMENT_PATTERN}/\2/p"
-}
-
-function task:describe {
-  : "Prints description of task"
-
-  printf '  %-16s ▎%s\n' $1 "$(getDescription $1)"
-}
-
-function task:explain {
-  : "Prints definition of task"
-
-  printf '%s => %s\n' $1 "$(nameWithTaskPrefix $1 | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;")"
-}
-
 # set up an array of our base 42 characters
 # to look up each digit against
 BASE42=($(echo {0..8} {a..z} M O A Z A M I))
@@ -289,10 +251,62 @@ export LINKOMATIC_HOSTNAME=$(
   done
 )
 
-if [ "$1" = "complete" ]; then
+####################
+# Help Tasks
+
+function help:help {
+  : "Prints this help"
+
+  echo "$0 help"
+  echo "$0 explain <task>"
+  echo "$0 describe <task>"
+  echo "$0 <task> <args>"
+  echo
+  echo "Tasks:"
+  for task in $(getTaskList); do
+    help:describe $task
+  done
+  echo
+  help:explain default
+}
+
+function help:describe {
+  : "Prints description of task"
+
+  printf '  %-16s ▎%s\n' $1 "$(getDescription $1)"
+}
+
+function help:explain {
+  : "Prints definition of task"
+
+  echo $1
+  printf '%s => %s\n' $1 "$(nameWithTaskPrefix $1 | sed -e "1,2d; /${COLON_COMMENT_PATTERN}/d;")"
+}
+
+function help:complete {
   for task in $(getTaskList); do
     printf '%s\t%s\n' $task "$(getDescription $task)"
   done
+}
+
+####################
+# Help Helpers
+
+COLON_COMMENT_PATTERN=" *: *\(['"'"'"]\)\(.*\)\1;"
+function nameWithTaskPrefix {
+  type "task:$1"
+}
+
+function getTaskList {
+  compgen -A function | sed -nE '/default/d; s/task:(.*)/\1/p'
+}
+
+function getDescription {
+  nameWithTaskPrefix $1 | sed -ne "s/${COLON_COMMENT_PATTERN}/\2/p"
+}
+
+if [[ $(type -t help:$1) == "function" ]]; then
+  "help:$@"
   exit
 fi
 
