@@ -28,7 +28,7 @@ return {
     -- this is equivalent to setup({}) function
   },
 
-  { "danilamihailov/beacon.nvim", opts = {} },
+  { "danilamihailov/beacon.nvim", opts = { speed = 1 } },
 
   {
     "roman/golden-ratio", -- C-W \

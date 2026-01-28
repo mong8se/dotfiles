@@ -98,7 +98,7 @@ setKeyMap("n", "<leader>bb", picker.buffers, {
 })
 setKeyMap("n", "<leader>bd", function()
   local lastBuf = vim.api.nvim_win_get_buf(0)
-  vim.cmd("edit " .. mong8se.directoryFromContext())
+  vim.cmd("edit " .. mong8se.directory_from_context())
   vim.schedule(function() vim.api.nvim_buf_delete(lastBuf, {}) end)
 end, {
   silent = true,
@@ -120,7 +120,7 @@ setKeyMap("n", "<leader>;", require("buffish.shortcuts").follow, {
 setKeyMap(
   "n",
   "<leader>f-",
-  function() vim.cmd("edit " .. mong8se.directoryFromContext()) end,
+  function() vim.cmd("edit " .. mong8se.directory_from_context()) end,
   {
     silent = true,
     desc = "Browse files from here",
@@ -136,11 +136,11 @@ setKeyMap("n", "<leader>fz", picker.files, {
 })
 
 -- toggle
-setKeyMap("n", "<leader>tn", mong8se.toggleNumberMode, {
+setKeyMap("n", "<leader>tn", mong8se.toggle_number_mode, {
   silent = true,
   desc = "Toggle numbers",
 })
-setKeyMap("n", "<leader>tb", mong8se.toggleScrollBindAllWindows, {
+setKeyMap("n", "<leader>tb", mong8se.toggle_scrollbind_all_windows, {
   silent = true,
   desc = "Toggle scroll bind",
 })
@@ -168,7 +168,7 @@ setKeyMap("n", "<leader>ti", "<cmd>IBLToggle<CR>", {
 setKeyMap(
   "n",
   "<leader>pp",
-  function() mong8se.activateGitOrFiles(picker.git_files, picker.files) end,
+  function() mong8se.pick_git_or_files(picker.git_files, picker.files) end,
   {
     silent = true,
     desc = "Find project files",
@@ -228,11 +228,11 @@ setKeyMap("n", "<leader>xb", picker.diagnostics_document, {
 })
 
 -- window
-setKeyMap("n", "<c-w>s", mong8se.splitCommand, {
+setKeyMap("n", "<c-w>s", mong8se.split_command, {
   silent = true,
   desc = "Split and browse",
 })
-setKeyMap("n", "<c-w><C-s>", mong8se.splitCommand, {
+setKeyMap("n", "<c-w><C-s>", mong8se.split_command, {
   desc = "Split and browse",
   silent = true,
 })

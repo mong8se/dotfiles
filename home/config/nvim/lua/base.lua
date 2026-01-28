@@ -2,7 +2,7 @@ local cmd = vim.cmd
 local settings = vim.opt
 local command = vim.api.nvim_create_user_command
 local has = vim.fn.has
-local splitCommand = require("mong8se").splitCommand
+local split_command = require("mong8se").split_command
 
 cmd("syntax on")
 settings.hidden = true
@@ -130,7 +130,7 @@ if has("user_commands") then
   })
   command("Messages", "messages", {})
 
-  command("Split", splitCommand, {
+  command("Split", split_command, {
     nargs = "?",
     complete = "file",
   })

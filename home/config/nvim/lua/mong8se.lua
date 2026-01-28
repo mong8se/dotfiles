@@ -8,7 +8,7 @@ local mong8se = {}
 
 -- attempts to load rc files if they exists, silently fails if they don't
 -- supports a prefix for a directory name relative to lua folder
-mong8se.loadRCFiles = function(which)
+mong8se.load_rc_files = function(which)
   local module = which
       and function(name)
         return table.concat({
@@ -28,7 +28,7 @@ mong8se.loadRCFiles = function(which)
 end
 
 -- require a module or complain it didn't load
-mong8se.requireOrComplain = function(...)
+mong8se.require_or_complain = function(...)
   for _, name in ipairs({
     ...,
   }) do
@@ -41,7 +41,7 @@ mong8se.requireOrComplain = function(...)
 end
 
 -- toggle line numbers
-mong8se.toggleNumberMode = function()
+mong8se.toggle_number_mode = function()
   if opt.relativenumber:get() then
     win.number = false
     win.relativenumber = false
@@ -56,7 +56,7 @@ mong8se.toggleNumberMode = function()
 end
 
 -- scroll bind all windows, works best with vertical splits
-mong8se.toggleScrollBindAllWindows = function()
+mong8se.toggle_scrollbind_all_windows = function()
   if vim.wo.scrollbind then
     cmd("windo setlocal noscrollbind")
   else
@@ -65,7 +65,7 @@ mong8se.toggleScrollBindAllWindows = function()
   end
 end
 
-mong8se.activateGitOrFiles = function(git_picker, files_picker)
+mong8se.pick_git_or_files = function(git_picker, files_picker)
   if b.gitsigns_head then
     git_picker()
   else
@@ -73,7 +73,7 @@ mong8se.activateGitOrFiles = function(git_picker, files_picker)
   end
 end
 
-mong8se.directoryFromContext = function()
+mong8se.directory_from_context = function()
   local filename = fn.getreg("%")
 
   if filename == "" then
@@ -87,7 +87,7 @@ end
 
 -- Split either horizontal or vertical, whichever is bigger, arguments
 -- are passed to vim's split command
-mong8se.smartSplit = function(...)
+mong8se.smart_split = function(...)
   local split = "split"
 
   if fn.winwidth(0) > fn.winheight(0) * 2 then split = "vsplit" end
@@ -100,19 +100,19 @@ end
 
 -- Command that uses smart split and by default opens the current directory
 -- instead of default behavior of repeating same buffer
-mong8se.splitCommand = function(opts)
+mong8se.split_command = function(opts)
   local args = opts and opts.fargs or {}
 
   local lastArg = args[#args]
 
   if not lastArg or vim.startswith(lastArg, "+") then
-    args[#args + 1] = mong8se.directoryFromContext()
+    args[#args + 1] = mong8se.directory_from_context()
   end
 
-  mong8se.smartSplit(unpack(args))
+  mong8se.smart_split(unpack(args))
 end
 
-mong8se.foldIt = function()
+mong8se.fold_it = function()
   local folded_count = (vim.v.foldend - vim.v.foldstart - 1)
 
   return string.format(

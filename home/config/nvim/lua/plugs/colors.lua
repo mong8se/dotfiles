@@ -18,4 +18,6 @@ return {
     end,
   },
   "caglartoklu/borlandp.vim",
+  { "rose-pine/neovim", name = "rose-pine" },
+  { "catppuccin/nvim", name = "catppuccin" },
 }
