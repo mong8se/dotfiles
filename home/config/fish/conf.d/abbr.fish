@@ -1,8 +1,6 @@
 status is-interactive || exit
 
-abbr -a lsg git ls-files
 abbr -a cat cat -v
-abbr -a --set-cursor gits git s%
 
 # because half the time I type cd.. instead of cd ..
 function multicd
@@ -31,6 +29,10 @@ function which_commander
 end
 abbr --add equalcommand --regex "=\w+" --position anywhere --function which_commander
 
+
+# because I keep doing `gits tatus` instead of `git status`
+abbr -a --set-cursor gits git s%
+
 # because I keep doing `npm runs tart` instead of `npm run start`
 function run_plus_space
   string replace 'run' 'run ' "$argv%"
@@ -38,6 +40,7 @@ end
 abbr --add npm_run --command npm --regex 'run\w+' --set-cursor --function run_plus_space
 
 if type -q eza
+  set -x EZA_ICONS_AUTO
   abbr tree eza --tree
   abbr ls eza
 else if type -q lsd

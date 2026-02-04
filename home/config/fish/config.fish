@@ -11,18 +11,6 @@ set -x BC_ENV_ARGS ~/.config/bcrc
 if status --is-interactive
   fish_default_key_bindings
 
-  set -x FZF_DEFAULT_OPTS "
-  --height 40% --reverse --extended --cycle
-  "
-
-  if type -q fd
-    set -x FZF_DEFAULT_COMMAND 'fd --type f --no-ignore'
-    set -x FZF_CTRL_T_COMMAND 'fd --type f . "$dir"'
-  else if type -q rg
-    set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore-vcs --hidden'
-    set -x FZF_CTRL_T_COMMAND 'rg --files . "$dir"'
-  end
-
   # Reset Base16 Shell Colors
   base16 reset
 
@@ -38,16 +26,18 @@ if status --is-interactive
     end
   end
 
-  function fv
-    fzf -m --query="$argv[1]" --select-1 --exit-0 | xargs -o $EDITOR
-  end
-
   if type -q fzf
-    fzf --fish | source
-  end
+    set -x FZF_DEFAULT_OPTS "--height 40% --reverse --extended --cycle"
 
-  if type -q eza
-    set -x EZA_ICONS_AUTO
+    if type -q fd
+      set -x FZF_DEFAULT_COMMAND 'fd --type f --no-ignore'
+      set -x FZF_CTRL_T_COMMAND 'fd --type f . "$dir"'
+    else if type -q rg
+      set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore-vcs --hidden'
+      set -x FZF_CTRL_T_COMMAND 'rg --files . "$dir"'
+    end
+
+    fzf --fish | source
   end
 
   if type -q starship
