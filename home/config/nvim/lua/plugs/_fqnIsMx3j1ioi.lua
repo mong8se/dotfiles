@@ -17,10 +17,24 @@ return {
         ["oil"] = false,
         ["vimwiki"] = false,
       }
-      vim.keymap.set("i", "<right>", 'copilot#Accept("\\<right>")', {
+
+      vim.keymap.set("i", "<right>", 'copilot#Accept("\\<CR>")', {
         expr = true,
         replace_keycodes = false,
       })
+
+      vim.keymap.set('i', '<C-down>', '<Plug>(copilot-next)')
+      vim.keymap.set('i', '<C-up>', '<Plug>(copilot-previous)')
     end,
   },
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   dependencies = {
+  --     { "nvim-lua/plenary.nvim", branch = "master" },
+  --   },
+  --   build = "make tiktoken",
+  --   opts = {
+  --     -- See Configuration section for options
+  --   },
+  -- },
 }

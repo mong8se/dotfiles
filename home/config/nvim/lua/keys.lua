@@ -135,6 +135,13 @@ setKeyMap("n", "<leader>fz", picker.files, {
   desc = "Search for file",
 })
 
+setKeyMap(
+  "n",
+  "<leader>fc",
+  function() picker.files({ cwd = vim.fn.stdpath("config") }) end,
+  { desc = "Find Config File" }
+)
+
 -- toggle
 setKeyMap("n", "<leader>tn", mong8se.toggle_number_mode, {
   silent = true,
