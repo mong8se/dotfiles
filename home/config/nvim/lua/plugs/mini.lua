@@ -12,10 +12,6 @@ return {
     opts = {},
   },
   {
-    "nvim-mini/mini.jump",
-    opts = {},
-  },
-  {
     "nvim-mini/mini.starter",
     opts = {},
   },
@@ -218,34 +214,6 @@ return {
         desc = "Zoom a buffer",
       },
     },
-  },
-  {
-    "nvim-mini/mini.jump2d",
-    config = function(plugin)
-      local MiniJump2d = require(plugin.name)
-      MiniJump2d.setup({
-        spotter = MiniJump2d.builtin_opts.line_start.spotter,
-        labels = "1234qwerasdfzxcv5678tyuighjkbnm,90-=op[]l;'./",
-        hooks = {
-          after_jump = function()
-            MiniJump2d.start({
-              spotter = MiniJump2d.builtin_opts.default.spotter,
-              allowed_lines = {
-                cursor_before = false,
-                cursor_after = false,
-              },
-              allowed_windows = {
-                not_current = false,
-              },
-              -- hl_group = 'Search',
-              hooks = {
-                after_jump = function() end,
-              },
-            })
-          end,
-        },
-      })
-    end,
   },
   {
     "nvim-mini/mini.map",

@@ -12,9 +12,11 @@ local ColorSchemeGroup = vim.api.nvim_create_augroup("ColorSchemeGroup", {
 
 local highviz = {
   bold = true,
-  bg = "orange",
-  fg = "black",
+  reverse = true,
+  bg = "purple",
+  fg = "white",
   sp = "lightblue",
+  nocombine = true,
 }
 
 vim.api.nvim_create_autocmd("ColorScheme", {
@@ -23,10 +25,13 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     cmd.highlight("Beacon cterm=reverse gui=reverse")
     cmd.highlight("Comment cterm=italic")
 
-    vim.api.nvim_set_hl(0, "MiniJump", highviz)
-    vim.api.nvim_set_hl(0, "MiniJump2dSpot", highviz)
-    vim.api.nvim_set_hl(0, "MiniJump2dSpotAhead", highviz)
-    vim.api.nvim_set_hl(0, "MiniJump2dSpotUnique", highviz)
+    -- vim.api.nvim_set_hl(0, "FlashBackdrop", highviz)
+    -- vim.api.nvim_set_hl(0, "FlashMatch", highviz)
+    -- vim.api.nvim_set_hl(0, "FlashCurrent", highviz)
+    vim.api.nvim_set_hl(0, "FlashLabel", highviz)
+    -- vim.api.nvim_set_hl(0, "FlashPrompt", highviz)
+    -- vim.api.nvim_set_hl(0, "FlashPromptIcon", highviz)
+    -- vim.api.nvim_set_hl(0, "FlashCursor", highviz)
 
     MiniMisc.setup_termbg_sync()
   end,

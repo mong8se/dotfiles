@@ -10,8 +10,8 @@ local picker = setmetatable({}, {
 
 -- disable these keys
 setKeyMap("n", "<f1>", "<NOP>")
-setKeyMap("n", "s", "<NOP>")
-setKeyMap("n", "S", "<NOP>")
+-- setKeyMap("n", "s", "<NOP>")
+-- setKeyMap("n", "S", "<NOP>")
 
 setKeyMap("n", "<leader> ", require("buffish").open, {
   silent = true,
