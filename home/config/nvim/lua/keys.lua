@@ -18,15 +18,27 @@ setKeyMap("n", "<leader> ", require("buffish").open, {
   desc = "Switch buffer",
 })
 
-setKeyMap("n", "<leader>:", picker.commands, {
-  desc = "Fuzzy command",
-})
+setKeyMap(
+  "n",
+  "<leader>:",
+  function()
+    picker.commands({ winopts = { height = 0.1, preview = { hidden = true } } })
+  end,
+  {
+    desc = "Fuzzy command",
+  }
+)
 setKeyMap("n", "<leader>'", picker.marks, {
   desc = "Fuzzy marks",
 })
-setKeyMap("n", '<leader>"', picker.registers, {
-  desc = "Fuzzy registers",
-})
+setKeyMap(
+  "n",
+  '<leader>"',
+  function() picker.registers({ winopts = { preview = { hidden = true } } }) end,
+  {
+    desc = "Fuzzy registers",
+  }
+)
 
 setKeyMap("n", "gV", [['`[' . strpart(getregtype(), 0, 1) . '`]']], {
   expr = true,
@@ -94,7 +106,7 @@ setKeyMap("v", ">", ">gv")
 -- buffer
 setKeyMap("n", "<leader>bb", picker.buffers, {
   silent = true,
-  desc = "List",
+  desc = "Fuzzy Choose",
 })
 setKeyMap("n", "<leader>bd", function()
   local lastBuf = vim.api.nvim_win_get_buf(0)
