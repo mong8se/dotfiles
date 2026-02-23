@@ -114,8 +114,8 @@ autocmd("TextYankPost", {
   pattern = "*",
   callback = function()
     vim.hl.on_yank({
-      higroup = "Search",
-      timeout = 300,
+      higroup = "DiffText",
+      timeout = 500,
     })
 
     if vim.v.event.operator == "y" and vim.v.event.regname == "" then

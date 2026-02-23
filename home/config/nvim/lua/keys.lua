@@ -68,12 +68,12 @@ setKeyMap("n", "-", [[:keeppatterns call search("^\\s*\\S", "be")<cr>]], {
   desc = "Up to previous non blank line",
 })
 
-setKeyMap("n", "go", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>", {
+setKeyMap("n", "go", "o<C-[>", {
   silent = true,
   desc = "Blank line below",
 })
 
-setKeyMap("n", "gO", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[", {
+setKeyMap("n", "gO", "O<C-[>", {
   silent = true,
   desc = "Blank line above",
 })
