@@ -40,10 +40,20 @@ setKeyMap(
   }
 )
 
-setKeyMap("n", "gV", [['`[' . strpart(getregtype(), 0, 1) . '`]']], {
-  expr = true,
-  desc = "Switch to VISUAL selecting last pasted text",
-})
+setKeyMap(
+  "n",
+  "gV",
+  function()
+    return string.format(
+      "`[%s`]",
+      vim.fn.keytrans(vim.fn.getregtype():sub(1, 1))
+    )
+  end,
+  {
+    expr = true,
+    desc = "Visually select last pasted text",
+  }
+)
 
 local clipboard_register =
   string.format('"%s', vim.fn.has("macunix") and "+" or "*")
