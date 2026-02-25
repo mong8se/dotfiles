@@ -14,6 +14,11 @@ function __base16_schemes
   command ls $__base16_path/*.sh | string match -g -r 'base16-([^/\.]+)\.sh$'
 end
 
+complete -c base16 --no-files
+complete -c base16 -a random -d "Random color scheme"
+complete -c base16 -a light -d "Default light scheme"
+complete -c base16 -a dark -d "Default dark scheme"
+complete -c base16 -a reset -d "Reset to default scheme"
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
 
 function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a skip_env
