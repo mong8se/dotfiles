@@ -11,9 +11,10 @@ return {
       vim.g.copilot_filetypes = {
         ["*"] = true,
         ["buffish"] = false,
-        ["grug-far"] = false,
-        ["grug-far-history"] = false,
         ["grug-far-help"] = false,
+        ["grug-far-history"] = false,
+        ["grug-far"] = false,
+        ["help"] = false,
         ["oil"] = false,
         ["vimwiki"] = false,
       }
@@ -23,8 +24,8 @@ return {
         replace_keycodes = false,
       })
 
-      vim.keymap.set('i', '<C-down>', '<Plug>(copilot-next)')
-      vim.keymap.set('i', '<C-up>', '<Plug>(copilot-previous)')
+      vim.keymap.set("i", "<C-down>", "<Plug>(copilot-next)")
+      vim.keymap.set("i", "<C-up>", "<Plug>(copilot-previous)")
     end,
   },
   -- {
