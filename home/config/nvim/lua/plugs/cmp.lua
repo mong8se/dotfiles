@@ -55,6 +55,10 @@ return {
           border = "rounded",
         },
       },
+      cmdline = {
+        enabled = false,
+        -- completion = { menu = { auto_show = true } },
+      }
     },
     opts_extend = {
       "sources.default",

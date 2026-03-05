@@ -8,6 +8,10 @@ return {
     opts = {},
   },
   {
+    "nvim-mini/mini.cmdline",
+    opts = {},
+  },
+  {
     "nvim-mini/mini.cursorword",
     opts = {},
   },
