@@ -201,6 +201,7 @@ return {
         "Gemfile",
         "Makefile",
         "package.json",
+        "pyproject.toml",
         "Taskfile",
       })
     end,

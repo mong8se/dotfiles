@@ -1,11 +1,7 @@
 return {
   {
     "tinted-theming/tinted-nvim",
-    config = function()
-      require("tinted-colorscheme").with_config({
-        supports = { tinty = false, live_reload = false, tinted_shell = true },
-      })
-    end,
+    opts = {},
   },
   {
     "sainnhe/gruvbox-material",
