@@ -16,4 +16,5 @@ return {
   "caglartoklu/borlandp.vim",
   { "rose-pine/neovim", name = "rose-pine" },
   { "catppuccin/nvim", name = "catppuccin" },
+  { "kungfusheep/mfd.nvim" },
 }
