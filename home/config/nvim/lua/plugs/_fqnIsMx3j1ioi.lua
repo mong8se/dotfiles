@@ -16,10 +16,11 @@ return {
         ["grug-far"] = false,
         ["help"] = false,
         ["oil"] = false,
+        ["snacks_picker_input"] = false,
         ["vimwiki"] = false,
       }
 
-      vim.keymap.set("i", "<right>", 'copilot#Accept("\\<CR>")', {
+      vim.keymap.set("i", "<right>", 'copilot#Accept("\\<right>")', {
         expr = true,
         replace_keycodes = false,
       })
