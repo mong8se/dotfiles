@@ -67,14 +67,6 @@ setKeyMap("n", "gP", clipboard_register .. "]P", {
 setKeyMap("n", "U", "<C-r>")
 setKeyMap("n", "Y", "y$")
 
-setKeyMap(
-  "n",
-  "<C-L>",
-  ":nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>",
-  {
-    silent = true,
-  }
-)
 setKeyMap("n", "<Down>", "gj")
 setKeyMap("n", "<Up>", "gk")
 setKeyMap("n", "<C-k>", "<C-e>gk")
