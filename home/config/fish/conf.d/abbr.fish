@@ -52,6 +52,10 @@ if type -q nvim
   abbr vi nvim
 end
 
+if type -q rg and type -q delta
+  abbr --add --set-cursor rgd 'rg --json -C 2 % | delta'
+end
+
 if set -q KITTY_WINDOW_ID
   alias icat="kitty +kitten icat"
   alias kg="kitty +kitten hyperlinked_grep"

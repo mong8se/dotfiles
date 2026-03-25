@@ -1,11 +1,13 @@
 # vim: ft=gitconfig
 [color]
 	ui = auto
+
 [color "branch"]
-	current = blue reverse
-	local   = blue
-	remote  = green
+	current  = blue reverse
+	local    = blue
+	remote   = green
 	upstream = green ul
+
 [color "status"]
 	header    = normal
 	added     = green reverse
@@ -13,59 +15,76 @@
 	untracked = white dim
 	branch    = blue ul
 	nobranch  = red ul
+
 [column]
 	ui = auto
+
 [core]
 	whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	autocrlf     = input
-	excludesfile = ~/.config/git/ignore
+	excludesfile = /Users/moazams/.config/git/ignore
+	pager        = delta
+
 [user]
 	name  = Steven Moazami
 	email = mong8se@users.noreply.github.com
+
 [mergetool]
 	prompt = true
 	keepBackup = false
+
 [difftool]
 	prompt = true
+
 [alias]
 	fes = "!sh -c 'git status --porcelain | awk '\"'\"'$1==\"'$1'\"{print $2}'\"'\""
 	co  = "!git branch -a --color=always | rg -v '/HEAD\\s' | sort | fzf --ansi --multi --tac --preview-window right:70% --preview 'git log --oneline --graph --date=short --pretty=\"format:%C(auto)%cd %h%d %s\" (echo {} | string sub -s 3 | cut -d\" \" -f1) | head -10' | sed 's/^..//' | cut -d' ' -f1 | sed 's#^remotes/##' | xargs git checkout"
 	vi  = "!git ls-files $1 | fzf | xargs -o \"$EDITOR\""
-	af  = "!git ls-files -m | fzf --preview 'git diff {} | bat -ldiff --color=always --italic-text=always' | xargs git add"
+	af  = "!git ls-files -m | fzf --preview 'git diff {} | bat -ldiff --color=always' | xargs git add"
 	fzf = "!git ls-files | fzf | xargs git $1"
+	; df  = "!g() { git diff --name-only --relative=${1##*/} $2; }; g"
+	df  = "!g() { git diff --name-only --relative=\"${1##*/}\" \"${@:2}\"; }; g"
+	; df  = "!git diff --name-only --relative=$1 ${@:2}"
+
 [push]
 	; New default for Git 2.0 and newer, only push the current local branch, and only if its name matches the upstream
 	default = simple
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Users/moazams/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
 [help]
 	autocorrect = 10
+
 [include]
 	path = _platform.config
 	path = config.local
+
 [init]
 	defaultBranch = main
 
 [pager]
-	diff = delta
-	log = delta
+	diff   = delta
+	log    = delta
 	reflog = delta
-	show = delta
+	show   = delta
 
 [interactive]
 	diffFilter = delta --color-only
 
 [delta]
-	features = side-by-side line-numbers decorations
-	whitespace-error-style = 22 reverse
+	navigate     = true
+	side-by-side = true
+	line-numbers = true
+	file-style   = reverse
 
-[delta "decorations"]
-	commit-decoration-style = bold yellow box ul
-	file-style = bold yellow ul
-	file-decoration-style = none
+[merge]
+	conflictStyle = zdiff3
+
 [pull]
 	rebase = true
