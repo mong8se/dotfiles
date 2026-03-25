@@ -11,6 +11,7 @@ return {
       vim.g.copilot_filetypes = {
         ["*"] = true,
         ["buffish"] = false,
+        ["gitcommit"] = false,
         ["grug-far-help"] = false,
         ["grug-far-history"] = false,
         ["grug-far"] = false,
