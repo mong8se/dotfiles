@@ -15,12 +15,6 @@ settings.timeoutlen = 750
 settings.ttimeout = true
 settings.ttimeoutlen = 10
 
-settings.wildmenu = true
-settings.wildmode = {
-  "longest:full",
-  "full",
-}
-
 settings.wildignore:append({
   "*.o",
   "*.obj",
