@@ -2,9 +2,9 @@ format = "$fill$all$line_break$character"
 right_format = "$directory"
 
 [character]
-success_symbol = "[\u2591\u2590](blue)"
-error_symbol   = "[\uf00d](red)[\u2590](red)"
-vicmd_symbol   = "[\u2591\u2590](green)"
+success_symbol = "[\u25b1\u25b0](blue)"
+error_symbol   = "[\u25b1](blue)[\u25b0](red)"
+vicmd_symbol   = "[\u25b1\u25b0](green)"
 
 [git_status]
 disabled = true
