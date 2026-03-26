@@ -18,6 +18,7 @@ return {
         ["help"] = false,
         ["oil"] = false,
         ["snacks_picker_input"] = false,
+        ["vim"] = false,
         ["vimwiki"] = false,
       }
 
