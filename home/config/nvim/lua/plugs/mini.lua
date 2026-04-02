@@ -17,7 +17,9 @@ return {
   },
   {
     "nvim-mini/mini.starter",
-    opts = {},
+    opts = {
+      header = "│ ╲ ││\n││╲╲││\n││ ╲ │",
+    },
   },
   {
     "nvim-mini/mini.surround",
