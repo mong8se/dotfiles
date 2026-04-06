@@ -123,7 +123,7 @@ mong8se.fold_it = function()
         return string.rep(opt.fillchars:get().fold, #whitespace - 1) .. " "
       end
     ),
-    folded_count == 0 and "█ " or ("▌" .. folded_count .. "▐"),
+    folded_count == 0 and "⣿" or ("⡇" .. folded_count .. "⢸"),
     fn.getline(vim.v.foldend):gsub("^%s*", "")
   )
 end

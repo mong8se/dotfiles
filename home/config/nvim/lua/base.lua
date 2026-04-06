@@ -108,7 +108,7 @@ settings.undofile = true
 settings.foldmethod = "expr"
 settings.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 settings.foldlevelstart = 4
-settings.foldtext = "v:lua.require('mong8se').foldIt()"
+settings.foldtext = "v:lua.require('mong8se').fold_it()"
 
 if has("spell") then vim.o.spelllang = "en_us" end
 
