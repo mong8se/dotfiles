@@ -11,35 +11,36 @@ return {
     keys = {
       {
         "<leader>/",
+        mode = "n",
         function() require("grug-far").open() end,
         desc = "Search and replace",
       },
       {
         "<leader>*",
-        mode = "n",
+        mode = { "x", "v" },
         function()
+          vim.api.nvim_feedkeys("*gv", "mx", false)
           require("grug-far").open({
-            prefills = { search = vim.fn.expand("<cword>") },
             startInInsertMode = false,
             transient = true,
           })
         end,
-        {
-          desc = "Search current word",
-        },
+        desc = "Search selection",
       },
       {
         "<leader>*",
-        mode = { "x", "v" },
+        mode = "n",
         function()
+          local word = vim.fn.expand("<cword>")
+          vim.fn.setreg("/", word)
+
           require("grug-far").open({
+            prefills = { search = word },
             startInInsertMode = false,
             transient = true,
           })
         end,
-        {
-          desc = "Search current word",
-        },
+        desc = "Search current word",
       },
     },
   },
