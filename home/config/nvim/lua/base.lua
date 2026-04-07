@@ -4,9 +4,6 @@ local command = vim.api.nvim_create_user_command
 local has = vim.fn.has
 local split_command = require("mong8se").split_command
 
-cmd("syntax on")
-settings.hidden = true
-
 settings.hidden = true
 settings.encoding = "utf-8"
 
