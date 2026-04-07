@@ -81,7 +81,7 @@
 	navigate     = true
 	side-by-side = true
 	line-numbers = true
-	file-style   = reverse
+	file-style   = reverse bold
 
 [merge]
 	conflictStyle = zdiff3
