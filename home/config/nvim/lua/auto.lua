@@ -67,7 +67,11 @@ autocmd({
   pattern = "*",
   callback = function()
     vim.schedule(function() vim.cmd.nohlsearch() end)
-    if vim.bo.buftype == "" and vim.fn.getreg("%") ~= "" then
+    if
+      vim.bo.buftype == ""
+      and vim.bo.modified
+      and vim.api.nvim_buf_get_name(0) ~= ""
+    then
       vim.cmd.update()
     end
   end,
