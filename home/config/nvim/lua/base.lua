@@ -89,7 +89,7 @@ settings.fillchars = {
   eob = "⢎",
   horiz = "╍",
   vert = "▕",
-  fold = "┈",
+  fold = "╱",
   foldopen = "\\uf078",
   foldclose = "\\uf077",
 }
@@ -102,8 +102,6 @@ settings.splitbelow = true
 
 settings.undofile = true
 
-settings.foldmethod = "expr"
-settings.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 settings.foldlevelstart = 4
 settings.foldtext = "v:lua.require('mong8se').fold_it()"
 
