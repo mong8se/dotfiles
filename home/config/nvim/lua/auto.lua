@@ -59,18 +59,19 @@ autocmd({
 })
 
 --  Save the buffer if it is modified and has a filename
+--  and the file is not new
 autocmd({
   "BufLeave",
   "FocusLost",
   "VimSuspend",
 }, {
   pattern = "*",
-  callback = function()
+  callback = function(details)
     vim.schedule(function() vim.cmd.nohlsearch() end)
     if
       vim.bo.buftype == ""
-      and vim.bo.modified
-      and vim.api.nvim_buf_get_name(0) ~= ""
+      and details.file ~= ""
+      and vim.uv.fs_stat(details.file)
     then
       vim.cmd.update()
     end
