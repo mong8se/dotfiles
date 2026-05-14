@@ -15,32 +15,15 @@ local TermBuf = vim.api.nvim_create_augroup("TermBuf", {
   clear = true,
 })
 
--- cursorline only for active window
-autocmd({
-  "VimEnter",
-  "WinEnter",
-  "BufWinEnter",
-}, {
+autocmd("InsertEnter", {
   pattern = "*",
   callback = function() vim.wo.cursorline = true end,
   group = CursorLine,
 })
 
-autocmd("WinLeave", {
-  pattern = "*",
-  callback = function() vim.wo.cursorline = false end,
-  group = CursorLine,
-})
-
-autocmd("InsertEnter", {
-  pattern = "*",
-  callback = function() vim.cmd.highlight("CursorLine", "gui=underline") end,
-  group = CursorLine,
-})
-
 autocmd("InsertLeave", {
   pattern = "*",
-  callback = function() vim.cmd.highlight("CursorLine", "gui=none") end,
+  callback = function() vim.wo.cursorline = false end,
   group = CursorLine,
 })
 
