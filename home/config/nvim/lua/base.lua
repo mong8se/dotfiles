@@ -79,8 +79,8 @@ settings.virtualedit = {
 
 settings.list = true
 settings.listchars = {
-  tab = "╍╍⇥",
-  trail = "ˍ",
+  tab = "┈┈▱",
+  trail = "▢",
   precedes = "\\uf053",
   extends = "\\uf054",
 }
