@@ -1,7 +1,5 @@
 status is-interactive || exit
 
-abbr -a cat cat -v
-
 # because half the time I type cd.. instead of cd ..
 function multicd
   echo cd (string repeat -n (math (string length -- $argv[1]) - 3) ../)
