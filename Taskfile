@@ -118,7 +118,7 @@ function task:os:upgrade {
       esac
       ;;
     Darwin)
-      brew update && brew upgrade
+      brew update && brew upgrade -y
       ;;
     *)
       echo "OS is unrecognized."
