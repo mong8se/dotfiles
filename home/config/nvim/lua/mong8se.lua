@@ -128,4 +128,25 @@ mong8se.fold_it = function()
   )
 end
 
+mong8se.renumber = function(opts)
+  local start_line = opts.line1
+  local end_line = opts.line2
+
+  -- 1. Zero out the numbers across the specific user range
+  -- \1 = the matched whitespace in the regex
+  cmd(string.format([[%s,%ss/^\(\s*\)\d\+/\10/]], start_line, end_line))
+
+  -- 2. Jump cursor to the start line so the visual selection context is correct
+  vim.api.nvim_win_set_cursor(0, { start_line, 0 })
+
+  -- 3. Enter Visual Line Mode ('V'), select down to end_line, and pass literal 'g Ctrl-A'
+  -- \1 = Ctrl-A byte sequence in Lua strings
+  local keystrokes = string.format("V%dG%dg\1", end_line, opts.fargs[1] or 1)
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes(keystrokes, true, false, true),
+    "nx",
+    false
+  )
+end
+
 return mong8se

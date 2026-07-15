@@ -2,7 +2,10 @@ local cmd = vim.cmd
 local settings = vim.opt
 local command = vim.api.nvim_create_user_command
 local has = vim.fn.has
-local split_command = require("mong8se").split_command
+
+local mong8se = require("mong8se")
+local split_command = mong8se.split_command
+local renumber = mong8se.renumber
 
 settings.hidden = true
 settings.encoding = "utf-8"
@@ -119,6 +122,8 @@ if has("user_commands") then
   })
   command("Messages", "messages", {})
 
+  command("Renumber", renumber, { nargs = "?", range = "%" })
+
   command("Split", split_command, {
     nargs = "?",
     complete = "file",
@@ -134,4 +139,5 @@ end
 settings.grepprg = "rg --vimgrep --no-heading --smart-case"
 settings.grepformat = "%f:%l:%c:%m"
 
-settings.guicursor="n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
+settings.guicursor =
+  "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
