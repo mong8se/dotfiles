@@ -3,7 +3,7 @@ if not set -q __base16_path
 end
 
 if not set -q __base16_default_light
-  set -g __base16_default_light selenized-light
+  set -g __base16_default_light penumbra-light-contrast-plus-plus
 end
 
 if not set -q __base16_default_dark
