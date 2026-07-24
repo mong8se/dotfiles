@@ -1,37 +1,43 @@
 return {
   {
     "nvim-mini/mini.bracketed",
+    version = false,
     opts = {},
   },
   {
     "nvim-mini/mini.comment",
+    version = false,
     opts = {},
   },
   {
     "nvim-mini/mini.cmdline",
+    version = false,
     opts = {},
   },
   {
     "nvim-mini/mini.cursorword",
+    version = false,
     opts = {},
   },
   {
-    "nvim-mini/mini.starter",
-    opts = {
-      header = "│ ╲ ││\n││╲╲││\n││ ╲ │",
-    },
+    "nvim-mini/mini.surround",
+    version = false,
+    opts = {},
   },
   {
-    "nvim-mini/mini.surround",
+    "nvim-mini/mini.statusline",
+    version = false,
     opts = {},
   },
   {
     "nvim-mini/mini.icons",
+    version = false,
     opts = {},
     init = function(plugin) require(plugin.name).mock_nvim_web_devicons() end,
   },
   {
     "nvim-mini/mini.clue",
+    version = false,
     config = function(plugin)
       local MiniClue = require(plugin.name)
       MiniClue.setup({
@@ -192,6 +198,7 @@ return {
   },
   {
     "nvim-mini/mini.misc",
+    version = false,
     init = function(plugin)
       require(plugin.name).setup_auto_root({
         ".bzr",
@@ -224,6 +231,7 @@ return {
   },
   {
     "nvim-mini/mini.map",
+    version = false,
     config = function(plugin)
       local MiniMap = require(plugin.name)
       MiniMap.setup({
