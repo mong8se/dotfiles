@@ -31,6 +31,19 @@ return {
   { "danilamihailov/beacon.nvim", opts = { speed = 1 } },
 
   {
+    "ergodice/hamal.nvim",
+    opts = {},
+    keys = {
+      {
+        "<leader>j",
+        function() require("hamal").split() end,
+        mode = { "n", "o", "v" },
+        desc = "Jump via hamal"
+      }
+    }
+  },
+
+  {
     "roman/golden-ratio", -- C-W \
     init = function() vim.g.golden_ratio_autocommand = 0 end,
     keys = {
