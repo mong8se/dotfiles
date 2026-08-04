@@ -100,19 +100,6 @@ autocmd({
   group = ScrollOff,
 })
 
--- make gq in normal mode in a help file close the help
--- similar to what happens in fugitive
-autocmd("FileType", {
-  pattern = "help",
-  callback = function()
-    vim.keymap.set("n", "gq", ":helpclose<CR>", {
-      remap = true,
-      silent = true,
-      buffer = true,
-    })
-  end,
-})
-
 -- whenever we yank to the unamed register also copy to the + and * registers
 -- instead of using the clipboard=unamed setting which does so even on deletes
 autocmd("TextYankPost", {
