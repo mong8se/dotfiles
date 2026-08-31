@@ -251,12 +251,21 @@ setKeyMap("n", "<leader>xb", picker.diagnostics_document, {
 -- window
 setKeyMap("n", "<c-w>s", mong8se.split_command, {
   silent = true,
-  desc = "Split and browse",
+  desc = "Split + browse directory",
 })
 setKeyMap("n", "<c-w><C-s>", mong8se.split_command, {
-  desc = "Split and browse",
+  desc = "Split + browse directory",
   silent = true,
 })
+
+setKeyMap("n", "<c-w>.", function()
+  mong8se.smart_split("term://" .. vim.env.SHELL )
+end, {
+  silent = true,
+  desc = "Split + terminal",
+})
+
+-- terminal exit insert
 setKeyMap("t", "<c-w><C-w>", "<C-\\><C-n>")
 
 -- Insert mode
