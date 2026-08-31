@@ -1,9 +1,9 @@
+#!/usr/bin/env fish
+
 # The following lines were added by Docker Desktop to add commands to your PATH.
 # export PATH="$PATH:/Users/moazams/.docker/bin"
 fish_add_path --append ~/.docker/bin
 # End of Docker Desktop section.
-
-#!/usr/bin/env fish
 
 if not set -q hostname
   set -g hostname (hostname -s)
