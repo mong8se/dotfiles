@@ -49,6 +49,9 @@ end
 if type -q nvim
   abbr vi nvim
 end
+if set -q NVIM
+  alias nvim="nvim --server $NVIM --remote"
+end
 
 if type -q rg and type -q delta
   abbr --add --set-cursor rgd 'rg --json -C 2 % | delta'

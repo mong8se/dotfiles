@@ -76,9 +76,12 @@ end
 mong8se.directory_from_context = function()
   local filename = fn.getreg("%")
 
-  if filename == "" then
-    return "."
-  elseif fn.isdirectory(filename) == 1 then
+  if filename == "" then return "." end
+
+  local cwd = string.match(filename, "^term://(.+)//%d+:.+$")
+  if cwd then return cwd end
+
+  if fn.isdirectory(filename) == 1 then
     return "%"
   else
     return "%:h"
