@@ -1,91 +1,93 @@
 status is-interactive; or exit
 
-set -l program = (which fre zoxide fasd | head -1)
+set -l program = (which fre zoxide fasd 2>/dev/null | head -1)
 
 switch (path basename "$program")
-  case fre
-    function __fre_run --on-variable PWD
-      if test -n "$fish_private_mode" -o "$PWD" = "$HOME"
-        return
-      end
-      command fre --add "$PWD" &
-      disown
-    end
+    case fre
+        function __fre_run --on-variable PWD
+            if test -n "$fish_private_mode" -o "$PWD" = "$HOME"
+                return
+            end
+            command fre --add "$PWD" &
+            disown
+        end
 
-    if not set -q __z_fzf_args
-      set -g __z_fzf_args --nth=-2.. -d / --tiebreak end,length,index --no-sort --smart-case --exact --scheme=path
-    end
+        if not set -q __z_fzf_args
+            set -g __z_fzf_args --nth=-2.. -d / --tiebreak end,length,index --no-sort --smart-case --exact --scheme=path
+        end
 
-    function __z_query
-      set -f result (
-      begin
-        command fre --sorted
-        command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
-      end |
-      string match -v (pwd) |
-      if count $argv > "/dev/null"
-        fzf $__z_fzf_args -f "$argv" | head -1
-      else
-        fzf $__z_fzf_args
-      end
-      )
-
-      if test -z "$result"
-        echo z: No match found >&2
-        return 1
-      else if test -d "$result"
-        cd "$result"
-      else
-        command fre --delete "$result" &
-        disown
-      end
-    end
-  case zoxide
-    zoxide init fish --no-aliases | source
-    function __z_query
-      if count $argv >/dev/null
-        __zoxide_z $argv
-      else
-        __zoxide_zi
-      end
-    end
-  case fasd
-    if type -q disown
-      function __fasd_run --on-variable PWD
-        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) >/dev/null 2>&1 &
-        disown
-      end
+        function __z_query
+            set -f result (
+    begin
+      command fre --sorted
+      command find $Z_FALLBACKS -maxdepth 1 -mindepth 1 -type d -print
+    end |
+    string match -v (pwd) |
+    if count $argv > "/dev/null"
+      fzf $__z_fzf_args -f "$argv" | head -1
     else
-      function __fasd_run --on-variable PWD
-        command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) >/dev/null 2>&1 &
-      end
+      fzf $__z_fzf_args
     end
+    )
 
-    function __fasd_query
-      if count $argv >/dev/null
-        command fasd -dl1 "$argv"
-      else
-        command fasd -dlR | fzf
-      end
-    end
-    function __z_query
-      set -f result (__fasd_query $argv)
-      test -z "$result"; and return
-      test -d "$result"; and cd "$result"
-    end
+            if test -z "$result"
+                echo z: No match found >&2
+                return 1
+            else if test -d "$result"
+                cd "$result"
+            else
+                command fre --delete "$result" &
+                disown
+            end
+        end
+    case zoxide
+        zoxide init fish --no-aliases | source
+        function __z_query
+            if count $argv >/dev/null
+                __zoxide_z $argv
+            else
+                __zoxide_zi
+            end
+        end
+    case fasd
+        if type -q disown
+            function __fasd_run --on-variable PWD
+                command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) >/dev/null 2>&1 &
+                disown
+            end
+        else
+            function __fasd_run --on-variable PWD
+                command fasd --proc (command fasd --sanitize "$argv" | tr -s ' ' \n) >/dev/null 2>&1 &
+            end
+        end
+
+        function __fasd_query
+            if count $argv >/dev/null
+                command fasd -dl1 "$argv"
+            else
+                command fasd -dlR | fzf
+            end
+        end
+        function __z_query
+            set -f result (__fasd_query $argv)
+            test -z "$result"; and return
+            test -d "$result"; and cd "$result"
+        end
+    case '*'
+        echo 'Warning: No z program found'
+        exit 1
 end
 
 function z
-  if test "$argv" = -
-    cd -
-    return
-  end
+    if test "$argv" = -
+        cd -
+        return
+    end
 
-  set -g __z_last_arg $argv
-  __z_query $argv
+    set -g __z_last_arg $argv
+    __z_query $argv
 end
 
 function zz
-  __z_query $__z_last_arg
+    __z_query $__z_last_arg
 end
-
