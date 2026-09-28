@@ -8,6 +8,13 @@
         "timeoutSec": 5
       }
     ],
+    "errorOccurred": [
+      {
+        "type": "command",
+        "bash": "jq --raw-output0 '.error | .name,.message' | xargs -0 kitten notify --icon=error --app-name='Copilot'",
+        "timeoutSec": 5
+      }
+    ],
     "notification": [
       {
         "type": "command",
