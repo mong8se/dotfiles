@@ -8,17 +8,10 @@
         "timeoutSec": 5
       }
     ],
-    "permissionRequest": [
-      {
-        "type": "command",
-        "bash": "kitten notify --icon=info --app-name='Copilot' 'Permission Required' 'The agent is requesting permission.'",
-        "timeoutSec": 5
-      }
-    ],
     "notification": [
       {
         "type": "command",
-        "bash": "jq .title,.message | xargs kitten notify --icon=info --app-name='Copilot'",
+        "bash": "jq --raw-output0 .title,.message | xargs -0 kitten notify --icon=info --app-name='Copilot'",
         "timeoutSec": 5
       }
     ]
