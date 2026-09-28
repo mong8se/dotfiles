@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "hooks": {
+    "agentStop": [
+      {
+        "type": "command",
+        "bash": "kitten notify --icon=info --app-name='Copilot' 'Agent Stopped' 'The agent has stopped running.'",
+        "timeoutSec": 5
+      }
+    ],
+    "permissionRequest": [
+      {
+        "type": "command",
+        "bash": "kitten notify --icon=info --app-name='Copilot' 'Permission Required' 'The agent is requesting permission.'",
+        "timeoutSec": 5
+      }
+    ],
+    "notification": [
+      {
+        "type": "command",
+        "bash": "jq .title,.message | xargs kitten notify --icon=info --app-name='Copilot'",
+        "timeoutSec": 5
+      }
+    ]
+  }
+}
