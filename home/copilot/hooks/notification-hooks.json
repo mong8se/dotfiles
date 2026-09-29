@@ -11,14 +11,14 @@
     "errorOccurred": [
       {
         "type": "command",
-        "bash": "jq --raw-output0 '.error | .name,.message' | xargs -0 kitten notify --icon=error --app-name='Copilot'",
+        "bash": "jq --raw-output0 '.error | [\"Copilot: \" + .name,.message] | map( .[0:399])[]' | xargs -0 kitten notify --icon=error --app-name='Copilot'",
         "timeoutSec": 5
       }
     ],
     "notification": [
       {
         "type": "command",
-        "bash": "jq --raw-output0 .title,.message | xargs -0 kitten notify --icon=info --app-name='Copilot'",
+        "bash": "jq --raw-output0 '[\"Copilot: \" + .title,.message] | map( .[0:399] )[]' | xargs -0 kitten notify --icon=info --app-name='Copilot'",
         "timeoutSec": 5
       }
     ]
