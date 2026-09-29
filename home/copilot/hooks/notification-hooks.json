@@ -4,7 +4,7 @@
     "agentStop": [
       {
         "type": "command",
-        "bash": "kitten notify --icon=info --app-name='Copilot' 'Agent Stopped' 'The agent has stopped running.'",
+        "bash": "kitten notify --icon=info --app-name='Copilot' 'Copilot: Agent Stopped' 'The agent has stopped running.'",
         "timeoutSec": 5
       }
     ],
