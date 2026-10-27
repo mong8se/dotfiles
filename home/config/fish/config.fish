@@ -59,3 +59,7 @@ fish_add_path ~/.cargo/bin
 fish_add_path ~/.config/emacs/bin
 
 set -x BC_ENV_ARGS ~/.config/bcrc
+if type -q bat
+  set -x BAT_STYLE "plain"
+  set -x BAT_PAGER ""
+end
