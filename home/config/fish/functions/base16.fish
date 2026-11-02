@@ -22,7 +22,7 @@ complete -c base16 -a reset -d "Reset to default scheme"
 complete -c base16 -a "(__base16_schemes)" -d "Color scheme name"
 
 function base16 -d "Activate base16 terminal color scheme" -a scheme_name -a skip_env
-    if not status --is-interactive
+    if not status is-interactive
         echo "base16 doing nothing: non interactive shell"
         return
     end

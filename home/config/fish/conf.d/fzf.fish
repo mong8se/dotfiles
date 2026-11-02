@@ -1,4 +1,4 @@
-if status --is-interactive
+if status is-interactive
   if type -q fzf
     set -x FZF_DEFAULT_OPTS "--height 40% --reverse --extended --cycle"
 

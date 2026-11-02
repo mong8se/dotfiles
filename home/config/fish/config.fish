@@ -13,7 +13,7 @@ set -x DOTFILES_RESOURCES ~/.dotfiles/Resources
 set -x EDITOR (command -v nvim || command -v vim || command -v vi)
 set -x BC_ENV_ARGS ~/.config/bcrc
 
-if status --is-interactive
+if status is-interactive
   fish_default_key_bindings
 
   # Reset Base16 Shell Colors

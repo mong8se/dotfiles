@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-if status --is-interactive
+if status is-interactive
   and type -q thefuck
   thefuck --alias | source
 end
